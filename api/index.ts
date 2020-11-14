@@ -7,8 +7,7 @@ import UserRouter from "./routes/users";
 
 const port = process.env.SERVER_PORT || 3080;
 const database =
-  process.env.DATABASE ||
-  process.env.MONGODB_URI ||
+  process.env.MONGO_URI ||
   "mongodb://localhost:27017";
 
 // https://medium.com/bb-tutorials-and-thoughts/how-to-develop-and-build-react-app-with-nodejs-backend-typescript-version-27a6a283a7c5

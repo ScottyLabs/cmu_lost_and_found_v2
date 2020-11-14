@@ -7,7 +7,7 @@ cd api
 npm install
 npm start (or npm run dev)
 ```
-
+In a separate terminal window, run
 ```
 cd client
 npm install

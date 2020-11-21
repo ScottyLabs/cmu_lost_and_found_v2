@@ -28,7 +28,7 @@ mongoose
     useUnifiedTopology: true,
     useCreateIndex: true,
   })
-  .catch(() => console.log("Failed to connect to DB!"));
+  .catch(() => console.log("Failed to connect to DB!"  + process.env.MONGO_URI));
 
 // Morgan is for logging
 app.use(morgan("dev"));

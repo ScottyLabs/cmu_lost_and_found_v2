@@ -1,9 +1,10 @@
-.title {
+#title {
     margin: 30px auto;
     font-size: 30px;
+    color: #872222;
 }
 
 main {
     margin: auto;
-    margin-top: 10%;
+    margin-top: 7%;
 }

@@ -19,8 +19,9 @@ const ItemSchema = new mongoose.Schema({
   },
   retrievalLoc: {
     type: String,
-    /* Need to add the lost and found options */
+    /* Need to add the other lost and found options */
     enum: ['CUC', 'Gates', 'other'],
+    required: true
   },
   contactInfo: {
     email: String,
@@ -35,6 +36,6 @@ const ItemSchema = new mongoose.Schema({
   }
 });
 
-const Item = mongoose.model("Item", ItemSchema);
+const Item = mongoose.model("Item", ItemSchema, "items");
 
 export default Item;

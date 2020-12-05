@@ -1,6 +1,15 @@
 #side {
-    text-align: left;
-    background-color: #BDBDBD;
-    padding: 40px;
+  text-align: left;
+  background-color: #bdbdbd;
+  padding: 40px;
 }
 
+main {
+  padding-left: 80px;
+  padding-right: 80px;
+}
+
+#filter-bar {
+  padding: auto;
+  margin: auto;
+}

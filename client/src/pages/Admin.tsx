@@ -1,11 +1,12 @@
 import React from "react";
 import { Grid } from "semantic-ui-react";
 import "./Admin.css";
-import VerticalMenu from "../components/VerticalMenu"
-import "semantic-ui-css/semantic.min.css"
+import VerticalMenu from "../components/VerticalMenu";
+import FilterBar from "../components/FilterBar";
+import "semantic-ui-css/semantic.min.css";
 
 function Admin() {
-  document.title = "CMU Lost and Found"
+  document.title = "CMU Lost and Found";
   return (
     <Grid>
       <Grid.Row>
@@ -15,6 +16,9 @@ function Admin() {
         <Grid.Column width={13}>
           <main>
             <h1 id="title">Admin Page</h1>
+            <div id="filter-bar">
+              <FilterBar></FilterBar>  
+            </div>
           </main>
         </Grid.Column>
       </Grid.Row>

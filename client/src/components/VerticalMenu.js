@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import { Dropdown, Menu } from 'semantic-ui-react'
+import React, { Component } from 'react';
+import { Dropdown, Menu } from 'semantic-ui-react';
 
 export default class VerticalMenu extends Component {
   state = { activeItem: 'account' }
@@ -15,8 +15,13 @@ export default class VerticalMenu extends Component {
         <br></br>
         <br></br>
         <Menu.Item
-          name='account'
-          active={activeItem === 'account'}
+          name='available items'
+          active={activeItem === 'available items'}
+          onClick={this.handleItemClick}
+        />
+        <Menu.Item
+          name='archived items'
+          active={activeItem === 'archived items'}
           onClick={this.handleItemClick}
         />
         <Menu.Item
@@ -24,14 +29,6 @@ export default class VerticalMenu extends Component {
           active={activeItem === 'settings'}
           onClick={this.handleItemClick}
         />
-        <Dropdown item text='Display Options'>
-          <Dropdown.Menu>
-            <Dropdown.Header>Text Size</Dropdown.Header>
-            <Dropdown.Item>Small</Dropdown.Item>
-            <Dropdown.Item>Medium</Dropdown.Item>
-            <Dropdown.Item>Large</Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown>
       </Menu>
     )
   }

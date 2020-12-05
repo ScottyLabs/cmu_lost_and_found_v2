@@ -6,7 +6,10 @@ const router = Router();
 
 router.get("/all", async (req: Request, res: Response) => {
   let richard = new User({name: "Richard"});
-
+  richard.save(function (err) {
+    if (err) console.log(err);
+    // saved!
+  });
   return res.status(200).json({ bob: "hello" });
 });
 

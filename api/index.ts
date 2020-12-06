@@ -8,6 +8,7 @@ import * as cors from "cors";
 import * as mongoose from "mongoose";
 import UserRouter from "./routes/users";
 import AuthRouter from "./routes/auth";
+import ItemRouter from "./routes/items";
 
 
 const port = process.env.SERVER_PORT || 3080;
@@ -44,6 +45,7 @@ app.get("/", (req, res, next) => {
 // api route
 app.use("/api/users", UserRouter);
 app.use("/api/auth", AuthRouter);
+app.use("/api/items", ItemRouter);
 
 // handle undefined routes
 app.use("*", (req, res, next) => {

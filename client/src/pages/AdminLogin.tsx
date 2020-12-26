@@ -8,7 +8,7 @@ function AdminLogin() {
   document.title = "CMU Lost and Found";
   return (
     <Grid>
-      <main id="form">
+      <main id="admin-login">
         <h1 id="title">Admin Login</h1>
         <LoginForm></LoginForm>
         <br></br>

@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid } from "semantic-ui-react";
+import { Grid, Button } from "semantic-ui-react";
 import "./Admin.css";
 import VerticalMenu from "../components/VerticalMenu";
 import FilterBar from "../components/FilterBar";
@@ -17,7 +17,7 @@ function Admin() {
           <main>
             <h1 id="title">Admin Page</h1>
             <div id="filter-bar">
-              <FilterBar></FilterBar>  
+              <FilterBar></FilterBar> 
             </div>
           </main>
         </Grid.Column>

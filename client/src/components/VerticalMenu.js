@@ -11,7 +11,7 @@ export default class VerticalMenu extends Component {
 
     return (
       <Menu secondary vertical>
-        <img src="/dog-logo.png" alt="CMU Lost and Found Logo" width="210"></img>
+        <img id="logo" src="/dog-logo.png" alt="CMU Lost and Found Logo" width="210"></img>
         <br></br>
         <br></br>
         <Menu.Item

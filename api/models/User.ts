@@ -1,5 +1,6 @@
 import * as mongoose from "mongoose";
-
+// import * as bcrypt from "bcrypt-nodejs";
+// import * as jwt from "jsonwebtoken";
 const UserSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -7,6 +8,6 @@ const UserSchema = new mongoose.Schema({
   },
 });
 
-const User = mongoose.model("User", UserSchema);
+const User = mongoose.model("User", UserSchema, "users");
 
 export default User;

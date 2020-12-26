@@ -12,4 +12,24 @@ main {
 #filter-bar {
   padding: auto;
   margin: auto;
+  display: inline-flex;
+  justify-content: center;
+}
+
+#add-item {
+  margin-left: 300px;
+}
+
+/* #filter-bar .fields {
+  justify-content: center;
+}
+
+#filter-bar .field {
+  display: flex;
+  justify-content: center;
+} */
+
+#logo {
+  max-width: 210px;
+  height: auto;
 }

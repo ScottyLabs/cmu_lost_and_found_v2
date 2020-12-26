@@ -11,6 +11,7 @@ function AdminLogin() {
       <main id="form">
         <h1 id="title">Admin Login</h1>
         <LoginForm></LoginForm>
+        <br></br>
       </main>
     </Grid>
   );

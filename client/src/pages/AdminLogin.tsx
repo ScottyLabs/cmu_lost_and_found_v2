@@ -1,6 +1,6 @@
 import React from "react";
 import { Grid } from "semantic-ui-react";
-import LoginForm from "../components/Form";
+import LoginForm from "../components/LoginForm";
 import "./AdminLogin.css";
 import "semantic-ui-css/semantic.min.css";
 

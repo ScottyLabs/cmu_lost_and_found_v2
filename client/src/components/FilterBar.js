@@ -2,51 +2,47 @@ import React from "react";
 import { Form, Input, Button, Select } from "semantic-ui-react";
 
 const categoryOptions = [
-  { key: "c", text: "Clothing", value: "clothing" },
-  { key: "h", text: "Headphones", value: "headphones" },
-  { key: "j", text: "Jewelry", value: "jewelry" },
-  { key: "k", text: "Keys", value: "keys" },
-  { key: "l", text: "Laptops", value: "laptops" },
-  { key: "p", text: "Phones", value: "phones" },
-  { key: "s", text: "Student IDs", value: "students ids" },
-  { key: "t", text: "Tablets", value: "tablets" },
-  { key: "u", text: "Umbrellas", value: "umbrellas" },
-  { key: "w", text: "Water Bottles", value: "water bottles" },
-  { key: "o", text: "Other Electronics", value: "other electronics" },
-  { key: "m", text: "Miscellaneous", value: "miscellaneous" },
+  { key: "clothing", text: "Clothing", value: "clothing" },
+  { key: "headphones", text: "Headphones", value: "headphones" },
+  { key: "jewelry", text: "Jewelry", value: "jewelry" },
+  { key: "keys", text: "Keys", value: "keys" },
+  { key: "laptops", text: "Laptops", value: "laptops" },
+  { key: "phones", text: "Phones", value: "phones" },
+  { key: "students ids", text: "Student IDs", value: "students ids" },
+  { key: "tablets", text: "Tablets", value: "tablets" },
+  { key: "umbrellas", text: "Umbrellas", value: "umbrellas" },
+  { key: "water bottles", text: "Water Bottles", value: "water bottles" },
+  { key: "other electronics", text: "Other Electronics", value: "other electronics" },
+  { key: "miscellaneous", text: "Miscellaneous", value: "miscellaneous" },
 ];
 
 const FilterBar = () => (
   <Form>
     <Form.Group>
       <Form.Field
-        id="form-input-control-search"
+        id="form-searchbar"
         control={Input}
         placeholder="Search Items"
       />
       <Form.Field
+        id="form-category"
+        fluid
         control={Select}
         options={categoryOptions}
         placeholder="Category"
         search
-        searchInput={{ id: "form-select-control-category" }}
       />
       <Form.Field
-        id="form-button-control-search-button"
+        id="form-search"
         control={Button}
-        content="Search"
-      />
-      <Form.Field
-        id="add-item"
-        control={Button}
-        content="+ Add Item"
+        icon='search'
       />
     </Form.Group>
-    <Form.Field
+    {/* <Form.Field
       id="form-button-control-advanced-settings"
       control={Button}
-      content="Advanced Settings"
-    />
+      content="Advanced Search"
+    /> */}
   </Form>
 );
 

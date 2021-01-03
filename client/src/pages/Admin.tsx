@@ -1,8 +1,9 @@
 import React from "react";
-import { Grid, Button } from "semantic-ui-react";
+import { Grid } from "semantic-ui-react";
 import "./Admin.css";
 import VerticalMenu from "../components/VerticalMenu";
 import FilterBar from "../components/FilterBar";
+import AddModal from "../components/AddModal";
 import "semantic-ui-css/semantic.min.css";
 
 function Admin() {
@@ -16,8 +17,9 @@ function Admin() {
         <Grid.Column width={13}>
           <main>
             <h1 id="title">Admin Page</h1>
-            <div id="filter-bar">
+            <div id="admin-filter-bar">
               <FilterBar></FilterBar> 
+              <AddModal></AddModal>
             </div>
           </main>
         </Grid.Column>

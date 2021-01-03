@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { Dropdown, Menu } from 'semantic-ui-react';
+import { Menu } from 'semantic-ui-react';
 
 export default class VerticalMenu extends Component {
-  state = { activeItem: 'account' }
+  state = { activeItem: 'available items' }
 
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 

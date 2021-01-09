@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Grid, Modal, Form } from 'semantic-ui-react'
+import { Button, Grid, Modal, Form, Radio } from 'semantic-ui-react'
 // import AddForm from '../components/AddForm';
 
 function exampleReducer(state, action) {
@@ -18,15 +18,25 @@ function exampleReducer(state, action) {
 }
 
 const locations = [
-  { key: 'm', text: 'Male', value: 'male' },
-  { key: 'f', text: 'Female', value: 'female' },
-  { key: 'o', text: 'Other', value: 'other' },
+  { key: 'baker', text: 'Baker Hall', value: 'baker hall' },
+  { key: 'cohon', text: 'Cohon University Center', value: 'cohon university center' },
+  { key: 'doherty', text: 'Doherty Hall', value: 'doherty hall' },
+  { key: 'gates', text: 'Gates Center', value: 'gates center' },
+  { key: 'hamburg', text: 'Hamburg Hall', value: 'hamburg hall' },
+  { key: 'hunt', text: 'Hunt Library', value: 'hunt library' },
+  { key: 'hamerschlag', text: 'Hamerschlag Hall', value: 'hamerschlag hall' },
+  { key: 'margaret', text: 'Margaret Morrison Hall', value: 'margaret morrison hall' },
+  { key: 'porter', text: 'Porter Hall', value: 'porter hall' },
+  { key: 'posner', text: 'Posner Hall', value: 'posner hall' },
+  { key: 'sorrells', text: 'Sorrells Library', value: 'sorrells library' },
+  { key: 'tepper', text: 'Tepper Building', value: 'tepper building' },
+  { key: 'wean', text: 'Wean Hall', value: 'wean hall' },
 ]
 
 const pickup = [
-  { key: 'm', text: 'Male', value: 'male' },
-  { key: 'f', text: 'Female', value: 'female' },
-  { key: 'o', text: 'Other', value: 'other' },
+  { key: 'cohon', text: 'Cohon University Center', value: 'cohon university center' },
+  { key: 'gates', text: 'Gates Center', value: 'gates center' },
+  { key: 'tepper', text: 'Tepper Building', value: 'tepper building' },
 ]
 
 function AddModal() {
@@ -55,8 +65,8 @@ function AddModal() {
             <Form>
               <Form.Input required fluid label='Item Name' placeholder='Item Name'/>
               <Form.Group widths='equal'>
-                <Form.Input required fluid label='Date Found' placeholder='MM/DD/YYY'/>
-                <Form.Input required fluid label='Time Found' placeholder='HH:MM'/>
+                <Form.Input required fluid label='Date Found' type='date' placeholder='MM/DD/YYY'/>
+                <Form.Input required fluid label='Time Found' type='time' placeholder='HH:MM'/>
                 {/* Need to manually require location selection?? */}
                 <Form.Select required fluid label='Location Found' options={locations} placeholder='Location'/>    
               </Form.Group>
@@ -67,8 +77,9 @@ function AddModal() {
               </Form.Group>
               <Form.Input required label='Image Upload' type='file'/>
               <Form.Group inline>
-                <label>Image Permissions</label>
-                <Form.Field label='Private' control='input' type='radio' name='htmlRadios'/>
+                <label>Image Visibility</label>
+                {/* <Radio toggle></Radio> */}
+                <Form.Field label='Private' control='input' type='radio' name='htmlRadios' defaultChecked/>
                 <Form.Field label='Public' control='input' type='radio' name='htmlRadios'/>
               </Form.Group>
               <Form.Group inline id='modal-actions'>
@@ -85,8 +96,3 @@ function AddModal() {
 }
 
 export default AddModal
-
-
-
-
-

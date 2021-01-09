@@ -1,7 +1,7 @@
 import React from "react";
 import { Grid } from "semantic-ui-react";
 import "./Admin.css";
-import VerticalMenu from "../components/VerticalMenu";
+import AdminMenu from "../components/AdminMenu";
 import FilterBar from "../components/FilterBar";
 import AddModal from "../components/AddModal";
 import "semantic-ui-css/semantic.min.css";
@@ -12,11 +12,14 @@ function Admin() {
     <Grid>
       <Grid.Row>
         <Grid.Column width={3} id="side">
-          <VerticalMenu></VerticalMenu>
+          <img id="logo" src="/dog-logo.png" alt="CMU Lost and Found Logo"></img>
+          <br></br>
+          <br></br>
+          <AdminMenu></AdminMenu>
         </Grid.Column>
         <Grid.Column width={13}>
           <main>
-            <h1 id="title">Admin Page</h1>
+            <h1 id="title">Available Items</h1>
             <div id="admin-filter-bar">
               <FilterBar></FilterBar> 
               <AddModal></AddModal>

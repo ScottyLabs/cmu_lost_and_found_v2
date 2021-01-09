@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Menu } from 'semantic-ui-react';
 
-export default class VerticalMenu extends Component {
+export default class AdminMenu extends Component {
   state = { activeItem: 'available items' }
 
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
@@ -10,10 +10,7 @@ export default class VerticalMenu extends Component {
     const { activeItem } = this.state
 
     return (
-      <Menu secondary vertical>
-        <img id="logo" src="/dog-logo.png" alt="CMU Lost and Found Logo" width="210"></img>
-        <br></br>
-        <br></br>
+      <Menu secondary fluid vertical>
         <Menu.Item
           name='available items'
           active={activeItem === 'available items'}
@@ -33,3 +30,4 @@ export default class VerticalMenu extends Component {
     )
   }
 }
+

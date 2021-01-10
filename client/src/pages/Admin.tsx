@@ -4,6 +4,7 @@ import "./Admin.css";
 import AdminMenu from "../components/AdminMenu";
 import FilterBar from "../components/FilterBar";
 import AddModal from "../components/AddModal";
+import ExampleTable from "../components/Table";
 import "semantic-ui-css/semantic.min.css";
 
 function Admin() {
@@ -12,10 +13,12 @@ function Admin() {
     <Grid>
       <Grid.Row>
         <Grid.Column width={3} id="side">
-          <img id="logo" src="/dog-logo.png" alt="CMU Lost and Found Logo"></img>
-          <br></br>
-          <br></br>
-          <AdminMenu></AdminMenu>
+          <div id="sidemenu">
+            <img id="logo" src="/dog-logo.png" alt="CMU Lost and Found Logo"></img>
+            <br></br>
+            <br></br>
+            <AdminMenu></AdminMenu>
+          </div>
         </Grid.Column>
         <Grid.Column width={13}>
           <main>
@@ -23,6 +26,9 @@ function Admin() {
             <div id="admin-filter-bar">
               <FilterBar></FilterBar> 
               <AddModal></AddModal>
+            </div>
+            <div id="table">
+              <ExampleTable></ExampleTable>
             </div>
           </main>
         </Grid.Column>

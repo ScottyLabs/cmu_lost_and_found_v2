@@ -60,16 +60,17 @@ router.post("/add", async (req: Request, res: Response) => {
  * id: id
  * }
  */
-router.post("/remove", async (req: Request, res: Response) => {
+router.post("/updateStatus", async (req: Request, res: Response) => {
   let id = req.body.id;
-  Item.deleteOne({_id: id}, (err) => {
+  let status = req.body.status;
+  Item.updateOne({_id: id}, {status: status}, {runValidators: true}, (err, raw) => {
     if (err) {
       console.log(err);
       return res.status(401).send(err);
     }
-    return res.status(200).send("success");
+    return res.status(200).send({raw: raw});
   });
-  
+
 });
 
 export default router;

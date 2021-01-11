@@ -14,7 +14,7 @@ const TableExample = (props: {
         <Table.Row>
           <Table.HeaderCell>Date Found</Table.HeaderCell>
           <Table.HeaderCell>Time Found</Table.HeaderCell>
-          <Table.HeaderCell>Object</Table.HeaderCell>
+          <Table.HeaderCell>Name</Table.HeaderCell>
           <Table.HeaderCell>Where Found</Table.HeaderCell>
           <Table.HeaderCell>Description</Table.HeaderCell>
           <Table.HeaderCell>Category</Table.HeaderCell>
@@ -28,7 +28,7 @@ const TableExample = (props: {
             <Table.Row key={item.id}>
               <Table.Cell>{item.dateFound}</Table.Cell>
               <Table.Cell>{item.timeFound}</Table.Cell>
-              <Table.Cell>{item.object}</Table.Cell>
+              <Table.Cell>{item.name}</Table.Cell>
               <Table.Cell>{item.whereFound}</Table.Cell>
               <Table.Cell>{item.description}</Table.Cell>
               <Table.Cell>{item.category}</Table.Cell>

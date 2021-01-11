@@ -2,6 +2,9 @@ import { Request, Response, Router } from "express";
 import Item from "../models/Item";
 const router = Router();
 
+/**
+ * Returns all items in database, according to schema specified in Item.ts
+ */
 router.get("/all", async (req: Request, res: Response) => {
   Item.find((err, docs) => {
     if (err) {
@@ -12,6 +15,10 @@ router.get("/all", async (req: Request, res: Response) => {
   });
 });
 
+/**
+ * Adds an item to database
+ * Should correspond to schema found in Item.ts
+ */
 //TODO: Still need add item validation (in case some fields aren't satisfactory)
 router.post("/add", async (req: Request, res: Response) => {
   let {
@@ -45,6 +52,24 @@ router.post("/add", async (req: Request, res: Response) => {
     }
     return res.status(200).json({ id: item._id });
   });
+});
+
+/**
+ * Removes an item by id
+ * {
+ * id: id
+ * }
+ */
+router.post("/remove", async (req: Request, res: Response) => {
+  let id = req.body.id;
+  Item.deleteOne({_id: id}, (err) => {
+    if (err) {
+      console.log(err);
+      return res.status(401).send(err);
+    }
+    return res.status(200).send("success");
+  });
+  
 });
 
 export default router;

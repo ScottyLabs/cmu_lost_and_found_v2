@@ -1,7 +1,10 @@
 import { Model, Query, Schema, Document, model } from "mongoose";
 import * as bcrypt from "bcrypt";
 import * as jwt from "jsonwebtoken";
+// TODO: move this away from here
 const JWT_SECRET = "asdfwecvjoi3sdfoi";
+// time for access token to expire in milliseconds
+const TIME_TO_EXPIRE = 3600000;
 
 export interface IUser extends Document {
   username: string,
@@ -11,8 +14,12 @@ export interface IUser extends Document {
 }
 
 export interface IUserModel extends Model<IUser> {
-  generateHash: (password: string) => string,
-  findOneByUsername: (username: string) => Query<IUser>
+  generateHash: (password: string) => string;
+  findOneByUsername: (username: string) => Query<IUser>;
+  getByToken: (
+    token: string,
+    callback: (err: any, user: IUser) => void
+  ) => void;
 }
 
 const UserSchema = new Schema({
@@ -37,7 +44,7 @@ UserSchema.methods.checkPassword = function(password: string) {
 };
 
 UserSchema.methods.generateAuthToken = function () {
-  return jwt.sign(this._id.toString(), JWT_SECRET);
+  return jwt.sign({id: this._id.toString(), accessTime: Date.now()}, JWT_SECRET);
 };
 
 UserSchema.statics.findOneByUsername = function (username: string) {
@@ -51,13 +58,21 @@ UserSchema.statics.findOneByUsername = function (username: string) {
  * @param  {String}   token    User's authentication token.
  * @param  {Function} callback args(err, user)
  */
-UserSchema.statics.getByToken = function(token: string, callback: Function) {
+UserSchema.statics.getByToken = function(token: string, callback: (err: any, user: IUser) => void) {
   jwt.verify(
     token,
     JWT_SECRET,
-    function(err: any, id: any) {
+    function(err: any, payload: any) {
+      if (!payload || !payload.id || !payload.accessTime) {
+        return callback("Bad token", null);
+      }
+      let id: string = payload.id;
+      let accessTime: number = payload.accessTime;
       if (err) {
-        return callback(err);
+        return callback(err, null);
+      }
+      if (Date.now() > accessTime + TIME_TO_EXPIRE) {
+        return callback("Token has expired. Please login again.", null);
       }
       this.findOne({ _id: id }, callback);
     }.bind(this)

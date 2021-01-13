@@ -8,30 +8,36 @@ export default class UserController {
    * @param  {String}   password Password
    * @param  {Function} callback args(err, token, user)
    */
-  public static loginWithPassword(username: string, password: string, callback: (err:string, user:any)=>any) {
+  public static loginWithPassword(username: string, password: string, callback: (err:string, token: string, user:any)=>any) {
     if (!password || password.length === 0) {
-      return callback("Please enter a password", null);
+      return callback("Please enter a password", null, null);
     }
     
     User.findOneByUsername(username)
-      // .schema.methods.select("+password")
       .exec(function (err:string, user:IUser) {
         if (err) {
-          return callback(err, user);
+          return callback(err, null, null);
         }
         if (!user) {
-          return callback("We couldn't find you!", user);
+          return callback("We couldn't find you!", null, null);
         }
         if (!user.checkPassword(password)) {
-          return callback("That's not the right password.", user);
+          return callback("That's not the right password.", null, null);
         }
-        // var token = user.generateAuthToken();
-        var u = user.toJSON();
-
+        let token = user.generateAuthToken();
+        let u = user.toJSON();
         delete u.password;
-
-        return callback(null, u);
+        return callback(null, token, u);
       });
+  }
+
+  public static loginWithToken(token: string, callback: (err: any, token: string, user: IUser) => void) {
+    User.getByToken(token, (err: any, user: IUser) => {
+      if (err || !user) {
+        return callback(err, null, null);
+      }
+      return callback(err, user.generateAuthToken(), user);
+    });
   }
 
   /**
@@ -52,7 +58,7 @@ export default class UserController {
 
     // Check that there isn't a user with this username already.
     if (!this.canRegister(username, password)) {
-      callback("can't register, password too short", null);
+      callback("Can't register, password too short", null);
     }
     let u = new User();
     u.username = username;
@@ -76,4 +82,8 @@ export default class UserController {
     });
     
   }
+
+  public static getByToken(token: string, callback: (err: any, user: IUser) => void) {
+    User.getByToken(token, callback);
+  };
 }

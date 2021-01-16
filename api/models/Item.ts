@@ -1,39 +1,46 @@
 import * as mongoose from "mongoose";
 
 const ItemSchema = new mongoose.Schema({
+  dateFound: {
+    type: String,
+    required: true,
+  },
+  timeFound: {
+    type: String,
+    required: true,
+  },
   name: {
     type: String,
-    required:true
+    required: true,
+  },
+  whereFound: {
+    type: String,
+    required: true,
   },
   description: {
     type: String,
-    required: true
+    required: true,
   },
-  dateFound: {
-    type: Date,
-    default: Date.now
-  },
-  foundLoc: {
+  category: {
     type: String,
-    required: true
+    required: true,
   },
-  retrievalLoc: {
+  whereToRetrieve: {
     type: String,
-    /* Need to add the other lost and found options */
-    enum: ['CUC', 'Gates', 'other'],
-    required: true
-  },
-  contactInfo: {
-    email: String,
-    phone: String
+    required: true,
   },
   image: {
-    img: String
+    type: String,
+  },
+  imagePermission: {
+    type: String,
+    required: true
   },
   status: {
-    type: Boolean,
-    default: false
-  }
+    type: String,
+    enum: ["available", "destroyed", "claimed"],
+    required: true
+  },
 });
 
 const Item = mongoose.model("Item", ItemSchema, "items");

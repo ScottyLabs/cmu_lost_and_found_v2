@@ -13,6 +13,12 @@ const ItemSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   },
+  category: {
+    type: String,
+    enum: ['clothing', 'headphones', 'jewelry', 'keys', 'laptops', 'phones', 'students ids',
+    'tablets','umbrellas', 'water bottles', 'other electronics', 'miscellaneous'],
+    required: true
+  },
   foundLoc: {
     type: String,
     required: true
@@ -28,11 +34,16 @@ const ItemSchema = new mongoose.Schema({
     phone: String
   },
   image: {
-    img: String
+    type: String
+  },
+  imagepermission: {
+    type: Boolean,
+    default: true
   },
   status: {
-    type: Boolean,
-    default: false
+    type: String,
+    enum: ['available', 'unavailable'],
+    default: 'available'
   }
 });
 

@@ -1,12 +1,14 @@
 import React from "react";
 import { Table } from "semantic-ui-react";
 import { Item } from "../interface/item";
-import "./Table.css";
+import "./TableWidget.css";
 //import ViewIcon from "./ViewIcon";
 import ImageModal from "./ImageModal";
+import ClaimButton from "./ClaimButton";
 
-const TableExample = (props: {
-  items: Array<Item>
+const TableWidget = (props: {
+  items: Array<Item>;
+  permissions: boolean;
 }) => {
   return (
     <Table celled className="lf_table">
@@ -35,6 +37,7 @@ const TableExample = (props: {
               <Table.Cell>{item.whereToRetrieve}</Table.Cell>
               <Table.Cell>
                 <ImageModal image={item.image}></ImageModal>
+                {props.permissions ? (<ClaimButton></ClaimButton>) : null}
               </Table.Cell>
             </Table.Row>
           );
@@ -44,4 +47,4 @@ const TableExample = (props: {
   );
 }
 
-export default TableExample;
+export default TableWidget;

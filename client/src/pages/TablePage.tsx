@@ -1,8 +1,8 @@
-import React from "react";
-import Table from "../components/Table";
+import React, {useState} from "react";
+import TableWidget from "../components/TableWidget";
 
-function Page2() {
-  const items = [
+function TablePage() {
+  const _items = [
     {
       id:1,
       dateFound: "11/12/20",
@@ -30,12 +30,14 @@ function Page2() {
       status: "available",
     },
   ];
+  const [items, setItems] = useState(_items);
+
   return (
     <>
       <div className="title">Lost and Found Inventory</div>
-      <Table items={items}></Table>
+      <TableWidget items={items} permissions={false}></TableWidget>
     </>
   );
 }
 
-export default Page2;
+export default TablePage;

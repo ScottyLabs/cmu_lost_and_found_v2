@@ -1,6 +1,5 @@
 import React from 'react'
 import { Button, Grid, Modal, Form, Radio } from 'semantic-ui-react'
-// import AddForm from '../components/AddForm';
 
 function exampleReducer(state, action) {
   switch (action.type) {

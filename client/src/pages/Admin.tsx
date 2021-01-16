@@ -4,7 +4,7 @@ import "./Admin.css";
 import AdminMenu from "../components/AdminMenu";
 import FilterBar from "../components/FilterBar";
 import AddModal from "../components/AddModal";
-import TableExample from "../components/Table";
+import ExampleTable from "../components/Table";
 import "semantic-ui-css/semantic.min.css";
 
 function Admin() {
@@ -28,7 +28,7 @@ function Admin() {
               <AddModal></AddModal>
             </div>
             <div id="table">
-              <TableExample></TableExample>
+              <ExampleTable></ExampleTable>
             </div>
           </main>
         </Grid.Column>

@@ -2,14 +2,17 @@ import React from "react";
 import { Table } from "semantic-ui-react";
 import { Item } from "../interface/item";
 import "./TableWidget.css";
-//import ViewIcon from "./ViewIcon";
 import ImageModal from "./ImageModal";
 import ClaimButton from "./ClaimButton";
+import UnclaimButton from "./UnclaimButton";
 
 const TableWidget = (props: {
   items: Array<Item>;
-  permissions: boolean;
+  isAdmin: boolean;
+  isArchived: boolean;
+  fetchItems: Function;
 }) => {
+  console.log("Creating table");
   return (
     <Table celled className="lf_table">
       <Table.Header>
@@ -25,26 +28,44 @@ const TableWidget = (props: {
         </Table.Row>
       </Table.Header>
       <Table.Body>
-        {props.items.map((item: Item) => {
-          return (
-            <Table.Row key={item.id}>
-              <Table.Cell>{item.dateFound}</Table.Cell>
-              <Table.Cell>{item.timeFound}</Table.Cell>
-              <Table.Cell>{item.name}</Table.Cell>
-              <Table.Cell>{item.whereFound}</Table.Cell>
-              <Table.Cell>{item.description}</Table.Cell>
-              <Table.Cell>{item.category}</Table.Cell>
-              <Table.Cell>{item.whereToRetrieve}</Table.Cell>
-              <Table.Cell>
-                <ImageModal image={item.image}></ImageModal>
-                {props.permissions ? (<ClaimButton></ClaimButton>) : null}
-              </Table.Cell>
-            </Table.Row>
-          );
-        })}
+        {props.items
+          .filter((item) => {
+            return props.isArchived
+              ? item.status !== "available"
+              : item.status === "available";
+          })
+          .map((item: Item) => {
+            return (
+              <Table.Row key={item._id}>
+                <Table.Cell>{item.dateFound}</Table.Cell>
+                <Table.Cell>{item.timeFound}</Table.Cell>
+                <Table.Cell>{item.name}</Table.Cell>
+                <Table.Cell>{item.whereFound}</Table.Cell>
+                <Table.Cell>{item.description}</Table.Cell>
+                <Table.Cell>{item.category}</Table.Cell>
+                <Table.Cell>{item.whereToRetrieve}</Table.Cell>
+                <Table.Cell>
+                  <ImageModal image={item.image}></ImageModal>
+                  {props.isAdmin ? (
+                    props.isArchived ? (
+                      <UnclaimButton
+                        id={item._id}
+                        fetchItems={props.fetchItems}
+                      ></UnclaimButton>
+                    ) : (
+                      <ClaimButton
+                        id={item._id}
+                        fetchItems={props.fetchItems}
+                      ></ClaimButton>
+                    )
+                  ) : null}
+                </Table.Cell>
+              </Table.Row>
+            );
+          })}
       </Table.Body>
     </Table>
   );
-}
+};
 
 export default TableWidget;

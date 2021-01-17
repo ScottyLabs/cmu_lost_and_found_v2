@@ -4,9 +4,9 @@ import { Switch, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import AdminLogin from "./pages/AdminLogin";
 import Admin from "./pages/Admin";
+import Archived from "./pages/Archived";
 import Items from "./pages/Items";
 import TablePage from "./pages/TablePage";
-import AdminPage from "./pages/AdminPage";
 
 function App() {
   return (
@@ -21,14 +21,14 @@ function App() {
         <Route path="/Admin">
           <Admin />
         </Route>
+        <Route path="/Archived">
+          <Archived />
+        </Route>
         <Route path="/Items">
           <Items />
         </Route>
         <Route path="/table">
           <TablePage />
-        </Route>
-        <Route path="/admin">
-          <AdminPage />
         </Route>
       </Switch>
     </div>

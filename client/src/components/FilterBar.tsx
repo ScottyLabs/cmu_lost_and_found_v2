@@ -36,6 +36,7 @@ const FilterBar = () => (
         id="form-search"
         control={Button}
         icon='search'
+        type='submit'
       />
     </Form.Group>
     {/* <Form.Field

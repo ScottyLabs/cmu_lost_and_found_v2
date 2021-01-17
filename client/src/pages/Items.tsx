@@ -1,5 +1,6 @@
 import React from "react";
 import { Grid } from "semantic-ui-react";
+import { Link } from "react-router-dom";
 import "./Items.css";
 import UserMenu from "../components/UserMenu";
 import FilterBar from "../components/FilterBar";
@@ -11,7 +12,7 @@ function Items() {
     <Grid>
       <Grid.Row>
         <Grid.Column width={3} id="side">
-          <img id="logo" src="/dog-logo.png" alt="CMU Lost and Found Logo"></img>
+          <Link to="/"><img id="logo" src="/dog-logo.png" alt="CMU Lost and Found Logo"></img></Link>
           <br></br>
           <br></br>
           <UserMenu></UserMenu>

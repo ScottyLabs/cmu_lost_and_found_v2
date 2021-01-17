@@ -12,3 +12,7 @@ form {
   justify-content: center;
   padding-bottom: 20px;
 }
+
+#forgot:hover {
+  text-decoration: underline;
+}

@@ -2,7 +2,7 @@
   margin: auto;
   margin-top: 10%;
   padding: 50px;
-  width: 30%;
+  width: 400px;
   border: 2px solid #872222;
 }
 
@@ -11,4 +11,8 @@ form {
   display: inline;
   justify-content: center;
   padding-bottom: 20px;
+}
+
+#forgot:hover {
+  text-decoration: underline;
 }

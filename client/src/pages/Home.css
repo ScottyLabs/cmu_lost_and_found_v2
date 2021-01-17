@@ -6,7 +6,8 @@
 
 main {
   margin: auto;
-  margin-top: 7%;
+  display: block;
+  margin-top: 8%;
 }
 
 img {

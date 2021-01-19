@@ -4,7 +4,7 @@ import { Menu } from 'semantic-ui-react';
 export default class UserMenu extends Component {
   state = { activeItem: 'available items' }
 
-  handleItemClick = (e, { name }) => this.setState({ activeItem: name })
+  handleItemClick = (e:any, { name }:any) => this.setState({ activeItem: name })
 
   render() {
     const { activeItem } = this.state

@@ -18,7 +18,7 @@ export default function AdminMenu(props: { activeTab: string }) {
           active={props.activeTab === "archived"}
         />
       </Link>
-      <Link to="/Admin">
+      <Link to="/Settings">
         <Menu.Item
           name="settings"
           active={props.activeTab === "settings"}

@@ -1,6 +1,7 @@
-import axios from 'axios'
-import React, {useState} from 'react'
-import { Button, Grid, Modal, Form } from 'semantic-ui-react'
+import axios from 'axios';
+import React, {useState} from 'react';
+import { Button, Grid, Modal, Form } from 'semantic-ui-react';
+import "./AddModal.css";
 
 function exampleReducer(dispatchState: any, action: any) {
   switch (action.type) {

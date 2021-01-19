@@ -5,14 +5,3 @@
   width: 400px;
   border: 2px solid #872222;
 }
-
-form {
-  text-align: left;
-  display: inline;
-  justify-content: center;
-  padding-bottom: 20px;
-}
-
-#forgot:hover {
-  text-decoration: underline;
-}

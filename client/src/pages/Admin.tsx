@@ -67,7 +67,7 @@ function Admin() {
     <Grid>
       <Grid.Row>
         <Grid.Column width={3} id="side">
-          <div id="sidemenu">
+          <div>
            <Link to="/"><img id="logo" src="/dog-logo.png" alt="CMU Lost and Found Logo"></img></Link>
             <br></br>
             <br></br>

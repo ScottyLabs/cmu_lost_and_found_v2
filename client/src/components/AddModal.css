@@ -1,0 +1,22 @@
+#add-item {
+    width : 100px;
+    margin-left: 20px;
+}
+
+.ui.modal {
+    width: 60%;
+}
+
+div .header {
+    text-align: center;
+}
+
+#modal-actions {
+    display: flex;
+    justify-content: center;
+}
+
+body.dimmed.dimmable {
+    overflow-y: scroll !important;
+}
+

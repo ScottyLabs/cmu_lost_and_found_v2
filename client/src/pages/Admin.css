@@ -22,49 +22,7 @@ main {
   justify-content: center; 
 }
 
-.ui.form {
-  width: 100%;
-}
-
-#form-searchbar {
-  width: 250px;
-}
-
-#form-search {
-  width: 50px;
-}
-
-#form-category {
-  width: 160px;
-}
-
-#add-item {
-  width : 100px;
-  margin-left: 20px;
-}
-
-div .header {
-  text-align: center;
-}
-
 #logo {
   max-width: 90%;
   height: auto;
-}
-
-.ui.modal {
-  width: 60%;
-}
-
-#modal-actions {
-  display: flex;
-  justify-content: center;
-}
-
-.ui.menu {
-  margin: auto;
-}
-
-body.dimmed.dimmable {
-  overflow-y: scroll !important;
 }

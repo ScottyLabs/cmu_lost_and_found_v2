@@ -1,5 +1,6 @@
 import React from "react";
 import { Form, Input, Button, Select } from "semantic-ui-react";
+import "./FilterBar.css";
 
 const categoryOptions = [
   { key: "clothing", text: "Clothing", value: "clothing" },

@@ -32,7 +32,7 @@ function Archived() {
     <Grid>
       <Grid.Row>
         <Grid.Column width={3} id="side">
-          <div id="sidemenu">
+          <div>
               <Link to="/">
                 <img
                   id="logo"

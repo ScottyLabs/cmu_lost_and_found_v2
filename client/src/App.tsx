@@ -7,6 +7,7 @@ import Admin from "./pages/Admin";
 import Archived from "./pages/Archived";
 import Items from "./pages/Items";
 import TablePage from "./pages/TablePage";
+import UserMenu from "./pages/UserMenu";
 
 function App() {
   return (
@@ -29,6 +30,9 @@ function App() {
         </Route>
         <Route path="/table">
           <TablePage />
+        </Route>
+        <Route path="/UserMenu">
+          <UserMenu />
         </Route>
       </Switch>
     </div>

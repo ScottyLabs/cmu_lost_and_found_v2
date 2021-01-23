@@ -64,8 +64,6 @@ router.post("/add", async (req: Request, res: Response) => {
 router.post("/updateStatus", async (req: Request, res: Response) => {
   let id = req.body.id;
   let status = req.body.status;
-  console.log(id);
-  console.log(status);
   Item.findByIdAndUpdate({_id: id}, {status: status}, {runValidators: true, useFindAndModify: false}, (err, raw) => {
     if (err) {
       console.log(err);
@@ -73,13 +71,6 @@ router.post("/updateStatus", async (req: Request, res: Response) => {
     }
     return res.status(200).send({msg: raw});
   });
-  // Item.updateOne({_id: id}, { $set: {status: status} }, {runValidators: true}, (err, raw) => {
-  //   if (err) {
-  //     console.log(err);
-  //     return res.status(401).send({trace: err, msg: "can't find item in db"});
-  //   }
-  //   return res.status(200).send({msg: raw});
-  // });
 
 });
 

@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, {useState} from "react";
 import TableWidget from "../components/TableWidget";
+import SearchBar from '../components/SearchBar';
 
 function TablePage() {
   // const _items = [
@@ -33,20 +34,46 @@ function TablePage() {
   // ];
   const [items, setItems] = useState([]);
 
+  //what is from the search
+  const [input, setInput] = useState('');
+  //unfiltered list
+  const [itemListDefault, setItemListDefault] = useState();
+  //filtered list
+  const [itemList, setItemList] = useState();
+
   const fetchItems = () => {
     axios.get(`http://localhost:3080/api/items/all`).then(
       (res) => {
         console.log(res);
         setItems(res.data);
+
+        //added
+        setItemListDefault(res.data);
+        setItemList(res.data);
       },
       (error) => {
         console.log(error);
       }
     );
   };
+  
+ //modify items 
+  const updateInput = async (input) => {
+    const filtered = itemListDefault.filter(item => {
+     return item.name.toLowerCase().includes(input.toLowerCase())
+    })
+    setInput(input);
+    setItemList(filtered);
+ }
+
+
   return (
     <>
       <div className="title">Lost and Found Inventory</div>
+      <SearchBar 
+       input={input} 
+       onChange={updateInput}
+      />
       <TableWidget items={items} isAdmin={false} isArchived={false} fetchItems={fetchItems}></TableWidget>
     </>
   );

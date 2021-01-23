@@ -8,7 +8,7 @@ function Home() {
   document.title = "CMU Lost and Found";
   return (
     <Grid>
-      <main>
+      <main id="home">
         <h1 id="title">Welcome to the<br></br>CMU Lost and Found</h1>
         <img src="/dog-logo.png" alt="CMU Lost and Found Logo"></img>
         <br></br>

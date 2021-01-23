@@ -4,13 +4,14 @@
   color: #872222;
 }
 
-main {
+#home {
   margin: auto;
   display: block;
   margin-top: 8%;
 }
 
-img {
+#home img {
+  margin-top: 0;
   max-width: 300px;
   height: auto;
 }

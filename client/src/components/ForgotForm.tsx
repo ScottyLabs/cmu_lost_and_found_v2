@@ -10,7 +10,7 @@ const ForgotForm = () => (
     <Form.Field>
       <Form.Input label="Confirm Password" placeholder="Confirm Password" type="password"/>
     </Form.Field>
-    <Button type="submit">Update Password</Button>
+    <Button type="submit" id="update-pass">Update Password</Button>
   </Form>
 )
 

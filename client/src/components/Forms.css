@@ -12,3 +12,7 @@ form {
 #forgot:hover {
   text-decoration: underline;
 }
+
+#update-pass {
+  margin-top: 20px;
+}

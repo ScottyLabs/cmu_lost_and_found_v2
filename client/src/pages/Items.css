@@ -16,9 +16,14 @@ main {
   justify-content: center; 
 }
 
-#logo {
-  max-width: 90%;
+img {
+  margin-top: 20px;
+  max-width: 120px;
   height: auto;
+}
+
+#top {
+  margin-top: 110px;
 }
   
 /* #filter-bar #form-searchbar {

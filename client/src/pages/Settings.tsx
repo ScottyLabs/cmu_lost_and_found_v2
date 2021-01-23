@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Grid } from "semantic-ui-react";
+import { Grid, Rail } from "semantic-ui-react";
 import {Link} from "react-router-dom";
 import "./Admin.css";
 import AdminMenu from "../components/AdminMenu";
@@ -28,7 +28,7 @@ function Settings() {
   return (
     <Grid>
       <Grid.Row>
-        <Grid.Column width={3} id="side">
+        {/* <Grid.Column width={3} id="side">
           <div>
               <Link to="/">
                 <img
@@ -41,9 +41,14 @@ function Settings() {
             <br></br>
             <AdminMenu activeTab="settings"></AdminMenu>
           </div>
-        </Grid.Column>
-        <Grid.Column width={13}>
+        </Grid.Column> */}
+        <Grid.Column width={16}>
           <main>
+            <div id="top">
+              <Rail attached internal position='left'>
+                <Link to="/"><img src="/dog-logo.png" alt="CMU Lost and Found Logo"></img></Link>
+              </Rail>
+            </div>
             <h1 id="title">Settings</h1>
           </main>
         </Grid.Column>

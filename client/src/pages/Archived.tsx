@@ -31,7 +31,7 @@ function Archived() {
   return (
     <Grid>
       <Grid.Row>
-        <Grid.Column width={3} id="side">
+        {/* <Grid.Column width={3} id="side">
           <div>
               <Link to="/">
                 <img
@@ -44,8 +44,8 @@ function Archived() {
             <br></br>
             <AdminMenu activeTab="archived"></AdminMenu>
           </div>
-        </Grid.Column>
-        <Grid.Column width={13}>
+        </Grid.Column> */}
+        <Grid.Column width={16}>
           <main>
             <h1 id="title">Archived Items</h1>
             <div id="admin-filter-bar">

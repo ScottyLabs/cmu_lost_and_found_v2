@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Input, Button, Select } from "semantic-ui-react";
+import { Form, Input, Button, Select, Radio } from "semantic-ui-react";
 import "./FilterBar.css";
 
 const categoryOptions = [
@@ -36,10 +36,11 @@ const FilterBar = () => (
       <Form.Field
         id="form-search"
         control={Button}
-        icon='search'
-        type='submit'
+        icon="search"
+        type="submit"
       />
     </Form.Group>
+    <Form.Checkbox label="Show Archived Items"/>
     {/* <Form.Field
       id="form-button-control-advanced-settings"
       control={Button}

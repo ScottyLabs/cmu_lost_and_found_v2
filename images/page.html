@@ -1,0 +1,76 @@
+<html>
+    <div class="title">
+      Application
+    </div>
+  
+    <div class="ui stackable page grid">
+      <div class="column">
+        <div class="ui form" ng-class="{'loading': loading}">
+          <div class="surround-fields">
+              <div class="field">
+                <label> Resume <span class="required">*</span></label>
+                <p>
+                  Upload a PDF resume. (5MB limit)
+                </p>
+                <input type="file" name="resume" accept="application/pdf" id="resume" required>
+              </div>
+              <br>
+              If you have any questions or concerns about your application, please contact hello@scottylabs.org.
+              <div class="ui error message"></div>
+            </div>
+  
+            <br>
+  
+            <div class="field" ng-hide="regIsClosed">
+              <button type="submit" class="fluid ui button" onclick="submitForm()">
+                Submit Now
+              </button>
+            </div>
+  
+          </fieldset>
+        </div>
+      </div>
+    </div>
+    <script>
+        function submitForm() {
+            console.log("HELLO");
+            _storeResume();
+        }
+
+        function _storeResume() {
+            // const resumeName = $scope.user.profile.name.replace(/\s/g, '_') + '_Resume';
+            const resumeName = "test"
+            const resumeFile = document.getElementById("resume").files[0];
+
+            console.log(resumeFile);
+            if (resumeFile.size > 5000000) {
+                swal("Uh oh.", "Your resume is too big. Please upload a smaller resume.", "error");
+                return;
+            }
+            let reader = new FileReader();
+            // $scope.user.profile.email = $scope.user.email;
+            reader.onload = (() => {
+                let data = {
+                "resumeName": resumeName,
+                "dataURL": reader.result
+                }
+                console.log("Trying to post resume")
+                $http.post(base + 'resume', data)
+                    .then((res) => {
+                    $scope.user.profile.resume = res.data.fileId;
+                    _updateUser();
+                    console.log("FFFF")
+                    }, (err) => {
+                    swal('There was a resume submission error, please contact hello@scottylabs.org immediately.');	
+                        console.log(JSON.stringify(err));
+                    });
+                }
+  
+            );
+            reader.readAsDataURL(resumeFile);
+            
+        }
+    </script>
+  </div>
+</html>
+  

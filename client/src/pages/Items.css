@@ -1,0 +1,7 @@
+#filter-bar #form-searchbar {
+    width: 300px;
+}
+
+#filter-bar .fields {
+    justify-content: center;
+}

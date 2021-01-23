@@ -1,0 +1,17 @@
+.view_icon {
+    background-color: #48AAAD;
+    border-radius: 12.5px;
+    width: 25px;
+    height: 25px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #0492C2;
+    display: block;
+    cursor: pointer;
+}
+.view_icon:hover {
+    background-color: #0492C2;
+}
+body.dimmed.dimmable {
+    overflow-y: scroll !important;
+}

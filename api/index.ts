@@ -1,21 +1,24 @@
+// loads the .env file
+require("dotenv").config();
+
 import * as bodyParser from "body-parser";
 import * as express from "express";
 import * as morgan from "morgan";
 import * as cors from "cors";
 import * as mongoose from "mongoose";
 import UserRouter from "./routes/users";
+import AuthRouter from "./routes/auth";
+import ItemRouter from "./routes/items";
+
 
 const port = process.env.SERVER_PORT || 3080;
-const database =
-  process.env.DATABASE ||
-  process.env.MONGODB_URI ||
-  "mongodb://localhost:27017";
+const database = process.env.MONGO_URI || "mongodb://localhost:27017";
 
 // https://medium.com/bb-tutorials-and-thoughts/how-to-develop-and-build-react-app-with-nodejs-backend-typescript-version-27a6a283a7c5
 // https://github.com/bbachi/react-nodejs-typescript-example
 // https://github.com/seanpmaxwell/express-generator-typescript
 
-const app: express.Application = express();
+const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(process.cwd() + "/client/build/"));
@@ -29,7 +32,8 @@ mongoose
     useUnifiedTopology: true,
     useCreateIndex: true,
   })
-  .catch(() => console.log("Failed to connect to DB!"));
+  .then(() => console.log("Connected to " + database))
+  .catch(() => console.log("Failed to connect to DB at: " + database));
 
 // Morgan is for logging
 app.use(morgan("dev"));
@@ -40,6 +44,8 @@ app.get("/", (req, res, next) => {
 
 // api route
 app.use("/api/users", UserRouter);
+app.use("/api/auth", AuthRouter);
+app.use("/api/items", ItemRouter);
 
 // handle undefined routes
 app.use("*", (req, res, next) => {

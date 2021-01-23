@@ -1,4 +1,5 @@
 import { Request, Response, Router } from "express";
+import User from "../models/User";
 
 // https://github.com/seanpmaxwell/express-generator-typescript/tree/265df43a2cb23a4389a0361530bb741d1fc88c7b
 
@@ -9,7 +10,13 @@ const router = Router();
  ******************************************************************************/
 
 router.get('/all', async (req: Request, res: Response) => {
-    return res.status(200).json({bob: "hello"});
+    User.find((err, docs) => {
+    if (err) {
+      console.log(err);
+      return res.status(401).send(err);
+    }
+    return res.status(200).json(docs);
+  });
 });
 
 
@@ -18,10 +25,27 @@ router.get('/all', async (req: Request, res: Response) => {
  *                       Add One - "POST /api/users/add"
  ******************************************************************************/
 
-router.post('/add', async (req: Request, res: Response) => {
-    // const { user } = req.body;
-    // return res.status(200).end();
-    throw "Unimplemented";
+/**
+ * Update permissions
+ * {
+ *  username: "bob",
+ *  perm: "isAdmin",
+ *  isChecked: "true"
+ * }
+ */
+router.post('/updatePerm', async (req: Request, res: Response) => {
+    let { username, perm, isChecked } = req.body;
+    if (perm !== "isAdmin" && perm !== "isOwner") {
+        return res.status(406).send({msg: "this admin privilege doesn't exist"})
+    }
+
+    User.findOneAndUpdate({username: username}, {[perm]: isChecked}, {runValidators: true, useFindAndModify: false, new: true}, (err, raw) => {
+        if (err) {
+            console.log(err);
+            return res.status(401).send({trace: err, msg: "can't find item in db"});
+        }
+        return res.status(200).send({msg: raw});
+    });
 });
 
 export default router;

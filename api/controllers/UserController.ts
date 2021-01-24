@@ -47,7 +47,7 @@ export default class UserController {
    * @return {[type]}            [description]
    */
   public static canRegister(username: string, password: string) {
-    if (!password || password.length < 6) {
+    if (!password) {
       return false;
     }
     return true;
@@ -58,7 +58,7 @@ export default class UserController {
 
     // Check that there isn't a user with this username already.
     if (!this.canRegister(username, password)) {
-      callback("Can't register, password too short", null);
+      return callback("Can't register, password too short", null);
     }
     let u = new User();
     u.username = username;
@@ -66,7 +66,6 @@ export default class UserController {
     u.isAdmin = isAdmin;
     u.isOwner = isOwner;
     u.save(function (err:any, user:IUser) {
-      console.log(err);
       if (err) {
         // Duplicate key error codes
         if (
@@ -75,7 +74,6 @@ export default class UserController {
         ) {
           return callback("An account for this username already exists.", user);
         }
-
         return callback(err.toString(), user);
       } else {
         // success

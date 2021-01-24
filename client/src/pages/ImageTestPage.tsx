@@ -57,7 +57,7 @@ function ImageTestPage() {
           <p>
             Upload a PDF resume. (5MB limit)
           </p>
-          <input type="file" name="resume" accept="application/pdf" id="resume" ref={inputRef}>
+          <input type="file" name="resume" accept="image/*" id="resume" ref={inputRef}>
             
           </input>
 

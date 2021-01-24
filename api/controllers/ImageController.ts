@@ -36,11 +36,11 @@ export default class ImageController {
             bufferStream.end(buffer);
             const drive = google.drive({ version: 'v3', auth });
             // const folder_id = process.env.FOLDER_ID;
-            const folder_id = 'lost_and_found_images'
+            // const folder_id = 'lost_and_found_images'
             var fileMetadata = {
                 'name': resumeName,
-                'mimeType': 'application/pdf',
-                'parents': [folder_id]
+                'mimeType': 'application/pdf'
+                // 'parents': []
             };
             var media = {
                 mimeType: 'application/pdf',

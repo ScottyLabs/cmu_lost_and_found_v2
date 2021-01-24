@@ -2,6 +2,8 @@ import { Request, Response, Router } from "express";
 import Item from "../models/Item";
 const router = Router();
 
+import ImageController from "../controllers/ImageController";
+
 /**
  * Returns all items in database, according to schema specified in Item.ts
  */
@@ -82,5 +84,27 @@ router.post("/updateStatus", async (req: Request, res: Response) => {
   // });
 
 });
+
+router.post("/addImage", async (req: Request, res: Response) => {
+  console.log("ATTEMPTING TO ADD IMAGE")
+  
+  var resumeName = req.body.resumeName;
+  var dataURL = req.body.dataURL
+  ImageController.sendResumeToDrive(resumeName, dataURL,
+    (err : any, finalURL : any) => {
+    if (err) {
+      console.log(err);
+      return res.status(401).send(err);
+    }
+    return res.status(200).send({msg: finalURL})
+  });
+});
+  // Item.updateOne({_id: id}, { $set: {status: status} }, {runValidators: true}, (err, raw) => {
+  //   if (err) {
+  //     console.log(err);
+  //     return res.status(401).send({trace: err, msg: "can't find item in db"});
+  //   }
+  //   return res.status(200).send({msg: raw});
+  // });
 
 export default router;

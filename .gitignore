@@ -4,3 +4,5 @@ build
 .DS_Store
 api/.env
 api/controllers/credentials.json
+api/credentials.json
+api/token.json

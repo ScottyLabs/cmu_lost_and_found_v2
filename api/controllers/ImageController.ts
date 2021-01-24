@@ -5,7 +5,7 @@ const stream = require('stream');
 let controller = {};
 
 // If modifying these scopes, delete token.json.
-const SCOPES = ['https://www.googleapis.com/auth/drive'];
+const SCOPES = ['https://www.googleapis.com/auth/drive.metadata.readonly'];
 // The file token.json stores the user's access and refresh tokens, and is
 // created automatically when the authorization flow completes for the first
 // time.
@@ -20,7 +20,7 @@ export default class ImageController {
      * @param  {Function} callback args(err, token, user)
      */
 
-    public sendResumeToDrive(resumeName : string, dataURL : any, callback : Function) {
+    public static sendResumeToDrive(resumeName : string, dataURL : any, callback : Function) {
         // Load client secrets from a local file.
         fs.readFile('credentials.json', (err : any, content : any) => {
             if (err) return console.log('Error loading client secret file:', err);
@@ -29,7 +29,7 @@ export default class ImageController {
         });
     }
 
-    private addResume(resumeName : string, dataURL : any, callback : Function) { 
+    private static addResume(resumeName : string, dataURL : any, callback : Function) { 
         return (auth : any) => {
             var buffer = new Buffer(dataURL.split(",")[1], 'base64');
             let bufferStream = new stream.PassThrough();
@@ -39,8 +39,7 @@ export default class ImageController {
             var fileMetadata = {
                 'name': resumeName,
                 'mimeType': 'application/pdf',
-                'parents': [folder_id],
-                'description': JSON.stringify(profile)
+                'parents': [folder_id]
             };
             var media = {
                 mimeType: 'application/pdf',
@@ -68,7 +67,9 @@ export default class ImageController {
      * @param {Object} credentials The authorization client credentials.
      * @param {function} callback The callback to call with the authorized client.
      */
-    private authorize(credentials : any, callback : Function) {
+    private static authorize(credentials : any, callback : Function) {
+        console.log("credentials:")
+        console.log(credentials)
         const { client_secret, client_id, redirect_uris } = credentials.installed;
         const oAuth2Client = new google.auth.OAuth2(
             client_id, client_secret, redirect_uris[0]);
@@ -87,7 +88,7 @@ export default class ImageController {
      * @param {google.auth.OAuth2} oAuth2Client The OAuth2 client to get token for.
      * @param {getEventsCallback} callback The callback for the authorized client.
      */
-    private getAccessToken(oAuth2Client : any, callback : any) {
+    private static getAccessToken(oAuth2Client : any, callback : any) {
         const authUrl = oAuth2Client.generateAuthUrl({
             access_type: 'offline',
             scope: SCOPES,
@@ -97,7 +98,7 @@ export default class ImageController {
             input: process.stdin,
             output: process.stdout,
         });
-        rl.question('Enter the code from that page here: ', (code : anay) => {
+        rl.question('Enter the code from that page here: ', (code : any) => {
             rl.close();
             oAuth2Client.getToken(code, (err : any, token : any) => {
                 if (err) return console.error('Error retrieving access token', err);

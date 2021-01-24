@@ -5,7 +5,7 @@ const stream = require('stream');
 let controller = {};
 
 // If modifying these scopes, delete token.json.
-const SCOPES = ['https://www.googleapis.com/auth/drive.metadata.readonly'];
+const SCOPES = ['https://www.googleapis.com/auth/drive'];
 // The file token.json stores the user's access and refresh tokens, and is
 // created automatically when the authorization flow completes for the first
 // time.
@@ -35,7 +35,8 @@ export default class ImageController {
             let bufferStream = new stream.PassThrough();
             bufferStream.end(buffer);
             const drive = google.drive({ version: 'v3', auth });
-            const folder_id = process.env.FOLDER_ID;
+            // const folder_id = process.env.FOLDER_ID;
+            const folder_id = 'lost_and_found_images'
             var fileMetadata = {
                 'name': resumeName,
                 'mimeType': 'application/pdf',
@@ -68,8 +69,6 @@ export default class ImageController {
      * @param {function} callback The callback to call with the authorized client.
      */
     private static authorize(credentials : any, callback : Function) {
-        console.log("credentials:")
-        console.log(credentials)
         const { client_secret, client_id, redirect_uris } = credentials.installed;
         const oAuth2Client = new google.auth.OAuth2(
             client_id, client_secret, redirect_uris[0]);

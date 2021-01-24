@@ -8,10 +8,26 @@ import axios from "axios";
 function ImageTestPage() {
   document.title = "Image Test";
 
+  const inputRef = React.useRef<HTMLInputElement>(null);
+
   const testImage = () => {
     console.log("hello")
-    axios
-        .post(`http://localhost:3080/api/items/addImage`, { resumeName: "nothing yet", dataURL: "data_url" })
+    const resumeName = "test"
+    const resumeInput = inputRef.current;
+    if (resumeInput != null && resumeInput.files!.length > 0) {
+      console.log("PRE-AXIOS")
+      let reader = new FileReader();
+
+      var resumeFile = resumeInput.files![0]
+      console.log(resumeFile)
+      reader.onload = (() => {
+        let data = {
+        "resumeName": resumeName,
+        "dataURL": reader.result
+        }
+        console.log("Trying to post resume")
+        axios
+        .post(`http://localhost:3080/api/items/addImage`, data)
         .then(
         (res) => {
             console.log("Nice!")
@@ -20,10 +36,14 @@ function ImageTestPage() {
         (error) => {
             console.error(error);
         }
-    );
-    
+        );
+      });
+      console.log("am i getting here?")
+      reader.readAsDataURL(resumeFile);
+
     // ImageController.sendResumeToDrive("test", "test", "test")
 
+    }
   }
 
   return (
@@ -37,7 +57,8 @@ function ImageTestPage() {
           <p>
             Upload a PDF resume. (5MB limit)
           </p>
-          <input type="file" name="resume" accept="application/pdf" id="resume" required>
+          <input type="file" name="resume" accept="application/pdf" id="resume" ref={inputRef}>
+            
           </input>
 
         <button onClick={testImage}>

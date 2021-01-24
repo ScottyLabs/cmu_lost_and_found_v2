@@ -47,7 +47,7 @@ export default class UserController {
    * @return {[type]}            [description]
    */
   public static canRegister(username: string, password: string) {
-    if (!password || password.length < 6) {
+    if (!password) {
       return false;
     }
     return true;

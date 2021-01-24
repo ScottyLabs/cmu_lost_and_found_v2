@@ -46,6 +46,10 @@ function UserMenu() {
       );
   }
 
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
   return (
     <Grid>
       <Grid.Row>

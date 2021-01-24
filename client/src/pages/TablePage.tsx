@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import TableWidget from "../components/TableWidget";
 
 function TablePage() {
@@ -44,6 +44,11 @@ function TablePage() {
       }
     );
   };
+
+  useEffect(() => {
+    fetchItems();
+  }, []);
+  
   return (
     <>
       <div className="title">Lost and Found Inventory</div>

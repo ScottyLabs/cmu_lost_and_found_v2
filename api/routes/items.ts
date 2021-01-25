@@ -85,12 +85,22 @@ router.post("/updateStatus", async (req: Request, res: Response) => {
 
 });
 
+
+/**
+ * Adds an image to Google Drive
+ * {
+ * imageName: imageName
+ * dataURL: dataURL
+ * }
+ * 
+ * Returns the finalURL
+ */
 router.post("/addImage", async (req: Request, res: Response) => {
-  console.log("ATTEMPTING TO ADD IMAGE")
-  
-  var resumeName = req.body.resumeName;
-  var dataURL = req.body.dataURL
-  ImageController.sendResumeToDrive(resumeName, dataURL,
+  console.log("Attempting to add image")
+ 
+  var imageName = req.body.imageName;
+  var dataURL = req.body.dataURL;
+  ImageController.sendImageToDrive(imageName, dataURL,
     (err : any, finalURL : any) => {
     if (err) {
       console.log(err);

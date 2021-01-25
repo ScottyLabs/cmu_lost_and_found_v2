@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom"; 
 import { Grid, Button } from "semantic-ui-react";
 import "./Home.css";
 import "semantic-ui-css/semantic.min.css";
@@ -11,38 +10,34 @@ function ImageTestPage() {
   const inputRef = React.useRef<HTMLInputElement>(null);
 
   const testImage = () => {
-    console.log("hello")
-    const resumeName = "test"
-    const resumeInput = inputRef.current;
-    if (resumeInput != null && resumeInput.files!.length > 0) {
-      console.log("PRE-AXIOS")
+    const imageName = "test"
+    const imageInput = inputRef.current;
+    if (imageInput != null && imageInput.files!.length > 0) {
       let reader = new FileReader();
+      var imageFile = imageInput.files![0]
+      console.log(imageFile)
 
-      var resumeFile = resumeInput.files![0]
-      console.log(resumeFile)
       reader.onload = (() => {
         let data = {
-        "resumeName": resumeName,
+        "imageName": imageName,
         "dataURL": reader.result
         }
-        console.log("Trying to post resume")
+        console.log("Trying to add image")
         axios
         .post(`http://localhost:3080/api/items/addImage`, data)
         .then(
         (res) => {
-            console.log("Nice!")
+            console.log("Image uploaded successfully")
             console.log(res)
+            let finalURL = res.data.msg.fileId
+            console.log(finalURL)
         },
         (error) => {
             console.error(error);
         }
         );
       });
-      console.log("am i getting here?")
-      reader.readAsDataURL(resumeFile);
-
-    // ImageController.sendResumeToDrive("test", "test", "test")
-
+      reader.readAsDataURL(imageFile);
     }
   }
 
@@ -55,9 +50,9 @@ function ImageTestPage() {
         <br></br>
 
           <p>
-            Upload a PDF resume. (5MB limit)
+            Upload an image. (5MB limit)
           </p>
-          <input type="file" name="resume" accept="image/*" id="resume" ref={inputRef}>
+          <input type="file" name="image" accept="image/*" id="image" ref={inputRef}>
             
           </input>
 

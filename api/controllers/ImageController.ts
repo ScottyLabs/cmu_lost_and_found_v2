@@ -20,16 +20,16 @@ export default class ImageController {
      * @param  {Function} callback args(err, token, user)
      */
 
-    public static sendResumeToDrive(resumeName : string, dataURL : any, callback : Function) {
+    public static sendImageToDrive(imageName : string, dataURL : any, callback : Function) {
         // Load client secrets from a local file.
         fs.readFile('credentials.json', (err : any, content : any) => {
             if (err) return console.log('Error loading client secret file:', err);
             // Authorize a client with credentials, then call the Google Drive API.
-            this.authorize(JSON.parse(content), this.addResume(resumeName, dataURL, callback));
+            this.authorize(JSON.parse(content), this.addImage(imageName, dataURL, callback));
         });
     }
 
-    private static addResume(resumeName : string, dataURL : any, callback : Function) { 
+    private static addImage(imageName : string, dataURL : any, callback : Function) { 
         return (auth : any) => {
             var buffer = new Buffer(dataURL.split(",")[1], 'base64');
             let bufferStream = new stream.PassThrough();
@@ -38,12 +38,12 @@ export default class ImageController {
             // const folder_id = process.env.FOLDER_ID;
             // const folder_id = 'lost_and_found_images'
             var fileMetadata = {
-                'name': resumeName,
-                'mimeType': 'application/pdf'
+                'name': imageName,
+                'mimeType': 'image/*'
                 // 'parents': []
             };
             var media = {
-                mimeType: 'application/pdf',
+                mimeType: 'image/*',
                 body: bufferStream
             };
             drive.files.create({

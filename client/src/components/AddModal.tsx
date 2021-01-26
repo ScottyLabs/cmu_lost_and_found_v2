@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import { Button, Grid, Modal, Form } from 'semantic-ui-react'
 import { collapseTextChangeRangesAcrossMultipleVersions } from 'typescript'
 
@@ -67,103 +67,112 @@ function AddModal(props: {
     status: "available"
   });
 
-  const handleChange = (e: any, {name, value}: any) => {
+  const handleChange = (e: any, { name, value }: any) => {
     console.log(value);
-    console.log(typeof(value))
+    console.log(typeof (value))
     console.log(name);
-    setState({...state, [name]: value});
+    setState({ ...state, [name]: value });
   }
   const handleRadioChange = (e: any, value: any) => {
-    setState({...state, "imagePermission": value === "true"});
+    setState({ ...state, "imagePermission": value === "true" });
   }
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>, {name, value}: any) => {
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>, { name, value }: any) => {
     console.log("handling file change")
     console.log(name + " " + value);
-    setState({...state, [name]: value, imageObject: e!.target!.files![0]});
+    setState({ ...state, [name]: value, imageObject: e!.target!.files![0] });
   }
 
   const testImage = (imageFile: File) => {
     console.log('attempting to add image')
     const imageName = "test"
     console.log(imageFile)
-    console.log(typeof(imageFile))
-    
-    let reader = new FileReader();
+    console.log(typeof (imageFile))
 
-    reader.onload = (() => {
-      let data = {
-      "imageName": imageName,
-      "dataURL": reader.result
-      }
-      console.log("Trying to add image")
-      axios
-      .post(`http://localhost:3080/api/items/addImage`, data)
-      .then(
-      (res) => {
-          console.log("Image uploaded successfully")
-          console.log(res)
-          let finalURL = res.data.msg.fileId
-          console.log(finalURL)
-          console.log('http://drive.google.com/uc?export=view&id=' + finalURL)
-      },
-      (error) => {
-          console.error(error);
-      }
-      );
+    return new Promise((resolve, reject) => {
+      let reader = new FileReader();
+
+      reader.onload = (() => {
+        let data = {
+          "imageName": imageName,
+          "dataURL": reader.result
+        }
+        console.log("Trying to add image")
+
+        axios
+          .post(`http://localhost:3080/api/items/addImage`, data)
+          .then(
+            (res) => {
+              console.log("Image uploaded successfully")
+              console.log(res)
+              let finalURL = res.data.msg.fileId
+              console.log(finalURL)
+              console.log('http://drive.google.com/uc?export=view&id=' + finalURL)
+              resolve('http://drive.google.com/uc?export=view&id=' + finalURL);
+              return;
+            },
+            (error) => {
+              console.error(error);
+              reject(error);
+              return;
+            }
+          );
+      });
+      reader.readAsDataURL(imageFile);
     });
-    reader.readAsDataURL(imageFile);
-
   }
+
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const {dateFound, timeFound, name, whereFound,description, category, whereToRetrieve, image, imageObject, imagePermission, status} = state;
+    const { dateFound, timeFound, name, whereFound, description, category, whereToRetrieve, image, imageObject, imagePermission, status } = state;
     console.log(image)
     let date = dateFound.split("-");
     let dateFormatted = date[1] + "/" + date[2] + "/" + date[0];
     let [h, m] = timeFound.split(":");
     let timeFormatted = (parseInt(h) % 12) + (parseInt(h) % 12 === 0 ? 12 : 0) + ":" + m + " " + (parseInt(h) >= 12 ? "PM" : "AM")
-    
-    testImage(imageObject);
-    /**
-     * testImage(imageObject).then((res) => {
-     * })
-     */
-    axios
-      .post(`http://localhost:3080/api/items/add`, {
-        dateFound: dateFormatted,
-        timeFound: timeFormatted,
-        name: name,
-        whereFound: whereFound,
-        description: description,
-        category: category,
-        whereToRetrieve: whereToRetrieve,
-        image: image,
-        imagePermission: imagePermission,
-        status: status
-      })
-      .then(
-        (res) => {
-          console.log("Added");
-          console.log(res);
-          props.fetchItems();
-          
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
-    dispatch({ type: 'CLOSE_MODAL' });
-    setState({ dateFound: "", timeFound: "", name: "", whereFound: "", description: "", category: "", whereToRetrieve: "", image: "", imageObject: null, imagePath: "", imagePermission: false, status: "available" });
+
+    testImage(imageObject).then((res) => {
+      axios
+        .post(`http://localhost:3080/api/items/add`, {
+          dateFound: dateFormatted,
+          timeFound: timeFormatted,
+          name: name,
+          whereFound: whereFound,
+          description: description,
+          category: category,
+          whereToRetrieve: whereToRetrieve,
+          image: res,
+          imagePermission: imagePermission,
+          status: status
+        })
+        .then(
+          (res) => {
+            console.log("Added");
+            console.log(res);
+            props.fetchItems();
+
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+      dispatch({ type: 'CLOSE_MODAL' });
+      setState({ dateFound: "", timeFound: "", name: "", whereFound: "", description: "", category: "", whereToRetrieve: "", image: "", imageObject: null, imagePath: "", imagePermission: false, status: "available" });
+      return res;
+    }, (err) => {
+      console.error(err);
+    });
+    // res.data.msg.fileId
+
   }
 
-  
+
   let currentDate = new Date();
   const offset = currentDate.getTimezoneOffset();
-  currentDate = new Date(currentDate.getTime() - (offset*60*1000));
-  let todayDate = currentDate.toISOString().slice(0,10);
+  currentDate = new Date(currentDate.getTime() - (offset * 60 * 1000));
+  let todayDate = currentDate.toISOString().slice(0, 10);
 
-  
+
 
   return (
     <Grid columns={1}>
@@ -197,7 +206,7 @@ function AddModal(props: {
                   name="dateFound"
                   type="date"
                   placeholder="MM/DD/YYY"
-                  max = {todayDate}
+                  max={todayDate}
                   value={state.dateFound}
                   onChange={handleChange}
                 />

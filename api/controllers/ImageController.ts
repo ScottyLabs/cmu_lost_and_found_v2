@@ -65,12 +65,16 @@ export default class ImageController {
                         fileId: file.data.id,
                         resource: body,
                         auth: auth
-                    }, function (err: any, res: any) {
-                        console.log('permission failure')
-                        console.log(err)
-                    });
-                    callback(null, {
-                        fileId: file.data.id
+                    }, (err: any, res: any) => {
+                        if (err) {
+                            console.log('permission failure')
+                            callback(err)
+                        } else {
+                            // console.log(res)
+                            callback(null, {
+                                fileId: file.data.id
+                            });
+                        }
                     });
                 }
             });

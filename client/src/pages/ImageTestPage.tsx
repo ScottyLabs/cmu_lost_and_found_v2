@@ -12,10 +12,15 @@ function ImageTestPage() {
   const testImage = () => {
     const imageName = "test"
     const imageInput = inputRef.current;
+    console.log("imageInput:")
+    console.log(imageInput)
+    // console.log(imageInput.type)
     if (imageInput != null && imageInput.files!.length > 0) {
       let reader = new FileReader();
       var imageFile = imageInput.files![0]
+      console.log("ImageFile:")
       console.log(imageFile)
+      console.log(imageFile.type)
 
       reader.onload = (() => {
         let data = {
@@ -23,6 +28,7 @@ function ImageTestPage() {
         "dataURL": reader.result
         }
         console.log("Trying to add image")
+        console.log(reader.result)
         axios
         .post(`http://localhost:3080/api/items/addImage`, data)
         .then(
@@ -56,6 +62,7 @@ function ImageTestPage() {
           <input type="file" name="image" accept="image/*" id="image" ref={inputRef}>
             
           </input>
+          <img src="http://drive.google.com/uc?export=view&id=1IOMjNoMaDABl8duK9owfqfW789uqhD_l"/>
 
         <button onClick={testImage}>
             Send Image

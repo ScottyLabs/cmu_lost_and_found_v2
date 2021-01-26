@@ -7,6 +7,7 @@ import Admin from "./pages/Admin";
 import Archived from "./pages/Archived";
 import Items from "./pages/Items";
 import TablePage from "./pages/TablePage";
+import ImageTestPage from "./pages/ImageTestPage";
 import UserMenu from "./pages/UserMenu";
 
 function App() {
@@ -31,6 +32,8 @@ function App() {
         <Route path="/table">
           <TablePage />
         </Route>
+        <Route path="/ImageTest">
+          <ImageTestPage />
         <Route path="/UserMenu">
           <UserMenu />
         </Route>

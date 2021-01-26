@@ -19,8 +19,9 @@ function Items() {
         </Grid.Column> */}
         <Grid.Column width={16}>
           <main>
+            <Link to="/"><img src="/dog-logo.png" id="logo-mobile" alt="CMU Lost and Found Logo"></img></Link>
             <div id="top">
-              <Rail attached internal position='left'>
+              <Rail attached internal position='left' id="logo-desktop">
                 <Link to="/"><img src="/dog-logo.png" alt="CMU Lost and Found Logo"></img></Link>
               </Rail>
             </div>

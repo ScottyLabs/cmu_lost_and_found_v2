@@ -5,3 +5,9 @@
   width: 400px;
   border: 2px solid #872222;
 }
+
+@media (max-width: 425px) {
+  #admin-login {
+    width: 300px;
+  }
+}

@@ -62,7 +62,6 @@ function Admin() {
     fetchItems();
   }, []);
 
-
   return (
     <Grid>
       {/* <Grid.Row id="settings">
@@ -83,16 +82,22 @@ function Admin() {
         </Grid.Column> */}
         <Grid.Column width={16}>
           <main>
+            <Link to="/"><img src="/dog-logo.png" id="logo-mobile" alt="CMU Lost and Found Logo"></img></Link>
             <div id="settings">
-              <Rail attached internal position='left'>
-              <Link to="/"><img src="/dog-logo.png" alt="CMU Lost and Found Logo"></img></Link>
+              <Rail attached internal position='left' id="logo-desktop">
+                <Link to="/"><img src="/dog-logo.png" alt="CMU Lost and Found Logo"></img></Link>
               </Rail>
               <Link to="/Settings"><Button icon><Icon name='setting'/></Button></Link>
             </div>
             <h1 id="title">Available Items</h1>
+            <div id="add-mobile">
+              <AddModal fetchItems={fetchItems}></AddModal>
+            </div>
             <div id="admin-filter-bar">
               <FilterBar></FilterBar> 
-              <AddModal fetchItems={fetchItems}></AddModal>
+              <div id="add-desktop">
+                <AddModal fetchItems={fetchItems}></AddModal>
+              </div>
             </div>
             <div id="table">
               <TableWidget items={items} isAdmin={true} isArchived={false} fetchItems={fetchItems}></TableWidget>

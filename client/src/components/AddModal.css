@@ -1,6 +1,6 @@
 #add-item {
     width : 100px;
-    margin-left: 20px;
+    margin-left: 15px;
 }
 
 .ui.modal {
@@ -18,5 +18,12 @@ div .header {
 
 body.dimmed.dimmable {
     overflow-y: scroll !important;
+}
+
+@media (max-width: 425px) {
+    #add-item {
+        width : 100px;
+        margin-left: 0;
+    }
 }
 

@@ -19,26 +19,28 @@ const categoryOptions = [
 
 const FilterBar = () => (
   <Form>
-    <Form.Group>
+    <Form.Group id="form-group">
       <Form.Field
         id="form-searchbar"
         control={Input}
         placeholder="Search Items"
       />
-      <Form.Field
-        id="form-category"
-        fluid
-        control={Select}
-        options={categoryOptions}
-        placeholder="Category"
-        search
-      />
-      <Form.Field
-        id="form-search"
-        control={Button}
-        icon="search"
-        type="submit"
-      />
+      <Form.Group id="form-subgroup">
+        <Form.Field
+          id="form-category"
+          fluid
+          control={Select}
+          options={categoryOptions}
+          placeholder="Category"
+          search
+        />
+        <Form.Field
+          id="form-search"
+          control={Button}
+          icon="search"
+          type="submit"
+        />
+      </Form.Group>
     </Form.Group>
     <Form.Checkbox label="Show Archived Items"/>
     {/* <Form.Field

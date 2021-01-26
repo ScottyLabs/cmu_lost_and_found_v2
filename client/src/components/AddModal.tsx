@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { resolve } from 'dns'
 import React, { useState } from 'react'
 import { Button, Grid, Modal, Form } from 'semantic-ui-react'
 import { collapseTextChangeRangesAcrossMultipleVersions } from 'typescript'
@@ -82,11 +83,19 @@ function AddModal(props: {
     setState({ ...state, [name]: value, imageObject: e!.target!.files![0] });
   }
 
-  const testImage = (imageFile: File) => {
+  const uploadImage = (imageFile: File) => {
     console.log('attempting to add image')
     const imageName = "test"
     console.log(imageFile)
     console.log(typeof (imageFile))
+
+    // no image, TODO: check
+    if (!imageFile) {
+      return new Promise((resolve, reject) => {
+        resolve("")
+        return
+      })
+    }
 
     return new Promise((resolve, reject) => {
       let reader = new FileReader();
@@ -105,7 +114,6 @@ function AddModal(props: {
               console.log("Image uploaded successfully")
               console.log(res)
               let finalURL = res.data.msg.fileId
-              console.log(finalURL)
               console.log('http://drive.google.com/uc?export=view&id=' + finalURL)
               resolve('http://drive.google.com/uc?export=view&id=' + finalURL);
               return;
@@ -121,7 +129,6 @@ function AddModal(props: {
     });
   }
 
-
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const { dateFound, timeFound, name, whereFound, description, category, whereToRetrieve, image, imageObject, imagePermission, status } = state;
@@ -131,7 +138,7 @@ function AddModal(props: {
     let [h, m] = timeFound.split(":");
     let timeFormatted = (parseInt(h) % 12) + (parseInt(h) % 12 === 0 ? 12 : 0) + ":" + m + " " + (parseInt(h) >= 12 ? "PM" : "AM")
 
-    testImage(imageObject).then((res) => {
+    uploadImage(imageObject).then((res) => {
       axios
         .post(`http://localhost:3080/api/items/add`, {
           dateFound: dateFormatted,
@@ -162,7 +169,6 @@ function AddModal(props: {
     }, (err) => {
       console.error(err);
     });
-    // res.data.msg.fileId
 
   }
 
@@ -265,7 +271,6 @@ function AddModal(props: {
                 name="imagePath"
                 type="file"
                 value={state.imagePath}
-                // ref = {inputRef}
                 onChange={handleFileChange}
               />
               <Form.Group inline>

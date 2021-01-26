@@ -2,7 +2,6 @@ const fs = require('fs');
 const readline = require('readline');
 const { google } = require('googleapis');
 const stream = require('stream');
-let controller = {};
 
 // If modifying these scopes, delete token.json.
 const SCOPES = ['https://www.googleapis.com/auth/drive'];
@@ -54,6 +53,22 @@ export default class ImageController {
                 if (err) {
                     callback(err);
                 } else {
+                    // TODO: use proper callback stuff
+                    console.log('attempting to adjust permissions')
+                    console.log(file.data.id)
+                    var body = {
+                        // 'value': 'default',
+                        'type': 'anyone',
+                        'role': 'reader'
+                    };
+                    drive.permissions.create({
+                        fileId: file.data.id,
+                        resource: body,
+                        auth: auth
+                    }, function (err: any, res: any) {
+                        console.log('permission failure')
+                        console.log(err)
+                    });
                     callback(null, {
                         fileId: file.data.id
                     });

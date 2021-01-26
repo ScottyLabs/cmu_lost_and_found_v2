@@ -31,6 +31,7 @@ function ImageTestPage() {
             console.log(res)
             let finalURL = res.data.msg.fileId
             console.log(finalURL)
+            console.log('http://drive.google.com/uc?export=view&id=' + finalURL)
         },
         (error) => {
             console.error(error);

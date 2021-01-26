@@ -1,8 +1,6 @@
 import axios from 'axios'
-import { resolve } from 'dns'
 import React, { useState } from 'react'
 import { Button, Grid, Modal, Form } from 'semantic-ui-react'
-import { collapseTextChangeRangesAcrossMultipleVersions } from 'typescript'
 
 function exampleReducer(dispatchState: any, action: any) {
   switch (action.type) {

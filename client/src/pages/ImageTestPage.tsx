@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Button } from "semantic-ui-react";
+import { Grid } from "semantic-ui-react";
 import "./Home.css";
 import "semantic-ui-css/semantic.min.css";
 import axios from "axios";

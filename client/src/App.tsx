@@ -34,6 +34,7 @@ function App() {
         </Route>
         <Route path="/ImageTest">
           <ImageTestPage />
+        </Route>
         <Route path="/UserMenu">
           <UserMenu />
         </Route>

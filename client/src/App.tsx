@@ -2,7 +2,13 @@ import React from "react";
 import "./App.css";
 import { Switch, Route } from "react-router-dom";
 import Home from "./pages/Home";
+import AdminLogin from "./pages/AdminLogin";
+import Admin from "./pages/Admin";
+import Archived from "./pages/Archived";
+import Items from "./pages/Items";
 import TablePage from "./pages/TablePage";
+import ImageTestPage from "./pages/ImageTestPage";
+import UserMenu from "./pages/UserMenu";
 
 function App() {
   return (
@@ -11,8 +17,26 @@ function App() {
         <Route exact strict path="/">
           <Home />
         </Route>
+        <Route path="/AdminLogin">
+          <AdminLogin />
+        </Route>
+        <Route path="/Admin">
+          <Admin />
+        </Route>
+        <Route path="/Archived">
+          <Archived />
+        </Route>
+        <Route path="/Items">
+          <Items />
+        </Route>
         <Route path="/table">
           <TablePage />
+        </Route>
+        <Route path="/ImageTest">
+          <ImageTestPage />
+        </Route>
+        <Route path="/UserMenu">
+          <UserMenu />
         </Route>
       </Switch>
     </div>

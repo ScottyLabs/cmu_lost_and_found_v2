@@ -1,5 +1,5 @@
 import React from "react";
-import { Icon, Label, Menu, Table, Button } from "semantic-ui-react";
+import { Icon, Button } from "semantic-ui-react";
 import "./ViewIcon.css";
 
 export default function ViewIcon (props: {

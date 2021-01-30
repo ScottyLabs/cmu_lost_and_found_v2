@@ -50,14 +50,15 @@ function isOwner(req: Request, res: Response, next: NextFunction) {
  * Fails if password too short or username already exists
  * body {
  *  username: username,
- *  password: password
+ *  password: password,
+ *  isAdmin: false,
+ *  isOwner: false;
  * }
  */
 router.post("/register", (req: Request, res: Response) => {
-  let username = req.body.username;
-  let password = req.body.password;
+  let { username, password, isAdmin, isOwner } = req.body;
 
-  UserController.createUser(username, password, (err:string, user:IUser) => {
+  UserController.createUser(username, password, isAdmin, isOwner, (err:string, user:IUser) => {
     if (err != null) {
       return res.status(401).send(err);
     }

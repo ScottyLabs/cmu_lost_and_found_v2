@@ -4,7 +4,6 @@ import { Table } from "semantic-ui-react";
 import { User } from "../interface/user";
 import "./TableWidget.css";
 import { Checkbox } from 'semantic-ui-react'
-import OwnerButton from "./OwnerButton";
 
 const UserTable = (props: {
     users: Array<User>;

@@ -1,5 +1,4 @@
 import { Grid } from "semantic-ui-react";
-import LoginForm from "../components/LoginForm";
 import "./UserMenu.css";
 import "semantic-ui-css/semantic.min.css";
 import AdminMenu from "../components/AdminMenu";
@@ -7,7 +6,6 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import FilterBar from "../components/FilterBar";
-import AddModal from "../components/AddModal";
 import UserTable from "../components/UserTable";
 import AddUser from "../components/AddUser";
 

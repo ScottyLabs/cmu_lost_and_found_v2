@@ -13,7 +13,7 @@ function Home() {
         <img src="/dog-logo.png" alt="CMU Lost and Found Logo"></img>
         <br></br>
         <br></br>
-        <Link to = "/AdminLogin"><Button>Admin Login</Button></Link>
+        <Link to = "/login"><Button>Admin Login</Button></Link>
         <Link to = "/Items"><Button>View Items</Button></Link>
       </main>
     </Grid>

@@ -17,7 +17,7 @@ function App() {
         <Route exact strict path="/">
           <Home />
         </Route>
-        <Route path="/AdminLogin">
+        <Route path="/login">
           <AdminLogin />
         </Route>
         <Route path="/Admin">
@@ -35,7 +35,7 @@ function App() {
         <Route path="/ImageTest">
           <ImageTestPage />
         </Route>
-        <Route path="/UserMenu">
+        <Route path="/users">
           <UserMenu />
         </Route>
       </Switch>

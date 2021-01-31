@@ -9,6 +9,7 @@ import FilterBar from "../components/FilterBar";
 import UserTable from "../components/UserTable";
 import AddUser from "../components/AddUser";
 
+
 function UserMenu() {
   // const users = [
   //   {
@@ -45,6 +46,7 @@ function UserMenu() {
   }
 
   useEffect(() => {
+    console.log("Effect used!");
     fetchUsers();
   }, []);
 

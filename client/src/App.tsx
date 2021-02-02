@@ -7,6 +7,8 @@ import Admin from "./pages/Admin";
 import Archived from "./pages/Archived";
 import Items from "./pages/Items";
 import TablePage from "./pages/TablePage";
+import ImageTestPage from "./pages/ImageTestPage";
+import UserMenu from "./pages/UserMenu";
 
 function App() {
   return (
@@ -15,7 +17,7 @@ function App() {
         <Route exact strict path="/">
           <Home />
         </Route>
-        <Route path="/AdminLogin">
+        <Route path="/login">
           <AdminLogin />
         </Route>
         <Route path="/Admin">
@@ -29,6 +31,12 @@ function App() {
         </Route>
         <Route path="/table">
           <TablePage />
+        </Route>
+        <Route path="/ImageTest">
+          <ImageTestPage />
+        </Route>
+        <Route path="/users">
+          <UserMenu />
         </Route>
       </Switch>
     </div>

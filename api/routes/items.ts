@@ -2,6 +2,8 @@ import { Request, Response, Router } from "express";
 import Item from "../models/Item";
 const router = Router();
 
+import ImageController from "../controllers/ImageController";
+
 /**
  * Returns all items in database, according to schema specified in Item.ts
  */
@@ -64,8 +66,6 @@ router.post("/add", async (req: Request, res: Response) => {
 router.post("/updateStatus", async (req: Request, res: Response) => {
   let id = req.body.id;
   let status = req.body.status;
-  console.log(id);
-  console.log(status);
   Item.findByIdAndUpdate({_id: id}, {status: status}, {runValidators: true, useFindAndModify: false}, (err, raw) => {
     if (err) {
       console.log(err);
@@ -73,6 +73,33 @@ router.post("/updateStatus", async (req: Request, res: Response) => {
     }
     return res.status(200).send({msg: raw});
   });
+
+});
+
+
+/**
+ * Adds an image to Google Drive
+ * {
+ * imageName: imageName
+ * dataURL: dataURL
+ * }
+ * 
+ * Returns the finalURL
+ */
+router.post("/addImage", async (req: Request, res: Response) => {
+  console.log("Attempting to add image")
+ 
+  var imageName = req.body.imageName;
+  var dataURL = req.body.dataURL;
+  ImageController.sendImageToDrive(imageName, dataURL,
+    (err : any, finalURL : any) => {
+    if (err) {
+      console.log(err);
+      return res.status(401).send(err);
+    }
+    return res.status(200).send({msg: finalURL})
+  });
+});
   // Item.updateOne({_id: id}, { $set: {status: status} }, {runValidators: true}, (err, raw) => {
   //   if (err) {
   //     console.log(err);
@@ -80,7 +107,5 @@ router.post("/updateStatus", async (req: Request, res: Response) => {
   //   }
   //   return res.status(200).send({msg: raw});
   // });
-
-});
 
 export default router;

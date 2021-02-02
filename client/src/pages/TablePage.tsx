@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, {useEffect, useState} from "react";
+import React, {useState, useEffect} from "react";
 import TableWidget from "../components/TableWidget";
 import SearchBar from '../components/SearchBar';
 import { Item } from "../interface/item";
@@ -67,8 +67,11 @@ function TablePage() {
     setItemList(filtered);
  }
 
- useEffect( () => {fetchItems()},[]);
 
+  useEffect(() => {
+    fetchItems();
+  }, []);
+  
   return (
     <>
       <div className="title">Lost and Found Inventory</div>

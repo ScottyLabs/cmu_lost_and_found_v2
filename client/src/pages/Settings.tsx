@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Grid } from "semantic-ui-react";
+import { Grid, Rail } from "semantic-ui-react";
 import {Link} from "react-router-dom";
 import "./Admin.css";
 import AdminMenu from "../components/AdminMenu";
-import FilterBar from "../components/FilterBar";
-import AddModal from "../components/AddModal";
-import TableWidget from "../components/TableWidget";
 import "semantic-ui-css/semantic.min.css";
 import axios from "axios";
 
-function Archived() {
+function Settings() {
   document.title = "CMU Lost and Found";
   const [items, setItems] = useState([]);
 
@@ -42,24 +39,17 @@ function Archived() {
               </Link>
             <br></br>
             <br></br>
-            <AdminMenu activeTab="archived"></AdminMenu>
+            <AdminMenu activeTab="settings"></AdminMenu>
           </div>
         </Grid.Column> */}
         <Grid.Column width={16}>
           <main>
-            <h1 id="title">Archived Items</h1>
-            <div id="admin-filter-bar">
-              <FilterBar></FilterBar>
-              <AddModal fetchItems={fetchItems}></AddModal>
+            <div id="top">
+              <Rail attached internal position='left'>
+                <Link to="/"><img src="/dog-logo.png" alt="CMU Lost and Found Logo"></img></Link>
+              </Rail>
             </div>
-            <div id="table">
-              <TableWidget
-                items={items}
-                isAdmin={true}
-                isArchived={true}
-                fetchItems={fetchItems}
-              ></TableWidget>
-            </div>
+            <h1 id="title">Settings</h1>
           </main>
         </Grid.Column>
       </Grid.Row>
@@ -67,4 +57,4 @@ function Archived() {
   );
 }
 
-export default Archived;
+export default Settings;

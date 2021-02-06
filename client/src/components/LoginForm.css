@@ -1,0 +1,10 @@
+.ui.form {
+  width: 100%;
+}
+
+form {
+  text-align: left;
+  display: inline;
+  justify-content: center;
+  padding-bottom: 20px;
+}

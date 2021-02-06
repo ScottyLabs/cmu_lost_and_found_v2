@@ -19,8 +19,8 @@ const database = process.env.MONGO_URI || "mongodb://localhost:27017";
 // https://github.com/seanpmaxwell/express-generator-typescript
 
 const app = express();
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json({limit: '5mb'}));
+app.use(bodyParser.urlencoded({limit: '5mb', extended: true }));
 app.use(express.static(process.cwd() + "/client/build/"));
 
 // Set up CORS policy

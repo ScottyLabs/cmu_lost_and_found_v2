@@ -39,6 +39,8 @@ const pickup = [
   { key: 'tepper', text: 'Tepper Building', value: 'Tepper Building' },
 ]
 
+
+
 function AddModal(props: {
   fetchItems: Function;
 }) {
@@ -59,59 +61,123 @@ function AddModal(props: {
     category: "",
     whereToRetrieve: "",
     image: "",
+    imagePath: "",
+    imageObject: null as any,
     imagePermission: false,
     status: "available"
   });
 
-  const handleChange = (e: any, {name, value}: any) => {
-    // console.log(value);
-    // console.log(name);
-    setState({...state, [name]: value});
+  const handleChange = (e: any, { name, value }: any) => {
+    console.log(value);
+    console.log(typeof (value))
+    console.log(name);
+    setState({ ...state, [name]: value });
   }
   const handleRadioChange = (e: any, value: any) => {
-    setState({...state, "imagePermission": value === "true"});
+    setState({ ...state, "imagePermission": value === "true" });
+  }
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>, { name, value }: any) => {
+    console.log("handling file change")
+    console.log(name + " " + value);
+    setState({ ...state, [name]: value, imageObject: e!.target!.files![0] });
+  }
+
+  const uploadImage = (imageFile: File) => {
+    console.log('attempting to add image')
+    const imageName = "test"
+    console.log(imageFile)
+    console.log(typeof (imageFile))
+
+    // no image, TODO: check
+    if (!imageFile) {
+      return new Promise((resolve, reject) => {
+        resolve("")
+        return
+      })
+    }
+
+    return new Promise((resolve, reject) => {
+      let reader = new FileReader();
+
+      reader.onload = (() => {
+        let data = {
+          "imageName": imageName,
+          "dataURL": reader.result
+        }
+        console.log("Trying to add image")
+
+        axios
+          .post(`http://localhost:3080/api/items/addImage`, data)
+          .then(
+            (res) => {
+              console.log("Image uploaded successfully")
+              console.log(res)
+              let finalURL = res.data.msg.fileId
+              console.log('http://drive.google.com/uc?export=view&id=' + finalURL)
+              resolve('http://drive.google.com/uc?export=view&id=' + finalURL);
+              return;
+            },
+            (error) => {
+              console.error(error);
+              reject(error);
+              return;
+            }
+          );
+      });
+      reader.readAsDataURL(imageFile);
+    });
   }
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const {dateFound, timeFound, name, whereFound,description, category, whereToRetrieve, image, imagePermission, status} = state;
+    const { dateFound, timeFound, name, whereFound, description, category, whereToRetrieve, image, imageObject, imagePermission, status } = state;
+    console.log(image)
     let date = dateFound.split("-");
     let dateFormatted = date[1] + "/" + date[2] + "/" + date[0];
     let [h, m] = timeFound.split(":");
     let timeFormatted = (parseInt(h) % 12) + (parseInt(h) % 12 === 0 ? 12 : 0) + ":" + m + " " + (parseInt(h) >= 12 ? "PM" : "AM")
-    axios
-      .post(`http://localhost:3080/api/items/add`, {
-        dateFound: dateFormatted,
-        timeFound: timeFormatted,
-        name: name,
-        whereFound: whereFound,
-        description: description,
-        category: category,
-        whereToRetrieve: whereToRetrieve,
-        image: image,
-        imagePermission: imagePermission,
-        status: status
-      })
-      .then(
-        (res) => {
-          console.log("Added");
-          console.log(res);
-          props.fetchItems();
-          
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
-    dispatch({ type: 'CLOSE_MODAL' });
-    setState({ dateFound: "", timeFound: "", name: "", whereFound: "", description: "", category: "", whereToRetrieve: "", image: "", imagePermission: false, status: "available" });
+
+    uploadImage(imageObject).then((res) => {
+      axios
+        .post(`http://localhost:3080/api/items/add`, {
+          dateFound: dateFormatted,
+          timeFound: timeFormatted,
+          name: name,
+          whereFound: whereFound,
+          description: description,
+          category: category,
+          whereToRetrieve: whereToRetrieve,
+          image: res,
+          imagePermission: imagePermission,
+          status: status
+        })
+        .then(
+          (res) => {
+            console.log("Added");
+            console.log(res);
+            props.fetchItems();
+
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+      dispatch({ type: 'CLOSE_MODAL' });
+      setState({ dateFound: "", timeFound: "", name: "", whereFound: "", description: "", category: "", whereToRetrieve: "", image: "", imageObject: null, imagePath: "", imagePermission: false, status: "available" });
+      return res;
+    }, (err) => {
+      console.error(err);
+    });
+
   }
 
-  
+
   let currentDate = new Date();
   const offset = currentDate.getTimezoneOffset();
-  currentDate = new Date(currentDate.getTime() - (offset*60*1000));
-  let todayDate = currentDate.toISOString().slice(0,10);
+  currentDate = new Date(currentDate.getTime() - (offset * 60 * 1000));
+  let todayDate = currentDate.toISOString().slice(0, 10);
+
+
 
   return (
     <Grid columns={1}>
@@ -145,7 +211,7 @@ function AddModal(props: {
                   name="dateFound"
                   type="date"
                   placeholder="MM/DD/YYY"
-                  max = {todayDate}
+                  max={todayDate}
                   value={state.dateFound}
                   onChange={handleChange}
                 />
@@ -201,10 +267,10 @@ function AddModal(props: {
               </Form.Group>
               <Form.Input
                 label="Image Upload"
-                name="image"
+                name="imagePath"
                 type="file"
-                value={state.image}
-                onChange={handleChange}
+                value={state.imagePath}
+                onChange={handleFileChange}
               />
               <Form.Group inline>
                 <label>Image Visibility</label>

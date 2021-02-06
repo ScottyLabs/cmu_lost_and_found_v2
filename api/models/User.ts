@@ -1,5 +1,5 @@
 import { Model, Query, Schema, Document, model } from "mongoose";
-import * as bcrypt from "bcrypt";
+import * as bcrypt from "bcryptjs";
 import * as jwt from "jsonwebtoken";
 // TODO: move this away from here
 const JWT_SECRET = "asdfwecvjoi3sdfoi";
@@ -9,6 +9,8 @@ const TIME_TO_EXPIRE = 3600000;
 export interface IUser extends Document {
   username: string,
   password: string,
+  isAdmin: boolean,
+  isOwner: boolean,
   checkPassword: (password: string) => boolean
   generateAuthToken: () => string
 }
@@ -32,6 +34,14 @@ const UserSchema = new Schema({
     type: String,
     required: true,
   },
+  isAdmin: {
+    type: Boolean,
+    default: false,
+  },
+  isOwner: {
+    type: Boolean,
+    default: false,
+  }
 });
 
 UserSchema.statics.generateHash = function (password: string) {

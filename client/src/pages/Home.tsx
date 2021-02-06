@@ -14,7 +14,7 @@ function Home() {
         <br></br>
         <br></br>
         <Link to = "/login"><Button>Admin Login</Button></Link>
-        <Link to = "/Items"><Button>View Items</Button></Link>
+        <Link to = "/"><Button>View Items</Button></Link>
       </main>
     </Grid>
   );

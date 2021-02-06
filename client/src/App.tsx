@@ -15,7 +15,8 @@ function App() {
     <div className="App">
       <Switch>
         <Route exact strict path="/">
-          <Home />
+          {/* <Home /> */}
+          <TablePage />
         </Route>
         <Route path="/login">
           <AdminLogin />
@@ -25,12 +26,6 @@ function App() {
         </Route>
         <Route path="/Archived">
           <Archived />
-        </Route>
-        <Route path="/Items">
-          <Items />
-        </Route>
-        <Route path="/table">
-          <TablePage />
         </Route>
         <Route path="/ImageTest">
           <ImageTestPage />

@@ -15,9 +15,10 @@ function App() {
   return (
     <div className="App">
       <Switch>
-        {/* <Route exact strict path="/">
-          <Home />
-        </Route> */}
+        <Route exact strict path="/">
+          {/* <Home /> */}
+          <TablePage />
+        </Route>
         <Route path="/login">
           <AdminLogin />
         </Route>
@@ -29,9 +30,6 @@ function App() {
         </Route>
         <Route path="/Items">
           <Items />
-        </Route>
-        <Route path="/">
-          <TablePage />
         </Route>
         <Route path="/Settings">
           <Settings />

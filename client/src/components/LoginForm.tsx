@@ -59,7 +59,7 @@ export default function LoginForm(props: any) {
         />
       </Form.Field>
       <Form.Field>
-        <Link to="/reset" id="forgot">
+        <Link to="/Forgot" id="forgot">
           Forgot Password?
         </Link>
       </Form.Field>

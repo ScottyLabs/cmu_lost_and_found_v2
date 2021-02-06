@@ -1,7 +1,24 @@
-#filter-bar #form-searchbar {
-    width: 300px;
+#side {
+  text-align: left;
+  background-color: #bdbdbd;
+  padding: 3%;
+  padding-right: 2%;
+  height: 713px;
+}
+
+#table {
+  display: flex;
+  justify-content: center; 
+}
+
+#top {
+  margin-top: 110px;
+}
+  
+/* #filter-bar #form-searchbar {
+  width: 300px;
 }
 
 #filter-bar .fields {
-    justify-content: center;
-}
+  justify-content: center;
+} */

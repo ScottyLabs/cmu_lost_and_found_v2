@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { Button, Form } from "semantic-ui-react";
 import { Link, useHistory } from "react-router-dom";
+import "./LoginForm.css";
 
 export default function LoginForm(props: any) {
   const [state, setState] = useState({
@@ -58,11 +59,11 @@ export default function LoginForm(props: any) {
           onChange={handleChange}
         />
       </Form.Field>
-      <Form.Field>
-        <Link to="/reset" id="forgot">
+      {/* <Form.Field>
+        <Link to="/Forgot" id="forgot">
           Forgot Password?
         </Link>
-      </Form.Field>
+      </Form.Field> */}
       <Button type="submit">Submit</Button>
     </Form>
   );

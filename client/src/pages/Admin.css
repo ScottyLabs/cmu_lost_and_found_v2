@@ -1,5 +1,13 @@
 main {
   margin-top: 0;
+  padding-left: 75px;
+  padding-right: 75px;
+}
+
+#title {
+  margin: 30px auto;
+  font-size: 30px;
+  color: #872222;
 }
 
 h1 {
@@ -59,6 +67,13 @@ img {
 
   #settings {
     margin-top: -70px;
+  }
+}
+
+@media (max-width: 768px) {
+  main {
+    padding-left: 30px;
+    padding-right: 30px;
   }
 }
 

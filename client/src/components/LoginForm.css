@@ -8,11 +8,3 @@ form {
   justify-content: center;
   padding-bottom: 20px;
 }
-
-#forgot:hover {
-  text-decoration: underline;
-}
-
-#update-pass {
-  margin-top: 20px;
-}

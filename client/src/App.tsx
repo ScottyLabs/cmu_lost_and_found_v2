@@ -26,9 +26,9 @@ function App() {
         <Route path="/Archived">
           <Archived />
         </Route>
-        <Route path="/Items">
+        {/* <Route path="/Items">
           <Items />
-        </Route>
+        </Route> */}
         <Route path="/table">
           <TablePage />
         </Route>

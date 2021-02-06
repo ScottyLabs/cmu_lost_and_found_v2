@@ -3,6 +3,7 @@ import React, {useState, useEffect} from "react";
 import TableWidget from "../components/TableWidget";
 import SearchBar from '../components/SearchBar';
 import { Item } from "../interface/item";
+import "./TablePage.css";
 
 function TablePage() {
   // const _items = [
@@ -71,15 +72,30 @@ function TablePage() {
   useEffect(() => {
     fetchItems();
   }, []);
+
+  let description = `
+  Hello, this is the Lost and Found page.
+  If you find a lost item, please take it to either Gates Hillman 6203, or the Lost and Found desk in the University Center, whichever is closer to the lost item location. 
+  Send email to lostfound@cs.cmu.edu. To retrieve an object, go to the location listed by the object.  You will be required to identify any
+     lost possessions.  All items must be picked up in person.
+   `;
   
   return (
     <>
-      <div className="title">Lost and Found Inventory</div>
-      <SearchBar 
-       input={input} 
-       onChange={updateInput}
-      />
-      <TableWidget items={itemList} isAdmin={false} isArchived={false} fetchItems={fetchItems}></TableWidget>
+      <div className="title">
+        Carnegie Mellon University
+      </div>
+      <div className="title">
+        Lost and Found Website
+      </div>
+      <div className="description">{description}</div>
+      <SearchBar input={input} onChange={updateInput} />
+      <TableWidget
+        items={itemList}
+        isAdmin={false}
+        isArchived={false}
+        fetchItems={fetchItems}
+      ></TableWidget>
     </>
   );
 }

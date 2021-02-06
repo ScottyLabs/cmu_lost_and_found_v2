@@ -8,6 +8,8 @@ import AddModal from "../components/AddModal";
 import TableWidget from "../components/TableWidget";
 import "semantic-ui-css/semantic.min.css";
 import axios from "axios";
+import { Item } from "../interface/item";
+import SearchBar from "../components/SearchBar";
 
 function Admin() {
   document.title = "CMU Lost and Found";
@@ -43,32 +45,53 @@ function Admin() {
   //   },
   // ];
   const [items, setItems] = useState([]);
+  //what is from the search
+  const [input, setInput] = useState("");
+  //unfiltered list
+  const [itemListDefault, setItemListDefault] = useState([]);
+  //filtered list
+  const [itemList, setItemList] = useState([]);
 
   const fetchItems = () => {
-    axios
-      .get(`http://localhost:3080/api/items/all`)
-      .then(
-        (res) => {
-          console.log("Claimed!");
-          console.log(res);
-          setItems(res.data);
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
-  }
+    axios.get(`http://localhost:3080/api/items/all`).then(
+      (res) => {
+        console.log("Claimed!");
+        console.log(res);
+        setItems(res.data);
+        //added
+        setItemListDefault(res.data);
+        setItemList(res.data);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  };
   useEffect(() => {
     fetchItems();
   }, []);
 
+  //modify items
+  const updateInput = async (input: string) => {
+    const filtered = itemListDefault.filter((item: Item) => {
+      return item.name.toLowerCase().includes(input.toLowerCase());
+    });
+    setInput(input);
+    setItemList(filtered);
+  };
 
   return (
     <Grid>
       <Grid.Row>
         <Grid.Column width={3} id="side">
           <div id="sidemenu">
-           <Link to="/"><img id="logo" src="/dog-logo.png" alt="CMU Lost and Found Logo"></img></Link>
+            <Link to="/">
+              <img
+                id="logo"
+                src="/dog-logo.png"
+                alt="CMU Lost and Found Logo"
+              ></img>
+            </Link>
             <br></br>
             <br></br>
             <AdminMenu activeTab="admin"></AdminMenu>
@@ -78,11 +101,17 @@ function Admin() {
           <main>
             <h1 id="title">Available Items</h1>
             <div id="admin-filter-bar">
-              <FilterBar></FilterBar> 
+              <FilterBar></FilterBar>
+              <SearchBar input={input} onChange={updateInput} />
               <AddModal fetchItems={fetchItems}></AddModal>
             </div>
             <div id="table">
-              <TableWidget items={items} isAdmin={true} isArchived={false} fetchItems={fetchItems}></TableWidget>
+              <TableWidget
+                items={itemList}
+                isAdmin={true}
+                isArchived={false}
+                fetchItems={fetchItems}
+              ></TableWidget>
             </div>
           </main>
         </Grid.Column>

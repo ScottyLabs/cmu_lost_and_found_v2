@@ -7,5 +7,7 @@
 .description {
     font-size: 20px;
     font-family: 'Lato';
-    margin: 20px;
+    margin: auto;
+    max-width: 50%;
+    padding: 10px;
 }

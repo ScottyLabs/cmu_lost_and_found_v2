@@ -98,7 +98,7 @@ function Admin() {
             </div>
             <div id="admin-filter-bar">
               <FilterBar></FilterBar>
-              <SearchBar input={input} onChange={updateInput} />
+              {/* <SearchBar input={input} onChange={updateInput} /> */}
               <AddModal fetchItems={fetchItems}></AddModal>
             </div>
             <div id="table">

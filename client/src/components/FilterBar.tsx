@@ -42,7 +42,7 @@ const FilterBar = () => (
         />
       </Form.Group>
     </Form.Group>
-    <Form.Checkbox label="Show Archived Items"/>
+    {/* <Form.Checkbox label="Show Archived Items"/> */}
     {/* <Form.Field
       id="form-button-control-advanced-settings"
       control={Button}

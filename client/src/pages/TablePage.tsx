@@ -1,6 +1,9 @@
 import axios from "axios";
 import React, {useState, useEffect} from "react";
+import { Grid, Button, Icon, Rail} from "semantic-ui-react";
+import { Link } from "react-router-dom";
 import TableWidget from "../components/TableWidget";
+import FilterBar from "../components/FilterBar";
 import SearchBar from '../components/SearchBar';
 import { Item } from "../interface/item";
 import "./TablePage.css";
@@ -88,22 +91,52 @@ function TablePage() {
    `;
   
   return (
-    <>
-      <div className="title">
-        Carnegie Mellon University
-      </div>
-      <div className="title">
-        Lost and Found Website
-      </div>
-      <div className="description">{description}</div>
-      <SearchBar input={input} onChange={updateInput} />
-      <TableWidget
-        items={itemList}
-        isAdmin={false}
-        isArchived={false}
-        fetchItems={fetchItems}
-      ></TableWidget>
-    </>
+    // <>
+    //   <div className="title">
+    //     Carnegie Mellon University
+    //   </div>
+    //   <div className="title">
+    //     Lost and Found Website
+    //   </div>
+    //   <div className="description">{description}</div>
+    //   <SearchBar input={input} onChange={updateInput} />
+    //   <TableWidget
+    //     items={itemList}
+    //     isAdmin={false}
+    //     isArchived={false}
+    //     fetchItems={fetchItems}
+    //   ></TableWidget>
+    // </>
+    <Grid>
+      <Grid.Row>
+        <Grid.Column width={16}>
+          <main>
+            <Link to="/"><img src="/dog-logo.png" id="logo-mobile" alt="CMU Lost and Found Logo"></img></Link>
+            <div id="settings">
+              <Rail attached internal position='left' id="logo-desktop">
+                <Link to="/"><img src="/dog-logo.png" alt="CMU Lost and Found Logo"></img></Link>
+              </Rail>
+              <Link to="/Settings"><Button icon><Icon name='setting'/></Button></Link>
+            </div>
+            <h1 className="title">Carnegie Mellon University</h1>
+            <h2 className="subtitle">Lost and Found Website</h2>
+            <div className="description">{description}</div>
+            <div id="admin-filter-bar">
+              <FilterBar></FilterBar>
+              {/* <SearchBar input={input} onChange={updateInput} /> */}
+            </div>
+            <div id="table">
+              <TableWidget
+                items={itemList}
+                isAdmin={false}
+                isArchived={false}
+                fetchItems={fetchItems}
+              ></TableWidget>
+            </div>
+          </main>
+        </Grid.Column>
+      </Grid.Row>
+    </Grid>
   );
 }
 

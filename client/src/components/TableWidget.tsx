@@ -25,6 +25,9 @@ const TableWidget = (props: {
           <Table.HeaderCell>Category</Table.HeaderCell>
           <Table.HeaderCell>Where to Retrieve</Table.HeaderCell>
           <Table.HeaderCell>Image</Table.HeaderCell>
+          {props.isAdmin ? (
+            <Table.HeaderCell>Claim/Unclaim</Table.HeaderCell>
+          ) : null}
         </Table.Row>
       </Table.Header>
       <Table.Body>
@@ -46,20 +49,21 @@ const TableWidget = (props: {
                 <Table.Cell>{item.whereToRetrieve}</Table.Cell>
                 <Table.Cell>
                   <ImageModal image={item.image}></ImageModal>
-                  {props.isAdmin ? (
-                    props.isArchived ? (
-                      <UnclaimButton
-                        id={item._id}
-                        fetchItems={props.fetchItems}
-                      ></UnclaimButton>
-                    ) : (
-                      <ClaimButton
-                        id={item._id}
-                        fetchItems={props.fetchItems}
-                      ></ClaimButton>
-                    )
-                  ) : null}
                 </Table.Cell>
+                {props.isAdmin ? (
+                  <Table.Cell>
+                    <ClaimButton
+                      id={item._id}
+                      disabled={item.status != "available"}
+                      fetchItems={props.fetchItems}
+                    ></ClaimButton>
+                    <UnclaimButton
+                      id={item._id}
+                      disabled={item.status == "available"}
+                      fetchItems={props.fetchItems}
+                    ></UnclaimButton>
+                  </Table.Cell>
+                ) : null}
               </Table.Row>
             );
           })}

@@ -36,7 +36,6 @@ def extract_url(s):
 rowcount = 0
 
 for row in soup.find_all('tr'):
-    # print("row", row)
     column_marker = 0
     rowcount += 1
     if (rowcount == 1):
@@ -44,16 +43,9 @@ for row in soup.find_all('tr'):
     columns = row.find_all('td')
     data = []
     for column in columns:
-        # new_table.iat[row_marker,column_marker] = column.get_text()
-        # print(column)
         if column is not None:
-            # print(type(column.contents[0]))
             strcontents = [str(x) for x in column.contents]
             data.append("".join(strcontents))
-            # print(type(column))
-            # print("contents", column.contents)
-        # column_marker += 1
-    print(data)
     if (len(columns) >= 4):
         info = {}
         
@@ -67,6 +59,7 @@ for row in soup.find_all('tr'):
         theName = data[2]
         cleaned = clean(theName)
         info["name"], info["image"] = extract_url(cleaned)
+        
         found = clean(data[3])
         info["whereFound"] = found
         info["description"] = clean(data[4])

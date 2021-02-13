@@ -6,7 +6,7 @@ export default function AdminMenu(props: { activeTab: string }) {
 
   return (
     <Menu secondary fluid vertical>
-      <Link to="/Admin">
+      <Link to="/admin">
         <Menu.Item
           name="available items"
           active={props.activeTab === "admin"}
@@ -18,13 +18,13 @@ export default function AdminMenu(props: { activeTab: string }) {
           active={props.activeTab === "archived"}
         />
       </Link>
-      <Link to="/Admin">
+      <Link to="/Settings">
         <Menu.Item
           name="settings"
           active={props.activeTab === "settings"}
         />
       </Link>
-      <Link to="/UserMenu">
+      <Link to="/users">
         <Menu.Item
           name="user menu"
           active={props.activeTab === "user menu"}

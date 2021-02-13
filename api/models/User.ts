@@ -1,5 +1,5 @@
 import { Model, Query, Schema, Document, model } from "mongoose";
-import * as bcrypt from "bcrypt";
+import * as bcrypt from "bcryptjs";
 import * as jwt from "jsonwebtoken";
 // TODO: move this away from here
 const JWT_SECRET = "asdfwecvjoi3sdfoi";

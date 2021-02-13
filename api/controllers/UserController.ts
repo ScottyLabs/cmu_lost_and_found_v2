@@ -83,6 +83,21 @@ export default class UserController {
     
   }
 
+  // public static deleteUser(username: string, callback:(err:string, user:IUser) => void){
+  //   username = username.toLowerCase();
+  //   User.findOneByUsername(username)
+  //     .exec(function (err:string, user:IUser) {
+  //       if (err) {
+  //         return callback(err, null);
+  //       }
+  //       if (!user) {
+  //         return callback("We couldn't find you!", null);
+  //       }
+  //       return callback(null, null);
+  //     });
+    
+  // }
+
   public static getByToken(token: string, callback: (err: any, user: IUser) => void) {
     User.getByToken(token, callback);
   };

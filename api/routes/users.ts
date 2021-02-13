@@ -48,4 +48,22 @@ router.post('/updatePerm', async (req: Request, res: Response) => {
     });
 });
 
+/**
+ * Delete user
+ * {
+ *  username: "bob"
+ * }
+ */
+router.post('/delete', async (req: Request, res: Response) => {
+    let { username } = req.body;
+    User.findOneAndDelete({username: username}, (err, raw) => {
+        if (err) {
+            console.log(err);
+            return res.status(401).send({trace: err, msg: "can't find item in db"});
+        }
+        return res.status(200).send({msg: raw});
+        
+    });
+})
+
 export default router;

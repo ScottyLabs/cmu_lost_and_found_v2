@@ -1,0 +1,27 @@
+#form-searchbar {
+  width: 250px;
+}
+
+#form-search {
+  width: 50px;
+}
+
+#form-category {
+  width: 160px;
+}
+
+#form-group {
+  margin-bottom: 0px;
+}
+
+@media (max-width: 662px) {
+  #form-subgroup {
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 770px) {
+  #form-group {
+    margin-bottom: 10px;
+  }
+}

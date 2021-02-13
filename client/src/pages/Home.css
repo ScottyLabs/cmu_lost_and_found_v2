@@ -1,15 +1,29 @@
+/* main {
+  padding-left: 75px;
+  padding-right: 75px;
+}
+
 #title {
   margin: 30px auto;
   font-size: 30px;
   color: #872222;
 }
 
-main {
+#home {
   margin: auto;
-  margin-top: 7%;
+  display: block;
+  margin-top: 8%;
 }
 
-img {
+#home img {
+  margin-top: 0;
   max-width: 300px;
   height: auto;
 }
+
+@media (max-width: 768px) {
+  main {
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+} */

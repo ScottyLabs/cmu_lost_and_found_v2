@@ -1,6 +1,7 @@
 import axios from 'axios'
 import React, {useState} from 'react'
 import { Button, Grid, Modal, Form, Checkbox } from 'semantic-ui-react'
+import "./AddUser.css"
 
 function exampleReducer(dispatchState: any, action: any) {
     switch (action.type) {
@@ -37,11 +38,15 @@ function AddUser(props: {
   });
 
   const handleChange = (e: any, {name, value}: any) => {
-    // console.log(value);
-    // console.log(name);
     setState({...state, [name]: value});
   }
+  const handlePermissionChange = (e: any, {name, value}: any) => {
+    
+    value = !value;
 
+    console.log(value)
+    setState({...state, [name]: value});
+  }
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -107,22 +112,22 @@ function AddUser(props: {
                 <Form.Input
                   required
                   fluid
-                  label="isAdmin"
+                  control = {Checkbox}
+                  label="Admin Permission"
                   name="isAdmin"
                   placeholder="Admin Permission"
-                  control = {Checkbox}
                   value={state.isAdmin}
-                  onChange={handleChange}
+                  onChange={handlePermissionChange}
                 />
                 <Form.Input
                   required
                   fluid
-                  label="isOwner"
+                  control = {Checkbox}
+                  label="Owner Permission"
                   name="isOwner"
                   placeholder="Owner Permission"
-                  control = {Checkbox}
                   value={state.isOwner}
-                  onChange={handleChange}
+                  onChange={handlePermissionChange}
                 />
                 </Form.Group>
               <Form.Group inline id="modal-actions">

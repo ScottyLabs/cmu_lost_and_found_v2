@@ -1,5 +1,4 @@
 import { Grid } from "semantic-ui-react";
-import LoginForm from "../components/LoginForm";
 import "./UserMenu.css";
 import "semantic-ui-css/semantic.min.css";
 import AdminMenu from "../components/AdminMenu";
@@ -7,9 +6,9 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import FilterBar from "../components/FilterBar";
-import AddModal from "../components/AddModal";
 import UserTable from "../components/UserTable";
 import AddUser from "../components/AddUser";
+
 
 function UserMenu() {
   // const users = [
@@ -47,21 +46,15 @@ function UserMenu() {
   }
 
   useEffect(() => {
+    console.log("Effect used!");
     fetchUsers();
   }, []);
 
   return (
     <Grid>
       <Grid.Row>
-        <Grid.Column width={3} id="side">
-          <div id="sidemenu">
-            <Link to="/"><img id="logo" src="/dog-logo.png" alt="CMU Lost and Found Logo"></img></Link>
-            <br></br>
-            <br></br>
-            <AdminMenu activeTab="user menu"></AdminMenu>
-          </div>
-        </Grid.Column>
-        <Grid.Column width={13}>
+        
+        <Grid.Column>
           <main>
             <h1 id="title">Users</h1>
             <div id="admin-filter-bar">

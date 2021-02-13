@@ -22,7 +22,7 @@ function App() {
         <Route path="/login">
           <AdminLogin />
         </Route>
-        <Route path="/Admin">
+        <Route path="/admin">
           <Admin />
         </Route>
         <Route path="/Archived">

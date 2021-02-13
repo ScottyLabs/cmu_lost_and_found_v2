@@ -133,7 +133,11 @@ function AddModal(props: {
     const { dateFound, timeFound, name, whereFound, description, category, whereToRetrieve, image, imageObject, imagePermission, status } = state;
     console.log(image)
     let date = dateFound.split("-");
+    if (date.length > 2) {
+      date[0] = date[0].substr(2, 2)
+    }
     let dateFormatted = date[1] + "/" + date[2] + "/" + date[0];
+    
     let [h, m] = timeFound.split(":");
     let timeFormatted = (parseInt(h) % 12) + (parseInt(h) % 12 === 0 ? 12 : 0) + ":" + m + " " + (parseInt(h) >= 12 ? "PM" : "AM")
 

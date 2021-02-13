@@ -90,7 +90,7 @@ function Admin() {
               <Rail attached internal position='left' id="logo-desktop">
                 <Link to="/"><img src="/dog-logo.png" alt="CMU Lost and Found Logo"></img></Link>
               </Rail>
-              <Link to="/Settings"><Button icon><Icon name='setting'/></Button></Link>
+              <Link to="/users"><Button icon><Icon name='setting'/></Button></Link>
             </div>
             <h1 className="title">Carnegie Mellon University</h1>
             <h2 className="subtitle">Lost and Found Website - Admin</h2>

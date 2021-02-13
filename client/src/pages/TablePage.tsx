@@ -74,19 +74,16 @@ function TablePage() {
   }, []);
 
   let description = `
-  Hello, this is the Lost and Found page!
-  If you find a lost item, please take it to one of the following locations: 
-  - Gates Hillman 6203 
-  - Lost and Found desk in the University Center
-  - Lost and Found desk in Residence on Fifth
-  - Lost and Found desk in Morewood E-tower
-  - Lost and Found desk in Donner
+  Hello, this is the Lost and Found page! `;
+  let description2 = `If you find a lost item, please take it to one of the following locations:`; 
+  let locations = ['Gates Hillman 6203', `Lost and Found desk in the University Center`, `Lost and Found desk in Residence on Fifth
+  `, `Lost and Found desk in Morewood E-tower`, `Lost and Found desk in Donner`];
    
-  To retrieve an object, go to the location listed next to the object on the table.  You will be required to identify any lost possessions. 
+  let description3 = `To retrieve an object, go to the location listed next to the object on the table.  You will be required to identify any lost possessions. 
   All items must be picked up in person.
   If you have any inquiries, please send an email to lostfound@cs.cmu.edu. 
    `;
-  
+  const listItems = locations.map((d) => <div className = "location">{d}</div>);
   return (
     <>
       <div className="title">
@@ -96,6 +93,9 @@ function TablePage() {
         Lost and Found Website
       </div>
       <div className="description">{description}</div>
+      <div className="description">{description2}</div>
+      {listItems}
+      <div className="description" >{description3}</div>
       <SearchBar input={input} onChange={updateInput} />
       <TableWidget
         items={itemList}

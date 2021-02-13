@@ -1,6 +1,7 @@
 import axios from 'axios'
 import React, {useState} from 'react'
 import { Button, Grid, Modal, Form, Checkbox } from 'semantic-ui-react'
+import "./AddUser.css"
 
 function exampleReducer(dispatchState: any, action: any) {
     switch (action.type) {

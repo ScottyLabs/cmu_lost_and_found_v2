@@ -82,22 +82,7 @@ function Admin() {
 
   return (
     <Grid>
-      {/* <Grid.Row id="settings">
-        <Grid.Column>
-          <Rail attached internal position='right'>
-            <Link to="/Settings"><Button>Settings</Button></Link>
-          </Rail>
-        </Grid.Column>
-      </Grid.Row> */}
       <Grid.Row>
-        {/* <Grid.Column width={3} id="side">
-          <div>
-           <Link to="/"><img id="logo" src="/dog-logo.png" alt="CMU Lost and Found Logo"></img></Link>
-            <br></br>
-            <br></br>
-            <AdminMenu activeTab="admin"></AdminMenu>
-          </div>
-        </Grid.Column> */}
         <Grid.Column width={16}>
           <main>
             <Link to="/"><img src="/dog-logo.png" id="logo-mobile" alt="CMU Lost and Found Logo"></img></Link>

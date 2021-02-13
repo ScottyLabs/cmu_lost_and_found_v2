@@ -53,15 +53,8 @@ function UserMenu() {
   return (
     <Grid>
       <Grid.Row>
-        <Grid.Column width={3} id="side">
-          <div id="sidemenu">
-            <Link to="/"><img id="logo" src="/dog-logo.png" alt="CMU Lost and Found Logo"></img></Link>
-            <br></br>
-            <br></br>
-            <AdminMenu activeTab="user menu"></AdminMenu>
-          </div>
-        </Grid.Column>
-        <Grid.Column width={13}>
+        
+        <Grid.Column>
           <main>
             <h1 id="title">Users</h1>
             <div id="admin-filter-bar">

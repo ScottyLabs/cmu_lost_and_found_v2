@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import { Button } from "semantic-ui-react";
+import { Button, Icon } from "semantic-ui-react";
 
 export default function DeleteUser(props: {
   username: string;
@@ -8,9 +8,15 @@ export default function DeleteUser(props: {
 }) {
     return (
       <Button
+        icon
+        circular
+        color="blue"
+        size="tiny"
         onClick={() => {
           axios
-            .post(`http://localhost:3080/api/users/delete`, { username: props.username })
+            .post(`http://localhost:3080/api/users/delete`, {
+              username: props.username,
+            })
             .then(
               (res) => {
                 console.log("Unclaimed!");
@@ -23,7 +29,7 @@ export default function DeleteUser(props: {
             );
         }}
       >
-        Delete User
+        <Icon name="trash alternate" inverted size="large"></Icon>
       </Button>
     );
   }

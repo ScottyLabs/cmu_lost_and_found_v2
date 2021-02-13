@@ -105,7 +105,7 @@ function Admin() {
               <Rail attached internal position='left' id="logo-desktop">
                 <Link to="/"><img src="/dog-logo.png" alt="CMU Lost and Found Logo"></img></Link>
               </Rail>
-              <Link to="/Settings"><Button icon><Icon name='setting'/></Button></Link>
+              <Link to="/users"><Button icon><Icon name='setting'/></Button></Link>
             </div>
             <h1 id="title">Available Items</h1>
             <div id="add-mobile">

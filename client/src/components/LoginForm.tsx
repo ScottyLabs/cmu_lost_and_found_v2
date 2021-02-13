@@ -27,7 +27,7 @@ export default function LoginForm(props: any) {
       .then(
         (res) => {
           console.log("Logged in");
-          history.push("/Admin");
+          history.push("/admin");
           setState({ username: "", password: "" });
         },
         (error) => {

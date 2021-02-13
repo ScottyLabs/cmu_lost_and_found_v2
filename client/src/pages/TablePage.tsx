@@ -74,10 +74,17 @@ function TablePage() {
   }, []);
 
   let description = `
-  Hello, this is the Lost and Found page.
-  If you find a lost item, please take it to either Gates Hillman 6203, or the Lost and Found desk in the University Center, whichever is closer to the lost item location. 
-  Send email to lostfound@cs.cmu.edu. To retrieve an object, go to the location listed by the object.  You will be required to identify any
-     lost possessions.  All items must be picked up in person.
+  Hello, this is the Lost and Found page!
+  If you find a lost item, please take it to one of the following locations: 
+  - Gates Hillman 6203 
+  - Lost and Found desk in the University Center
+  - Lost and Found desk in Residence on Fifth
+  - Lost and Found desk in Morewood E-tower
+  - Lost and Found desk in Donner
+   
+  To retrieve an object, go to the location listed next to the object on the table.  You will be required to identify any lost possessions. 
+  All items must be picked up in person.
+  If you have any inquiries, please send an email to lostfound@cs.cmu.edu. 
    `;
   
   return (

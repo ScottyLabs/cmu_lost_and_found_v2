@@ -2,20 +2,20 @@ import React from "react";
 import { Form, Input, Button, Select, Radio } from "semantic-ui-react";
 import "./FilterBar.css";
 
-const categoryOptions = [
-  { key: "clothing", text: "Clothing", value: "clothing" },
-  { key: "headphones", text: "Headphones", value: "headphones" },
-  { key: "jewelry", text: "Jewelry", value: "jewelry" },
-  { key: "keys", text: "Keys", value: "keys" },
-  { key: "laptops", text: "Laptops", value: "laptops" },
-  { key: "phones", text: "Phones", value: "phones" },
-  { key: "students ids", text: "Student IDs", value: "students ids" },
-  { key: "tablets", text: "Tablets", value: "tablets" },
-  { key: "umbrellas", text: "Umbrellas", value: "umbrellas" },
-  { key: "water bottles", text: "Water Bottles", value: "water bottles" },
-  { key: "other electronics", text: "Other Electronics", value: "other electronics" },
-  { key: "miscellaneous", text: "Miscellaneous", value: "miscellaneous" },
-];
+// const categoryOptions = [
+//   { key: "clothing", text: "Clothing", value: "clothing" },
+//   { key: "headphones", text: "Headphones", value: "headphones" },
+//   { key: "jewelry", text: "Jewelry", value: "jewelry" },
+//   { key: "keys", text: "Keys", value: "keys" },
+//   { key: "laptops", text: "Laptops", value: "laptops" },
+//   { key: "phones", text: "Phones", value: "phones" },
+//   { key: "students ids", text: "Student IDs", value: "students ids" },
+//   { key: "tablets", text: "Tablets", value: "tablets" },
+//   { key: "umbrellas", text: "Umbrellas", value: "umbrellas" },
+//   { key: "water bottles", text: "Water Bottles", value: "water bottles" },
+//   { key: "other electronics", text: "Other Electronics", value: "other electronics" },
+//   { key: "miscellaneous", text: "Miscellaneous", value: "miscellaneous" },
+// ];
 
 const FilterBar = () => (
   <Form>
@@ -26,14 +26,14 @@ const FilterBar = () => (
         placeholder="Search Items"
       />
       <Form.Group id="form-subgroup">
-        <Form.Field
+        {/* <Form.Field
           id="form-category"
           fluid
           control={Select}
           options={categoryOptions}
           placeholder="Category"
           search
-        />
+        /> */}
         <Form.Field
           id="form-search"
           control={Button}

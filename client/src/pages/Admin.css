@@ -4,9 +4,15 @@ main {
   padding-right: 75px;
 }
 
-#title {
+.title {
   margin: 30px auto;
+  margin-bottom: 10px;
   font-size: 30px;
+  color: #872222;
+}
+
+.subtitle {
+  margin-top: 0px;
   color: #872222;
 }
 

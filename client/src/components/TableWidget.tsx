@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Form, Table } from "semantic-ui-react";
 import { Item } from "../interface/item";
 import "./TableWidget.css";
@@ -12,15 +12,26 @@ const TableWidget = (props: {
   isArchived: boolean;
   fetchItems: Function;
 }) => {
+  const [displayArchived, setDisplayArchived] = useState(false);
+
+  const updateDisplayArchived = (evt: any, data: any) => {
+    setDisplayArchived(data.checked);
+  };
+
   console.log("Creating table");
   return (
     <Form>
-      <Form.Checkbox label="Show Archived Items" />
+      {props.isAdmin ? (
+        <Form.Checkbox
+          label="Show Archived Items"
+          onClick={updateDisplayArchived}
+        />
+      ) : null}
       <Table celled className="lf_table">
         <Table.Header>
           <Table.Row>
-            <Table.HeaderCell>Date Found</Table.HeaderCell>
-            <Table.HeaderCell>Time Found</Table.HeaderCell>
+            <Table.HeaderCell width={1}>Date Found</Table.HeaderCell>
+            <Table.HeaderCell width={1}>Time Found</Table.HeaderCell>
             <Table.HeaderCell>Name</Table.HeaderCell>
             <Table.HeaderCell>Where Found</Table.HeaderCell>
             <Table.HeaderCell>Description</Table.HeaderCell>
@@ -35,9 +46,10 @@ const TableWidget = (props: {
         <Table.Body>
           {props.items
             .filter((item) => {
-              return props.isArchived
-                ? item.status !== "available"
-                : item.status === "available";
+              return (
+                item.status === "available" ||
+                (props.isAdmin && displayArchived)
+              );
             })
             .map((item: Item) => {
               return (
@@ -56,12 +68,12 @@ const TableWidget = (props: {
                     <Table.Cell>
                       <ClaimButton
                         id={item._id}
-                        disabled={item.status != "available"}
+                        disabled={item.status !== "available"}
                         fetchItems={props.fetchItems}
                       ></ClaimButton>
                       <UnclaimButton
                         id={item._id}
-                        disabled={item.status == "available"}
+                        disabled={item.status === "available"}
                         fetchItems={props.fetchItems}
                       ></UnclaimButton>
                     </Table.Cell>

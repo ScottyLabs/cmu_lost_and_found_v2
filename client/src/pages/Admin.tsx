@@ -93,7 +93,7 @@ function Admin() {
               <Link to="/users"><Button icon><Icon name='setting'/></Button></Link>
             </div>
             <h1 className="title">Carnegie Mellon University</h1>
-            <h2 className="subtitle">Lost and Found Website - Admin</h2>
+            <h2 className="subtitle">Lost and Found Admin Panel - Items</h2>
             <div id="add-mobile">
               <AddModal fetchItems={fetchItems}></AddModal>
             </div>

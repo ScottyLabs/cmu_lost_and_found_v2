@@ -1,4 +1,4 @@
-import { Grid } from "semantic-ui-react";
+import { Button, Grid, Icon, Rail } from "semantic-ui-react";
 import "./UserMenu.css";
 import "semantic-ui-css/semantic.min.css";
 import AdminMenu from "../components/AdminMenu";
@@ -53,16 +53,39 @@ function UserMenu() {
   return (
     <Grid>
       <Grid.Row>
-        
         <Grid.Column>
           <main>
-            <h1 id="title">Users</h1>
+            <Link to="/">
+              <img
+                src="/dog-logo.png"
+                id="logo-mobile"
+                alt="CMU Lost and Found Logo"
+              ></img>
+            </Link>
+            <div id="settings">
+              <Rail attached internal position="left" id="logo-desktop">
+                <Link to="/">
+                  <img src="/dog-logo.png" alt="CMU Lost and Found Logo"></img>
+                </Link>
+              </Rail>
+              <Link to="/admin">
+                <Button icon>
+                  <Icon name="setting" />
+                </Button>
+              </Link>
+            </div>
+            <h1 className="title">Carnegie Mellon University</h1>
+            <h2 className="subtitle">Lost and Found Admin Panel - Users</h2>
             <div id="admin-filter-bar">
               <FilterBar></FilterBar>
-              <AddUser fetchUsers = {fetchUsers}></AddUser>
+              <AddUser fetchUsers={fetchUsers}></AddUser>
             </div>
             <div id="table">
-              <UserTable users={users} isOwner={true} fetchUsers={fetchUsers}></UserTable>
+              <UserTable
+                users={users}
+                isOwner={true}
+                fetchUsers={fetchUsers}
+              ></UserTable>
             </div>
           </main>
         </Grid.Column>

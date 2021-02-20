@@ -5,6 +5,7 @@ import "./TableWidget.css";
 import ImageModal from "./ImageModal";
 import ClaimButton from "./ClaimButton";
 import UnclaimButton from "./UnclaimButton";
+import DeleteButton from "./DeleteButton";
 
 const TableWidget = (props: {
   items: Array<Item>;
@@ -41,6 +42,7 @@ const TableWidget = (props: {
             {props.isAdmin ? (
               <Table.HeaderCell>Claim/Unclaim</Table.HeaderCell>
             ) : null}
+            {props.isAdmin ? <Table.HeaderCell>Delete</Table.HeaderCell> : null}
           </Table.Row>
         </Table.Header>
         <Table.Body>
@@ -76,6 +78,14 @@ const TableWidget = (props: {
                         disabled={item.status === "available"}
                         fetchItems={props.fetchItems}
                       ></UnclaimButton>
+                    </Table.Cell>
+                  ) : null}
+                  {props.isAdmin ? (
+                    <Table.Cell>
+                      <DeleteButton
+                        id={item._id}
+                        fetchItems={props.fetchItems}
+                      ></DeleteButton>
                     </Table.Cell>
                   ) : null}
                 </Table.Row>

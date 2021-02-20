@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 import "./Admin.css";
 import AdminMenu from "../components/AdminMenu";
 import FilterBar from "../components/FilterBar";
-import AddModal from "../components/AddModal";
+import AddItemButton from "../components/AddItemButton";
 import TableWidget from "../components/TableWidget";
 import "semantic-ui-css/semantic.min.css";
 import axios from "axios";
@@ -50,7 +50,7 @@ function Archived() {
             <h1 id="title">Archived Items</h1>
             <div id="admin-filter-bar">
               <FilterBar></FilterBar>
-              <AddModal fetchItems={fetchItems}></AddModal>
+              <AddItemButton fetchItems={fetchItems}></AddItemButton>
             </div>
             <div id="table">
               <TableWidget

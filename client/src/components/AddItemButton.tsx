@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, {useState} from 'react';
 import { Button, Grid, Modal, Form } from 'semantic-ui-react';
-import "./AddModal.css";
+import "./AddItemButton.css";
 
 function exampleReducer(dispatchState: any, action: any) {
   switch (action.type) {
@@ -41,7 +41,7 @@ const pickup = [
 
 
 
-function AddModal(props: {
+function AddItemButton(props: {
   fetchItems: Function;
 }) {
   const [dispatchState, dispatch] = React.useReducer(exampleReducer, {
@@ -324,4 +324,4 @@ function AddModal(props: {
   );
 }
 
-export default AddModal
+export default AddItemButton

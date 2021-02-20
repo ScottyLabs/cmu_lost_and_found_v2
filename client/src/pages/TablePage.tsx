@@ -47,7 +47,7 @@ function TablePage() {
   const [itemList, setItemList] = useState([]);
 
   const fetchItems = () => {
-    axios.get(`http://localhost:3080/api/items/all`).then(
+    axios.get(`/api/items/all`).then(
       (res) => {
         console.log(res);
         setItems(res.data);

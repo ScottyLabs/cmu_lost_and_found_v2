@@ -32,7 +32,7 @@ function UserMenu() {
 
   const fetchUsers = () => {
     axios
-      .get(`http://localhost:3080/api/users/all`)
+      .get(`/api/users/all`)
       .then(
         (res) => {
           console.log("Retrieved users!");

@@ -11,7 +11,7 @@ export default function ClaimButton(props: {
   
   const handleClick = () => {
     axios
-      .post(`http://localhost:3080/api/items/updateStatus`, { id: props.id, status: "claimed" })
+      .post(`/api/items/updateStatus`, { id: props.id, status: "claimed" })
       .then(
         (res) => {
           console.log("Claimed!");

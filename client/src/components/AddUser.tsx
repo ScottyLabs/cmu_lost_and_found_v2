@@ -52,7 +52,7 @@ function AddUser(props: {
     e.preventDefault();
     const {username, password, isAdmin, isOwner} = state;
     axios
-      .post(`http://localhost:3080/api/auth/register`, {
+      .post(`/api/auth/register`, {
         username: username,
         password: password,
         isAdmin: isAdmin,

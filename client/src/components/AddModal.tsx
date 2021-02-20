@@ -107,7 +107,7 @@ function AddModal(props: {
         console.log("Trying to add image")
 
         axios
-          .post(`http://localhost:3080/api/items/addImage`, data)
+          .post(`/api/items/addImage`, data)
           .then(
             (res) => {
               console.log("Image uploaded successfully")
@@ -143,7 +143,7 @@ function AddModal(props: {
 
     uploadImage(imageObject).then((res) => {
       axios
-        .post(`http://localhost:3080/api/items/add`, {
+        .post(`/api/items/add`, {
           dateFound: dateFormatted,
           timeFound: timeFormatted,
           name: name,

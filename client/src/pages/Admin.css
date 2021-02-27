@@ -59,11 +59,11 @@ img {
   display: none; 
 }
 
-@media (max-width: 660px) {
+@media (max-width: 840px) {
   #logo-mobile {
     display: inline;
     max-width: 90px;
-    margin-bottom: 30px;
+    margin-bottom: 50px;
   }
 
   #logo-desktop {

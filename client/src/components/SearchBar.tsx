@@ -7,7 +7,7 @@ const SearchBar = (props: {input: string, onChange: Function}) => {
      style={BarStyling}
      key="random1"
      value={props.input}
-     placeholder={"search items"}
+     placeholder={"Search Items"}
      onChange={(e) => props.onChange(e.target.value)}
     />
   );

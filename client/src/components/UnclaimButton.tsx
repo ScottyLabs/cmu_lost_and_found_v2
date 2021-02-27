@@ -11,7 +11,7 @@ export default function UnclaimButton(props: {
 
   const handleClick = () => {
     axios
-      .post(`http://localhost:3080/api/items/updateStatus`, { id: props.id, status: "available" })
+      .post(`/api/items/updateStatus`, { id: props.id, status: "available" })
       .then(
         (res) => {
           console.log("Unclaimed!");

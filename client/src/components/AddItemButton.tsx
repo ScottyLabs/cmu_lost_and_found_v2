@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, {useState} from 'react';
 import { Button, Grid, Modal, Form } from 'semantic-ui-react';
-import "./AddModal.css";
+import "./AddItemButton.css";
 
 function exampleReducer(dispatchState: any, action: any) {
   switch (action.type) {
@@ -41,7 +41,7 @@ const pickup = [
 
 
 
-function AddModal(props: {
+function AddItemButton(props: {
   fetchItems: Function;
 }) {
   const [dispatchState, dispatch] = React.useReducer(exampleReducer, {
@@ -107,7 +107,7 @@ function AddModal(props: {
         console.log("Trying to add image")
 
         axios
-          .post(`http://localhost:3080/api/items/addImage`, data)
+          .post(`/api/items/addImage`, data)
           .then(
             (res) => {
               console.log("Image uploaded successfully")
@@ -143,7 +143,7 @@ function AddModal(props: {
 
     uploadImage(imageObject).then((res) => {
       axios
-        .post(`http://localhost:3080/api/items/add`, {
+        .post(`/api/items/add`, {
           dateFound: dateFormatted,
           timeFound: timeFormatted,
           name: name,
@@ -324,4 +324,4 @@ function AddModal(props: {
   );
 }
 
-export default AddModal
+export default AddItemButton

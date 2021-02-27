@@ -57,6 +57,24 @@ router.post("/add", async (req: Request, res: Response) => {
 });
 
 /**
+ * Delete an item by id
+ * {
+ * id: id
+ * }
+ */
+router.post("/delete", async (req: Request, res: Response) => {
+  let id = req.body.id;
+  Item.findByIdAndDelete({_id: id}, (err, raw) => {
+    if (err) {
+      console.log(err);
+      return res.status(401).send({trace: err, msg: "can't find item in db"});
+    }
+    return res.status(200).send({msg: raw});
+  });
+
+});
+
+/**
  * Updates an item's status by id
  * {
  * id: id
@@ -76,6 +94,25 @@ router.post("/updateStatus", async (req: Request, res: Response) => {
 
 });
 
+/**
+ * Edits an item
+ * {
+ * id: id
+ * status: status
+ * }
+ */
+router.post("/editItem", async (req: Request, res: Response) => {
+  let id = req.body.id;
+  let status = req.body.status;
+  Item.findByIdAndUpdate({_id: id}, {status: status}, {runValidators: true, useFindAndModify: false}, (err, raw) => {
+    if (err) {
+      console.log(err);
+      return res.status(401).send({trace: err, msg: "can't find item in db"});
+    }
+    return res.status(200).send({msg: raw});
+  });
+
+});
 
 /**
  * Adds an image to Google Drive

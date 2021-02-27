@@ -30,7 +30,7 @@ function ImageTestPage() {
         console.log("Trying to add image")
         console.log(reader.result)
         axios
-        .post(`http://localhost:3080/api/items/addImage`, data)
+        .post(`/api/items/addImage`, data)
         .then(
         (res) => {
             console.log("Image uploaded successfully")

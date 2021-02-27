@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import "./Admin.css";
 import AdminMenu from "../components/AdminMenu";
 import FilterBar from "../components/FilterBar";
-import AddModal from "../components/AddModal";
+import AddItemButton from "../components/AddItemButton";
 import TableWidget from "../components/TableWidget";
 import "semantic-ui-css/semantic.min.css";
 import axios from "axios";
@@ -53,7 +53,7 @@ function Admin() {
   const [itemList, setItemList] = useState([]);
 
   const fetchItems = () => {
-    axios.get(`http://localhost:3080/api/items/all`).then(
+    axios.get(`/api/items/all`).then(
       (res) => {
         console.log("Claimed!");
         console.log(res);
@@ -93,14 +93,14 @@ function Admin() {
               <Link to="/users"><Button icon><Icon name='setting'/></Button></Link>
             </div>
             <h1 className="title">Carnegie Mellon University</h1>
-            <h2 className="subtitle">Lost and Found Website - Admin</h2>
+            <h2 className="subtitle">Lost and Found Admin Panel - Items</h2>
             <div id="add-mobile">
-              <AddModal fetchItems={fetchItems}></AddModal>
+              <AddItemButton fetchItems={fetchItems}></AddItemButton>
             </div>
             <div id="admin-filter-bar">
-              <FilterBar></FilterBar>
-              {/* <SearchBar input={input} onChange={updateInput} /> */}
-              <AddModal fetchItems={fetchItems}></AddModal>
+              {/* <FilterBar></FilterBar> */}
+              <SearchBar input={input} onChange={updateInput} />
+              <AddItemButton fetchItems={fetchItems}></AddItemButton>
             </div>
             <div id="table">
               <TableWidget

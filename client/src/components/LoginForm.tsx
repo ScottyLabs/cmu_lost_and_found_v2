@@ -20,7 +20,7 @@ export default function LoginForm(props: any) {
     e.preventDefault();
     const { username, password } = state;
     axios
-      .post(`http://localhost:3080/api/auth/login`, {
+      .post(`/api/auth/login`, {
         username: username,
         password: password,
       })

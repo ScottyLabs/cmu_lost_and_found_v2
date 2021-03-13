@@ -56,14 +56,14 @@ const TableWidget = (props: {
             .map((item: Item) => {
               return (
                 <Table.Row key={item._id}>
-                  <Table.Cell>{item.dateFound}</Table.Cell>
-                  <Table.Cell>{item.timeFound}</Table.Cell>
-                  <Table.Cell>{item.name}</Table.Cell>
-                  <Table.Cell>{item.whereFound}</Table.Cell>
-                  <Table.Cell>{item.description}</Table.Cell>
-                  <Table.Cell>{item.category}</Table.Cell>
-                  <Table.Cell>{item.whereToRetrieve}</Table.Cell>
-                  <Table.Cell>
+                  <Table.Cell collapsing>{item.dateFound}</Table.Cell>
+                  <Table.Cell collapsing>{item.timeFound}</Table.Cell>
+                  <Table.Cell collapsing>{item.name}</Table.Cell>
+                  <Table.Cell collapsing>{item.whereFound}</Table.Cell>
+                  <Table.Cell collapsing>{item.description}</Table.Cell>
+                  <Table.Cell collapsing>{item.category}</Table.Cell>
+                  <Table.Cell collapsing>{item.whereToRetrieve}</Table.Cell>
+                  <Table.Cell collapsing>
                     <ImageModal image={item.image}></ImageModal>
                   </Table.Cell>
                   {props.isAdmin ? (

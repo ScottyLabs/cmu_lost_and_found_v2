@@ -1,6 +1,6 @@
 export interface Item {
   _id: string;
-  dateFound: string;
+  dateFound: Date;
   timeFound: string;
   name: string;
   whereFound: string;

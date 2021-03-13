@@ -54,10 +54,14 @@ const TableWidget = (props: {
               );
             })
             .map((item: Item) => {
+              let date = new Date(item.dateFound).toISOString().substring(0, 10).split("-");
+              let dateFormatted = date[1] + "/" + date[2] + "/" + date[0];
+              let [h, m] = item.timeFound.split(":");
+              let timeFormatted = (parseInt(h) % 12) + (parseInt(h) % 12 === 0 ? 12 : 0) + ":" + m + " " + (parseInt(h) >= 12 ? "PM" : "AM")
               return (
                 <Table.Row key={item._id}>
-                  <Table.Cell>{item.dateFound}</Table.Cell>
-                  <Table.Cell>{item.timeFound}</Table.Cell>
+                  <Table.Cell>{dateFormatted}</Table.Cell>
+                  <Table.Cell>{timeFormatted}</Table.Cell>
                   <Table.Cell>{item.name}</Table.Cell>
                   <Table.Cell>{item.whereFound}</Table.Cell>
                   <Table.Cell>{item.description}</Table.Cell>

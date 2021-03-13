@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, {useState} from 'react';
 import { Button, Grid, Modal, Form } from 'semantic-ui-react';
+import { useHistory } from "react-router-dom";
 import "./AddItemButton.css";
 
 function exampleReducer(dispatchState: any, action: any) {
@@ -66,6 +67,7 @@ function AddItemButton(props: {
     imagePermission: false,
     status: "available"
   });
+  const history = useHistory();
 
   const handleChange = (e: any, { name, value }: any) => {
     console.log(value);
@@ -102,7 +104,8 @@ function AddItemButton(props: {
       reader.onload = (() => {
         let data = {
           "imageName": imageName,
-          "dataURL": reader.result
+          "dataURL": reader.result,
+          "token": localStorage.getItem("lnf_token")
         }
         console.log("Trying to add image")
 
@@ -144,6 +147,7 @@ function AddItemButton(props: {
     uploadImage(imageObject).then((res) => {
       axios
         .post(`/api/items/add`, {
+          token: localStorage.getItem("lnf_token"),
           dateFound: dateFormatted,
           timeFound: timeFormatted,
           name: name,
@@ -164,6 +168,7 @@ function AddItemButton(props: {
           },
           (error) => {
             console.log(error);
+            history.push("/login");
           }
         );
       dispatch({ type: 'CLOSE_MODAL' });

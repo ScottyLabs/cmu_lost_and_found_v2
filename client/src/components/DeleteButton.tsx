@@ -1,14 +1,16 @@
 import React from "react";
 import axios from "axios";
 import { Icon, Button } from "semantic-ui-react";
+import { useHistory } from "react-router-dom";
 
 // Admin-side unclaim button that sets backend claim status to available
 export default function DeleteButton(props: {
   id: string;
   fetchItems: Function;
 }) {
+  const history = useHistory();
   const handleClick = () => {
-    axios.post(`/api/items/delete`, { id: props.id }).then(
+    axios.post(`/api/items/delete`, { "token": localStorage.getItem("lnf_token"), id: props.id }).then(
       (res) => {
         console.log("Deleted!");
         console.log(res);
@@ -16,6 +18,7 @@ export default function DeleteButton(props: {
       },
       (error) => {
         console.log(error);
+        history.push("/login");
       }
     );
   };

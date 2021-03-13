@@ -102,9 +102,22 @@ router.post("/updateStatus", async (req: Request, res: Response) => {
  * }
  */
 router.post("/editItem", async (req: Request, res: Response) => {
-  let id = req.body.id;
-  let status = req.body.status;
-  Item.findByIdAndUpdate({_id: id}, {status: status}, {runValidators: true, useFindAndModify: false}, (err, raw) => {
+  let {
+    id,
+    dateFound,
+    timeFound,
+    name,
+    whereFound,
+    description,
+    category,
+    whereToRetrieve,
+    image,
+    imagePermission,
+    status,
+  } = req.body;
+
+  Item.findByIdAndUpdate({_id: req.body.id}, {dateFound: req.body.dateFound, timeFound: req.body.timeFound, name:req.body.name, whereFound:req.body.whereFound, description: req.body.description, 
+    category: req.body.category, whereToRetrieve: req.body.whereToRetrieve, image:req.body.image, imagePermission:req.body.imagePermission, status: req.body.status}, {runValidators: true, useFindAndModify: false}, (err, raw) => {
     if (err) {
       console.log(err);
       return res.status(401).send({trace: err, msg: "can't find item in db"});

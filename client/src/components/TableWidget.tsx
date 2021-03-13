@@ -31,14 +31,14 @@ const TableWidget = (props: {
       <Table celled className="lf_table">
         <Table.Header>
           <Table.Row>
-            <Table.HeaderCell width={1}>Date Found</Table.HeaderCell>
-            <Table.HeaderCell width={1}>Time Found</Table.HeaderCell>
-            <Table.HeaderCell>Name</Table.HeaderCell>
-            <Table.HeaderCell>Where Found</Table.HeaderCell>
-            <Table.HeaderCell>Description</Table.HeaderCell>
-            <Table.HeaderCell>Category</Table.HeaderCell>
-            <Table.HeaderCell>Where to Retrieve</Table.HeaderCell>
-            <Table.HeaderCell>Image</Table.HeaderCell>
+            <Table.HeaderCell width={1} collapsing>Date Found</Table.HeaderCell>
+            <Table.HeaderCell width={1} collapsing>Time Found</Table.HeaderCell>
+            <Table.HeaderCell collapsing>Name</Table.HeaderCell>
+            <Table.HeaderCell collapsing>Where Found</Table.HeaderCell>
+            <Table.HeaderCell collapsing>Description</Table.HeaderCell>
+            <Table.HeaderCell collapsing>Category</Table.HeaderCell>
+            <Table.HeaderCell collapsing>Where to Retrieve</Table.HeaderCell>
+            <Table.HeaderCell collapsing>Image</Table.HeaderCell>
             {props.isAdmin ? (
               <Table.HeaderCell>Claim/Unclaim</Table.HeaderCell>
             ) : null}

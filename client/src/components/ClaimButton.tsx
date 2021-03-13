@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { Icon, Button } from "semantic-ui-react";
+import { useHistory } from "react-router-dom";
 
 // Admin-side claim button that sets backend claim status to claimed
 export default function ClaimButton(props: {
@@ -8,10 +9,11 @@ export default function ClaimButton(props: {
   disabled: boolean;
   fetchItems: Function
 }) {
+  const history = useHistory();
   
   const handleClick = () => {
     axios
-      .post(`/api/items/updateStatus`, { id: props.id, status: "claimed" })
+      .post(`/api/items/updateStatus`, { "token": localStorage.getItem("lnf_token"), id: props.id, status: "claimed" })
       .then(
         (res) => {
           console.log("Claimed!");
@@ -20,6 +22,7 @@ export default function ClaimButton(props: {
         },
         (error) => {
           console.error(error);
+          history.push("/login");
         }
       );
   }

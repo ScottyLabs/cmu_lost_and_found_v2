@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, {useState} from 'react';
 import { Button, Grid, Modal, Form } from 'semantic-ui-react';
+import { useHistory } from "react-router-dom";
 import "./AddModal.css";
 
 function exampleReducer(dispatchState: any, action: any) {
@@ -17,6 +18,7 @@ function exampleReducer(dispatchState: any, action: any) {
       throw new Error()
   }
 }
+
 
 const categories = [
   { key: "clothing", text: "Clothing", value: "Clothing" },
@@ -50,7 +52,8 @@ function EditItem(props: {
     open: false,
     dimmer: undefined,
   })
-  const { open, closeOnEscape, closeOnDimmerClick } = dispatchState
+  const { open, closeOnEscape, closeOnDimmerClick } = dispatchState;
+  const history = useHistory();
 
   const [state, setState] = useState({
     dateFound: "",
@@ -101,9 +104,10 @@ function EditItem(props: {
 
       reader.onload = (() => {
         let data = {
-          "imageName": imageName,
-          "dataURL": reader.result
-        }
+          imageName: imageName,
+          dataURL: reader.result,
+          token: localStorage.getItem("lnf_token"),
+        };
         console.log("Trying to add image")
 
         axios
@@ -139,11 +143,13 @@ function EditItem(props: {
     let dateFormatted = date[1] + "/" + date[2] + "/" + date[0];
     
     let [h, m] = timeFound.split(":");
-    let timeFormatted = (parseInt(h) % 12) + (parseInt(h) % 12 === 0 ? 12 : 0) + ":" + m + " " + (parseInt(h) >= 12 ? "PM" : "AM")
+    let timeFormatted = (parseInt(h) % 12) + (parseInt(h) % 12 === 0 ? 12 : 0) + ":" + m + " " + (parseInt(h) >= 12 ? "PM" : "AM");
+    
 
     uploadImage(imageObject).then((res) => {
       axios
         .post(`/api/items/add`, {
+          token: localStorage.getItem("lnf_token"),
           dateFound: dateFormatted,
           timeFound: timeFormatted,
           name: name,
@@ -153,14 +159,13 @@ function EditItem(props: {
           whereToRetrieve: whereToRetrieve,
           image: res,
           imagePermission: imagePermission,
-          status: status
+          status: status,
         })
         .then(
           (res) => {
             console.log("Added");
             console.log(res);
             props.fetchItems();
-
           },
           (error) => {
             console.log(error);
@@ -171,6 +176,7 @@ function EditItem(props: {
       return res;
     }, (err) => {
       console.error(err);
+      history.push("/login");
     });
 
   }

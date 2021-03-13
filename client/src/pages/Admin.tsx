@@ -10,6 +10,7 @@ import "semantic-ui-css/semantic.min.css";
 import axios from "axios";
 import { Item } from "../interface/item";
 import SearchBar from "../components/SearchBar";
+import LogoutButton from "../components/LogoutButton";
 
 function Admin() {
   document.title = "CMU Lost and Found";
@@ -92,6 +93,7 @@ function Admin() {
               </Rail>
               <Link to="/users"><Button icon><Icon name='setting'/></Button></Link>
             </div>
+            <LogoutButton />
             <h1 className="title">Carnegie Mellon University</h1>
             <h2 className="subtitle">Lost and Found Admin Panel - Items</h2>
             <div id="add-mobile">

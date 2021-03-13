@@ -2,7 +2,7 @@ import * as mongoose from "mongoose";
 
 const ItemSchema = new mongoose.Schema({
   dateFound: {
-    type: String,
+    type: Date,
     required: true,
   },
   timeFound: {

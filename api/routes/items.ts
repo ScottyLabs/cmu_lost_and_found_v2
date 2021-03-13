@@ -8,7 +8,7 @@ import ImageController from "../controllers/ImageController";
  * Returns all items in database, according to schema specified in Item.ts
  */
 router.get("/all", async (req: Request, res: Response) => {
-  Item.find((err, docs) => {
+  Item.find().sort({ dateFound: -1, timeFound: -1 }).exec(function (err, docs) {
     if (err) {
       console.log(err);
       return res.status(401).send(err);
@@ -36,7 +36,7 @@ router.post("/add", async (req: Request, res: Response) => {
     status,
   } = req.body;
   let item = new Item({
-    dateFound: dateFound,
+    dateFound: new Date(dateFound),
     timeFound: timeFound,
     name: name,
     whereFound: whereFound,
@@ -64,12 +64,12 @@ router.post("/add", async (req: Request, res: Response) => {
  */
 router.post("/delete", async (req: Request, res: Response) => {
   let id = req.body.id;
-  Item.findByIdAndDelete({_id: id}, (err, raw) => {
+  Item.findByIdAndDelete({ _id: id }, (err, raw) => {
     if (err) {
       console.log(err);
-      return res.status(401).send({trace: err, msg: "can't find item in db"});
+      return res.status(401).send({ trace: err, msg: "can't find item in db" });
     }
-    return res.status(200).send({msg: raw});
+    return res.status(200).send({ msg: raw });
   });
 
 });
@@ -84,12 +84,12 @@ router.post("/delete", async (req: Request, res: Response) => {
 router.post("/updateStatus", async (req: Request, res: Response) => {
   let id = req.body.id;
   let status = req.body.status;
-  Item.findByIdAndUpdate({_id: id}, {status: status}, {runValidators: true, useFindAndModify: false}, (err, raw) => {
+  Item.findByIdAndUpdate({ _id: id }, { status: status }, { runValidators: true, useFindAndModify: false }, (err, raw) => {
     if (err) {
       console.log(err);
-      return res.status(401).send({trace: err, msg: "can't find item in db"});
+      return res.status(401).send({ trace: err, msg: "can't find item in db" });
     }
-    return res.status(200).send({msg: raw});
+    return res.status(200).send({ msg: raw });
   });
 
 });
@@ -120,9 +120,9 @@ router.post("/editItem", async (req: Request, res: Response) => {
     category: req.body.category, whereToRetrieve: req.body.whereToRetrieve, image:req.body.image, imagePermission:req.body.imagePermission, status: req.body.status}, {runValidators: true, useFindAndModify: false}, (err, raw) => {
     if (err) {
       console.log(err);
-      return res.status(401).send({trace: err, msg: "can't find item in db"});
+      return res.status(401).send({ trace: err, msg: "can't find item in db" });
     }
-    return res.status(200).send({msg: raw});
+    return res.status(200).send({ msg: raw });
   });
 
 });
@@ -138,24 +138,24 @@ router.post("/editItem", async (req: Request, res: Response) => {
  */
 router.post("/addImage", async (req: Request, res: Response) => {
   console.log("Attempting to add image")
- 
+
   var imageName = req.body.imageName;
   var dataURL = req.body.dataURL;
   ImageController.sendImageToDrive(imageName, dataURL,
-    (err : any, finalURL : any) => {
-    if (err) {
-      console.log(err);
-      return res.status(401).send(err);
-    }
-    return res.status(200).send({msg: finalURL})
-  });
+    (err: any, finalURL: any) => {
+      if (err) {
+        console.log(err);
+        return res.status(401).send(err);
+      }
+      return res.status(200).send({ msg: finalURL })
+    });
 });
-  // Item.updateOne({_id: id}, { $set: {status: status} }, {runValidators: true}, (err, raw) => {
-  //   if (err) {
-  //     console.log(err);
-  //     return res.status(401).send({trace: err, msg: "can't find item in db"});
-  //   }
-  //   return res.status(200).send({msg: raw});
-  // });
+// Item.updateOne({_id: id}, { $set: {status: status} }, {runValidators: true}, (err, raw) => {
+//   if (err) {
+//     console.log(err);
+//     return res.status(401).send({trace: err, msg: "can't find item in db"});
+//   }
+//   return res.status(200).send({msg: raw});
+// });
 
 export default router;

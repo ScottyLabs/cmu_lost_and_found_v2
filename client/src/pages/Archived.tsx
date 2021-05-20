@@ -50,7 +50,7 @@ function Archived() {
             <h1 id="title">Archived Items</h1>
             <div id="admin-filter-bar">
               <FilterBar></FilterBar>
-              <AddItemButton fetchItems={fetchItems}></AddItemButton>
+              <AddItemButton fetchItems={fetchItems} isAdmin={true}></AddItemButton>
             </div>
             <div id="table">
               <TableWidget

@@ -41,6 +41,10 @@ const ItemSchema = new mongoose.Schema({
     enum: ["available", "destroyed", "claimed"],
     required: true
   },
+  approved: {
+    type: Boolean,
+    required: true
+  }
 });
 
 const Item = mongoose.model("Item", ItemSchema, "items");

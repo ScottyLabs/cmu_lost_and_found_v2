@@ -3,8 +3,8 @@ import { Form, Table } from "semantic-ui-react";
 import { Item } from "../interface/item";
 import "./TableWidget.css";
 import ImageModal from "./ImageModal";
-import ClaimButton from "./ClaimButton";
-import UnclaimButton from "./UnclaimButton";
+import SwitchButton from "./SwitchButton";
+import ApproveSwitch from "./ApproveSwitch";
 import DeleteButton from "./DeleteButton";
 
 const TableWidget = (props: {
@@ -42,6 +42,7 @@ const TableWidget = (props: {
             {props.isAdmin ? (
               <Table.HeaderCell>Claim/Unclaim</Table.HeaderCell>
             ) : null}
+            {props.isAdmin ? <Table.HeaderCell>Approve</Table.HeaderCell> : null}
             {props.isAdmin ? <Table.HeaderCell>Delete</Table.HeaderCell> : null}
           </Table.Row>
         </Table.Header>
@@ -49,8 +50,8 @@ const TableWidget = (props: {
           {props.items
             .filter((item) => {
               return (
-                item.status === "available" ||
-                (props.isAdmin && displayArchived)
+                (item.status === "available" && item.approved) ||
+                (props.isAdmin && (displayArchived || item.status === "available"))
               );
             })
             .map((item: Item) => {
@@ -72,16 +73,21 @@ const TableWidget = (props: {
                   </Table.Cell>
                   {props.isAdmin ? (
                     <Table.Cell>
-                      <ClaimButton
+                      <SwitchButton
                         id={item._id}
-                        disabled={item.status !== "available"}
+                        isClaimed={item.status !== "available"}
+                        disabled={!(item.approved.valueOf())}
                         fetchItems={props.fetchItems}
-                      ></ClaimButton>
-                      <UnclaimButton
+                      ></SwitchButton>
+                    </Table.Cell>
+                  ) : null}
+                  {props.isAdmin ? (
+                    <Table.Cell>
+                      <ApproveSwitch
                         id={item._id}
-                        disabled={item.status === "available"}
+                        isApproved={item.approved.valueOf()}
                         fetchItems={props.fetchItems}
-                      ></UnclaimButton>
+                      ></ApproveSwitch>
                     </Table.Cell>
                   ) : null}
                   {props.isAdmin ? (

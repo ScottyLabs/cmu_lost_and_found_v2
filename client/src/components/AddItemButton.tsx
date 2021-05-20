@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { Button, Grid, Modal, Form } from 'semantic-ui-react';
 import "./AddItemButton.css";
 
@@ -43,6 +43,7 @@ const pickup = [
 
 function AddItemButton(props: {
   fetchItems: Function;
+  isAdmin: boolean;
 }) {
   const [dispatchState, dispatch] = React.useReducer(exampleReducer, {
     closeOnEscape: false,
@@ -131,6 +132,7 @@ function AddItemButton(props: {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const { dateFound, timeFound, name, whereFound, description, category, whereToRetrieve, image, imageObject, imagePermission, status } = state;
+    console.log(props.isAdmin);
 
     uploadImage(imageObject).then((res) => {
       axios
@@ -144,7 +146,8 @@ function AddItemButton(props: {
           whereToRetrieve: whereToRetrieve,
           image: res,
           imagePermission: imagePermission,
-          status: status
+          status: status,
+          approved: props.isAdmin
         })
         .then(
           (res) => {

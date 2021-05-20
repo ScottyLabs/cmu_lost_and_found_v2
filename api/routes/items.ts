@@ -34,6 +34,7 @@ router.post("/add", async (req: Request, res: Response) => {
     image,
     imagePermission,
     status,
+    approved,
   } = req.body;
   let item = new Item({
     dateFound: new Date(dateFound),
@@ -46,6 +47,7 @@ router.post("/add", async (req: Request, res: Response) => {
     image: image,
     imagePermission: imagePermission,
     status: status,
+    approved: approved,
   });
   item.save((err) => {
     if (err) {
@@ -85,6 +87,26 @@ router.post("/updateStatus", async (req: Request, res: Response) => {
   let id = req.body.id;
   let status = req.body.status;
   Item.findByIdAndUpdate({ _id: id }, { status: status }, { runValidators: true, useFindAndModify: false }, (err, raw) => {
+    if (err) {
+      console.log(err);
+      return res.status(401).send({ trace: err, msg: "can't find item in db" });
+    }
+    return res.status(200).send({ msg: raw });
+  });
+
+});
+
+/**
+ * Updates an item's approved status by id
+ * {
+ * id: id
+ * approved: approved
+ * }
+ */
+router.post("/updateApprovedStatus", async (req: Request, res: Response) => {
+  let id = req.body.id;
+  let approved = req.body.approved;
+  Item.findByIdAndUpdate({ _id: id }, { approved: approved }, { runValidators: true, useFindAndModify: false }, (err, raw) => {
     if (err) {
       console.log(err);
       return res.status(401).send({ trace: err, msg: "can't find item in db" });

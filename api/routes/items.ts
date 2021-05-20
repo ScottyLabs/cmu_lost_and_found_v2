@@ -1,8 +1,29 @@
-import { Request, Response, Router } from "express";
+import { Request, Response, Router, NextFunction } from "express";
 import Item from "../models/Item";
 const router = Router();
 
 import ImageController from "../controllers/ImageController";
+import UserController from "../controllers/UserController";
+
+/**
+ * Using the access token provided, check to make sure that
+ * you are, indeed, an admin.
+ */
+function isAdmin(req: Request, res: Response, next: NextFunction) {
+  let token: string = req.body.token;
+  UserController.getByToken(token, (err: any, user: any) => {
+    if (err) {
+      return res.status(500).send(err);
+    }
+    if (user && user.isAdmin) {
+      req.body.user = user;
+      return next();
+    }
+    return res.status(401).send({
+      message: "Failed authentication for admin",
+    });
+  });
+}
 
 /**
  * Returns all items in database, according to schema specified in Item.ts
@@ -22,7 +43,7 @@ router.get("/all", async (req: Request, res: Response) => {
  * Should correspond to schema found in Item.ts
  */
 //TODO: Still need add item validation (in case some fields aren't satisfactory)
-router.post("/add", async (req: Request, res: Response) => {
+router.post("/add", isAdmin, async (req: Request, res: Response) => {
   let {
     dateFound,
     timeFound,
@@ -64,7 +85,7 @@ router.post("/add", async (req: Request, res: Response) => {
  * id: id
  * }
  */
-router.post("/delete", async (req: Request, res: Response) => {
+router.post("/delete", isAdmin, async (req: Request, res: Response) => {
   let id = req.body.id;
   Item.findByIdAndDelete({ _id: id }, (err, raw) => {
     if (err) {
@@ -83,7 +104,7 @@ router.post("/delete", async (req: Request, res: Response) => {
  * status: status
  * }
  */
-router.post("/updateStatus", async (req: Request, res: Response) => {
+router.post("/updateStatus", isAdmin, async (req: Request, res: Response) => {
   let id = req.body.id;
   let status = req.body.status;
   Item.findByIdAndUpdate({ _id: id }, { status: status }, { runValidators: true, useFindAndModify: false }, (err, raw) => {
@@ -123,7 +144,7 @@ router.post("/updateApprovedStatus", async (req: Request, res: Response) => {
  * status: status
  * }
  */
-router.post("/editItem", async (req: Request, res: Response) => {
+router.post("/editItem", isAdmin, async (req: Request, res: Response) => {
   let id = req.body.id;
   let status = req.body.status;
   Item.findByIdAndUpdate({ _id: id }, { status: status }, { runValidators: true, useFindAndModify: false }, (err, raw) => {
@@ -145,7 +166,7 @@ router.post("/editItem", async (req: Request, res: Response) => {
  * 
  * Returns the finalURL
  */
-router.post("/addImage", async (req: Request, res: Response) => {
+router.post("/addImage", isAdmin, async (req: Request, res: Response) => {
   console.log("Attempting to add image")
 
   var imageName = req.body.imageName;

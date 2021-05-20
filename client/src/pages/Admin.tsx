@@ -97,12 +97,12 @@ function Admin() {
             <h1 className="title">Carnegie Mellon University</h1>
             <h2 className="subtitle">Lost and Found Admin Panel - Items</h2>
             <div id="add-mobile">
-              <AddItemButton fetchItems={fetchItems}></AddItemButton>
+              <AddItemButton fetchItems={fetchItems} isAdmin={true}></AddItemButton>
             </div>
             <div id="admin-filter-bar">
               {/* <FilterBar></FilterBar> */}
               <SearchBar input={input} onChange={updateInput} />
-              <AddItemButton fetchItems={fetchItems}></AddItemButton>
+              <AddItemButton fetchItems={fetchItems} isAdmin={true}></AddItemButton>
             </div>
             <div id="table">
               <TableWidget

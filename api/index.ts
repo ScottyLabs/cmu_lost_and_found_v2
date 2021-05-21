@@ -43,7 +43,7 @@ app.get("/", (req, res, next) => {
 });
 
 // api route
-app.use("/api/users", UserRouter);
+app.use("/api/accounts", UserRouter);
 app.use("/api/auth", AuthRouter);
 app.use("/api/items", ItemRouter);
 

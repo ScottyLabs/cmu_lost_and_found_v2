@@ -36,7 +36,7 @@ const UserTable = (props: {
                     data
                   ) => {
                     axios
-                      .post(`/api/users/updatePerm`, {
+                      .post(`/api/accounts/updatePerm`, {
                         username: user.username,
                         perm: "isAdmin",
                         isChecked: data.checked,
@@ -63,7 +63,7 @@ const UserTable = (props: {
                     data
                   ) => {
                     axios
-                      .post(`/api/users/updatePerm`, {
+                      .post(`/api/accounts/updatePerm`, {
                         username: user.username,
                         perm: "isOwner",
                         isChecked: data.checked,

@@ -7,6 +7,8 @@ import FilterBar from "../components/FilterBar";
 import SearchBar from '../components/SearchBar';
 import { Item } from "../interface/item";
 import "./TablePage.css";
+import CardWidget from "../components/CardWidget";
+import ItemCard from "../components/ItemCard";
 
 function TablePage() {
   const [items, setItems] = useState([]);
@@ -51,14 +53,19 @@ function TablePage() {
   let locations = ['Gates Hillman 6203', `Lost and Found desk in the University Center`, `Lost and Found desk in Residence on Fifth
   `, `Lost and Found desk in Morewood E-tower`, `Lost and Found desk in Donner`];
 
-  const listItems = locations.map((d) => <li className="location">{d}</li>);
+  const listItems = locations.map((d) => <li className="location" key={d}>{d}</li>);
 
   return (
     <Grid>
       <Grid.Row>
         <Grid.Column width={16}>
           <main>
-            <Link to="/"><img src="/dog-logo.png" id="logo-mobile" alt="CMU Lost and Found Logo"></img>
+            <Link to="/">
+              <img
+                src="/dog-logo.png"
+                id="logo-mobile"
+                alt="CMU Lost and Found Logo"
+              ></img>
             </Link>
             <div id="settings">
               <Rail attached internal position="left" id="logo-desktop">
@@ -71,21 +78,32 @@ function TablePage() {
             <h1 className="title">Carnegie Mellon University</h1>
             <h2 className="subtitle">Lost and Found Website</h2>
             <div id="description">
-              <p>If you find a lost item, please take it to one of the following locations:</p>
+              <p>
+                If you find a lost item, please take it to one of the following
+                locations:
+              </p>
               <ul>{listItems}</ul>
               <p>
-                To retrieve an object, go to the location listed next to the object on the table.  You will be required to identify any lost possessions. 
-                All items must be picked up in person.
-                If you have any inquiries, please send an email to <a href="mailto:lostfound@cs.cmu.edu">lostfound@cs.cmu.edu</a>.
+                To retrieve an object, go to the location listed next to the
+                object on the table. You will be required to identify any lost
+                possessions. All items must be picked up in person. If you have
+                any inquiries, please send an email to{" "}
+                <a href="mailto:lostfound@cs.cmu.edu">lostfound@cs.cmu.edu</a>.
               </p>
             </div>
-            <div id="center-admin-bar">
-              <div id="admin-filter-bar">
-                <FilterBar></FilterBar>
-                {/* <SearchBar input={input} onChange={updateInput} /> */}
-              </div>
+            <div id="admin-filter-bar">
+              {/* <FilterBar></FilterBar> */}
+              <SearchBar input={input} onChange={updateInput} />
             </div>
 
+            <div id="cards">
+              <CardWidget
+                items={itemList}
+                isAdmin={false}
+                isArchived={false}
+                fetchItems={fetchItems}
+              ></CardWidget>
+            </div>
             <div id="table">
               <TableWidget
                 items={itemList}
@@ -94,6 +112,7 @@ function TablePage() {
                 fetchItems={fetchItems}
               ></TableWidget>
             </div>
+            {/* <ItemCard name="bob"></ItemCard> */}
           </main>
         </Grid.Column>
       </Grid.Row>

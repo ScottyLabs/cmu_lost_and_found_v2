@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Menu } from 'semantic-ui-react';
 
-export default class UserMenu extends Component {
+export default class Accounts extends Component {
   state = { activeItem: 'available items' }
 
   handleItemClick = (e:any, { name }:any) => this.setState({ activeItem: name })

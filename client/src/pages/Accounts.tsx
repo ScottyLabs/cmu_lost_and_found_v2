@@ -1,5 +1,5 @@
 import { Button, Grid, Icon, Rail } from "semantic-ui-react";
-import "./UserMenu.css";
+import "./Accounts.css";
 import "semantic-ui-css/semantic.min.css";
 import AdminMenu from "../components/AdminMenu";
 import axios from "axios";
@@ -10,7 +10,7 @@ import UserTable from "../components/UserTable";
 import AddUser from "../components/AddUser";
 
 
-function UserMenu() {
+function Accounts() {
   // const users = [
   //   {
   //     username: "rwguo",
@@ -32,7 +32,7 @@ function UserMenu() {
 
   const fetchUsers = () => {
     axios
-      .get(`/api/users/all`)
+      .get(`/api/accounts/all`)
       .then(
         (res) => {
           console.log("Retrieved users!");
@@ -76,9 +76,14 @@ function UserMenu() {
             </div>
             <h1 className="title">Carnegie Mellon University</h1>
             <h2 className="subtitle">Lost and Found Admin Panel - Users</h2>
+            <div id="add-user-mobile">
+              <AddUser fetchUsers={fetchUsers}></AddUser>
+            </div>
             <div id="admin-filter-bar">
               <FilterBar></FilterBar>
-              <AddUser fetchUsers={fetchUsers}></AddUser>
+              <div id="add-user-desktop">
+                <AddUser fetchUsers={fetchUsers}></AddUser>
+              </div>
             </div>
             <div id="table">
               <UserTable
@@ -95,4 +100,4 @@ function UserMenu() {
 
 };
 
-export default UserMenu;
+export default Accounts;

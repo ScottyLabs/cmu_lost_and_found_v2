@@ -40,9 +40,9 @@ const TableWidget = (props: {
             <Table.HeaderCell collapsing>Where to Retrieve</Table.HeaderCell>
             <Table.HeaderCell collapsing>Image</Table.HeaderCell>
             {props.isAdmin ? (
-              <Table.HeaderCell>Claim/Unclaim</Table.HeaderCell>
+              <Table.HeaderCell collapsing>Claim/Unclaim</Table.HeaderCell>
             ) : null}
-            {props.isAdmin ? <Table.HeaderCell>Delete</Table.HeaderCell> : null}
+            {props.isAdmin ? <Table.HeaderCell collapsing>Delete</Table.HeaderCell> : null}
           </Table.Row>
         </Table.Header>
         <Table.Body>
@@ -60,14 +60,14 @@ const TableWidget = (props: {
               let timeFormatted = (parseInt(h) % 12) + (parseInt(h) % 12 === 0 ? 12 : 0) + ":" + m + " " + (parseInt(h) >= 12 ? "PM" : "AM")
               return (
                 <Table.Row key={item._id}>
-                  <Table.Cell collapsing>{dateFormatted}</Table.Cell>
-                  <Table.Cell collapsing>{timeFormatted}</Table.Cell>
-                  <Table.Cell collapsing>{item.name}</Table.Cell>
-                  <Table.Cell collapsing>{item.whereFound}</Table.Cell>
-                  <Table.Cell collapsing>{item.description}</Table.Cell>
-                  <Table.Cell collapsing>{item.category}</Table.Cell>
-                  <Table.Cell collapsing>{item.whereToRetrieve}</Table.Cell>
-                  <Table.Cell collapsing>
+                  <Table.Cell>{dateFormatted}</Table.Cell>
+                  <Table.Cell>{timeFormatted}</Table.Cell>
+                  <Table.Cell>{item.name}</Table.Cell>
+                  <Table.Cell>{item.whereFound}</Table.Cell>
+                  <Table.Cell>{item.description}</Table.Cell>
+                  <Table.Cell>{item.category}</Table.Cell>
+                  <Table.Cell>{item.whereToRetrieve}</Table.Cell>
+                  <Table.Cell>
                     <ImageModal image={item.image}></ImageModal>
                   </Table.Cell>
                   {props.isAdmin ? (

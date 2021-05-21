@@ -1,14 +1,14 @@
 import React from 'react';
+import "./SearchBar.css";
 
 const SearchBar = (props: {input: string, onChange: Function}) => {
-  const BarStyling = {width:"20rem",background:"#F2F1F9", border:"none", padding:"0.5rem"};
   return (
     <input 
-     style={BarStyling}
-     key="random1"
-     value={props.input}
-     placeholder={"Search Items"}
-     onChange={(e) => props.onChange(e.target.value)}
+      key="random1"
+      className="search-bar"
+      value={props.input}
+      placeholder={"Search Items..."}
+      onChange={(e) => props.onChange(e.target.value)}
     />
   );
 }

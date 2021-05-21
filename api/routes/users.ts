@@ -6,7 +6,7 @@ import User from "../models/User";
 const router = Router();
 
 /******************************************************************************
- *                      Get All Users - "GET /api/users/all"
+ *                      Get All Users - "GET /api/accounts/all"
  ******************************************************************************/
 
 router.get('/all', async (req: Request, res: Response) => {
@@ -22,7 +22,7 @@ router.get('/all', async (req: Request, res: Response) => {
 
 
 /******************************************************************************
- *                       Add One - "POST /api/users/add"
+ *                       Add One - "POST /api/accounts/add"
  ******************************************************************************/
 
 /**

@@ -9,7 +9,7 @@ import Items from "./pages/Items";
 import TablePage from "./pages/TablePage";
 import Settings from "./pages/Settings";
 import ImageTestPage from "./pages/ImageTestPage";
-import UserMenu from "./pages/UserMenu";
+import Accounts from "./pages/Accounts";
 
 function App() {
   return (
@@ -37,8 +37,8 @@ function App() {
         <Route path="/ImageTest">
           <ImageTestPage />
         </Route>
-        <Route path="/users">
-          <UserMenu />
+        <Route path="/accounts">
+          <Accounts />
         </Route>
       </Switch>
     </div>

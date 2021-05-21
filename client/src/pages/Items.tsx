@@ -2,7 +2,7 @@ import React from "react";
 import { Grid, Rail, Button, Icon } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import "./Items.css";
-import UserMenu from "../components/UserMenu";
+import Accounts from "../components/UserMenu";
 import FilterBar from "../components/FilterBar";
 import "semantic-ui-css/semantic.min.css";
 
@@ -16,7 +16,7 @@ function Items() {
   //         <Link to="/"><img id="logo" src="/dog-logo.png" alt="CMU Lost and Found Logo"></img></Link>
   //         <br></br>
   //         <br></br>
-  //         <UserMenu></UserMenu>
+  //         <Accounts></Accounts>
   //       </Grid.Column>
   //       <Grid.Column width={13}>
   //         <main>

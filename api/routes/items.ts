@@ -11,6 +11,8 @@ import UserController from "../controllers/UserController";
  */
 function isAdmin(req: Request, res: Response, next: NextFunction) {
   let token: string = req.body.token;
+  // uncomment the next line to disable authentication
+  // next();
   UserController.getByToken(token, (err: any, user: any) => {
     if (err) {
       return res.status(500).send(err);

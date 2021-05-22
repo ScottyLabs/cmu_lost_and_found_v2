@@ -19,7 +19,6 @@ const TableWidget = (props: {
     setDisplayArchived(data.checked);
   };
 
-  console.log("Creating table");
   return (
     <Form>
       {props.isAdmin ? (
@@ -31,16 +30,16 @@ const TableWidget = (props: {
       <Table celled className="lf_table">
         <Table.Header>
           <Table.Row>
-            <Table.HeaderCell width={1} collapsing>Date Found</Table.HeaderCell>
-            <Table.HeaderCell width={1} collapsing>Time Found</Table.HeaderCell>
-            <Table.HeaderCell collapsing>Name</Table.HeaderCell>
-            <Table.HeaderCell collapsing>Where Found</Table.HeaderCell>
-            <Table.HeaderCell collapsing>Description</Table.HeaderCell>
-            <Table.HeaderCell collapsing>Category</Table.HeaderCell>
-            <Table.HeaderCell collapsing>Where to Retrieve</Table.HeaderCell>
-            <Table.HeaderCell collapsing>Image</Table.HeaderCell>
+            <Table.HeaderCell width={1}>Date Found</Table.HeaderCell>
+            <Table.HeaderCell width={1}>Time Found</Table.HeaderCell>
+            <Table.HeaderCell>Name</Table.HeaderCell>
+            <Table.HeaderCell>Where Found</Table.HeaderCell>
+            <Table.HeaderCell>Description</Table.HeaderCell>
+            <Table.HeaderCell>Category</Table.HeaderCell>
+            <Table.HeaderCell>Where to Retrieve</Table.HeaderCell>
+            <Table.HeaderCell>Image</Table.HeaderCell>
             {props.isAdmin ? (
-              <Table.HeaderCell collapsing>Claim/Unclaim</Table.HeaderCell>
+              <Table.HeaderCell>Claim/Unclaim</Table.HeaderCell>
             ) : null}
             {props.isAdmin ? <Table.HeaderCell>Approve</Table.HeaderCell> : null}
             {props.isAdmin ? <Table.HeaderCell>Delete</Table.HeaderCell> : null}
@@ -58,7 +57,8 @@ const TableWidget = (props: {
               let date = new Date(item.dateFound).toISOString().substring(0, 10).split("-");
               let dateFormatted = date[1] + "/" + date[2] + "/" + date[0];
               let [h, m] = item.timeFound.split(":");
-              let timeFormatted = (parseInt(h) % 12) + (parseInt(h) % 12 === 0 ? 12 : 0) + ":" + m + " " + (parseInt(h) >= 12 ? "PM" : "AM")
+              let timeFormatted = (parseInt(h) % 12) + (parseInt(h) % 12 === 0 ? 12 : 0) + ":" + m + " " + (parseInt(h) >= 12 ? "PM" : "AM");
+              console.log(item.approved);
               return (
                 <Table.Row key={item._id}>
                   <Table.Cell>{dateFormatted}</Table.Cell>

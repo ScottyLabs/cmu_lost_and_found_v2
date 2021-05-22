@@ -73,7 +73,7 @@ for row in soup.find_all('tr'):
         info["whereToRetrieve"] = "Gates" # for now
         info["imagePermission"] = True # for now
         info["status"] = "available" # for now
-        info["approved"] = True
+        info["approved"] = "true"
 
         print(info)
         send_data(info)

@@ -2,8 +2,6 @@ import React, {useState,useEffect} from "react";
 import { Grid, Button, Icon, Rail} from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import "./Admin.css";
-import AdminMenu from "../components/AdminMenu";
-import FilterBar from "../components/FilterBar";
 import AddItemButton from "../components/AddItemButton";
 import TableWidget from "../components/TableWidget";
 import "semantic-ui-css/semantic.min.css";
@@ -100,7 +98,6 @@ function Admin() {
               <AddItemButton fetchItems={fetchItems} isAdmin={true}></AddItemButton>
             </div>
             <div id="admin-filter-bar">
-              {/* <FilterBar></FilterBar> */}
               <SearchBar input={input} onChange={updateInput} />
               <div id="add-desktop">
                 <AddItemButton fetchItems={fetchItems} isAdmin={true}></AddItemButton>

@@ -1,9 +1,8 @@
 import axios from "axios";
 import React, {useState, useEffect} from "react";
-import { Grid, Button, Icon, Rail} from "semantic-ui-react";
+import { Grid, Rail} from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import TableWidget from "../components/TableWidget";
-import FilterBar from "../components/FilterBar";
 import SearchBar from '../components/SearchBar';
 import { Item } from "../interface/item";
 import "./TablePage.css";
@@ -92,7 +91,6 @@ function TablePage() {
               </p>
             </div>
             <div id="admin-filter-bar">
-              {/* <FilterBar></FilterBar> */}
               <SearchBar input={input} onChange={updateInput} />
             </div>
 

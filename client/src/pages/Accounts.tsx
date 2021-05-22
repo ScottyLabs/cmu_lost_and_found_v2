@@ -1,12 +1,10 @@
 import { Button, Grid, Icon, Rail } from "semantic-ui-react";
 import "./Accounts.css";
 import "semantic-ui-css/semantic.min.css";
-import AdminMenu from "../components/AdminMenu";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { User } from "../interface/user";
 import { Link } from "react-router-dom";
-import FilterBar from "../components/FilterBar";
 import UserTable from "../components/UserTable";
 import SearchBar from "../components/SearchBar";
 import AddUser from "../components/AddUser";

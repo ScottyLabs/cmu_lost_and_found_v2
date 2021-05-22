@@ -2,8 +2,6 @@ import React from "react";
 import { Grid, Rail, Button, Icon } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import "./Items.css";
-import Accounts from "../components/UserMenu";
-import FilterBar from "../components/FilterBar";
 import "semantic-ui-css/semantic.min.css";
 
 function Items() {

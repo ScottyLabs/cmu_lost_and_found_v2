@@ -4,9 +4,11 @@ import "semantic-ui-css/semantic.min.css";
 import AdminMenu from "../components/AdminMenu";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
+import { User } from "../interface/user";
 import { Link } from "react-router-dom";
 import FilterBar from "../components/FilterBar";
 import UserTable from "../components/UserTable";
+import SearchBar from "../components/SearchBar";
 import AddUser from "../components/AddUser";
 
 
@@ -26,9 +28,14 @@ function Accounts() {
   //     }
   // ];
 
-
   document.title = "Lost and Found User Permissions";
   const [users, setUsers] = useState([]);
+  //what is from the search
+  const [input, setInput] = useState("");
+  //unfiltered list
+  const [userListDefault, setUserListDefault] = useState([]);
+  //filtered list
+  const [userList, setUserList] = useState([]);
 
   const fetchUsers = () => {
     axios
@@ -38,6 +45,9 @@ function Accounts() {
           console.log("Retrieved users!");
           console.log(res);
           setUsers(res.data);
+                 //added
+        setUserListDefault(res.data);
+        setUserList(res.data);
         },
         (error) => {
           console.log(error);
@@ -49,6 +59,15 @@ function Accounts() {
     console.log("Effect used!");
     fetchUsers();
   }, []);
+
+  //modify users
+  const updateInput = async (input: string) => {
+    const filtered = userListDefault.filter((user: User) => {
+      return user.username.toLowerCase().includes(input.toLowerCase());
+    });
+    setInput(input);
+    setUserList(filtered);
+  };
 
   return (
     <Grid>
@@ -80,14 +99,14 @@ function Accounts() {
               <AddUser fetchUsers={fetchUsers}></AddUser>
             </div>
             <div id="admin-filter-bar">
-              <FilterBar></FilterBar>
+              <SearchBar input={input} onChange={updateInput} />
               <div id="add-user-desktop">
                 <AddUser fetchUsers={fetchUsers}></AddUser>
               </div>
             </div>
             <div id="table">
               <UserTable
-                users={users}
+                users={userList}
                 isOwner={true}
                 fetchUsers={fetchUsers}
               ></UserTable>

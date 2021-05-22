@@ -1,4 +1,5 @@
-import React, {useState,useEffect} from "react";
+import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { Grid, Button, Icon, Rail} from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import "./Admin.css";
@@ -66,7 +67,13 @@ function Admin() {
       }
     );
   };
+  const history = useHistory();
   useEffect(() => {
+    if (localStorage.getItem("lnf_token") == null) {
+      console.log("not logged in");
+      history.push("/login");
+      return;
+    }
     fetchItems();
   }, []);
 

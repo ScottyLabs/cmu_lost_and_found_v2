@@ -35,7 +35,7 @@ router.get('/all', async (req: Request, res: Response) => {
  */
 router.post('/updatePerm', async (req: Request, res: Response) => {
     let { username, perm, isChecked } = req.body;
-    if (perm !== "isAdmin" && perm !== "isOwner") {
+    if (perm !== "isAdmin") {
         return res.status(406).send({msg: "this admin privilege doesn't exist"})
     }
 

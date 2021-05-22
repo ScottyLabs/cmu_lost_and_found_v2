@@ -15,13 +15,11 @@ function Accounts() {
   //   {
   //     username: "rwguo",
   //     password: "bleh",
-  //     isOwner: false,
   //     isAdmin: true,
   //   },
   //   {
   //       username: "rwguo1",
   //       password: "bleh",
-  //       isOwner: true,
   //       isAdmin: true,
   //     }
   // ];
@@ -92,7 +90,7 @@ function Accounts() {
               </Link>
             </div>
             <h1 className="title">Carnegie Mellon University</h1>
-            <h2 className="subtitle">Lost and Found Admin Panel - Users</h2>
+            <h2 className="subtitle">Lost and Found Admin Panel - Accounts</h2>
             <div id="add-user-mobile">
               <AddUser fetchUsers={fetchUsers}></AddUser>
             </div>
@@ -105,7 +103,6 @@ function Accounts() {
             <div id="table">
               <UserTable
                 users={userList}
-                isOwner={true}
                 fetchUsers={fetchUsers}
               ></UserTable>
             </div>

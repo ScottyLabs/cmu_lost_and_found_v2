@@ -7,6 +7,32 @@ import UserController from "../controllers/UserController";
 
 /**
  * Using the access token provided, check to make sure that
+ * you are, indeed, a verified user.
+ */
+function isUser(req: Request, res: Response, next: NextFunction) {
+  let token: string = req.body.token;
+  // set authenticate to false to disable authentication
+  let authenticate = true
+  if (!authenticate) {
+    return next();
+  }
+  UserController.getByToken(token, (err: any, user: any) => {
+    if (err) {
+      console.log(err)
+      return res.status(500).send(err);
+    }
+    if (user) {
+      req.body.user = user;
+      return next();
+    }
+    return res.status(401).send({
+      message: "Failed authentication for admin",
+    });
+  });
+}
+
+/**
+ * Using the access token provided, check to make sure that
  * you are, indeed, an admin.
  */
 function isAdmin(req: Request, res: Response, next: NextFunction) {
@@ -14,8 +40,7 @@ function isAdmin(req: Request, res: Response, next: NextFunction) {
   // set authenticate to false to disable authentication
   let authenticate = true
   if (!authenticate) {
-    next();
-    return;
+    return next();
   }
   UserController.getByToken(token, (err: any, user: any) => {
     if (err) {
@@ -49,7 +74,7 @@ router.get("/all", async (req: Request, res: Response) => {
  * Should correspond to schema found in Item.ts
  */
 //TODO: Still need add item validation (in case some fields aren't satisfactory)
-router.post("/add", isAdmin, async (req: Request, res: Response) => {
+router.post("/add", isUser, async (req: Request, res: Response) => {
   let {
     dateFound,
     timeFound,
@@ -91,7 +116,7 @@ router.post("/add", isAdmin, async (req: Request, res: Response) => {
  * id: id
  * }
  */
-router.post("/delete", isAdmin, async (req: Request, res: Response) => {
+router.post("/delete", isUser, async (req: Request, res: Response) => {
   let id = req.body.id;
   Item.findByIdAndDelete({ _id: id }, (err, raw) => {
     if (err) {
@@ -110,7 +135,7 @@ router.post("/delete", isAdmin, async (req: Request, res: Response) => {
  * status: status
  * }
  */
-router.post("/updateStatus", isAdmin, async (req: Request, res: Response) => {
+router.post("/updateStatus", isUser, async (req: Request, res: Response) => {
   let id = req.body.id;
   let status = req.body.status;
   Item.findByIdAndUpdate({ _id: id }, { status: status }, { runValidators: true, useFindAndModify: false }, (err, raw) => {
@@ -130,7 +155,7 @@ router.post("/updateStatus", isAdmin, async (req: Request, res: Response) => {
  * approved: approved
  * }
  */
-router.post("/updateApprovedStatus", async (req: Request, res: Response) => {
+router.post("/updateApprovedStatus", isUser, async (req: Request, res: Response) => {
   let id = req.body.id;
   let approved = req.body.approved;
   Item.findByIdAndUpdate({ _id: id }, { approved: approved }, { runValidators: true, useFindAndModify: false }, (err, raw) => {
@@ -150,7 +175,7 @@ router.post("/updateApprovedStatus", async (req: Request, res: Response) => {
  * status: status
  * }
  */
-router.post("/editItem", isAdmin, async (req: Request, res: Response) => {
+router.post("/editItem", isUser, async (req: Request, res: Response) => {
   let id = req.body.id;
   let status = req.body.status;
   Item.findByIdAndUpdate({ _id: id }, { status: status }, { runValidators: true, useFindAndModify: false }, (err, raw) => {
@@ -172,11 +197,9 @@ router.post("/editItem", isAdmin, async (req: Request, res: Response) => {
  * 
  * Returns the finalURL
  */
-router.post("/addImage", isAdmin, async (req: Request, res: Response) => {
-  console.log("Attempting to add image")
-
-  var imageName = req.body.imageName;
-  var dataURL = req.body.dataURL;
+router.post("/addImage", isUser, async (req: Request, res: Response) => {
+  let imageName = req.body.imageName;
+  let dataURL = req.body.dataURL;
   ImageController.sendImageToDrive(imageName, dataURL,
     (err: any, finalURL: any) => {
       if (err) {

@@ -17,7 +17,7 @@ export default function ApproveSwitch(props: {
   const handleClick = () => {
     const { isApproved } = state;
     axios
-      .post(`/api/items/updateApprovedStatus`, { id: props.id, approved: !isApproved })
+      .post(`/api/items/updateApprovedStatus`, { token: localStorage.getItem("lnf_token"), id: props.id, approved: !isApproved })
       .then(
         (res) => {
           props.fetchItems();

@@ -1,15 +1,19 @@
 import React from 'react';
+import { Form, Input } from "semantic-ui-react";
+import "./SearchBar.css";
 
 const SearchBar = (props: {input: string, onChange: Function}) => {
-  const BarStyling = {width:"20rem",background:"#F2F1F9", border:"none", padding:"0.5rem"};
   return (
-    <input 
-     style={BarStyling}
-     key="random1"
-     value={props.input}
-     placeholder={"Search Items"}
-     onChange={(e) => props.onChange(e.target.value)}
-    />
+    <Form id="search">
+      <Form.Field
+        id="searchbar"
+        control={Input}
+        value={props.input}
+        placeholder="Search Items..."
+        onChange={(e: any) => props.onChange(e.target.value)}
+        icon="search"
+      />
+    </Form>
   );
 }
 

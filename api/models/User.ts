@@ -10,7 +10,6 @@ export interface IUser extends Document {
   username: string,
   password: string,
   isAdmin: boolean,
-  isOwner: boolean,
   checkPassword: (password: string) => boolean
   generateAuthToken: () => string
 }
@@ -35,10 +34,6 @@ const UserSchema = new Schema({
     required: true,
   },
   isAdmin: {
-    type: Boolean,
-    default: false,
-  },
-  isOwner: {
     type: Boolean,
     default: false,
   }

@@ -1,43 +1,49 @@
 import { Button, Grid, Icon, Rail } from "semantic-ui-react";
-import "./UserMenu.css";
+import "./Accounts.css";
 import "semantic-ui-css/semantic.min.css";
-import AdminMenu from "../components/AdminMenu";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
+import { User } from "../interface/user";
 import { Link } from "react-router-dom";
-import FilterBar from "../components/FilterBar";
 import UserTable from "../components/UserTable";
+import SearchBar from "../components/SearchBar";
 import AddUser from "../components/AddUser";
 
 
-function UserMenu() {
+function Accounts() {
   // const users = [
   //   {
   //     username: "rwguo",
   //     password: "bleh",
-  //     isOwner: false,
   //     isAdmin: true,
   //   },
   //   {
   //       username: "rwguo1",
   //       password: "bleh",
-  //       isOwner: true,
   //       isAdmin: true,
   //     }
   // ];
 
-
   document.title = "Lost and Found User Permissions";
   const [users, setUsers] = useState([]);
+  //what is from the search
+  const [input, setInput] = useState("");
+  //unfiltered list
+  const [userListDefault, setUserListDefault] = useState([]);
+  //filtered list
+  const [userList, setUserList] = useState([]);
 
   const fetchUsers = () => {
     axios
-      .get(`/api/users/all`)
+      .get(`/api/accounts/all`)
       .then(
         (res) => {
           console.log("Retrieved users!");
           console.log(res);
           setUsers(res.data);
+                 //added
+        setUserListDefault(res.data);
+        setUserList(res.data);
         },
         (error) => {
           console.log(error);
@@ -49,6 +55,15 @@ function UserMenu() {
     console.log("Effect used!");
     fetchUsers();
   }, []);
+
+  //modify users
+  const updateInput = async (input: string) => {
+    const filtered = userListDefault.filter((user: User) => {
+      return user.username.toLowerCase().includes(input.toLowerCase());
+    });
+    setInput(input);
+    setUserList(filtered);
+  };
 
   return (
     <Grid>
@@ -75,15 +90,19 @@ function UserMenu() {
               </Link>
             </div>
             <h1 className="title">Carnegie Mellon University</h1>
-            <h2 className="subtitle">Lost and Found Admin Panel - Users</h2>
-            <div id="admin-filter-bar">
-              <FilterBar></FilterBar>
+            <h2 className="subtitle">Lost and Found Admin Panel - Accounts</h2>
+            <div id="add-user-mobile">
               <AddUser fetchUsers={fetchUsers}></AddUser>
+            </div>
+            <div id="admin-filter-bar">
+              <SearchBar input={input} onChange={updateInput} />
+              <div id="add-user-desktop">
+                <AddUser fetchUsers={fetchUsers}></AddUser>
+              </div>
             </div>
             <div id="table">
               <UserTable
-                users={users}
-                isOwner={true}
+                users={userList}
                 fetchUsers={fetchUsers}
               ></UserTable>
             </div>
@@ -95,4 +114,4 @@ function UserMenu() {
 
 };
 
-export default UserMenu;
+export default Accounts;

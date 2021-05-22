@@ -19,7 +19,6 @@ const TableWidget = (props: {
     setDisplayArchived(data.checked);
   };
 
-  console.log("Creating table");
   return (
     <Form>
       {props.isAdmin ? (
@@ -58,7 +57,7 @@ const TableWidget = (props: {
               let date = new Date(item.dateFound).toISOString().substring(0, 10).split("-");
               let dateFormatted = date[1] + "/" + date[2] + "/" + date[0];
               let [h, m] = item.timeFound.split(":");
-              let timeFormatted = (parseInt(h) % 12) + (parseInt(h) % 12 === 0 ? 12 : 0) + ":" + m + " " + (parseInt(h) >= 12 ? "PM" : "AM")
+              let timeFormatted = (parseInt(h) % 12) + (parseInt(h) % 12 === 0 ? 12 : 0) + ":" + m + " " + (parseInt(h) >= 12 ? "PM" : "AM");
               return (
                 <Table.Row key={item._id}>
                   <Table.Cell>{dateFormatted}</Table.Cell>
@@ -76,7 +75,7 @@ const TableWidget = (props: {
                       <SwitchButton
                         id={item._id}
                         isClaimed={item.status !== "available"}
-                        disabled={!(item.approved.valueOf())}
+                        disabled={!(item.approved)}
                         fetchItems={props.fetchItems}
                       ></SwitchButton>
                     </Table.Cell>
@@ -85,7 +84,7 @@ const TableWidget = (props: {
                     <Table.Cell>
                       <ApproveSwitch
                         id={item._id}
-                        isApproved={item.approved.valueOf()}
+                        isApproved={item.approved}
                         fetchItems={props.fetchItems}
                       ></ApproveSwitch>
                     </Table.Cell>

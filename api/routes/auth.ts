@@ -6,37 +6,19 @@ import User, { IUser } from "../models/User"
 const router = Router();
 
 
-
-// function isOwner(req: Request, res: Response, next: NextFunction) {
-//   var token = getToken(req);
-//   UserController.getByToken(token, (err:any, user:any) => {
-//     if (err) {
-//       return res.status(500).send(err);
-//     }
-//     if (user && user.owner) {
-//       req.body.user = user;
-//       return next();
-//     }
-//     return res.status(401).send({
-//       message: "Failed authentication for owner",
-//     });
-//   });
-// }
-
 /**
  * Register a user with a username and password
  * Fails if password too short or username already exists
  * body {
  *  username: username,
  *  password: password,
- *  isAdmin: false,
- *  isOwner: false;
+ *  isAdmin: false
  * }
  */
 router.post("/register", (req: Request, res: Response) => {
-  let { username, password, isAdmin, isOwner } = req.body;
+  let { username, password, isAdmin } = req.body;
 
-  UserController.createUser(username, password, isAdmin, isOwner, (err:string, user:IUser) => {
+  UserController.createUser(username, password, isAdmin, (err:string, user:IUser) => {
     if (err != null) {
       return res.status(401).send(err);
     }
@@ -88,8 +70,6 @@ router.post("/register", (req: Request, res: Response) => {
           }
         );
       }
-
-      
 
   });
 

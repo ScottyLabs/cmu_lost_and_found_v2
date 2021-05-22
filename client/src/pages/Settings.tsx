@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Grid, Rail } from "semantic-ui-react";
 import {Link} from "react-router-dom";
 import "./Admin.css";
-import AdminMenu from "../components/AdminMenu";
 import "semantic-ui-css/semantic.min.css";
 import axios from "axios";
 

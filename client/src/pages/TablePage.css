@@ -26,3 +26,16 @@
     display: flex;
     justify-content: center;
 } */
+
+#cards-widget {
+    display: none;
+}
+
+@media (max-width: 1180px) {
+    #table-widget {
+        display: none;
+    }
+    #cards-widget {
+        display: block;
+    }
+}

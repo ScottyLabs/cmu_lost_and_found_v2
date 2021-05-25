@@ -7,7 +7,6 @@ import Admin from "./pages/Admin";
 import Items from "./pages/Items";
 import TablePage from "./pages/TablePage";
 import Settings from "./pages/Settings";
-import ImageTestPage from "./pages/ImageTestPage";
 import Accounts from "./pages/Accounts";
 
 function App() {
@@ -29,9 +28,6 @@ function App() {
         </Route>
         <Route path="/Settings">
           <Settings />
-        </Route>
-        <Route path="/ImageTest">
-          <ImageTestPage />
         </Route>
         <Route path="/accounts">
           <Accounts />

@@ -68,7 +68,10 @@ UserSchema.statics.getByToken = function(token: string, callback: (err: any, use
     token,
     JWT_SECRET,
     function(err: any, payload: any) {
-      if (!payload || !payload.id || !payload.accessTime) {
+      if (!payload) {
+        return callback("No token present. Did you forget to pass in the token with the API call?", null);
+      }
+      if (!payload.id || !payload.accessTime) {
         return callback("Bad token", null);
       }
       let id: string = payload.id;

@@ -52,6 +52,7 @@ function AddUser(props: {
     const {username, password, isAdmin} = state;
     axios
       .post(`/api/auth/register`, {
+        token: localStorage.getItem("lnf_token"),
         username: username,
         password: password,
         isAdmin: isAdmin

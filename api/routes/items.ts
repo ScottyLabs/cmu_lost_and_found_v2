@@ -1,60 +1,10 @@
 import { Request, Response, Router, NextFunction } from "express";
 import Item from "../models/Item";
-const router = Router();
-
 import ImageController from "../controllers/ImageController";
 import UserController from "../controllers/UserController";
+import { isUser, isAdmin } from "./auth";
 
-/**
- * Using the access token provided, check to make sure that
- * you are, indeed, a verified user.
- */
-function isUser(req: Request, res: Response, next: NextFunction) {
-  let token: string = req.body.token;
-  // set authenticate to false to disable authentication
-  let authenticate = true
-  if (!authenticate) {
-    return next();
-  }
-  UserController.getByToken(token, (err: any, user: any) => {
-    if (err) {
-      console.log(err)
-      return res.status(500).send(err);
-    }
-    if (user) {
-      req.body.user = user;
-      return next();
-    }
-    return res.status(401).send({
-      message: "Failed authentication for admin",
-    });
-  });
-}
-
-/**
- * Using the access token provided, check to make sure that
- * you are, indeed, an admin.
- */
-function isAdmin(req: Request, res: Response, next: NextFunction) {
-  let token: string = req.body.token;
-  // set authenticate to false to disable authentication
-  let authenticate = true
-  if (!authenticate) {
-    return next();
-  }
-  UserController.getByToken(token, (err: any, user: any) => {
-    if (err) {
-      return res.status(500).send(err);
-    }
-    if (user && user.isAdmin) {
-      req.body.user = user;
-      return next();
-    }
-    return res.status(401).send({
-      message: "Failed authentication for admin",
-    });
-  });
-}
+const router = Router();
 
 /**
  * Returns all items in database, according to schema specified in Item.ts
@@ -155,7 +105,7 @@ router.post("/updateStatus", isUser, async (req: Request, res: Response) => {
  * approved: approved
  * }
  */
-router.post("/updateApprovedStatus", isUser, async (req: Request, res: Response) => {
+router.post("/updateApprovedStatus", isAdmin, async (req: Request, res: Response) => {
   let id = req.body.id;
   let approved = req.body.approved;
   Item.findByIdAndUpdate({ _id: id }, { approved: approved }, { runValidators: true, useFindAndModify: false }, (err, raw) => {

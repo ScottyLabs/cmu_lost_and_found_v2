@@ -1,8 +1,13 @@
+.card-wrapper {
+  width: 23%;
+  margin: 0px 10px 20px 10px;
+}
+
 .ui.card.item-card {
   cursor: pointer;
-  height: 140px;
+  height: 180px;
   overflow: hidden;
-  margin: 0px 10px 20px 10px;
+  width: 100%;
 }
 
 .image-modal-wrapper {
@@ -10,8 +15,22 @@
     text-align: center;
 }
 
-@media (max-width: 768px) {
-  .card-wrapper, .ui.card.item-card {
+@media (max-width: 650px) {
+  .card-wrapper {
     width: 100%;
+  }
+}
+
+@media (min-width: 651px) and (max-width: 1024px) {
+  .card-wrapper {
+    width: 45%;
+    margin-right: 2.5%;
+  }
+}
+
+@media (min-width: 1025px) {
+  .card-wrapper {
+    width: 30%;
+    margin-right: 2%;
   }
 }

@@ -171,8 +171,6 @@ function AddItemButton(props: {
   currentDate = new Date(currentDate.getTime() - (offset * 60 * 1000));
   let todayDate = currentDate.toISOString().slice(0, 10);
 
-
-
   return (
     <Grid columns={1}>
       <Grid.Column>

@@ -35,7 +35,7 @@ function Accounts() {
 
   const fetchUsers = () => {
     axios
-      .get(`/api/accounts/all`)
+      .post(`/api/accounts/all`, {token: localStorage.getItem("lnf_token")})
       .then(
         (res) => {
           console.log("Retrieved users!");

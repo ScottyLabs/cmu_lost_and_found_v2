@@ -91,29 +91,57 @@ function Admin() {
       <Grid.Row>
         <Grid.Column width={16}>
           <main>
-            <Link to="/"><img src="/dog-logo.png" id="logo-mobile" alt="CMU Lost and Found Logo"></img></Link>
+            <Link to="/">
+              <img
+                src="/dog-logo.png"
+                id="logo-mobile"
+                alt="CMU Lost and Found Logo"
+              ></img>
+            </Link>
             <div id="settings">
-              <Rail attached internal position='left' id="logo-desktop">
-                <Link to="/"><img src="/dog-logo.png" alt="CMU Lost and Found Logo"></img></Link>
+              <Rail attached internal position="left" id="logo-desktop">
+                <Link to="/">
+                  <img src="/dog-logo.png" alt="CMU Lost and Found Logo"></img>
+                </Link>
               </Rail>
-              <Link to="/accounts"><Button icon><Icon name='setting'/></Button></Link>
+              {localStorage.getItem("lnf_isAdmin") === "true" ? (
+                <Link to="/accounts">
+                  <Button icon>
+                    <Icon name="setting" />
+                  </Button>
+                </Link>
+              ) : null}
             </div>
             <LogoutButton />
             <h1 className="title">Carnegie Mellon University</h1>
             <h2 className="subtitle">Lost and Found Website - Admin</h2>
             <div id="add-mobile">
+<<<<<<< HEAD
               <AddItemButton name={"Add Item"} fetchItems={fetchItems} isAdmin={true} button={"Add"}></AddItemButton>
+=======
+              <AddItemButton
+                fetchItems={fetchItems}
+                isAdmin={true}
+              ></AddItemButton>
+>>>>>>> origin/main
             </div>
             <div id="admin-filter-bar">
               <SearchBar input={input} onChange={updateInput} />
               <div id="add-desktop">
+<<<<<<< HEAD
                 <AddItemButton name={"Add Item"} fetchItems={fetchItems} isAdmin={true} button={"Add"}></AddItemButton>
+=======
+                <AddItemButton
+                  fetchItems={fetchItems}
+                  isAdmin={true}
+                ></AddItemButton>
+>>>>>>> origin/main
               </div>
             </div>
             <div id="table">
               <TableWidget
                 items={itemList}
-                isAdmin={true}
+                isAdmin={localStorage.getItem("lnf_isAdmin") === "true"}
                 isArchived={false}
                 fetchItems={fetchItems}
               ></TableWidget>

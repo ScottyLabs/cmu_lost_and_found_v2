@@ -35,6 +35,7 @@ const UserTable = (props: {
                   ) => {
                     axios
                       .post(`/api/accounts/updatePerm`, {
+                        token: localStorage.getItem("lnf_token"),
                         username: user.username,
                         perm: "isAdmin",
                         isChecked: data.checked,

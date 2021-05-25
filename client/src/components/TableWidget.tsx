@@ -21,12 +21,10 @@ const TableWidget = (props: {
 
   return (
     <Form>
-      {props.isAdmin ? (
-        <Form.Checkbox
-          label="Show Archived Items"
-          onClick={updateDisplayArchived}
-        />
-      ) : null}
+      <Form.Checkbox
+        label="Show Archived Items"
+        onClick={updateDisplayArchived}
+      />
       <Table celled className="lf_table">
         <Table.Header>
           <Table.Row>
@@ -38,9 +36,13 @@ const TableWidget = (props: {
             <Table.HeaderCell>Category</Table.HeaderCell>
             <Table.HeaderCell>Where to Retrieve</Table.HeaderCell>
             <Table.HeaderCell>Image</Table.HeaderCell>
+<<<<<<< HEAD
             {props.isAdmin ? (
               <Table.HeaderCell>Claimed/Unclaimed</Table.HeaderCell>
             ) : null}
+=======
+            <Table.HeaderCell>Claim/Unclaim</Table.HeaderCell>
+>>>>>>> origin/main
             {props.isAdmin ? <Table.HeaderCell>Approve</Table.HeaderCell> : null}
             {props.isAdmin ? <Table.HeaderCell>Delete</Table.HeaderCell> : null}
           </Table.Row>
@@ -50,7 +52,7 @@ const TableWidget = (props: {
             .filter((item) => {
               return (
                 (item.status === "available" && item.approved) ||
-                (props.isAdmin && (displayArchived || item.status === "available"))
+                (displayArchived || item.status === "available")
               );
             })
             .map((item: Item) => {
@@ -70,16 +72,14 @@ const TableWidget = (props: {
                   <Table.Cell>
                     <ImageModal image={item.image}></ImageModal>
                   </Table.Cell>
-                  {props.isAdmin ? (
-                    <Table.Cell>
-                      <SwitchButton
-                        id={item._id}
-                        isClaimed={item.status !== "available"}
-                        disabled={!(item.approved)}
-                        fetchItems={props.fetchItems}
-                      ></SwitchButton>
-                    </Table.Cell>
-                  ) : null}
+                  <Table.Cell>
+                    <SwitchButton
+                      id={item._id}
+                      isClaimed={item.status !== "available"}
+                      disabled={!(item.approved)}
+                      fetchItems={props.fetchItems}
+                    ></SwitchButton>
+                  </Table.Cell>
                   {props.isAdmin ? (
                     <Table.Cell>
                       <ApproveSwitch

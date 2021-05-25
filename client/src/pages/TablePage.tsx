@@ -5,9 +5,10 @@ import { Link } from "react-router-dom";
 import TableWidget from "../components/TableWidget";
 import SearchBar from '../components/SearchBar';
 import { Item } from "../interface/item";
-import "./TablePage.css";
 import CardWidget from "../components/CardWidget";
 import ItemCard from "../components/ItemCard";
+
+import "./TablePage.css";
 
 function TablePage() {
   const [items, setItems] = useState([]);
@@ -94,7 +95,7 @@ function TablePage() {
               <SearchBar input={input} onChange={updateInput} />
             </div>
 
-            <div id="cards">
+            <div id="cards-widget">
               <CardWidget
                 items={itemList}
                 isAdmin={false}
@@ -102,7 +103,7 @@ function TablePage() {
                 fetchItems={fetchItems}
               ></CardWidget>
             </div>
-            <div id="table">
+            <div id="table-widget">
               <TableWidget
                 items={itemList}
                 isAdmin={false}

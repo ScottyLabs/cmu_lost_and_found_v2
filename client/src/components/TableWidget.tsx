@@ -76,7 +76,7 @@ const TableWidget = (props: {
                       <SwitchButton
                         id={item._id}
                         isClaimed={item.status !== "available"}
-                        disabled={!(item.approved.valueOf())}
+                        disabled={!(item.approved)}
                         fetchItems={props.fetchItems}
                       ></SwitchButton>
                     </Table.Cell>
@@ -85,7 +85,7 @@ const TableWidget = (props: {
                     <Table.Cell>
                       <ApproveSwitch
                         id={item._id}
-                        isApproved={item.approved.valueOf()}
+                        isApproved={item.approved}
                         fetchItems={props.fetchItems}
                       ></ApproveSwitch>
                     </Table.Cell>

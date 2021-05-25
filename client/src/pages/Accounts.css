@@ -1,0 +1,14 @@
+#add-user-mobile {
+  display: none; 
+}
+
+@media (max-width: 425px) {
+  #add-user-mobile {
+    display: block;
+    margin-bottom: 20px;
+  }
+
+  #add-user-desktop {
+    display: none;
+  }
+}

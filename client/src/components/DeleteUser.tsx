@@ -14,7 +14,7 @@ export default function DeleteUser(props: {
         size="tiny"
         onClick={() => {
           axios
-            .post(`/api/users/delete`, {
+            .post(`/api/accounts/delete`, {
               username: props.username,
             })
             .then(

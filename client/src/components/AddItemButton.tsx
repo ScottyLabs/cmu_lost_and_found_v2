@@ -71,25 +71,17 @@ function AddItemButton(props: {
   const history = useHistory();
 
   const handleChange = (e: any, { name, value }: any) => {
-    console.log(value);
-    console.log(typeof (value))
-    console.log(name);
     setState({ ...state, [name]: value });
   }
   const handleRadioChange = (e: any, value: any) => {
     setState({ ...state, "imagePermission": value === "true" });
   }
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>, { name, value }: any) => {
-    console.log("handling file change")
-    console.log(name + " " + value);
     setState({ ...state, [name]: value, imageObject: e!.target!.files![0] });
   }
 
   const uploadImage = (imageFile: File) => {
-    console.log('attempting to add image')
     const imageName = "test"
-    console.log(imageFile)
-    console.log(typeof (imageFile))
 
     // no image, TODO: check
     if (!imageFile) {
@@ -108,7 +100,6 @@ function AddItemButton(props: {
           "dataURL": reader.result,
           "token": localStorage.getItem("lnf_token")
         }
-        console.log("Trying to add image")
 
         axios
           .post(`/api/items/addImage`, data)
@@ -179,8 +170,6 @@ function AddItemButton(props: {
   const offset = currentDate.getTimezoneOffset();
   currentDate = new Date(currentDate.getTime() - (offset * 60 * 1000));
   let todayDate = currentDate.toISOString().slice(0, 10);
-
-
 
   return (
     <Grid columns={1}>

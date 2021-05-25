@@ -1,0 +1,9 @@
+#search .ui.input {
+  width: 400px;
+  margin-bottom: 20px;
+}
+
+#searchbar {
+  border-radius: .28571429rem;
+  border: 2px solid #872222;
+};

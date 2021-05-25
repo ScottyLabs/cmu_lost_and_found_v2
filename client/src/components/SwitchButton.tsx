@@ -17,7 +17,7 @@ export default function SwitchButton(props: {
   const handleClick = () => {
     const { isClaimed } = state;
     axios
-      .post(`/api/items/updateStatus`, { id: props.id, status: isClaimed ? "available" : "claimed" })
+      .post(`/api/items/updateStatus`, { token: localStorage.getItem("lnf_token"), id: props.id, status: isClaimed ? "available" : "claimed" })
       .then(
         (res) => {
           props.fetchItems();

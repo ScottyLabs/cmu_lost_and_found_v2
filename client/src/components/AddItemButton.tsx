@@ -43,8 +43,10 @@ const pickup = [
 
 
 function AddItemButton(props: {
+  name: String;
   fetchItems: Function;
   isAdmin: boolean;
+  button: String;
 }) {
   const [dispatchState, dispatch] = React.useReducer(exampleReducer, {
     closeOnEscape: false,
@@ -180,9 +182,9 @@ function AddItemButton(props: {
           open={open}
           onOpen={() => dispatch({ type: "OPEN_MODAL" })}
           onClose={() => dispatch({ type: "CLOSE_MODAL" })}
-          trigger={<Button id="add-item">Add Item</Button>}
+          trigger={<Button id="add-item">{props.name}</Button>}
         >
-          <Modal.Header>Add Item</Modal.Header>
+          <Modal.Header>{props.name}</Modal.Header>
           <Modal.Content>
             {/* Need to stop modal from closing when enter key is pressed */}
             <Form onSubmit={handleSubmit}>
@@ -301,7 +303,7 @@ function AddItemButton(props: {
                 </Button>
                 {/* Need to close modal after validation of the form */}
                 <Button positive type="submit">
-                  Add
+                  {props.button}
                 </Button>
               </Form.Group>
             </Form>

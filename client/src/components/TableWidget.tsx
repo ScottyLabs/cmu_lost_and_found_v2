@@ -9,6 +9,7 @@ import DeleteButton from "./DeleteButton";
 
 const TableWidget = (props: {
   items: Array<Item>;
+  isUser: boolean;
   isAdmin: boolean;
   isArchived: boolean;
   fetchItems: Function;
@@ -21,10 +22,12 @@ const TableWidget = (props: {
 
   return (
     <Form>
-      <Form.Checkbox
-        label="Show Archived Items"
-        onClick={updateDisplayArchived}
-      />
+      {props.isUser ? (
+        <Form.Checkbox
+          label="Show Archived Items"
+          onClick={updateDisplayArchived}
+        />
+      ) : null}
       <Table celled className="lf_table">
         <Table.Header>
           <Table.Row>
@@ -36,8 +39,12 @@ const TableWidget = (props: {
             <Table.HeaderCell>Category</Table.HeaderCell>
             <Table.HeaderCell>Where to Retrieve</Table.HeaderCell>
             <Table.HeaderCell>Image</Table.HeaderCell>
-            <Table.HeaderCell>Claim/Unclaim</Table.HeaderCell>
-            {props.isAdmin ? <Table.HeaderCell>Approve</Table.HeaderCell> : null}
+            {props.isUser ? (
+              <Table.HeaderCell>Claim/Unclaim</Table.HeaderCell>
+            ) : null}
+            {props.isAdmin ? (
+              <Table.HeaderCell>Approve</Table.HeaderCell>
+            ) : null}
             {props.isAdmin ? <Table.HeaderCell>Delete</Table.HeaderCell> : null}
           </Table.Row>
         </Table.Header>
@@ -46,14 +53,15 @@ const TableWidget = (props: {
             .filter((item) => {
               return (
                 (item.status === "available" && item.approved) ||
-                (displayArchived || item.status === "available")
+                (props.isUser && (displayArchived || item.status === "available"))
               );
             })
             .map((item: Item) => {
               let date = new Date(item.dateFound).toISOString().substring(0, 10).split("-");
               let dateFormatted = date[1] + "/" + date[2] + "/" + date[0];
               let [h, m] = item.timeFound.split(":");
-              let timeFormatted = (parseInt(h) % 12) + (parseInt(h) % 12 === 0 ? 12 : 0) + ":" + m + " " + (parseInt(h) >= 12 ? "PM" : "AM");
+              let timeFormatted = (parseInt(h) % 12) + (parseInt(h) % 12 === 0 ? 12 : 0) + 
+                ":" + m + " " + (parseInt(h) >= 12 ? "PM" : "AM");
               return (
                 <Table.Row key={item._id}>
                   <Table.Cell>{dateFormatted}</Table.Cell>
@@ -66,14 +74,16 @@ const TableWidget = (props: {
                   <Table.Cell>
                     <ImageModal image={item.image}></ImageModal>
                   </Table.Cell>
-                  <Table.Cell>
-                    <SwitchButton
-                      id={item._id}
-                      isClaimed={item.status !== "available"}
-                      disabled={!(item.approved)}
-                      fetchItems={props.fetchItems}
-                    ></SwitchButton>
-                  </Table.Cell>
+                  {props.isUser ? (
+                    <Table.Cell>
+                      <SwitchButton
+                        id={item._id}
+                        isClaimed={item.status !== "available"}
+                        disabled={!item.approved}
+                        fetchItems={props.fetchItems}
+                      ></SwitchButton>
+                    </Table.Cell>
+                  ) : null}
                   {props.isAdmin ? (
                     <Table.Cell>
                       <ApproveSwitch

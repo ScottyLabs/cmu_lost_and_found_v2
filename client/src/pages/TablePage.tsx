@@ -106,6 +106,7 @@ function TablePage() {
             <div id="table-widget">
               <TableWidget
                 items={itemList}
+                isUser={false}
                 isAdmin={false}
                 isArchived={false}
                 fetchItems={fetchItems}

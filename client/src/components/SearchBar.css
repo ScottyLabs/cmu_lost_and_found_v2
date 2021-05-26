@@ -1,9 +1,10 @@
-#search .ui.input {
-  width: 400px;
-  margin-bottom: 20px;
+#search div.ui.icon.input {
+  max-width: 400px;
+  width: 100%;
+  margin-bottom: 15px;
 }
 
 #searchbar {
   border-radius: .28571429rem;
-  border: 2px solid #872222;
+  border: 2px solid #c2c1c1;
 };

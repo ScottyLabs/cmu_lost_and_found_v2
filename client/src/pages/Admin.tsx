@@ -91,10 +91,10 @@ function Admin() {
       <Grid.Row>
         <Grid.Column width={16}>
           <main>
-            <Link to="/"><img src="/dog-logo.png" id="logo-mobile" alt="CMU Lost and Found Logo"></img></Link>
+            <Link to="/admin"><img src="/dog-logo.png" id="logo-mobile" alt="CMU Lost and Found Logo"></img></Link>
             <div id="settings">
               <Rail attached internal position='left' id="logo-desktop">
-                <Link to="/"><img src="/dog-logo.png" alt="CMU Lost and Found Logo"></img></Link>
+                <Link to="/admin"><img src="/dog-logo.png" alt="CMU Lost and Found Logo"></img></Link>
               </Rail>
               <Link to="/accounts"><Button icon><Icon name='setting'/></Button></Link>
             </div>

@@ -104,9 +104,9 @@ function EditItem(props: {
 
       reader.onload = (() => {
         let data = {
-          imageName: imageName,
-          dataURL: reader.result,
           token: localStorage.getItem("lnf_token"),
+          imageName: imageName,
+          dataURL: reader.result
         };
         console.log("Trying to add image")
 

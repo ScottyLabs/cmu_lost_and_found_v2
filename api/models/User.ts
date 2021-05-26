@@ -1,8 +1,8 @@
 import { Model, Query, Schema, Document, model } from "mongoose";
 import * as bcrypt from "bcryptjs";
 import * as jwt from "jsonwebtoken";
-// TODO: move this away from here
-const JWT_SECRET = "asdfwecvjoi3sdfoi";
+// jsonwebtoken secret for authentication purposes
+const JWT_SECRET = process.env.JWT_SECRET;
 // time for access token to expire in milliseconds
 const TIME_TO_EXPIRE = 3600000;
 
@@ -68,7 +68,10 @@ UserSchema.statics.getByToken = function(token: string, callback: (err: any, use
     token,
     JWT_SECRET,
     function(err: any, payload: any) {
-      if (!payload || !payload.id || !payload.accessTime) {
+      if (!payload) {
+        return callback("No token present. Did you forget to pass in the token with the API call?", null);
+      }
+      if (!payload.id || !payload.accessTime) {
         return callback("Bad token", null);
       }
       let id: string = payload.id;

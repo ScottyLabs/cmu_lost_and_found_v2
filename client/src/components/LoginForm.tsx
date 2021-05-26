@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Button, Form } from "semantic-ui-react";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import "./LoginForm.css";
 
 export default function LoginForm(props: any) {
@@ -27,8 +27,11 @@ export default function LoginForm(props: any) {
       .then(
         (res) => {
           let token = res.data.token;
-          console.log(token)
+          let isAdmin = res.data.isAdmin;
+          console.log(token);
+          console.log(isAdmin);
           localStorage.setItem("lnf_token", token);
+          localStorage.setItem("lnf_isAdmin", isAdmin);
           console.log("Logged in");
           history.push("/admin");
           setState({ username: "", password: "" });

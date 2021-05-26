@@ -10,7 +10,7 @@ export default function DeleteButton(props: {
 }) {
   const history = useHistory();
   const handleClick = () => {
-    axios.post(`/api/items/delete`, { "token": localStorage.getItem("lnf_token"), id: props.id }).then(
+    axios.post(`/api/items/delete`, { token: localStorage.getItem("lnf_token"), id: props.id }).then(
       (res) => {
         console.log("Deleted!");
         console.log(res);

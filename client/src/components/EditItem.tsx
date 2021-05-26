@@ -143,7 +143,7 @@ function EditItem(props: {
 
     uploadImage(imageObject).then((res) => {
       axios
-        .post(`/api/items/add`, {
+        .post(`/api/items/editItem`, {
           dateFound: dateFormatted,
           timeFound: timeFormatted,
           name: name,

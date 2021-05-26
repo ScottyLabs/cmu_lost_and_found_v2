@@ -1,6 +1,7 @@
 import axios from 'axios';
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { Button, Grid, Modal, Form } from 'semantic-ui-react';
+import { useHistory } from "react-router-dom";
 import "./AddItemButton.css";
 
 function exampleReducer(dispatchState: any, action: any) {
@@ -43,6 +44,7 @@ const pickup = [
 
 function AddItemButton(props: {
   fetchItems: Function;
+  isAdmin: boolean;
 }) {
   const [dispatchState, dispatch] = React.useReducer(exampleReducer, {
     closeOnEscape: false,
@@ -66,27 +68,20 @@ function AddItemButton(props: {
     imagePermission: false,
     status: "available"
   });
+  const history = useHistory();
 
   const handleChange = (e: any, { name, value }: any) => {
-    console.log(value);
-    console.log(typeof (value))
-    console.log(name);
     setState({ ...state, [name]: value });
   }
   const handleRadioChange = (e: any, value: any) => {
     setState({ ...state, "imagePermission": value === "true" });
   }
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>, { name, value }: any) => {
-    console.log("handling file change")
-    console.log(name + " " + value);
     setState({ ...state, [name]: value, imageObject: e!.target!.files![0] });
   }
 
   const uploadImage = (imageFile: File) => {
-    console.log('attempting to add image')
     const imageName = "test"
-    console.log(imageFile)
-    console.log(typeof (imageFile))
 
     // no image, TODO: check
     if (!imageFile) {
@@ -102,9 +97,9 @@ function AddItemButton(props: {
       reader.onload = (() => {
         let data = {
           "imageName": imageName,
-          "dataURL": reader.result
+          "dataURL": reader.result,
+          "token": localStorage.getItem("lnf_token")
         }
-        console.log("Trying to add image")
 
         axios
           .post(`/api/items/addImage`, data)
@@ -131,10 +126,12 @@ function AddItemButton(props: {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const { dateFound, timeFound, name, whereFound, description, category, whereToRetrieve, image, imageObject, imagePermission, status } = state;
+    console.log(props.isAdmin);
 
     uploadImage(imageObject).then((res) => {
       axios
         .post(`/api/items/add`, {
+          token: localStorage.getItem("lnf_token"),
           dateFound: dateFound,
           timeFound: timeFound,
           name: name,
@@ -144,7 +141,8 @@ function AddItemButton(props: {
           whereToRetrieve: whereToRetrieve,
           image: res,
           imagePermission: imagePermission,
-          status: status
+          status: status,
+          approved: props.isAdmin
         })
         .then(
           (res) => {
@@ -155,6 +153,7 @@ function AddItemButton(props: {
           },
           (error) => {
             console.log(error);
+            history.push("/login");
           }
         );
       dispatch({ type: 'CLOSE_MODAL' });
@@ -171,8 +170,6 @@ function AddItemButton(props: {
   const offset = currentDate.getTimezoneOffset();
   currentDate = new Date(currentDate.getTime() - (offset * 60 * 1000));
   let todayDate = currentDate.toISOString().slice(0, 10);
-
-
 
   return (
     <Grid columns={1}>

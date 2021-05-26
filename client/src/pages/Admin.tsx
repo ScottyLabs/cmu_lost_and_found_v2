@@ -1,15 +1,15 @@
-import React, {useState,useEffect} from "react";
+import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { Grid, Button, Icon, Rail} from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import "./Admin.css";
-import AdminMenu from "../components/AdminMenu";
-import FilterBar from "../components/FilterBar";
 import AddItemButton from "../components/AddItemButton";
 import TableWidget from "../components/TableWidget";
 import "semantic-ui-css/semantic.min.css";
 import axios from "axios";
 import { Item } from "../interface/item";
 import SearchBar from "../components/SearchBar";
+import LogoutButton from "../components/LogoutButton";
 
 function Admin() {
   document.title = "CMU Lost and Found";
@@ -67,7 +67,13 @@ function Admin() {
       }
     );
   };
+  const history = useHistory();
   useEffect(() => {
+    if (localStorage.getItem("lnf_token") == null) {
+      console.log("not logged in");
+      history.push("/login");
+      return;
+    }
     fetchItems();
   }, []);
 
@@ -85,27 +91,49 @@ function Admin() {
       <Grid.Row>
         <Grid.Column width={16}>
           <main>
-            <Link to="/"><img src="/dog-logo.png" id="logo-mobile" alt="CMU Lost and Found Logo"></img></Link>
+            <Link to="/">
+              <img
+                src="/dog-logo.png"
+                id="logo-mobile"
+                alt="CMU Lost and Found Logo"
+              ></img>
+            </Link>
             <div id="settings">
-              <Rail attached internal position='left' id="logo-desktop">
-                <Link to="/"><img src="/dog-logo.png" alt="CMU Lost and Found Logo"></img></Link>
+              <Rail attached internal position="left" id="logo-desktop">
+                <Link to="/">
+                  <img src="/dog-logo.png" alt="CMU Lost and Found Logo"></img>
+                </Link>
               </Rail>
-              <Link to="/users"><Button icon><Icon name='setting'/></Button></Link>
+              {localStorage.getItem("lnf_isAdmin") === "true" ? (
+                <Link to="/accounts">
+                  <Button icon>
+                    <Icon name="setting" />
+                  </Button>
+                </Link>
+              ) : null}
             </div>
+            <LogoutButton />
             <h1 className="title">Carnegie Mellon University</h1>
-            <h2 className="subtitle">Lost and Found Admin Panel - Items</h2>
+            <h2 className="subtitle">Lost and Found Website - Admin</h2>
             <div id="add-mobile">
-              <AddItemButton fetchItems={fetchItems}></AddItemButton>
+              <AddItemButton
+                fetchItems={fetchItems}
+                isAdmin={true}
+              ></AddItemButton>
             </div>
             <div id="admin-filter-bar">
-              {/* <FilterBar></FilterBar> */}
               <SearchBar input={input} onChange={updateInput} />
-              <AddItemButton fetchItems={fetchItems}></AddItemButton>
+              <div id="add-desktop">
+                <AddItemButton
+                  fetchItems={fetchItems}
+                  isAdmin={true}
+                ></AddItemButton>
+              </div>
             </div>
             <div id="table">
               <TableWidget
                 items={itemList}
-                isAdmin={true}
+                isAdmin={localStorage.getItem("lnf_isAdmin") === "true"}
                 isArchived={false}
                 fetchItems={fetchItems}
               ></TableWidget>

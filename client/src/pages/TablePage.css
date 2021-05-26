@@ -3,11 +3,39 @@
     color: #872222;
 }
 
-.description {
-    font-size: 20px;
+#description {
+    text-align: left;
+    font-size: 18px;
     font-family: 'Lato';
-    margin-bottom: 30px;
     margin: auto;
-    max-width: 50%;
+    margin-bottom: 40px;
+    max-width: 80%;
     padding: 10px;
+}
+
+#description p {
+    line-height: 1.25em;
+}
+
+.location {
+    font-size: 16px;
+    margin-left: 5%;
+}
+
+/* .fields {
+    display: flex;
+    justify-content: center;
+} */
+
+#cards-widget {
+    display: none;
+}
+
+@media (max-width: 1180px) {
+    #table-widget {
+        display: none;
+    }
+    #cards-widget {
+        display: block;
+    }
 }

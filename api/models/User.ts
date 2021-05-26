@@ -10,7 +10,6 @@ export interface IUser extends Document {
   username: string,
   password: string,
   isAdmin: boolean,
-  isOwner: boolean,
   checkPassword: (password: string) => boolean
   generateAuthToken: () => string
 }
@@ -35,10 +34,6 @@ const UserSchema = new Schema({
     required: true,
   },
   isAdmin: {
-    type: Boolean,
-    default: false,
-  },
-  isOwner: {
     type: Boolean,
     default: false,
   }
@@ -73,7 +68,10 @@ UserSchema.statics.getByToken = function(token: string, callback: (err: any, use
     token,
     JWT_SECRET,
     function(err: any, payload: any) {
-      if (!payload || !payload.id || !payload.accessTime) {
+      if (!payload) {
+        return callback("No token present. Did you forget to pass in the token with the API call?", null);
+      }
+      if (!payload.id || !payload.accessTime) {
         return callback("Bad token", null);
       }
       let id: string = payload.id;

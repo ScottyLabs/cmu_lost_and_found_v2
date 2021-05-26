@@ -14,7 +14,8 @@ export default function DeleteUser(props: {
         size="tiny"
         onClick={() => {
           axios
-            .post(`/api/users/delete`, {
+            .post(`/api/accounts/delete`, {
+              token: localStorage.getItem("lnf_token"),
               username: props.username,
             })
             .then(

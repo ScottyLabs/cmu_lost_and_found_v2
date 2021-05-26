@@ -8,7 +8,6 @@ import DeleteUser from "../components/DeleteUser";
 
 const UserTable = (props: {
   users: Array<User>;
-  isOwner: boolean;
   fetchUsers: Function;
 }) => {
   console.log("Creating table");
@@ -18,7 +17,6 @@ const UserTable = (props: {
         <Table.Row>
           <Table.HeaderCell>Username</Table.HeaderCell>
           <Table.HeaderCell>Admin</Table.HeaderCell>
-          <Table.HeaderCell>Owner</Table.HeaderCell>
           <Table.HeaderCell>Delete</Table.HeaderCell>
         </Table.Row>
       </Table.Header>
@@ -36,7 +34,8 @@ const UserTable = (props: {
                     data
                   ) => {
                     axios
-                      .post(`/api/users/updatePerm`, {
+                      .post(`/api/accounts/updatePerm`, {
+                        token: localStorage.getItem("lnf_token"),
                         username: user.username,
                         perm: "isAdmin",
                         isChecked: data.checked,
@@ -53,35 +52,6 @@ const UserTable = (props: {
                       );
                   }}
                 ></Checkbox>
-              </Table.Cell>
-              <Table.Cell>
-                <Checkbox
-                  toggle
-                  checked={user.isOwner}
-                  onChange={(
-                    event: React.FormEvent<HTMLInputElement>,
-                    data
-                  ) => {
-                    axios
-                      .post(`/api/users/updatePerm`, {
-                        username: user.username,
-                        perm: "isOwner",
-                        isChecked: data.checked,
-                      })
-                      .then(
-                        (res) => {
-                          console.log("Sent permission change request!");
-                          console.log(res);
-                          props.fetchUsers();
-                        },
-                        (error) => {
-                          console.error(error);
-                        }
-                      );
-                  }}
-                ></Checkbox>
-                {/* <OwnerButton isAdmin={false} isOwner={true}> </OwnerButton>
-                                    {user.isOwner ? "Yes" : "No"} */}
               </Table.Cell>
               <Table.Cell>
                 <DeleteUser

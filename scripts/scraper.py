@@ -10,6 +10,7 @@ soup = BeautifulSoup(response.text, 'html.parser')
 table = soup.find_all('tr')
 
 def send_data(obj):
+    # disable authentication for this to work (isAdmin in items.ts)
     r = requests.post('http://localhost:3080/api/items/add', data = obj)
     print(r)
 
@@ -54,7 +55,12 @@ for row in soup.find_all('tr'):
         dt = datetime.strptime(rawDate, "%d %b %y")
 
         info["dateFound"] = dt.strftime("%m/%d/%y")
-        info["timeFound"] = data[1].upper()
+        print(data[1][-2:])
+        timeFound = data[1][:-3].upper()
+        if data[1][-2:] == "pm":
+            hours, mins = timeFound.split(":")
+            timeFound = str(int(hours)+12) + ":" + mins.strip()
+        info["timeFound"] = timeFound
 
         theName = data[2]
         cleaned = clean(theName)
@@ -67,6 +73,7 @@ for row in soup.find_all('tr'):
         info["whereToRetrieve"] = "Gates" # for now
         info["imagePermission"] = True # for now
         info["status"] = "available" # for now
+        info["approved"] = "true"
 
         print(info)
         send_data(info)

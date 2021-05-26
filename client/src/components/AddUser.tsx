@@ -33,8 +33,7 @@ function AddUser(props: {
   const [state, setState] = useState({
     username: "",
     password: "",
-    isAdmin: false,
-    isOwner: false  
+    isAdmin: false
   });
 
   const handleChange = (e: any, {name, value}: any) => {
@@ -50,13 +49,13 @@ function AddUser(props: {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const {username, password, isAdmin, isOwner} = state;
+    const {username, password, isAdmin} = state;
     axios
       .post(`/api/auth/register`, {
+        token: localStorage.getItem("lnf_token"),
         username: username,
         password: password,
-        isAdmin: isAdmin,
-        isOwner: isOwner
+        isAdmin: isAdmin
       })
       .then(
         (res) => {
@@ -70,7 +69,7 @@ function AddUser(props: {
         }
       );
     dispatch({ type: 'CLOSE_MODAL' });
-    setState({ username: "",  password:"", isAdmin: false, isOwner: false});
+    setState({ username: "",  password:"", isAdmin: false });
   }
 
 
@@ -117,16 +116,6 @@ function AddUser(props: {
                   name="isAdmin"
                   placeholder="Admin Permission"
                   value={state.isAdmin}
-                  onChange={handlePermissionChange}
-                />
-                <Form.Input
-                  required
-                  fluid
-                  control = {Checkbox}
-                  label="Owner Permission"
-                  name="isOwner"
-                  placeholder="Owner Permission"
-                  value={state.isOwner}
                   onChange={handlePermissionChange}
                 />
                 </Form.Group>

@@ -4,12 +4,10 @@ import { Switch, Route } from "react-router-dom";
 // import Home from "./pages/Home";
 import AdminLogin from "./pages/AdminLogin";
 import Admin from "./pages/Admin";
-import Archived from "./pages/Archived";
 import Items from "./pages/Items";
 import TablePage from "./pages/TablePage";
 import Settings from "./pages/Settings";
-import ImageTestPage from "./pages/ImageTestPage";
-import UserMenu from "./pages/UserMenu";
+import Accounts from "./pages/Accounts";
 
 function App() {
   return (
@@ -25,20 +23,14 @@ function App() {
         <Route path="/admin">
           <Admin />
         </Route>
-        <Route path="/Archived">
-          <Archived />
-        </Route>
         <Route path="/Items">
           <Items />
         </Route>
         <Route path="/Settings">
           <Settings />
         </Route>
-        <Route path="/ImageTest">
-          <ImageTestPage />
-        </Route>
-        <Route path="/users">
-          <UserMenu />
+        <Route path="/accounts">
+          <Accounts />
         </Route>
       </Switch>
     </div>

@@ -3,8 +3,8 @@ import { Form, Table } from "semantic-ui-react";
 import { Item } from "../interface/item";
 import "./TableWidget.css";
 import ImageModal from "./ImageModal";
-import ClaimButton from "./ClaimButton";
-import UnclaimButton from "./UnclaimButton";
+import SwitchButton from "./SwitchButton";
+import ApproveSwitch from "./ApproveSwitch";
 import DeleteButton from "./DeleteButton";
 
 const TableWidget = (props: {
@@ -19,15 +19,12 @@ const TableWidget = (props: {
     setDisplayArchived(data.checked);
   };
 
-  console.log("Creating table");
   return (
     <Form>
-      {props.isAdmin ? (
-        <Form.Checkbox
-          label="Show Archived Items"
-          onClick={updateDisplayArchived}
-        />
-      ) : null}
+      <Form.Checkbox
+        label="Show Archived Items"
+        onClick={updateDisplayArchived}
+      />
       <Table celled className="lf_table">
         <Table.Header>
           <Table.Row>
@@ -39,9 +36,8 @@ const TableWidget = (props: {
             <Table.HeaderCell>Category</Table.HeaderCell>
             <Table.HeaderCell>Where to Retrieve</Table.HeaderCell>
             <Table.HeaderCell>Image</Table.HeaderCell>
-            {props.isAdmin ? (
-              <Table.HeaderCell>Claim/Unclaim</Table.HeaderCell>
-            ) : null}
+            <Table.HeaderCell>Claim/Unclaim</Table.HeaderCell>
+            {props.isAdmin ? <Table.HeaderCell>Approve</Table.HeaderCell> : null}
             {props.isAdmin ? <Table.HeaderCell>Delete</Table.HeaderCell> : null}
           </Table.Row>
         </Table.Header>
@@ -49,15 +45,15 @@ const TableWidget = (props: {
           {props.items
             .filter((item) => {
               return (
-                item.status === "available" ||
-                (props.isAdmin && displayArchived)
+                (item.status === "available" && item.approved) ||
+                (displayArchived || item.status === "available")
               );
             })
             .map((item: Item) => {
               let date = new Date(item.dateFound).toISOString().substring(0, 10).split("-");
               let dateFormatted = date[1] + "/" + date[2] + "/" + date[0];
               let [h, m] = item.timeFound.split(":");
-              let timeFormatted = (parseInt(h) % 12) + (parseInt(h) % 12 === 0 ? 12 : 0) + ":" + m + " " + (parseInt(h) >= 12 ? "PM" : "AM")
+              let timeFormatted = (parseInt(h) % 12) + (parseInt(h) % 12 === 0 ? 12 : 0) + ":" + m + " " + (parseInt(h) >= 12 ? "PM" : "AM");
               return (
                 <Table.Row key={item._id}>
                   <Table.Cell>{dateFormatted}</Table.Cell>
@@ -70,18 +66,21 @@ const TableWidget = (props: {
                   <Table.Cell>
                     <ImageModal image={item.image}></ImageModal>
                   </Table.Cell>
+                  <Table.Cell>
+                    <SwitchButton
+                      id={item._id}
+                      isClaimed={item.status !== "available"}
+                      disabled={!(item.approved)}
+                      fetchItems={props.fetchItems}
+                    ></SwitchButton>
+                  </Table.Cell>
                   {props.isAdmin ? (
                     <Table.Cell>
-                      <ClaimButton
+                      <ApproveSwitch
                         id={item._id}
-                        disabled={item.status !== "available"}
+                        isApproved={item.approved}
                         fetchItems={props.fetchItems}
-                      ></ClaimButton>
-                      <UnclaimButton
-                        id={item._id}
-                        disabled={item.status === "available"}
-                        fetchItems={props.fetchItems}
-                      ></UnclaimButton>
+                      ></ApproveSwitch>
                     </Table.Cell>
                   ) : null}
                   {props.isAdmin ? (

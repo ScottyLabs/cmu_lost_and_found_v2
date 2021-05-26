@@ -1,15 +1,16 @@
 import { Request, Response, Router } from "express";
 import User from "../models/User";
+import { isUser, isAdmin } from "./auth";
 
 // https://github.com/seanpmaxwell/express-generator-typescript/tree/265df43a2cb23a4389a0361530bb741d1fc88c7b
 
 const router = Router();
 
 /******************************************************************************
- *                      Get All Users - "GET /api/users/all"
+ *                      Get All Users - "GET /api/accounts/all"
  ******************************************************************************/
 
-router.get('/all', async (req: Request, res: Response) => {
+router.post('/all', isAdmin, async (req: Request, res: Response) => {
     User.find((err, docs) => {
     if (err) {
       console.log(err);
@@ -22,7 +23,7 @@ router.get('/all', async (req: Request, res: Response) => {
 
 
 /******************************************************************************
- *                       Add One - "POST /api/users/add"
+ *                       Add One - "POST /api/accounts/add"
  ******************************************************************************/
 
 /**
@@ -33,9 +34,10 @@ router.get('/all', async (req: Request, res: Response) => {
  *  isChecked: "true"
  * }
  */
-router.post('/updatePerm', async (req: Request, res: Response) => {
+router.post('/updatePerm', isAdmin, async (req: Request, res: Response) => {
     let { username, perm, isChecked } = req.body;
-    if (perm !== "isAdmin" && perm !== "isOwner") {
+    if (perm !== "isAdmin") {
+        console.log("admin privilege doesn't exist");
         return res.status(406).send({msg: "this admin privilege doesn't exist"})
     }
 
@@ -54,7 +56,7 @@ router.post('/updatePerm', async (req: Request, res: Response) => {
  *  username: "bob"
  * }
  */
-router.post('/delete', async (req: Request, res: Response) => {
+router.post('/delete', isAdmin, async (req: Request, res: Response) => {
     let { username } = req.body;
     User.findOneAndDelete({username: username}, (err, raw) => {
         if (err) {

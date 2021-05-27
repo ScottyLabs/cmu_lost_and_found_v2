@@ -36,13 +36,9 @@ const TableWidget = (props: {
             <Table.HeaderCell>Category</Table.HeaderCell>
             <Table.HeaderCell>Where to Retrieve</Table.HeaderCell>
             <Table.HeaderCell>Image</Table.HeaderCell>
-<<<<<<< HEAD
             {props.isAdmin ? (
               <Table.HeaderCell>Claimed/Unclaimed</Table.HeaderCell>
             ) : null}
-=======
-            <Table.HeaderCell>Claim/Unclaim</Table.HeaderCell>
->>>>>>> origin/main
             {props.isAdmin ? <Table.HeaderCell>Approve</Table.HeaderCell> : null}
             {props.isAdmin ? <Table.HeaderCell>Delete</Table.HeaderCell> : null}
           </Table.Row>

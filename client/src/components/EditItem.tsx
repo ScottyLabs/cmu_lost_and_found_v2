@@ -74,11 +74,11 @@ function EditItem(props: {
     whereFound: props.item.whereFound,
     description: props.item.description,
     category: props.item.category,
-    whereToRetrieve: "",
-    image: "",
+    whereToRetrieve: props.item.whereToRetrieve,
+    image: props.item.image,
     imagePath: "",
     imageObject: null as any,
-    imagePermission: false,
+    imagePermission: props.item.imagePermission,
     status: props.item.status,
     approved: props.item.approved
   });
@@ -171,7 +171,7 @@ function EditItem(props: {
           description: description,
           category: category,
           whereToRetrieve: whereToRetrieve,
-          image: res,
+          image: res == "" ? image : res, // use existing image if no new image was added
           imagePermission: imagePermission,
           status: status,
           approved: approved

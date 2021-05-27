@@ -66,7 +66,11 @@ for row in soup.find_all('tr'):
         timeFound = data[1][:-3].upper()
         if data[1][-2:] == "pm":
             hours, mins = timeFound.split(":")
-            timeFound = str(int(hours)+12) + ":" + mins.strip()
+            if hours == "12":
+                hourStr = "00"
+            else:
+                hourStr = str(int(hours)+12)
+            timeFound = hourStr + ":" + mins.strip()
         info["timeFound"] = timeFound
 
         theName = data[2]
@@ -76,7 +80,7 @@ for row in soup.find_all('tr'):
         found = clean(data[3])
         info["whereFound"] = found
         info["description"] = clean(data[4])
-        info["category"] = "Other" # for now
+        info["category"] = "Miscellaneous"  # for now
         info["whereToRetrieve"] = "GHC 6203, 412.268.8525, lostfound@cs.cmu.edu."  # for now
         info["imagePermission"] = True # for now
         if "claimed!" in clean(data[5]).lower():

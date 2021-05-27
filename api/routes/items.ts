@@ -126,20 +126,23 @@ router.post("/updateApprovedStatus", isAdmin, async (req: Request, res: Response
  * }
  */
 router.post("/editItem", isUser, async (req: Request, res: Response) => {
-  let id = req.body.id;
-  let token = req.body.token;
-  let dateFound = req.body.dateFound;
-  let timeFound = req.body.timeFound;
-  let name = req.body.name;
-  let whereFound = req.body.whereFound;
-  let description = req.body.description;
-  let category = req.body.category;
-  let whereToRetrieve = req.body.whereToRetrieve;
-  let image = req.body.image;
-  let imagePermission = req.body.imagePermission;
-  let status = req.body.status;
+  let {
+    id,
+    token,
+    dateFound,
+    timeFound,
+    name,
+    whereFound,
+    description,
+    category,
+    whereToRetrieve,
+    image,
+    imagePermission,
+    status,
+    approved,
+  } = req.body;
   Item.findByIdAndUpdate({ _id: id }, { status: status, token: token, dateFound: dateFound, timeFound: timeFound, name: name
-    , whereFound: whereFound, description: description, category: category, whereToRetrieve: whereToRetrieve, image: image, imagePermission: imagePermission}, 
+    , whereFound: whereFound, description: description, category: category, whereToRetrieve: whereToRetrieve, image: image, imagePermission: imagePermission, approved: approved}, 
     { runValidators: true, useFindAndModify: false }, (err, raw) => {
     if (err) {
       console.log(err);

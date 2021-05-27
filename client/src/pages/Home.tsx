@@ -1,24 +1,30 @@
 import React from "react";
-import { Link } from "react-router-dom"; 
+import { Link } from "react-router-dom";
 import { Grid, Button } from "semantic-ui-react";
 import "./Home.css";
 import "semantic-ui-css/semantic.min.css";
+import FoundItemModal from "../components/FoundItemModal";
 
 function Home() {
   document.title = "CMU Lost and Found";
   return (
-
-    <>{"dead page"}</>
-    // <Grid>
-    //   <main id="home">
-    //     <h1 id="title">Welcome to the<br></br>CMU Lost and Found</h1>
-    //     <img src="/dog-logo.png" alt="CMU Lost and Found Logo"></img>
-    //     <br></br>
-    //     <br></br>
-    //     <Link to = "/login"><Button>Admin Login</Button></Link>
-    //     <Link to = "/Items"><Button>View Items</Button></Link>
-    //   </main>
-    // </Grid>
+    <Grid>
+      <main id="home">
+        <h1 id="title">
+          Welcome to the<br></br>CMU Lost and Found
+        </h1>
+        <img src="/dog-logo.png" alt="CMU Lost and Found Logo"></img>
+        <br></br>
+        <br></br>
+        <br></br>
+        <div className="buttons">
+          <Link to="/items">
+            <Button>Lost an item</Button>
+          </Link>
+          <FoundItemModal></FoundItemModal>
+        </div>
+      </main>
+    </Grid>
   );
 };
 

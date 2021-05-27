@@ -1,4 +1,4 @@
-/* main {
+main {
   padding-left: 75px;
   padding-right: 75px;
 }
@@ -26,4 +26,11 @@
     padding-left: 30px;
     padding-right: 30px;
   }
-} */
+}
+
+.buttons {
+  display: flex;
+  margin: 0 20px;
+  width: 300px;
+  justify-content: space-evenly;
+}

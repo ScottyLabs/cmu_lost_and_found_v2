@@ -1,8 +1,8 @@
 import { Model, Query, Schema, Document, model } from "mongoose";
 import * as bcrypt from "bcryptjs";
 import * as jwt from "jsonwebtoken";
-// TODO: move this away from here
-const JWT_SECRET = "asdfwecvjoi3sdfoi";
+// jsonwebtoken secret for authentication purposes
+const JWT_SECRET = process.env.JWT_SECRET;
 // time for access token to expire in milliseconds
 const TIME_TO_EXPIRE = 3600000;
 

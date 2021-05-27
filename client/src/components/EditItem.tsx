@@ -37,10 +37,18 @@ const categories = [
 ];
 
 const pickup = [
-  { key: 'cohon', text: 'Cohon University Center', value: 'Cohon University Center' },
-  { key: 'gates', text: 'Gates Center', value: 'Gates Center' },
-  { key: 'tepper', text: 'Tepper Building', value: 'Tepper Building' },
-]
+  {
+    key: "cohon",
+    text: "Cohon University Center",
+    value: "Cohon University Center",
+  },
+  {
+    key: "gates",
+    text: "GHC 6203, 412.268.8525, lostfound@cs.cmu.edu.",
+    value: "GHC 6203, 412.268.8525, lostfound@cs.cmu.edu.",
+  },
+  { key: "tepper", text: "Tepper Building", value: "Tepper Building" },
+];
 
 
 

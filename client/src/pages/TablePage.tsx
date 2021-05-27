@@ -38,8 +38,11 @@ function TablePage() {
   
  //modify items 
   const updateInput = async (input: string) => {
+    let inputName = input.toLowerCase();
     const filtered = itemListDefault.filter((item: Item) => {
-     return item.name.toLowerCase().includes(input.toLowerCase())
+     return item.name.toLowerCase().includes(inputName) ||
+      item.category.toLowerCase().includes(inputName) ||
+      item.description.toLowerCase().includes(inputName)
     })
     setInput(input);
     setItemList(filtered);
@@ -50,10 +53,7 @@ function TablePage() {
     fetchItems();
   }, []);
   
-  let locations = ['Gates Hillman 6203', `Lost and Found desk in the University Center`, `Lost and Found desk in Residence on Fifth
-  `, `Lost and Found desk in Morewood E-tower`, `Lost and Found desk in Donner`];
 
-  const listItems = locations.map((d) => <li className="location" key={d}>{d}</li>);
 
   return (
     <Grid>
@@ -79,11 +79,6 @@ function TablePage() {
             <h2 className="subtitle">Lost and Found Website</h2>
             <div id="description">
               <p>
-                If you find a lost item, please take it to one of the following
-                locations:
-              </p>
-              <ul>{listItems}</ul>
-              <p>
                 To retrieve an object, go to the location listed next to the
                 object on the table. You will be required to identify any lost
                 possessions. All items must be picked up in person. If you have
@@ -106,6 +101,7 @@ function TablePage() {
             <div id="table-widget">
               <TableWidget
                 items={itemList}
+                isUser={false}
                 isAdmin={false}
                 isArchived={false}
                 fetchItems={fetchItems}

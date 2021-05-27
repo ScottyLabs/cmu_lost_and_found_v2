@@ -1,5 +1,5 @@
 import { Request, Response, Router } from "express";
-import User, {IUser} from "../models/User";
+import User, { IUser } from "../models/User";
 import { isUser, isAdmin } from "./auth";
 
 // https://github.com/seanpmaxwell/express-generator-typescript/tree/265df43a2cb23a4389a0361530bb741d1fc88c7b
@@ -67,6 +67,6 @@ router.post('/delete', isAdmin, async (req: Request, res: Response) => {
         return res.status(200).send({msg: raw});
         
     });
-})
+});
 
 export default router;

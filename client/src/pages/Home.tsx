@@ -19,7 +19,7 @@ function Home() {
         <br></br>
         <div className="buttons">
           <Link to="/items">
-            <Button>Lost an item</Button>
+            <Button>Lost an Item</Button>
           </Link>
           <FoundItemModal></FoundItemModal>
         </div>

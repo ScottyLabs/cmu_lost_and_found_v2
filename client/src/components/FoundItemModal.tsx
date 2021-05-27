@@ -20,11 +20,10 @@ function exampleReducer(dispatchState: any, action: any) {
 
   let locations = [
     "Gates Hillman 6203",
-    `Lost and Found desk in the University Center`,
-    `Lost and Found desk in Residence on Fifth
-  `,
-    `Lost and Found desk in Morewood E-tower`,
-    `Lost and Found desk in Donner`,
+    `University Center Information Desk`,
+    `Residence on Fifth Front Desk`,
+    `Morewood Front Desk`,
+    `Donner Front Desk`,
   ];
 
   const listItems = locations.map((d) => (
@@ -98,14 +97,14 @@ function FoundItemModal(props: {
           open={open}
           onOpen={() => dispatch({ type: "OPEN_MODAL" })}
           onClose={() => dispatch({ type: "CLOSE_MODAL" })}
-          trigger={<Button>Found an item</Button>}
+          trigger={<Button>Found an Item</Button>}
         >
-          <Modal.Header>Found an item</Modal.Header>
+          <Modal.Header>Found an Item</Modal.Header>
           <Modal.Content>
             {/* Need to stop modal from closing when enter key is pressed */}
             <div id="description">
               <p>
-                If you find a lost item, please take it to one of the following
+                If you found a lost item, please take it to one of the following
                 locations:
               </p>
               <ul>{listItems}</ul>

@@ -1,8 +1,9 @@
 import axios from 'axios';
 import React, {useState} from 'react';
-import { Button, Grid, Modal, Form } from 'semantic-ui-react';
+import { Button, Grid, Modal, Form, Icon } from 'semantic-ui-react';
 import { useHistory } from "react-router-dom";
-import "./AddModal.css";
+import { Item } from "../interface/item"
+import "./EditItem.css";
 
 function exampleReducer(dispatchState: any, action: any) {
   switch (action.type) {
@@ -53,6 +54,9 @@ const pickup = [
 
 function EditItem(props: {
   fetchItems: Function;
+  isAdmin: boolean;
+  item: Item;
+  id: string;
 }) {
   const [dispatchState, dispatch] = React.useReducer(exampleReducer, {
     closeOnEscape: false,
@@ -64,18 +68,19 @@ function EditItem(props: {
   const history = useHistory();
 
   const [state, setState] = useState({
-    dateFound: "",
-    timeFound: "",
-    name: "",
-    whereFound: "",
-    description: "",
-    category: "",
-    whereToRetrieve: "",
-    image: "",
+    dateFound: new Date(props.item.dateFound).toISOString().substring(0, 10),
+    timeFound: props.item.timeFound,
+    name: props.item.name,
+    whereFound: props.item.whereFound,
+    description: props.item.description,
+    category: props.item.category,
+    whereToRetrieve: props.item.whereToRetrieve,
+    image: props.item.image,
     imagePath: "",
     imageObject: null as any,
-    imagePermission: false,
-    status: "available"
+    imagePermission: props.item.imagePermission,
+    status: props.item.status,
+    approved: props.item.approved
   });
 
   const handleChange = (e: any, { name, value }: any) => {
@@ -94,7 +99,7 @@ function EditItem(props: {
   }
 
   const uploadImage = (imageFile: File) => {
-    console.log('attempting to add image')
+    console.log('attempting to edit image')
     const imageName = "test"
     console.log(imageFile)
     console.log(typeof (imageFile))
@@ -116,7 +121,7 @@ function EditItem(props: {
           imageName: imageName,
           dataURL: reader.result
         };
-        console.log("Trying to add image")
+        console.log("Trying to edit image")
 
         axios
           .post(`/api/items/addImage`, data)
@@ -142,36 +147,28 @@ function EditItem(props: {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const { dateFound, timeFound, name, whereFound, description, category, whereToRetrieve, image, imageObject, imagePermission, status } = state;
-    console.log(image)
-    let date = dateFound.split("-");
-    if (date.length > 2) {
-      date[0] = date[0].substr(2, 2)
-    }
-    let dateFormatted = date[1] + "/" + date[2] + "/" + date[0];
-    
-    let [h, m] = timeFound.split(":");
-    let timeFormatted = (parseInt(h) % 12) + (parseInt(h) % 12 === 0 ? 12 : 0) + ":" + m + " " + (parseInt(h) >= 12 ? "PM" : "AM");
-    
+    const { dateFound, timeFound, name, whereFound, description, category, whereToRetrieve, image, imageObject, imagePermission, status, approved } = state;
 
     uploadImage(imageObject).then((res) => {
       axios
-        .post(`/api/items/add`, {
+        .post(`/api/items/editItem`, {
+          id: props.id,
           token: localStorage.getItem("lnf_token"),
-          dateFound: dateFormatted,
-          timeFound: timeFormatted,
+          dateFound: dateFound,
+          timeFound: timeFound,
           name: name,
           whereFound: whereFound,
           description: description,
           category: category,
           whereToRetrieve: whereToRetrieve,
-          image: res,
+          image: res === "" ? image : res, // use existing image if no new image was added
           imagePermission: imagePermission,
           status: status,
+          approved: approved
         })
         .then(
           (res) => {
-            console.log("Added");
+            console.log("Edited");
             console.log(res);
             props.fetchItems();
           },
@@ -180,7 +177,7 @@ function EditItem(props: {
           }
         );
       dispatch({ type: 'CLOSE_MODAL' });
-      setState({ dateFound: state.dateFound, timeFound: state.timeFound, name: state.name, whereFound: state.whereFound, description: state.description, category: state.category, whereToRetrieve: state.whereToRetrieve, image: state.image, imageObject: state.imageObject, imagePath: state.imagePath, imagePermission: state.imagePermission, status: "available" });
+      setState({ dateFound: state.dateFound, timeFound: state.timeFound, name: state.name, whereFound: state.whereFound, description: state.description, category: state.category, whereToRetrieve: state.whereToRetrieve, image: state.image, imageObject: state.imageObject, imagePath: state.imagePath, imagePermission: state.imagePermission, status: "available", approved: false });
       return res;
     }, (err) => {
       console.error(err);
@@ -206,7 +203,11 @@ function EditItem(props: {
           open={open}
           onOpen={() => dispatch({ type: "OPEN_MODAL" })}
           onClose={() => dispatch({ type: "CLOSE_MODAL" })}
-          trigger={<Button id="add-item">Edit Item</Button>}
+          trigger={
+            <Button icon circular color="blue" size="tiny">
+              <Icon name="edit outline" inverted size="large"></Icon>
+            </Button>
+          }
         >
           <Modal.Header>Edit Item</Modal.Header>
           <Modal.Content>

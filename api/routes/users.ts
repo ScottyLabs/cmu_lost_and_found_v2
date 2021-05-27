@@ -56,6 +56,7 @@ router.post('/updatePerm', isAdmin, async (req: Request, res: Response) => {
  *  username: "bob"
  * }
  */
+
 router.post('/delete', isAdmin, async (req: Request, res: Response) => {
     let { username } = req.body;
     User.findOneAndDelete({username: username}, (err: any, raw: IUser) => {

@@ -126,14 +126,29 @@ router.post("/updateApprovedStatus", isAdmin, async (req: Request, res: Response
  * }
  */
 router.post("/editItem", isUser, async (req: Request, res: Response) => {
-  let id = req.body.id;
-  let status = req.body.status;
-  Item.findByIdAndUpdate({ _id: id }, { status: status }, { runValidators: true, useFindAndModify: false }, (err, raw) => {
+  let {
+    id,
+    token,
+    dateFound,
+    timeFound,
+    name,
+    whereFound,
+    description,
+    category,
+    whereToRetrieve,
+    image,
+    imagePermission,
+    status,
+    approved,
+  } = req.body;
+  Item.findByIdAndUpdate({ _id: id }, { status: status, token: token, dateFound: dateFound, timeFound: timeFound, name: name
+    , whereFound: whereFound, description: description, category: category, whereToRetrieve: whereToRetrieve, image: image, imagePermission: imagePermission, approved: approved}, 
+    { runValidators: true, useFindAndModify: false }, (err, raw) => {
     if (err) {
       console.log(err);
-      return res.status(401).send({ trace: err, msg: "can't find item in db" });
+      return res.status(401).send({trace: err, msg: "can't find item in db"});
     }
-    return res.status(200).send({ msg: raw });
+    return res.status(200).send({msg: raw});
   });
 
 });

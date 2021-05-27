@@ -1,7 +1,7 @@
 export interface Item {
   _id: string;
-  dateFound: Date;
-  timeFound: string;
+  dateFound: string; // Ex: 2020-03-11T05:00:00.000Z
+  timeFound: string; // Ex: 13:30
   name: string;
   whereFound: string;
   description: string;

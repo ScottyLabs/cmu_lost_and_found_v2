@@ -30,4 +30,7 @@ main {
 
 .buttons {
   display: flex;
+  margin: 0 20px;
+  width: 300px;
+  justify-content: space-evenly;
 }

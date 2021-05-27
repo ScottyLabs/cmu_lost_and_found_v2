@@ -1,4 +1,4 @@
-#add-item {
+#edit-item {
     width : 100px;
     margin-left: 15px;
 }
@@ -21,7 +21,7 @@ body.dimmed.dimmable {
 }
 
 @media (max-width: 425px) {
-    #add-item {
+    #edit-item {
         width : 100px;
         margin-left: 0;
     }

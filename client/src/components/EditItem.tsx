@@ -2,7 +2,8 @@ import axios from 'axios';
 import React, {useState} from 'react';
 import { Button, Grid, Modal, Form } from 'semantic-ui-react';
 import { useHistory } from "react-router-dom";
-import "./AddModal.css";
+import { Item } from "../interface/item"
+import "./EditItem.css";
 
 function exampleReducer(dispatchState: any, action: any) {
   switch (action.type) {
@@ -45,6 +46,9 @@ const pickup = [
 
 function EditItem(props: {
   fetchItems: Function;
+  isAdmin: boolean;
+  item: Item;
+  id: string;
 }) {
   const [dispatchState, dispatch] = React.useReducer(exampleReducer, {
     closeOnEscape: false,
@@ -57,17 +61,18 @@ function EditItem(props: {
 
   const [state, setState] = useState({
     dateFound: "",
-    timeFound: "",
-    name: "",
-    whereFound: "",
-    description: "",
-    category: "",
+    timeFound: props.item.timeFound,
+    name: props.item.name,
+    whereFound: props.item.whereFound,
+    description: props.item.description,
+    category: props.item.category,
     whereToRetrieve: "",
     image: "",
     imagePath: "",
     imageObject: null as any,
     imagePermission: false,
-    status: "available"
+    status: props.item.status,
+    approved: props.item.approved
   });
 
   const handleChange = (e: any, { name, value }: any) => {
@@ -86,7 +91,7 @@ function EditItem(props: {
   }
 
   const uploadImage = (imageFile: File) => {
-    console.log('attempting to add image')
+    console.log('attempting to edit image')
     const imageName = "test"
     console.log(imageFile)
     console.log(typeof (imageFile))
@@ -108,7 +113,7 @@ function EditItem(props: {
           imageName: imageName,
           dataURL: reader.result
         };
-        console.log("Trying to add image")
+        console.log("Trying to edit image")
 
         axios
           .post(`/api/items/addImage`, data)
@@ -134,7 +139,7 @@ function EditItem(props: {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const { dateFound, timeFound, name, whereFound, description, category, whereToRetrieve, image, imageObject, imagePermission, status } = state;
+    const { dateFound, timeFound, name, whereFound, description, category, whereToRetrieve, image, imageObject, imagePermission, status, approved } = state;
     console.log(image)
     let date = dateFound.split("-");
     if (date.length > 2) {
@@ -148,7 +153,8 @@ function EditItem(props: {
 
     uploadImage(imageObject).then((res) => {
       axios
-        .post(`/api/items/add`, {
+        .post(`/api/items/editItem`, {
+          id: props.id,
           token: localStorage.getItem("lnf_token"),
           dateFound: dateFormatted,
           timeFound: timeFormatted,
@@ -160,10 +166,11 @@ function EditItem(props: {
           image: res,
           imagePermission: imagePermission,
           status: status,
+          approved: approved
         })
         .then(
           (res) => {
-            console.log("Added");
+            console.log("Edited");
             console.log(res);
             props.fetchItems();
           },
@@ -198,7 +205,7 @@ function EditItem(props: {
           open={open}
           onOpen={() => dispatch({ type: "OPEN_MODAL" })}
           onClose={() => dispatch({ type: "CLOSE_MODAL" })}
-          trigger={<Button id="add-item">Edit Item</Button>}
+          trigger={<Button id="edit-item">Edit Item</Button>}
         >
           <Modal.Header>Edit Item</Modal.Header>
           <Modal.Content>

@@ -1,5 +1,5 @@
 import { Request, Response, Router } from "express";
-import User from "../models/User";
+import User, {IUser} from "../models/User";
 import { isUser, isAdmin } from "./auth";
 
 // https://github.com/seanpmaxwell/express-generator-typescript/tree/265df43a2cb23a4389a0361530bb741d1fc88c7b
@@ -56,9 +56,10 @@ router.post('/updatePerm', isAdmin, async (req: Request, res: Response) => {
  *  username: "bob"
  * }
  */
+
 router.post('/delete', isAdmin, async (req: Request, res: Response) => {
     let { username } = req.body;
-    User.findOneAndDelete({username: username}, (err, raw) => {
+    User.findOneAndDelete({username: username}, (err: any, raw: IUser) => {
         if (err) {
             console.log(err);
             return res.status(401).send({trace: err, msg: "can't find item in db"});

@@ -6,7 +6,7 @@ import ImageModal from "./ImageModal";
 import SwitchButton from "./SwitchButton";
 import ApproveSwitch from "./ApproveSwitch";
 import DeleteButton from "./DeleteButton";
-
+import EditButton from "./EditItem";
 const TableWidget = (props: {
   items: Array<Item>;
   isAdmin: boolean;
@@ -89,6 +89,16 @@ const TableWidget = (props: {
                         id={item._id}
                         fetchItems={props.fetchItems}
                       ></DeleteButton>
+                    </Table.Cell>
+                  ) : null}
+                  {props.isAdmin ? (
+                    <Table.Cell>
+                      <EditButton
+                        fetchItems={props.fetchItems}
+                        isAdmin= {props.isAdmin}
+                        item={item}
+                        id={item._id}
+                      ></EditButton>
                     </Table.Cell>
                   ) : null}
                 </Table.Row>

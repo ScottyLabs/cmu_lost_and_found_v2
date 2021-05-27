@@ -38,8 +38,11 @@ function TablePage() {
   
  //modify items 
   const updateInput = async (input: string) => {
+    let inputName = input.toLowerCase();
     const filtered = itemListDefault.filter((item: Item) => {
-     return item.name.toLowerCase().includes(input.toLowerCase())
+     return item.name.toLowerCase().includes(inputName) ||
+      item.category.toLowerCase().includes(inputName) ||
+      item.description.toLowerCase().includes(inputName)
     })
     setInput(input);
     setItemList(filtered);
@@ -98,6 +101,7 @@ function TablePage() {
             <div id="table-widget">
               <TableWidget
                 items={itemList}
+                isUser={false}
                 isAdmin={false}
                 isArchived={false}
                 fetchItems={fetchItems}

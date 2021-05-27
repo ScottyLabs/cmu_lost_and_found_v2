@@ -127,6 +127,7 @@ function Admin() {
             <div id="table">
               <TableWidget
                 items={itemList}
+                isUser={true}
                 isAdmin={localStorage.getItem("lnf_isAdmin") === "true"}
                 isArchived={false}
                 fetchItems={fetchItems}

@@ -27,13 +27,6 @@ def clean(s):
     s = s.replace(";", "")
     s = s.replace("<p>", "")
     s = s.replace("</p>", "")
-    if "<br" in s:
-        print("important", s)
-    s = s.replace("<=\"\" td=\"\"/> <td>To claim, please contact 412.268.8525 <a href=\"mailto: lostfound@cs.cmu.edu\">lostfound@cs.cmu.edu</a> GHC 6203 </td>", "")
-    s = s.replace("<=\"\" td=\"\"/> <td>To claim, please contact 412.268.8525 <a href=\"mailto: lostfound@cs.cmu.edu\">lostfound@cs.cmu.edu</a> GHC 6203 Claimed!</td>", "")
-    s = s.replace("<br <=\"\" td=\"\"/ > \
-                  < td > To claim, please contact 412.268.8525 \
-                  < a href=\"mailto:lostfound@cs.cmu.edu\" > lostfound@cs.cmu.edu < /a > GHC 6203 Claimed!< /td >", "")
     s = s.replace(" Must Claim in Person", " Must claim in person")
     s = s.replace(" Must claim in person", ". Must claim in person")
     s = s.replace(" Must identify in person", ". Must identify in person")

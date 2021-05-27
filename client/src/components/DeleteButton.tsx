@@ -7,6 +7,7 @@ import { useHistory } from "react-router-dom";
 export default function DeleteButton(props: {
   id: string;
   fetchItems: Function;
+  disabled: boolean;
 }) {
   const history = useHistory();
   const handleClick = () => {
@@ -24,7 +25,7 @@ export default function DeleteButton(props: {
   };
 
   return (
-    <Button icon circular color="red" size="tiny" onClick={handleClick}>
+    <Button disabled={props.disabled} icon circular color="red" size="tiny" onClick={handleClick}>
       <Icon name="trash alternate outline" inverted size="large"></Icon>
     </Button>
   );

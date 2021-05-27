@@ -7,7 +7,8 @@ import "./ApproveSwitch.css"
 export default function ApproveSwitch(props: {
   id: string;
   isApproved: boolean;
-  fetchItems: Function
+  fetchItems: Function;
+  disabled: boolean;
 }) {
 
   const [state, setState] = useState({
@@ -31,6 +32,6 @@ export default function ApproveSwitch(props: {
   }
 
   return (
-    <Toggle defaultChecked={state.isApproved} onChange={handleClick} />
+    <Toggle disabled={props.disabled} defaultChecked={state.isApproved} onChange={handleClick} />
   );
 }

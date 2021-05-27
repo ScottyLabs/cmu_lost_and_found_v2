@@ -57,6 +57,7 @@ function EditItem(props: {
   isAdmin: boolean;
   item: Item;
   id: string;
+  disabled: boolean;
 }) {
   const [dispatchState, dispatch] = React.useReducer(exampleReducer, {
     closeOnEscape: false,
@@ -204,7 +205,7 @@ function EditItem(props: {
           onOpen={() => dispatch({ type: "OPEN_MODAL" })}
           onClose={() => dispatch({ type: "CLOSE_MODAL" })}
           trigger={
-            <Button icon circular color="blue" size="tiny">
+            <Button disabled={props.disabled} icon circular color="blue" size="tiny">
               <Icon name="edit outline" inverted size="large"></Icon>
             </Button>
           }

@@ -80,7 +80,7 @@ function EditItem(props: {
     imageObject: null as any,
     imagePermission: props.item.imagePermission,
     status: props.item.status,
-    approved: props.item.approved
+    // approved: props.item.approved
   });
 
   const handleChange = (e: any, { name, value }: any) => {
@@ -147,7 +147,7 @@ function EditItem(props: {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const { dateFound, timeFound, name, whereFound, description, category, whereToRetrieve, image, imageObject, imagePermission, status, approved } = state;
+    const { dateFound, timeFound, name, whereFound, description, category, whereToRetrieve, image, imageObject, imagePermission, status } = state;
     console.log(image)
     let date = dateFound.split("-");
     if (date.length > 2) {
@@ -174,7 +174,7 @@ function EditItem(props: {
           image: res == "" ? image : res, // use existing image if no new image was added
           imagePermission: imagePermission,
           status: status,
-          approved: approved
+          // approved: approved
         })
         .then(
           (res) => {

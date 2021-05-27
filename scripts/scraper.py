@@ -1,11 +1,13 @@
 import requests
 from bs4 import BeautifulSoup
+import re
 
 from datetime import datetime
 
 response = requests.get('https://www.cs.cmu.edu/~lostfound/')
-
-soup = BeautifulSoup(response.text, 'html.parser')
+# fix broken br tags
+text = re.sub("<br\s", "<br>", response.text)
+soup = BeautifulSoup(text, 'html.parser')
 
 table = soup.find_all('tr')
 
@@ -23,6 +25,19 @@ def clean(s):
     s = s.replace("</i>", "")
     s = s.replace("  ", " ")
     s = s.replace(";", "")
+    s = s.replace("<p>", "")
+    s = s.replace("</p>", "")
+    if "<br" in s:
+        print("important", s)
+    s = s.replace("<=\"\" td=\"\"/> <td>To claim, please contact 412.268.8525 <a href=\"mailto: lostfound@cs.cmu.edu\">lostfound@cs.cmu.edu</a> GHC 6203 </td>", "")
+    s = s.replace("<=\"\" td=\"\"/> <td>To claim, please contact 412.268.8525 <a href=\"mailto: lostfound@cs.cmu.edu\">lostfound@cs.cmu.edu</a> GHC 6203 Claimed!</td>", "")
+    s = s.replace("<br <=\"\" td=\"\"/ > \
+                  < td > To claim, please contact 412.268.8525 \
+                  < a href=\"mailto:lostfound@cs.cmu.edu\" > lostfound@cs.cmu.edu < /a > GHC 6203 Claimed!< /td >", "")
+    s = s.replace(" Must Claim in Person", " Must claim in person")
+    s = s.replace(" Must claim in person", ". Must claim in person")
+    s = s.replace(" Must identify in person", ". Must identify in person")
+
     return s
 
 def extract_url(s):
@@ -55,7 +70,6 @@ for row in soup.find_all('tr'):
         dt = datetime.strptime(rawDate, "%d %b %y")
 
         info["dateFound"] = dt.strftime("%m/%d/%y")
-        print(data[1][-2:])
         timeFound = data[1][:-3].upper()
         if data[1][-2:] == "pm":
             hours, mins = timeFound.split(":")
@@ -70,9 +84,13 @@ for row in soup.find_all('tr'):
         info["whereFound"] = found
         info["description"] = clean(data[4])
         info["category"] = "Other" # for now
-        info["whereToRetrieve"] = "Gates" # for now
+        info["whereToRetrieve"] = "GHC 6203, 412.268.8525, lostfound@cs.cmu.edu."  # for now
         info["imagePermission"] = True # for now
-        info["status"] = "available" # for now
+        if "claimed!" in clean(data[5]).lower():
+            status = "claimed"
+        else:
+            status = "available"
+        info["status"] = status # for now
         info["approved"] = "true"
 
         print(info)

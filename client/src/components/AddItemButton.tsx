@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react';
-import { Button, Grid, Modal, Form } from 'semantic-ui-react';
+import { Button, Grid, Modal, Form, Message } from 'semantic-ui-react';
 import { useHistory } from "react-router-dom";
 import "./AddItemButton.css";
 
@@ -48,8 +48,6 @@ const pickup = [
   { key: "tepper", text: "Tepper Building", value: "Tepper Building" },
 ];
 
-
-
 function AddItemButton(props: {
   fetchItems: Function;
   isAdmin: boolean;
@@ -74,8 +72,19 @@ function AddItemButton(props: {
     imagePath: "",
     imageObject: null as any,
     imagePermission: false,
-    status: "available"
+    status: "available",
   });
+
+  // Validation error states
+  // const[nameError, setNameError] = useState(false);
+  // const[dateError, setDateError] = useState(false);
+  // const[timeError, setTimeError] = useState(false);
+  // const[locationError, setLocationError] = useState(false);
+  // const[descriptionError, setDescriptionError] = useState(false);
+  const[categoryError, setCategoryError] = useState(false);
+  const[pickupError, setPickupError] = useState(false);
+  const[formError, setFormError] = useState(false);
+
   const history = useHistory();
 
   const handleChange = (e: any, { name, value }: any) => {
@@ -133,8 +142,74 @@ function AddItemButton(props: {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const { dateFound, timeFound, name, whereFound, description, category, whereToRetrieve, image, imageObject, imagePermission, status } = state;
+    const { dateFound, timeFound, name, whereFound, description, category, whereToRetrieve, image, imageObject, imagePermission, status} = state;
     console.log(props.isAdmin);
+    
+    let error = false;
+
+    // if(name === "") {
+    //   setNameError(true);
+    //   error = true;
+    // }
+    // else {
+    //   setNameError(false);
+    // }
+
+    // if(dateFound === "") {
+    //   setDateError(true);
+    //   error = true;
+    // }
+    // else {
+    //   setDateError(false);
+    // }
+    
+    // if(timeFound === "") {
+    //   setTimeError(true);
+    //   error = true;
+    // }
+    // else {
+    //   setTimeError(false);
+    // }
+
+    // if(whereFound === "") {
+    //   setLocationError(true);
+    //   error = true;
+    // }
+    // else {
+    //   setLocationError(false);
+    // }
+
+    // if(description === "") {
+    //   setDescriptionError(true);
+    //   error = true;
+    // }
+    // else {
+    //   setDescriptionError(false);
+    // }
+
+    if(category === "") {
+      setCategoryError(true);
+      error = true;
+    }
+    else {
+      setCategoryError(false);
+    }
+
+    if(whereToRetrieve === "") {
+      setPickupError(true);
+      error = true;
+    }
+    else {
+      setPickupError(false);
+    }
+
+    if(error) {
+      setFormError(true);
+      return;
+    }
+    else {
+      setFormError(false);
+    }
 
     uploadImage(imageObject).then((res) => {
       axios
@@ -170,7 +245,6 @@ function AddItemButton(props: {
     }, (err) => {
       console.error(err);
     });
-
   }
 
 
@@ -193,7 +267,15 @@ function AddItemButton(props: {
           <Modal.Header>Add Item</Modal.Header>
           <Modal.Content>
             {/* Need to stop modal from closing when enter key is pressed */}
-            <Form onSubmit={handleSubmit}>
+            <Form onSubmit={handleSubmit} error={formError}>
+              {formError ?
+                <Message
+                  error
+                  content="Missing required field(s)"
+                />
+                :
+                null
+              }
               <Form.Input
                 required
                 fluid
@@ -202,6 +284,7 @@ function AddItemButton(props: {
                 name="name"
                 value={state.name}
                 onChange={handleChange}
+                // error={nameError}
               />
               <Form.Group widths="equal">
                 <Form.Input
@@ -214,6 +297,7 @@ function AddItemButton(props: {
                   max={todayDate}
                   value={state.dateFound}
                   onChange={handleChange}
+                  // error={dateError}
                 />
                 <Form.Input
                   required
@@ -224,6 +308,7 @@ function AddItemButton(props: {
                   placeholder="HH:MM"
                   value={state.timeFound}
                   onChange={handleChange}
+                  // error={timeError}
                 />
                 <Form.Input
                   required
@@ -233,6 +318,7 @@ function AddItemButton(props: {
                   placeholder="Location"
                   value={state.whereFound}
                   onChange={handleChange}
+                  // error={locationError}
                 />
               </Form.Group>
               <Form.Input
@@ -242,6 +328,7 @@ function AddItemButton(props: {
                 name="description"
                 value={state.description}
                 onChange={handleChange}
+                // error={descriptionError}
               />
               <Form.Group widths="equal">
                 <Form.Select
@@ -253,6 +340,7 @@ function AddItemButton(props: {
                   name="category"
                   value={state.category}
                   onChange={handleChange}
+                  error={categoryError}
                 />
                 <Form.Select
                   fluid
@@ -263,6 +351,7 @@ function AddItemButton(props: {
                   name="whereToRetrieve"
                   value={state.whereToRetrieve}
                   onChange={handleChange}
+                  error={pickupError}
                 />
               </Form.Group>
               <Form.Input

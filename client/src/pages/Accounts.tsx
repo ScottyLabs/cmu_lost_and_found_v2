@@ -70,7 +70,7 @@ function Accounts() {
       <Grid.Row>
         <Grid.Column>
           <main>
-            <Link to="/">
+            <Link to="/admin">
               <img
                 src="/dog-logo.png"
                 id="logo-mobile"
@@ -79,13 +79,13 @@ function Accounts() {
             </Link>
             <div id="settings">
               <Rail attached internal position="left" id="logo-desktop">
-                <Link to="/">
+                <Link to="/admin">
                   <img src="/dog-logo.png" alt="CMU Lost and Found Logo"></img>
                 </Link>
               </Rail>
               <Link to="/admin">
                 <Button icon>
-                  <Icon name="setting" />
+                  <Icon name="arrow left" />
                 </Button>
               </Link>
             </div>

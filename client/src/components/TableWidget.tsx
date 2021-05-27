@@ -40,11 +40,9 @@ const TableWidget = (props: {
             <Table.HeaderCell>Where to Retrieve</Table.HeaderCell>
             <Table.HeaderCell>Image</Table.HeaderCell>
             {props.isUser ? (
-              <Table.HeaderCell>Claim/Unclaim</Table.HeaderCell>
+              <Table.HeaderCell>Claimed/Unclaimed</Table.HeaderCell>
             ) : null}
-            {props.isAdmin ? (
-              <Table.HeaderCell>Approve</Table.HeaderCell>
-            ) : null}
+            {props.isAdmin ? <Table.HeaderCell>Approve</Table.HeaderCell> : null}
             {props.isAdmin ? <Table.HeaderCell>Delete</Table.HeaderCell> : null}
           </Table.Row>
         </Table.Header>

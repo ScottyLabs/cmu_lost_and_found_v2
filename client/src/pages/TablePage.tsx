@@ -53,10 +53,7 @@ function TablePage() {
     fetchItems();
   }, []);
   
-  let locations = ['Gates Hillman 6203', `Lost and Found desk in the University Center`, `Lost and Found desk in Residence on Fifth
-  `, `Lost and Found desk in Morewood E-tower`, `Lost and Found desk in Donner`];
 
-  const listItems = locations.map((d) => <li className="location" key={d}>{d}</li>);
 
   return (
     <Grid>
@@ -81,11 +78,6 @@ function TablePage() {
             <h1 className="title">Carnegie Mellon University</h1>
             <h2 className="subtitle">Lost and Found Website</h2>
             <div id="description">
-              <p>
-                If you find a lost item, please take it to one of the following
-                locations:
-              </p>
-              <ul>{listItems}</ul>
               <p>
                 To retrieve an object, go to the location listed next to the
                 object on the table. You will be required to identify any lost

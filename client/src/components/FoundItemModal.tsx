@@ -103,17 +103,15 @@ function FoundItemModal(props: {
           <Modal.Header>Found an item</Modal.Header>
           <Modal.Content>
             {/* Need to stop modal from closing when enter key is pressed */}
-            <div id="description">
-              <p>
-                If you find a lost item, please take it to one of the following
-                locations:
-              </p>
-              <ul>{listItems}</ul>
-              <p>
-                If you have any inquiries, please send an email to{" "}
-                <a href="mailto:lostfound@cs.cmu.edu">lostfound@cs.cmu.edu</a>.
-              </p>
-            </div>
+            <p>
+              If you find a lost item, please take it to one of the following
+              locations:
+            </p>
+            <ul>{listItems}</ul>
+            <p>
+              If you have any inquiries, please send an email to{" "}
+              <a href="mailto:lostfound@cs.cmu.edu">lostfound@cs.cmu.edu</a>.
+            </p>
             <Button onClick={() => dispatch({ type: "CLOSE_MODAL" })} negative>
               OK
             </Button>

@@ -19,9 +19,9 @@ function Home() {
         <br></br>
         <div className="buttons">
           <Link to="/items">
-            <Button>Lost an item</Button>
+            <Button style={{ width: "125px"}}>Lost an item</Button>
           </Link>
-          <FoundItemModal></FoundItemModal>
+          <FoundItemModal style={{ padding: "11px 11px", width: "125px"}}></FoundItemModal>
         </div>
       </main>
     </Grid>

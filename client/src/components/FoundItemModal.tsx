@@ -34,7 +34,7 @@ function exampleReducer(dispatchState: any, action: any) {
   ));
 
 function FoundItemModal(props: {
-  
+  style?: any;
 }) {
   const [dispatchState, dispatch] = React.useReducer(exampleReducer, {
     closeOnEscape: false,
@@ -98,7 +98,7 @@ function FoundItemModal(props: {
           open={open}
           onOpen={() => dispatch({ type: "OPEN_MODAL" })}
           onClose={() => dispatch({ type: "CLOSE_MODAL" })}
-          trigger={<Button>Found an item</Button>}
+          trigger={<Button style={props.style}>Found an item</Button>}
         >
           <Modal.Header>Found an item</Modal.Header>
           <Modal.Content>

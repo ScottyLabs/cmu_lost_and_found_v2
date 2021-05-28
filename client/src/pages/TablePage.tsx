@@ -7,8 +7,8 @@ import SearchBar from '../components/SearchBar';
 import { Item } from "../interface/item";
 import CardWidget from "../components/CardWidget";
 import ItemCard from "../components/ItemCard";
-
 import "./TablePage.css";
+import FoundItemModal from "../components/FoundItemModal";
 
 function TablePage() {
   const [items, setItems] = useState([]);
@@ -88,6 +88,15 @@ function TablePage() {
             </div>
             <div id="admin-filter-bar">
               <SearchBar input={input} onChange={updateInput} />
+              {/* <div id="add-desktop">
+                <AddItemButton
+                  fetchItems={fetchItems}
+                  isAdmin={isAdmin}
+                ></AddItemButton>
+              </div> */}
+              <FoundItemModal id="found-item-modal"
+                style={{ padding: "11px 11px", width: "110px" }}
+              ></FoundItemModal>
             </div>
 
             <div id="cards-widget">

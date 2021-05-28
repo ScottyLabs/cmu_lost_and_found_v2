@@ -4,6 +4,7 @@ import { Grid, Button } from "semantic-ui-react";
 import "./Home.css";
 import "semantic-ui-css/semantic.min.css";
 import FoundItemModal from "../components/FoundItemModal";
+import Footer from "../components/Footer";
 
 function Home() {
   document.title = "CMU Lost and Found";
@@ -19,11 +20,14 @@ function Home() {
         <br></br>
         <div className="buttons">
           <Link to="/items">
-            <Button style={{ width: "125px"}}>Lost an item</Button>
+            <Button style={{ width: "125px" }}>View Items</Button>
           </Link>
-          <FoundItemModal style={{ padding: "11px 11px", width: "125px"}}></FoundItemModal>
+          <FoundItemModal
+            style={{ padding: "11px 11px", width: "125px" }}
+          ></FoundItemModal>
         </div>
       </main>
+      <Footer></Footer>
     </Grid>
   );
 };

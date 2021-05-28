@@ -27,6 +27,8 @@ def clean(s):
     s = s.replace(";", "")
     s = s.replace("<p>", "")
     s = s.replace("</p>", "")
+    s = s.replace("<brlarge>", "")
+    s = s.replace("</brlarge>", "")
     s = s.replace(" Must Claim in Person", " Must claim in person")
     s = s.replace(" Must claim in person", ". Must claim in person")
     s = s.replace(" Must identify in person", ". Must identify in person")

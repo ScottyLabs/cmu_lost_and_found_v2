@@ -1,25 +1,24 @@
-import axios from 'axios';
-import React, {useState} from 'react';
-import { Button, Grid, Modal, Form, Icon } from 'semantic-ui-react';
+import axios from "axios";
+import React, { useState } from "react";
+import { Button, Grid, Modal, Form, Icon } from "semantic-ui-react";
 import { useHistory } from "react-router-dom";
-import { Item } from "../interface/item"
+import { Item } from "../interface/item";
 import "./EditItem.css";
 
 function exampleReducer(dispatchState: any, action: any) {
   switch (action.type) {
-    case 'CONFIG_CLOSE_ON_DIMMER_CLICK':
-      return { ...dispatchState, closeOnDimmerClick: action.value }
-    case 'CONFIG_CLOSE_ON_ESCAPE':
-      return { ...dispatchState, closeOnEscape: action.value }
-    case 'OPEN_MODAL':
-      return { ...dispatchState, open: true }
-    case 'CLOSE_MODAL':
-      return { ...dispatchState, open: false }
+    case "CONFIG_CLOSE_ON_DIMMER_CLICK":
+      return { ...dispatchState, closeOnDimmerClick: action.value };
+    case "CONFIG_CLOSE_ON_ESCAPE":
+      return { ...dispatchState, closeOnEscape: action.value };
+    case "OPEN_MODAL":
+      return { ...dispatchState, open: true };
+    case "CLOSE_MODAL":
+      return { ...dispatchState, open: false };
     default:
-      throw new Error()
+      throw new Error();
   }
 }
-
 
 const categories = [
   { key: "clothing", text: "Clothing", value: "Clothing" },
@@ -32,7 +31,11 @@ const categories = [
   { key: "tablets", text: "Tablets", value: "Tablets" },
   { key: "umbrellas", text: "Umbrellas", value: "Umbrellas" },
   { key: "water bottles", text: "Water Bottles", value: "Water Bottles" },
-  { key: "other electronics", text: "Other Electronics", value: "Other Electronics" },
+  {
+    key: "other electronics",
+    text: "Other Electronics",
+    value: "Other Electronics",
+  },
   { key: "miscellaneous", text: "Miscellaneous", value: "Miscellaneous" },
 ];
 
@@ -50,8 +53,6 @@ const pickup = [
   { key: "tepper", text: "Tepper Building", value: "Tepper Building" },
 ];
 
-
-
 function EditItem(props: {
   fetchItems: Function;
   isAdmin: boolean;
@@ -64,7 +65,7 @@ function EditItem(props: {
     closeOnDimmerClick: false,
     open: false,
     dimmer: undefined,
-  })
+  });
   const { open, closeOnEscape, closeOnDimmerClick } = dispatchState;
   const history = useHistory();
 
@@ -81,119 +82,148 @@ function EditItem(props: {
     imageObject: null as any,
     imagePermission: props.item.imagePermission,
     status: props.item.status,
-    approved: props.item.approved
+    approved: props.item.approved,
   });
 
   const handleChange = (e: any, { name, value }: any) => {
     console.log(value);
-    console.log(typeof (value))
+    console.log(typeof value);
     console.log(name);
     setState({ ...state, [name]: value });
-  }
+  };
   const handleRadioChange = (e: any, value: any) => {
-    setState({ ...state, "imagePermission": value === "true" });
-  }
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>, { name, value }: any) => {
-    console.log("handling file change")
+    setState({ ...state, imagePermission: value === "true" });
+  };
+  const handleFileChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    { name, value }: any
+  ) => {
+    console.log("handling file change");
     console.log(name + " " + value);
     setState({ ...state, [name]: value, imageObject: e!.target!.files![0] });
-  }
+  };
 
   const uploadImage = (imageFile: File) => {
-    console.log('attempting to edit image')
-    const imageName = "test"
-    console.log(imageFile)
-    console.log(typeof (imageFile))
+    console.log("attempting to edit image");
+    const imageName = "test";
+    console.log(imageFile);
+    console.log(typeof imageFile);
 
     // no image, TODO: check
     if (!imageFile) {
       return new Promise((resolve, reject) => {
-        resolve("")
-        return
-      })
+        resolve("");
+        return;
+      });
     }
 
     return new Promise((resolve, reject) => {
       let reader = new FileReader();
 
-      reader.onload = (() => {
+      reader.onload = () => {
         let data = {
           token: localStorage.getItem("lnf_token"),
           imageName: imageName,
-          dataURL: reader.result
+          dataURL: reader.result,
         };
-        console.log("Trying to edit image")
+        console.log("Trying to edit image");
 
-        axios
-          .post(`/api/items/addImage`, data)
-          .then(
-            (res) => {
-              console.log("Image uploaded successfully")
-              console.log(res)
-              let finalURL = res.data.msg.fileId
-              console.log('http://drive.google.com/uc?export=view&id=' + finalURL)
-              resolve('http://drive.google.com/uc?export=view&id=' + finalURL);
-              return;
-            },
-            (error) => {
-              console.error(error);
-              reject(error);
-              return;
-            }
-          );
-      });
+        axios.post(`/api/items/addImage`, data).then(
+          (res) => {
+            console.log("Image uploaded successfully");
+            console.log(res);
+            let finalURL = res.data.msg.fileId;
+            console.log(
+              "http://drive.google.com/uc?export=view&id=" + finalURL
+            );
+            resolve("http://drive.google.com/uc?export=view&id=" + finalURL);
+            return;
+          },
+          (error) => {
+            console.error(error);
+            reject(error);
+            return;
+          }
+        );
+      };
       reader.readAsDataURL(imageFile);
     });
-  }
+  };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const { dateFound, timeFound, name, whereFound, description, category, whereToRetrieve, image, imageObject, imagePermission, status, approved } = state;
+    const {
+      dateFound,
+      timeFound,
+      name,
+      whereFound,
+      description,
+      category,
+      whereToRetrieve,
+      image,
+      imageObject,
+      imagePermission,
+      status,
+      approved,
+    } = state;
 
-    uploadImage(imageObject).then((res) => {
-      axios
-        .post(`/api/items/editItem`, {
-          id: props.id,
-          token: localStorage.getItem("lnf_token"),
-          dateFound: dateFound,
-          timeFound: timeFound,
-          name: name,
-          whereFound: whereFound,
-          description: description,
-          category: category,
-          whereToRetrieve: whereToRetrieve,
-          image: res === "" ? image : res, // use existing image if no new image was added
-          imagePermission: imagePermission,
-          status: status,
-          approved: approved
-        })
-        .then(
-          (res) => {
-            console.log("Edited");
-            console.log(res);
-            props.fetchItems();
-          },
-          (error) => {
-            console.log(error);
-          }
-        );
-      dispatch({ type: 'CLOSE_MODAL' });
-      setState({ dateFound: state.dateFound, timeFound: state.timeFound, name: state.name, whereFound: state.whereFound, description: state.description, category: state.category, whereToRetrieve: state.whereToRetrieve, image: state.image, imageObject: state.imageObject, imagePath: state.imagePath, imagePermission: state.imagePermission, status: "available", approved: false });
-      return res;
-    }, (err) => {
-      console.error(err);
-      history.push("/login");
-    });
-
-  }
-
+    uploadImage(imageObject).then(
+      (res) => {
+        axios
+          .post(`/api/items/editItem`, {
+            id: props.id,
+            token: localStorage.getItem("lnf_token"),
+            dateFound: dateFound,
+            timeFound: timeFound,
+            name: name,
+            whereFound: whereFound,
+            description: description,
+            category: category,
+            whereToRetrieve: whereToRetrieve,
+            image: res === "" ? image : res, // use existing image if no new image was added
+            imagePermission: imagePermission,
+            status: status,
+            approved: approved,
+          })
+          .then(
+            (res) => {
+              console.log("Edited");
+              console.log(res);
+              props.fetchItems();
+            },
+            (error) => {
+              console.log(error);
+            }
+          );
+        dispatch({ type: "CLOSE_MODAL" });
+        setState({
+          dateFound: state.dateFound,
+          timeFound: state.timeFound,
+          name: state.name,
+          whereFound: state.whereFound,
+          description: state.description,
+          category: state.category,
+          whereToRetrieve: state.whereToRetrieve,
+          image: state.image,
+          imageObject: state.imageObject,
+          imagePath: state.imagePath,
+          imagePermission: state.imagePermission,
+          status: "available",
+          approved: false,
+        });
+        return res;
+      },
+      (err) => {
+        console.error(err);
+        history.push("/login");
+      }
+    );
+  };
 
   let currentDate = new Date();
   const offset = currentDate.getTimezoneOffset();
-  currentDate = new Date(currentDate.getTime() - (offset * 60 * 1000));
+  currentDate = new Date(currentDate.getTime() - offset * 60 * 1000);
   let todayDate = currentDate.toISOString().slice(0, 10);
-
-
 
   return (
     <Grid columns={1}>
@@ -205,7 +235,13 @@ function EditItem(props: {
           onOpen={() => dispatch({ type: "OPEN_MODAL" })}
           onClose={() => dispatch({ type: "CLOSE_MODAL" })}
           trigger={
-            <Button disabled={props.disabled} icon circular color="blue" size="tiny">
+            <Button
+              disabled={props.disabled}
+              icon
+              circular
+              color="blue"
+              size="tiny"
+            >
               <Icon name="edit outline" inverted size="large"></Icon>
             </Button>
           }
@@ -321,16 +357,25 @@ function EditItem(props: {
                 />
               </Form.Group>
               <Form.Group inline id="modal-actions">
-                <Button
-                  onClick={() => dispatch({ type: "CLOSE_MODAL" })}
-                  negative
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "flex-end",
+                    textAlign: "right",
+                    width: "100%",
+                  }}
                 >
-                  Cancel
-                </Button>
-                {/* Need to close modal after validation of the form */}
-                <Button positive type="submit">
-                  Edit
-                </Button>
+                  <Button
+                    onClick={() => dispatch({ type: "CLOSE_MODAL" })}
+                    negative
+                  >
+                    Cancel
+                  </Button>
+                  {/* Need to close modal after validation of the form */}
+                  <Button positive type="submit">
+                    Edit
+                  </Button>
+                </div>
               </Form.Group>
             </Form>
           </Modal.Content>
@@ -340,4 +385,4 @@ function EditItem(props: {
   );
 }
 
-export default EditItem
+export default EditItem;

@@ -34,6 +34,7 @@ function exampleReducer(dispatchState: any, action: any) {
   ));
 
 function FoundItemModal(props: {
+  id?: string;
   style?: any;
 }) {
   const [dispatchState, dispatch] = React.useReducer(exampleReducer, {
@@ -98,10 +99,10 @@ function FoundItemModal(props: {
           open={open}
           onOpen={() => dispatch({ type: "OPEN_MODAL" })}
           onClose={() => dispatch({ type: "CLOSE_MODAL" })}
-          trigger={<Button style={props.style}>Found an item</Button>}
+          trigger={<Button color="red" id={props.id} style={props.style}>Report Item</Button>}
         >
-          <Modal.Header>Found an item</Modal.Header>
-          <Modal.Content>
+          <Modal.Header>Report Item</Modal.Header>
+          <Modal.Content style={{margin: "auto", maxWidth: "100%", padding: "30px", fontSize: "18px"}}>
             {/* Need to stop modal from closing when enter key is pressed */}
             <p>
               If you find a lost item, please take it to one of the following

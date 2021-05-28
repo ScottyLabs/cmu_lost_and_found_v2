@@ -96,29 +96,42 @@ function Admin() {
       <Grid.Row>
         <Grid.Column width={16}>
           <main>
-            <Link to="/admin"><img src="/dog-logo.png" id="logo-mobile" alt="CMU Lost and Found Logo"></img></Link>
+            <Link to="/admin">
+              <img
+                src="/dog-logo.png"
+                id="logo-mobile"
+                alt="CMU Lost and Found Logo"
+              ></img>
+            </Link>
             <div id="settings">
-              <Rail attached internal position='left' id="logo-desktop">
-                <Link to="/admin"><img src="/dog-logo.png" alt="CMU Lost and Found Logo"></img></Link>
+              <Rail attached internal position="left" id="logo-desktop">
+                <Link to="/admin">
+                  <img src="/dog-logo.png" alt="CMU Lost and Found Logo"></img>
+                </Link>
               </Rail>
+              <LogoutButton />
               {isAdmin ? (
                 <Link to="/accounts">
-                  <Button icon>
-                    <Icon name="setting" />
-                  </Button>
+                  <Button size="large" color="teal" icon="id card"></Button>
                 </Link>
               ) : null}
             </div>
-            <LogoutButton />
+
             <h1 className="title">Carnegie Mellon University</h1>
-            <h2 className="subtitle">Lost and Found Website - Admin</h2>
+            <h2 className="subtitle">Lost and Found Admin Panel - Items</h2>
             <div id="add-mobile">
-              <AddItemButton fetchItems={fetchItems} isAdmin={isAdmin}></AddItemButton>
+              <AddItemButton
+                fetchItems={fetchItems}
+                isAdmin={isAdmin}
+              ></AddItemButton>
             </div>
             <div id="admin-filter-bar">
               <SearchBar input={input} onChange={updateInput} />
               <div id="add-desktop">
-                <AddItemButton fetchItems={fetchItems} isAdmin={isAdmin}></AddItemButton>
+                <AddItemButton
+                  fetchItems={fetchItems}
+                  isAdmin={isAdmin}
+                ></AddItemButton>
               </div>
             </div>
             <div id="table">

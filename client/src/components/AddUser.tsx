@@ -83,7 +83,7 @@ function AddUser(props: {
           open={open}
           onOpen={() => dispatch({ type: "OPEN_MODAL" })}
           onClose={() => dispatch({ type: "CLOSE_MODAL" })}
-          trigger={<Button id="add-user">Add User</Button>}
+          trigger={<Button color="red" id="add-user">Add User</Button>}
         >
           <Modal.Header>Add User</Modal.Header>
           <Modal.Content>

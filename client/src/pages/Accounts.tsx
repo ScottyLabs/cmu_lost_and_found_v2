@@ -8,6 +8,8 @@ import { Link } from "react-router-dom";
 import UserTable from "../components/UserTable";
 import SearchBar from "../components/SearchBar";
 import AddUser from "../components/AddUser";
+import LogoutButton from "../components/LogoutButton";
+import { useHistory } from "react-router-dom";
 
 
 function Accounts() {
@@ -32,6 +34,7 @@ function Accounts() {
   const [userListDefault, setUserListDefault] = useState([]);
   //filtered list
   const [userList, setUserList] = useState([]);
+  const history = useHistory();
 
   const fetchUsers = () => {
     axios
@@ -47,6 +50,7 @@ function Accounts() {
         },
         (error) => {
           console.log(error);
+          history.push("/login");
         }
       );
   }
@@ -83,10 +87,9 @@ function Accounts() {
                   <img src="/dog-logo.png" alt="CMU Lost and Found Logo"></img>
                 </Link>
               </Rail>
+              <LogoutButton />
               <Link to="/admin">
-                <Button icon>
-                  <Icon name="arrow left" />
-                </Button>
+                <Button size="large" color="teal" icon="arrow left"></Button>
               </Link>
             </div>
             <h1 className="title">Carnegie Mellon University</h1>
@@ -101,10 +104,7 @@ function Accounts() {
               </div>
             </div>
             <div id="table">
-              <UserTable
-                users={userList}
-                fetchUsers={fetchUsers}
-              ></UserTable>
+              <UserTable users={userList} fetchUsers={fetchUsers}></UserTable>
             </div>
           </main>
         </Grid.Column>

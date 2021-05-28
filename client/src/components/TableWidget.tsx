@@ -89,7 +89,7 @@ const TableWidget = (props: {
                       <AvailableSwitch
                         id={item._id}
                         isAvailable={item.status === "available"}
-                        disabled={!item.approved}
+                        disabled={false}
                         fetchItems={props.fetchItems}
                       ></AvailableSwitch>
                     </Table.Cell>

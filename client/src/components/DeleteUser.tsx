@@ -10,7 +10,7 @@ export default function DeleteUser(props: {
       <Button
         icon
         circular
-        color="blue"
+        color="red"
         size="tiny"
         onClick={() => {
           axios
@@ -30,7 +30,7 @@ export default function DeleteUser(props: {
             );
         }}
       >
-        <Icon name="trash alternate" inverted size="large"></Icon>
+        <Icon name="trash alternate outline" inverted size="large"></Icon>
       </Button>
     );
   }

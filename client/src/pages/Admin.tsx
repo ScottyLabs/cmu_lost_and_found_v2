@@ -87,41 +87,58 @@ function Admin() {
     setItemList(filtered);
   };
 
+  // check a value in local storage to decide if account user is an admin for client-side use
+  // safe from a security perspective because backend will independently check if user is an admin
+  const isAdmin = localStorage.getItem("lnf_isAdmin") === "true";
+
   return (
     <Grid>
       <Grid.Row>
         <Grid.Column width={16}>
           <main>
-            <Link to="/admin"><img src="/dog-logo.png" id="logo-mobile" alt="CMU Lost and Found Logo"></img></Link>
+            <Link to="/admin">
+              <img
+                src="/dog-logo.png"
+                id="logo-mobile"
+                alt="CMU Lost and Found Logo"
+              ></img>
+            </Link>
             <div id="settings">
-              <Rail attached internal position='left' id="logo-desktop">
-                <Link to="/admin"><img src="/dog-logo.png" alt="CMU Lost and Found Logo"></img></Link>
+              <Rail attached internal position="left" id="logo-desktop">
+                <Link to="/admin">
+                  <img src="/dog-logo.png" alt="CMU Lost and Found Logo"></img>
+                </Link>
               </Rail>
-              {localStorage.getItem("lnf_isAdmin") === "true" ? (
+              <LogoutButton />
+              {isAdmin ? (
                 <Link to="/accounts">
-                  <Button icon>
-                    <Icon name="setting" />
-                  </Button>
+                  <Button size="large" color="teal" icon="id card"></Button>
                 </Link>
               ) : null}
             </div>
-            <LogoutButton />
+
             <h1 className="title">Carnegie Mellon University</h1>
-            <h2 className="subtitle">Lost and Found Website - Admin</h2>
+            <h2 className="subtitle">Lost and Found Admin Panel - Items</h2>
             <div id="add-mobile">
-              <AddItemButton fetchItems={fetchItems} isAdmin={true}></AddItemButton>
+              <AddItemButton
+                fetchItems={fetchItems}
+                isAdmin={isAdmin}
+              ></AddItemButton>
             </div>
             <div id="admin-filter-bar">
               <SearchBar input={input} onChange={updateInput} />
               <div id="add-desktop">
-                <AddItemButton fetchItems={fetchItems} isAdmin={true}></AddItemButton>
+                <AddItemButton
+                  fetchItems={fetchItems}
+                  isAdmin={isAdmin}
+                ></AddItemButton>
               </div>
             </div>
             <div id="table">
               <TableWidget
                 items={itemList}
                 isUser={true}
-                isAdmin={localStorage.getItem("lnf_isAdmin") === "true"}
+                isAdmin={isAdmin}
                 isArchived={false}
                 fetchItems={fetchItems}
               ></TableWidget>

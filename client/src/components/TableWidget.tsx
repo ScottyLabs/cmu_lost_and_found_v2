@@ -3,10 +3,10 @@ import { Form, Table } from "semantic-ui-react";
 import { Item } from "../interface/item";
 import "./TableWidget.css";
 import ImageModal from "./ImageModal";
-import SwitchButton from "./SwitchButton";
 import ApproveSwitch from "./ApproveSwitch";
 import DeleteButton from "./DeleteButton";
 import EditButton from "./EditItem";
+import AvailableSwitch from "./AvailableSwitch";
 const TableWidget = (props: {
   items: Array<Item>;
   isUser: boolean;
@@ -14,7 +14,7 @@ const TableWidget = (props: {
   isArchived: boolean;
   fetchItems: Function;
 }) => {
-  const [displayArchived, setDisplayArchived] = useState(false);
+  const [displayArchived, setDisplayArchived] = useState(true);
 
   const updateDisplayArchived = (evt: any, data: any) => {
     setDisplayArchived(data.checked);
@@ -22,12 +22,12 @@ const TableWidget = (props: {
 
   return (
     <Form>
-      {props.isUser ? (
+      {/* {props.isUser ? (
         <Form.Checkbox
           label="Show Archived Items"
           onClick={updateDisplayArchived}
         />
-      ) : null}
+      ) : null} */}
       <Table celled className="lf_table">
         <Table.Header>
           <Table.Row>
@@ -40,13 +40,13 @@ const TableWidget = (props: {
             <Table.HeaderCell>Where to Retrieve</Table.HeaderCell>
             <Table.HeaderCell>Image</Table.HeaderCell>
             {props.isUser ? (
-              <Table.HeaderCell>Claimed/Unclaimed</Table.HeaderCell>
+              <Table.HeaderCell>Available</Table.HeaderCell>
             ) : null}
-            {props.isAdmin ? (
-              <Table.HeaderCell>Approve</Table.HeaderCell>
+            {props.isUser ? <Table.HeaderCell>Edit</Table.HeaderCell> : null}
+            {props.isUser ? <Table.HeaderCell>Delete</Table.HeaderCell> : null}
+            {props.isUser ? (
+              <Table.HeaderCell>Approved</Table.HeaderCell>
             ) : null}
-            {props.isAdmin ? <Table.HeaderCell>Edit</Table.HeaderCell> : null}
-            {props.isAdmin ? <Table.HeaderCell>Delete</Table.HeaderCell> : null}
           </Table.Row>
         </Table.Header>
         <Table.Body>
@@ -86,39 +86,42 @@ const TableWidget = (props: {
                   </Table.Cell>
                   {props.isUser ? (
                     <Table.Cell>
-                      <SwitchButton
+                      <AvailableSwitch
                         id={item._id}
-                        isClaimed={item.status !== "available"}
-                        disabled={!item.approved}
+                        isAvailable={item.status === "available"}
+                        disabled={false}
                         fetchItems={props.fetchItems}
-                      ></SwitchButton>
+                      ></AvailableSwitch>
                     </Table.Cell>
                   ) : null}
-                  {props.isAdmin ? (
-                    <Table.Cell>
-                      <ApproveSwitch
-                        id={item._id}
-                        isApproved={item.approved}
-                        fetchItems={props.fetchItems}
-                      ></ApproveSwitch>
-                    </Table.Cell>
-                  ) : null}
-                  {props.isAdmin ? (
+                  {props.isUser ? (
                     <Table.Cell>
                       <EditButton
                         fetchItems={props.fetchItems}
                         isAdmin={props.isAdmin}
                         item={item}
                         id={item._id}
+                        disabled={!props.isAdmin && item.approved}
                       ></EditButton>
                     </Table.Cell>
                   ) : null}
-                  {props.isAdmin ? (
+                  {props.isUser ? (
                     <Table.Cell>
                       <DeleteButton
                         id={item._id}
                         fetchItems={props.fetchItems}
+                        disabled={!props.isAdmin && item.approved}
                       ></DeleteButton>
+                    </Table.Cell>
+                  ) : null}
+                  {props.isUser ? (
+                    <Table.Cell>
+                      <ApproveSwitch
+                        id={item._id}
+                        isApproved={item.approved}
+                        fetchItems={props.fetchItems}
+                        disabled={!props.isAdmin}
+                      ></ApproveSwitch>
                     </Table.Cell>
                   ) : null}
                 </Table.Row>

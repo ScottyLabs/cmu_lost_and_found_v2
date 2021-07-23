@@ -33,7 +33,8 @@ function exampleReducer(dispatchState: any, action: any) {
   ));
 
 function FoundItemModal(props: {
-  
+  id?: string;
+  style?: any;
 }) {
   const [dispatchState, dispatch] = React.useReducer(exampleReducer, {
     closeOnEscape: false,
@@ -97,22 +98,20 @@ function FoundItemModal(props: {
           open={open}
           onOpen={() => dispatch({ type: "OPEN_MODAL" })}
           onClose={() => dispatch({ type: "CLOSE_MODAL" })}
-          trigger={<Button>Found an Item</Button>}
+          trigger={<Button color="red" id={props.id} style={props.style}>Report Item</Button>}
         >
-          <Modal.Header>Found an Item</Modal.Header>
-          <Modal.Content>
+          <Modal.Header>Report Item</Modal.Header>
+          <Modal.Content style={{margin: "auto", maxWidth: "100%", padding: "30px", fontSize: "18px"}}>
             {/* Need to stop modal from closing when enter key is pressed */}
-            <div id="description">
-              <p>
-                If you found a lost item, please take it to one of the following
-                locations:
-              </p>
-              <ul>{listItems}</ul>
-              <p>
-                If you have any inquiries, please send an email to{" "}
-                <a href="mailto:lostfound@cs.cmu.edu">lostfound@cs.cmu.edu</a>.
-              </p>
-            </div>
+            <p>
+              If you find a lost item, please take it to one of the following
+              locations:
+            </p>
+            <ul>{listItems}</ul>
+            <p>
+              If you have any inquiries, please send an email to{" "}
+              <a href="mailto:lostfound@cs.cmu.edu">lostfound@cs.cmu.edu</a>.
+            </p>
             <Button onClick={() => dispatch({ type: "CLOSE_MODAL" })} negative>
               OK
             </Button>

@@ -38,4 +38,7 @@
     #cards-widget {
         display: block;
     }
+    #found-item-modal {
+        display: none;
+    }
 }

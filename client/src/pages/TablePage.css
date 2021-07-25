@@ -31,6 +31,15 @@
     display: none;
 }
 
+#found-item-message {
+    display: none;
+    text-align: left;
+}
+
+#found-item-message .header {
+    text-align: left;
+}
+
 @media (max-width: 1180px) {
     #table-widget {
         display: none;
@@ -40,5 +49,14 @@
     }
     #found-item-modal {
         display: none;
+    }
+    #found-item-message {
+        display: block;
+    }
+    #admin-filter-bar {
+        position: sticky;
+        top: 0;
+        padding-top: 20px;
+        z-index: 1000;
     }
 }

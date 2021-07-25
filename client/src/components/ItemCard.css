@@ -1,13 +1,29 @@
+.ui.cards {
+  justify-content: space-between;
+}
+
 .card-wrapper {
   width: 23%;
-  margin: 0px 10px 20px 10px;
+  margin-bottom: 10px;
 }
 
 .ui.card.item-card {
   cursor: pointer;
-  height: 180px;
   overflow: hidden;
   width: 100%;
+}
+
+.ui.card img {
+  margin-top: 0;
+  max-width: none;
+}
+
+.ui.card .header {
+  text-align: left;
+}
+
+.ui.card::after {
+  content: '';
 }
 
 .image-modal-wrapper {
@@ -15,22 +31,20 @@
     text-align: center;
 }
 
-@media (max-width: 650px) {
+@media (max-width: 480px) {
   .card-wrapper {
-    width: 100%;
+    min-width: 100%;
   }
 }
 
-@media (min-width: 651px) and (max-width: 1024px) {
+@media (min-width: 481px) and (max-width: 1024px) {
   .card-wrapper {
-    width: 45%;
-    margin-right: 2.5%;
+    min-width: calc(50% - 10px);
   }
 }
 
 @media (min-width: 1025px) {
   .card-wrapper {
-    width: 30%;
-    margin-right: 2%;
+    min-width: calc(33.33% - 20px);
   }
 }

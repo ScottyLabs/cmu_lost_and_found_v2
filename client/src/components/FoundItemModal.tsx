@@ -45,51 +45,6 @@ function FoundItemModal(props: {
   });
   const { open, closeOnEscape, closeOnDimmerClick } = dispatchState;
 
-
-  const uploadImage = (imageFile: File) => {
-    const imageName = "test";
-
-    // no image, TODO: check
-    if (!imageFile) {
-      return new Promise((resolve, reject) => {
-        resolve("");
-        return;
-      });
-    }
-
-    return new Promise((resolve, reject) => {
-      let reader = new FileReader();
-
-      reader.onload = () => {
-        let data = {
-          imageName: imageName,
-          dataURL: reader.result,
-          token: localStorage.getItem("lnf_token"),
-        };
-
-        axios.post(`/api/items/addImage`, data).then(
-          (res) => {
-            console.log("Image uploaded successfully");
-            console.log(res);
-            let finalURL = res.data.msg.fileId;
-            console.log(
-              "http://drive.google.com/uc?export=view&id=" + finalURL
-            );
-            resolve("http://drive.google.com/uc?export=view&id=" + finalURL);
-            return;
-          },
-          (error) => {
-            console.error(error);
-            reject(error);
-            return;
-          }
-        );
-      };
-      reader.readAsDataURL(imageFile);
-    });
-  };
-
-
   return (
     <Grid columns={1}>
       <Grid.Column>

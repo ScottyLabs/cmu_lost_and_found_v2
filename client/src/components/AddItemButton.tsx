@@ -347,16 +347,8 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
                 value={state.imagePath}
                 onChange={handleFileChange}
               />
-              <Form.Group inline>
+              {/* <Form.Group inline>
                 <label>Image Visibility</label>
-                {/* <Radio toggle value={'false'}></Radio> */}
-                {/* <Form.Radio
-                  label='Private'
-                  value='false'
-                  checked={!state.imagePermission}
-                  onChange={handleChange}
-                  defaultChecked
-                /> */}
                 <Form.Field
                   label="Private"
                   control="input"
@@ -374,7 +366,7 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
                   value="true"
                   onChange={handleRadioChange}
                 />
-              </Form.Group>
+              </Form.Group> */}
               <Form.Group inline id="modal-actions">
                 <div
                   style={{

@@ -35,7 +35,6 @@ const TableWidget = (props: {
             <Table.HeaderCell>Name</Table.HeaderCell>
             <Table.HeaderCell>Where Found</Table.HeaderCell>
             <Table.HeaderCell>Description</Table.HeaderCell>
-            <Table.HeaderCell>Category</Table.HeaderCell>
             <Table.HeaderCell>Where to Retrieve</Table.HeaderCell>
             <Table.HeaderCell>Image</Table.HeaderCell>
             {props.isUser ? (
@@ -76,7 +75,6 @@ const TableWidget = (props: {
                   <Table.Cell>{item.name}</Table.Cell>
                   <Table.Cell>{item.whereFound}</Table.Cell>
                   <Table.Cell>{item.description}</Table.Cell>
-                  <Table.Cell>{item.category}</Table.Cell>
                   <Table.Cell>{item.whereToRetrieve}</Table.Cell>
                   <Table.Cell>
                     <ImageModal image={item.image}></ImageModal>

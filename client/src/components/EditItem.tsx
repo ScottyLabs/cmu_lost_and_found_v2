@@ -4,6 +4,7 @@ import { Button, Grid, Modal, Form, Icon } from "semantic-ui-react";
 import { useHistory } from "react-router-dom";
 import { Item } from "../interface/item";
 import "./EditItem.css";
+import DeleteButton from "./DeleteButton";
 
 function exampleReducer(dispatchState: any, action: any) {
   switch (action.type) {
@@ -312,35 +313,12 @@ function EditItem(props: {
                 value={state.imagePath}
                 onChange={handleFileChange}
               />
-              <Form.Group inline>
-                <label>Image Visibility</label>
-                {/* <Radio toggle value={'false'}></Radio> */}
-                {/* <Form.Radio
-                  label='Private'
-                  value='false'
-                  checked={!state.imagePermission}
-                  onChange={handleChange}
-                  defaultChecked
-                /> */}
-                <Form.Field
-                  label="Private"
-                  control="input"
-                  type="radio"
-                  name="imagePermission"
-                  value="false"
-                  onChange={handleRadioChange}
-                  defaultChecked
-                />
-                <Form.Field
-                  label="Public"
-                  control="input"
-                  type="radio"
-                  name="imagePermission"
-                  value="true"
-                  onChange={handleRadioChange}
-                />
-              </Form.Group>
               <Form.Group inline id="modal-actions">
+                <DeleteButton
+                    id={props.id}
+                    fetchItems={props.fetchItems}
+                    disabled={props.disabled}
+                ></DeleteButton>
                 <div
                   style={{
                     display: "flex",
@@ -349,7 +327,9 @@ function EditItem(props: {
                     width: "100%",
                   }}
                 >
+                  
                   <Button
+                    type="button" // needs to be set because type="submit" is the default
                     onClick={() => dispatch({ type: "CLOSE_MODAL" })}
                     negative
                   >

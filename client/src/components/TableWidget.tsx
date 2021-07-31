@@ -41,7 +41,6 @@ const TableWidget = (props: {
               <Table.HeaderCell>Available</Table.HeaderCell>
             ) : null}
             {props.isUser ? <Table.HeaderCell>Edit</Table.HeaderCell> : null}
-            {props.isUser ? <Table.HeaderCell>Delete</Table.HeaderCell> : null}
             {props.isUser ? (
               <Table.HeaderCell>Approved</Table.HeaderCell>
             ) : null}
@@ -99,15 +98,6 @@ const TableWidget = (props: {
                         id={item._id}
                         disabled={!props.isAdmin && item.approved}
                       ></EditButton>
-                    </Table.Cell>
-                  ) : null}
-                  {props.isUser ? (
-                    <Table.Cell>
-                      <DeleteButton
-                        id={item._id}
-                        fetchItems={props.fetchItems}
-                        disabled={!props.isAdmin && item.approved}
-                      ></DeleteButton>
                     </Table.Cell>
                   ) : null}
                   {props.isUser ? (

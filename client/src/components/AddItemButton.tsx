@@ -19,25 +19,6 @@ function exampleReducer(dispatchState: any, action: any) {
   }
 }
 
-const categories = [
-  { key: "clothing", text: "Clothing", value: "Clothing" },
-  { key: "headphones", text: "Headphones", value: "Headphones" },
-  { key: "jewelry", text: "Jewelry", value: "Jewelry" },
-  { key: "keys", text: "Keys", value: "Keys" },
-  { key: "laptops", text: "Laptops", value: "Laptops" },
-  { key: "phones", text: "Phones", value: "Phones" },
-  { key: "students ids", text: "Student IDs", value: "Student IDs" },
-  { key: "tablets", text: "Tablets", value: "Tablets" },
-  { key: "umbrellas", text: "Umbrellas", value: "Umbrellas" },
-  { key: "water bottles", text: "Water Bottles", value: "Water Bottles" },
-  {
-    key: "other electronics",
-    text: "Other Electronics",
-    value: "Other Electronics",
-  },
-  { key: "miscellaneous", text: "Miscellaneous", value: "Miscellaneous" },
-];
-
 const pickup = [
   {
     key: "cohon",
@@ -67,7 +48,6 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
     name: "",
     whereFound: "",
     description: "",
-    category: "",
     whereToRetrieve: "",
     image: "",
     imagePath: "",
@@ -82,7 +62,6 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
   // const[timeError, setTimeError] = useState(false);
   // const[locationError, setLocationError] = useState(false);
   // const[descriptionError, setDescriptionError] = useState(false);
-  const [categoryError, setCategoryError] = useState(false);
   const [pickupError, setPickupError] = useState(false);
   const [formError, setFormError] = useState(false);
 
@@ -152,7 +131,6 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
       name,
       whereFound,
       description,
-      category,
       whereToRetrieve,
       image,
       imageObject,
@@ -162,13 +140,6 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
     console.log(props.isAdmin);
 
     let error = false;
-
-    if (category === "") {
-      setCategoryError(true);
-      error = true;
-    } else {
-      setCategoryError(false);
-    }
 
     if (whereToRetrieve === "") {
       setPickupError(true);
@@ -194,7 +165,6 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
             name: name,
             whereFound: whereFound,
             description: description,
-            category: category,
             whereToRetrieve: whereToRetrieve,
             image: res,
             imagePermission: imagePermission,
@@ -219,7 +189,6 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
           name: "",
           whereFound: "",
           description: "",
-          category: "",
           whereToRetrieve: "",
           image: "",
           imageObject: null,
@@ -316,30 +285,17 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
                 onChange={handleChange}
                 // error={descriptionError}
               />
-              <Form.Group widths="equal">
-                <Form.Select
-                  fluid
-                  required
-                  label="Item Category"
-                  options={categories}
-                  placeholder="Item Category"
-                  name="category"
-                  value={state.category}
-                  onChange={handleChange}
-                  error={categoryError}
-                />
-                <Form.Select
-                  fluid
-                  required
-                  label="Pick-Up Location"
-                  options={pickup}
-                  placeholder="Pick-Up Location"
-                  name="whereToRetrieve"
-                  value={state.whereToRetrieve}
-                  onChange={handleChange}
-                  error={pickupError}
-                />
-              </Form.Group>
+              <Form.Select
+                fluid
+                required
+                label="Pick-Up Location"
+                options={pickup}
+                placeholder="Pick-Up Location"
+                name="whereToRetrieve"
+                value={state.whereToRetrieve}
+                onChange={handleChange}
+                error={pickupError}
+              />
               <Form.Input
                 label="Image Upload"
                 name="imagePath"

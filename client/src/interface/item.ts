@@ -5,7 +5,6 @@ export interface Item {
   name: string;
   whereFound: string;
   description: string;
-  category: string;
   whereToRetrieve: string;
   image: string;
   imagePermission: boolean;

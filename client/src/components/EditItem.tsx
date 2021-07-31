@@ -75,7 +75,6 @@ function EditItem(props: {
     name: props.item.name,
     whereFound: props.item.whereFound,
     description: props.item.description,
-    category: props.item.category,
     whereToRetrieve: props.item.whereToRetrieve,
     image: props.item.image,
     imagePath: "",
@@ -158,7 +157,6 @@ function EditItem(props: {
       name,
       whereFound,
       description,
-      category,
       whereToRetrieve,
       image,
       imageObject,
@@ -178,7 +176,6 @@ function EditItem(props: {
             name: name,
             whereFound: whereFound,
             description: description,
-            category: category,
             whereToRetrieve: whereToRetrieve,
             image: res === "" ? image : res, // use existing image if no new image was added
             imagePermission: imagePermission,
@@ -202,7 +199,6 @@ function EditItem(props: {
           name: state.name,
           whereFound: state.whereFound,
           description: state.description,
-          category: state.category,
           whereToRetrieve: state.whereToRetrieve,
           image: state.image,
           imageObject: state.imageObject,
@@ -299,28 +295,16 @@ function EditItem(props: {
                 value={state.description}
                 onChange={handleChange}
               />
-              <Form.Group widths="equal">
-                <Form.Select
-                  fluid
-                  required
-                  label="Item Category"
-                  options={categories}
-                  placeholder="Item Category"
-                  name="category"
-                  value={state.category}
-                  onChange={handleChange}
-                />
-                <Form.Select
-                  fluid
-                  required
-                  label="Pick-Up Location"
-                  options={pickup}
-                  placeholder="Pick-Up Location"
-                  name="whereToRetrieve"
-                  value={state.whereToRetrieve}
-                  onChange={handleChange}
-                />
-              </Form.Group>
+              <Form.Select
+                fluid
+                required
+                label="Pick-Up Location"
+                options={pickup}
+                placeholder="Pick-Up Location"
+                name="whereToRetrieve"
+                value={state.whereToRetrieve}
+                onChange={handleChange}
+              />
               <Form.Input
                 label="Image Upload"
                 name="imagePath"

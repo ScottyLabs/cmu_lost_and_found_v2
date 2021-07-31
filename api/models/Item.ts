@@ -21,6 +21,10 @@ const ItemSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  category: {
+    type: String,
+    required: true,
+  },
   whereToRetrieve: {
     type: String,
     required: true,

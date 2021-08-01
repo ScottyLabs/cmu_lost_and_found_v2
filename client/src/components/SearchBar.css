@@ -7,4 +7,13 @@
 #searchbar {
   border-radius: .28571429rem;
   border: 2px solid #c2c1c1;
-};
+}
+
+@media (max-width: 1180px) {
+  #search div.ui.icon.input {
+    max-width: none;
+    width: 100%;
+    font-size: 1.2em;
+    margin-bottom: 15px;
+  }
+}

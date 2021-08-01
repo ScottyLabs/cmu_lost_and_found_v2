@@ -20,11 +20,10 @@ function exampleReducer(dispatchState: any, action: any) {
 
   let locations = [
     "Gates Hillman 6203",
-    `Lost and Found desk in the University Center`,
-    `Lost and Found desk in Residence on Fifth
-  `,
-    `Lost and Found desk in Morewood E-tower`,
-    `Lost and Found desk in Donner`,
+    `University Center Information Desk`,
+    `Residence on Fifth Front Desk`,
+    `Morewood Front Desk`,
+    `Donner Front Desk`,
   ];
 
   const listItems = locations.map((d) => (

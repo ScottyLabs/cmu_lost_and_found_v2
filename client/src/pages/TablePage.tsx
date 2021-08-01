@@ -41,7 +41,6 @@ function TablePage() {
     let inputName = input.toLowerCase();
     const filtered = itemListDefault.filter((item: Item) => {
      return item.name.toLowerCase().includes(inputName) ||
-      item.category.toLowerCase().includes(inputName) ||
       item.description.toLowerCase().includes(inputName)
     })
     setInput(input);

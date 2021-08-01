@@ -23,7 +23,6 @@ function Admin() {
   //     name: "Phone",
   //     whereFound: "Tepper",
   //     description: "pink iPhone",
-  //     category: "Phones",
   //     whereToRetrieve: "gates",
   //     image:
   //       "https://i.pcmag.com/imagery/reviews/03xdTO0Ka4H4KvEgtSPg4c2-12.1569479325.fit_lpad.size_357x209.jpg",
@@ -37,7 +36,6 @@ function Admin() {
   //     name: "Cat",
   //     whereFound: "Tepper",
   //     description: "pink iPhone",
-  //     category: "Phones",
   //     whereToRetrieve: "gates",
   //     image:
   //       "https://i.pcmag.com/imagery/reviews/03xdTO0Ka4H4KvEgtSPg4c2-12.1569479325.fit_lpad.size_357x209.jpg",

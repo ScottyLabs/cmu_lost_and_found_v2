@@ -67,7 +67,6 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
     name: "",
     whereFound: "",
     description: "",
-    category: "",
     whereToRetrieve: "",
     image: "",
     imagePath: "",
@@ -82,7 +81,6 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
   // const[timeError, setTimeError] = useState(false);
   // const[locationError, setLocationError] = useState(false);
   // const[descriptionError, setDescriptionError] = useState(false);
-  const [categoryError, setCategoryError] = useState(false);
   const [pickupError, setPickupError] = useState(false);
   const [formError, setFormError] = useState(false);
 
@@ -152,7 +150,6 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
       name,
       whereFound,
       description,
-      category,
       whereToRetrieve,
       image,
       imageObject,
@@ -162,13 +159,6 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
     console.log(props.isAdmin);
 
     let error = false;
-
-    if (category === "") {
-      setCategoryError(true);
-      error = true;
-    } else {
-      setCategoryError(false);
-    }
 
     if (whereToRetrieve === "") {
       setPickupError(true);
@@ -194,7 +184,6 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
             name: name,
             whereFound: whereFound,
             description: description,
-            category: category,
             whereToRetrieve: whereToRetrieve,
             image: res,
             imagePermission: imagePermission,
@@ -219,7 +208,6 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
           name: "",
           whereFound: "",
           description: "",
-          category: "",
           whereToRetrieve: "",
           image: "",
           imageObject: null,
@@ -316,30 +304,17 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
                 onChange={handleChange}
                 // error={descriptionError}
               />
-              <Form.Group widths="equal">
-                <Form.Select
-                  fluid
-                  required
-                  label="Item Category"
-                  options={categories}
-                  placeholder="Item Category"
-                  name="category"
-                  value={state.category}
-                  onChange={handleChange}
-                  error={categoryError}
-                />
-                <Form.Select
-                  fluid
-                  required
-                  label="Pick-Up Location"
-                  options={pickup}
-                  placeholder="Pick-Up Location"
-                  name="whereToRetrieve"
-                  value={state.whereToRetrieve}
-                  onChange={handleChange}
-                  error={pickupError}
-                />
-              </Form.Group>
+              <Form.Select
+                fluid
+                required
+                label="Pick-Up Location"
+                options={pickup}
+                placeholder="Pick-Up Location"
+                name="whereToRetrieve"
+                value={state.whereToRetrieve}
+                onChange={handleChange}
+                error={pickupError}
+              />
               <Form.Input
                 label="Image Upload"
                 name="imagePath"
@@ -347,34 +322,6 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
                 value={state.imagePath}
                 onChange={handleFileChange}
               />
-              <Form.Group inline>
-                <label>Image Visibility</label>
-                {/* <Radio toggle value={'false'}></Radio> */}
-                {/* <Form.Radio
-                  label='Private'
-                  value='false'
-                  checked={!state.imagePermission}
-                  onChange={handleChange}
-                  defaultChecked
-                /> */}
-                <Form.Field
-                  label="Private"
-                  control="input"
-                  type="radio"
-                  name="imagePermission"
-                  value="false"
-                  onChange={handleRadioChange}
-                  defaultChecked
-                />
-                <Form.Field
-                  label="Public"
-                  control="input"
-                  type="radio"
-                  name="imagePermission"
-                  value="true"
-                  onChange={handleRadioChange}
-                />
-              </Form.Group>
               <Form.Group inline id="modal-actions">
                 <div
                   style={{

@@ -11,6 +11,10 @@ export default class PermissionsController {
   public static parsePermission(
     permission: string
   ): [BuildingType, PermissionType] {
+    if (!permission) {
+      return null;
+    }
+    
     const tokens = permission.split(":");
 
     if (tokens.length !== 2) {
@@ -41,6 +45,9 @@ export default class PermissionsController {
         ) ||
         user.permissions.includes(
           `${String(building)}:${String(PermissionType.ADMIN)}`
+        ) ||
+        user.permissions.includes(
+          `${String(BuildingType.ALL)}:${String(action)}`
         )
       ) {
         return true;
@@ -63,6 +70,9 @@ export default class PermissionsController {
         ) ||
         user.permissions.includes(
           `${String(building)}:${String(PermissionType.ADMIN)}`
+        ) ||
+        user.permissions.includes(
+          `${String(BuildingType.ALL)}:${String(action)}`
         )
       ) {
         return true;

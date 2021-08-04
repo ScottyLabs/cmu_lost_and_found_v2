@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Button, Grid, Modal, Form, Message } from "semantic-ui-react";
 import { useHistory } from "react-router-dom";
 import "./AddItemButton.css";
+import { BuildingType } from "../enums/locationTypes";
 
 function exampleReducer(dispatchState: any, action: any) {
   switch (action.type) {
@@ -52,6 +53,14 @@ const pickup = [
   { key: "tepper", text: "Tepper Building", value: "Tepper Building" },
 ];
 
+const buildings = Object.keys(BuildingType)
+  .filter((value) => value !== "ALL")
+  .map((key) => ({
+    key,
+    text: key,
+    value: key,
+  }));
+
 function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
   const [dispatchState, dispatch] = React.useReducer(exampleReducer, {
     closeOnEscape: false,
@@ -69,6 +78,7 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
     description: "",
     category: "",
     whereToRetrieve: "",
+    building: "",
     image: "",
     imagePath: "",
     imageObject: null as any,
@@ -154,6 +164,7 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
       description,
       category,
       whereToRetrieve,
+      building,
       image,
       imageObject,
       imagePermission,
@@ -193,6 +204,7 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
             timeFound: timeFound,
             name: name,
             whereFound: whereFound,
+            building: building,
             description: description,
             category: category,
             whereToRetrieve: whereToRetrieve,
@@ -209,7 +221,7 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
             },
             (error) => {
               console.log(error);
-              history.push("/login");
+              alert("Unable to create item")
             }
           );
         dispatch({ type: "CLOSE_MODAL" });
@@ -218,6 +230,7 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
           timeFound: "",
           name: "",
           whereFound: "",
+          building: "",
           description: "",
           category: "",
           whereToRetrieve: "",
@@ -338,6 +351,16 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
                   value={state.whereToRetrieve}
                   onChange={handleChange}
                   error={pickupError}
+                />
+                <Form.Select
+                  fluid
+                  required
+                  label="Building (Lost and Found Desk)"
+                  options={buildings}
+                  placeholder="Building (Lost and Found Desk)"
+                  name="building"
+                  value={state.building}
+                  onChange={handleChange}
                 />
               </Form.Group>
               <Form.Input

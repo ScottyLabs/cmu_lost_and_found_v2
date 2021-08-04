@@ -1,6 +1,22 @@
-import * as mongoose from "mongoose";
+import { Model, Query, Schema, Document, model } from "mongoose";
+import { BuildingType } from "../enums/locationTypes";
 
-const ItemSchema = new mongoose.Schema({
+export interface IItem extends Document {
+  dateFound: Date;
+  timeFound: string;
+  name: string;
+  whereFound: string;
+  description: string;
+  category: string;
+  whereToReceive: string;
+  building: BuildingType;
+  image: string;
+  imagePermission: string;
+  status: "available" | "destroyed" | "claimed";
+  approved: boolean;
+}
+
+const ItemSchema = new Schema({
   dateFound: {
     type: Date,
     required: true,
@@ -29,24 +45,28 @@ const ItemSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  building: {
+    type: String,
+    required: true,
+  },
   image: {
     type: String,
   },
   imagePermission: {
     type: String,
-    required: true
+    required: true,
   },
   status: {
     type: String,
     enum: ["available", "destroyed", "claimed"],
-    required: true
+    required: true,
   },
   approved: {
     type: Boolean,
-    required: true
-  }
+    required: true,
+  },
 });
 
-const Item = mongoose.model("Item", ItemSchema, "items");
+const Item = model<IItem>("Item", ItemSchema, "items");
 
-export default Item; 
+export default Item;

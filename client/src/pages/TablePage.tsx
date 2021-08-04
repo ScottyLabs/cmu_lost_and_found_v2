@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, {useState, useEffect} from "react";
-import { Grid, Rail} from "semantic-ui-react";
+import { Grid, Message, Rail} from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import TableWidget from "../components/TableWidget";
 import SearchBar from '../components/SearchBar';
@@ -8,7 +8,7 @@ import { Item } from "../interface/item";
 import CardWidget from "../components/CardWidget";
 import ItemCard from "../components/ItemCard";
 import "./TablePage.css";
-import FoundItemModal from "../components/FoundItemModal";
+import FoundItemModal, { foundItemMessage } from "../components/FoundItemModal";
 
 function TablePage() {
   const [items, setItems] = useState([]);
@@ -41,7 +41,6 @@ function TablePage() {
     let inputName = input.toLowerCase();
     const filtered = itemListDefault.filter((item: Item) => {
      return item.name.toLowerCase().includes(inputName) ||
-      item.category.toLowerCase().includes(inputName) ||
       item.description.toLowerCase().includes(inputName)
     })
     setInput(input);
@@ -86,6 +85,10 @@ function TablePage() {
                 <a href="mailto:lostfound@cs.cmu.edu">lostfound@cs.cmu.edu</a>.
               </p>
             </div>
+            <Message id="found-item-message" warning size='large'>
+              <Message.Header>Found an item?</Message.Header>
+              { foundItemMessage }
+            </Message>
             <div id="admin-filter-bar">
               <SearchBar input={input} onChange={updateInput} />
               {/* <div id="add-desktop">

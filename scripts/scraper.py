@@ -82,7 +82,6 @@ for row in soup.find_all('tr'):
         found = clean(data[3])
         info["whereFound"] = found
         info["description"] = clean(data[4])
-        info["category"] = "Miscellaneous"  # for now
         info["whereToRetrieve"] = "GHC 6203, 412.268.8525, lostfound@cs.cmu.edu."  # for now
         info["building"] = "GHC"  # for now
         info["imagePermission"] = True # for now

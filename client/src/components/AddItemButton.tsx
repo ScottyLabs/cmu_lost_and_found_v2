@@ -76,7 +76,6 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
     name: "",
     whereFound: "",
     description: "",
-    category: "",
     whereToRetrieve: "",
     building: "",
     image: "",
@@ -92,7 +91,6 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
   // const[timeError, setTimeError] = useState(false);
   // const[locationError, setLocationError] = useState(false);
   // const[descriptionError, setDescriptionError] = useState(false);
-  const [categoryError, setCategoryError] = useState(false);
   const [pickupError, setPickupError] = useState(false);
   const [formError, setFormError] = useState(false);
 
@@ -162,7 +160,6 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
       name,
       whereFound,
       description,
-      category,
       whereToRetrieve,
       building,
       image,
@@ -173,13 +170,6 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
     console.log(props.isAdmin);
 
     let error = false;
-
-    if (category === "") {
-      setCategoryError(true);
-      error = true;
-    } else {
-      setCategoryError(false);
-    }
 
     if (whereToRetrieve === "") {
       setPickupError(true);
@@ -206,7 +196,6 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
             whereFound: whereFound,
             building: building,
             description: description,
-            category: category,
             whereToRetrieve: whereToRetrieve,
             image: res,
             imagePermission: imagePermission,
@@ -232,7 +221,6 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
           whereFound: "",
           building: "",
           description: "",
-          category: "",
           whereToRetrieve: "",
           image: "",
           imageObject: null,
@@ -330,7 +318,7 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
                 // error={descriptionError}
               />
               <Form.Group widths="equal">
-                <Form.Select
+                {/* <Form.Select
                   fluid
                   required
                   label="Item Category"
@@ -340,7 +328,7 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
                   value={state.category}
                   onChange={handleChange}
                   error={categoryError}
-                />
+                /> */}
                 <Form.Select
                   fluid
                   required
@@ -370,34 +358,6 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
                 value={state.imagePath}
                 onChange={handleFileChange}
               />
-              <Form.Group inline>
-                <label>Image Visibility</label>
-                {/* <Radio toggle value={'false'}></Radio> */}
-                {/* <Form.Radio
-                  label='Private'
-                  value='false'
-                  checked={!state.imagePermission}
-                  onChange={handleChange}
-                  defaultChecked
-                /> */}
-                <Form.Field
-                  label="Private"
-                  control="input"
-                  type="radio"
-                  name="imagePermission"
-                  value="false"
-                  onChange={handleRadioChange}
-                  defaultChecked
-                />
-                <Form.Field
-                  label="Public"
-                  control="input"
-                  type="radio"
-                  name="imagePermission"
-                  value="true"
-                  onChange={handleRadioChange}
-                />
-              </Form.Group>
               <Form.Group inline id="modal-actions">
                 <div
                   style={{

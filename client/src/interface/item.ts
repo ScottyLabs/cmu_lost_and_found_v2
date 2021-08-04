@@ -7,7 +7,6 @@ export interface Item {
   name: string;
   whereFound: string;
   description: string;
-  category: string;
   whereToRetrieve: string;
   building: BuildingType;
   image: string;

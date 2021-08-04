@@ -18,20 +18,31 @@ function exampleReducer(dispatchState: any, action: any) {
   }
 }
 
-  let locations = [
-    "Gates Hillman 6203",
-    `Lost and Found desk in the University Center`,
-    `Lost and Found desk in Residence on Fifth
-  `,
-    `Lost and Found desk in Morewood E-tower`,
-    `Lost and Found desk in Donner`,
-  ];
+let locations = [
+  "Gates Hillman 6203",
+  `University Center Information Desk`,
+  `Residence on Fifth Front Desk`,
+  `Morewood Front Desk`,
+  `Donner Front Desk`,
+];
 
-  const listItems = locations.map((d) => (
-    <li className="location" key={d}>
-      {d}
-    </li>
-  ));
+const listItems = locations.map((d) => (
+  <li className="location" key={d}>
+    {d}
+  </li>
+));
+
+export const foundItemMessage = (<>
+  <p>
+    If you find a lost item, please take it to one of the following
+    locations:
+  </p>
+  <ul className="list">{listItems}</ul>
+  <p>
+    If you have any inquiries, please send an email to{" "}
+    <a href="mailto:lostfound@cs.cmu.edu">lostfound@cs.cmu.edu</a>.
+  </p>
+</>);
 
 function FoundItemModal(props: {
   id?: string;
@@ -44,51 +55,6 @@ function FoundItemModal(props: {
     dimmer: undefined,
   });
   const { open, closeOnEscape, closeOnDimmerClick } = dispatchState;
-
-
-  const uploadImage = (imageFile: File) => {
-    const imageName = "test";
-
-    // no image, TODO: check
-    if (!imageFile) {
-      return new Promise((resolve, reject) => {
-        resolve("");
-        return;
-      });
-    }
-
-    return new Promise((resolve, reject) => {
-      let reader = new FileReader();
-
-      reader.onload = () => {
-        let data = {
-          imageName: imageName,
-          dataURL: reader.result,
-          token: localStorage.getItem("lnf_token"),
-        };
-
-        axios.post(`/api/items/addImage`, data).then(
-          (res) => {
-            console.log("Image uploaded successfully");
-            console.log(res);
-            let finalURL = res.data.msg.fileId;
-            console.log(
-              "http://drive.google.com/uc?export=view&id=" + finalURL
-            );
-            resolve("http://drive.google.com/uc?export=view&id=" + finalURL);
-            return;
-          },
-          (error) => {
-            console.error(error);
-            reject(error);
-            return;
-          }
-        );
-      };
-      reader.readAsDataURL(imageFile);
-    });
-  };
-
 
   return (
     <Grid columns={1}>
@@ -104,15 +70,7 @@ function FoundItemModal(props: {
           <Modal.Header>Report Item</Modal.Header>
           <Modal.Content style={{margin: "auto", maxWidth: "100%", padding: "30px", fontSize: "18px"}}>
             {/* Need to stop modal from closing when enter key is pressed */}
-            <p>
-              If you find a lost item, please take it to one of the following
-              locations:
-            </p>
-            <ul>{listItems}</ul>
-            <p>
-              If you have any inquiries, please send an email to{" "}
-              <a href="mailto:lostfound@cs.cmu.edu">lostfound@cs.cmu.edu</a>.
-            </p>
+            { foundItemMessage }
             <Button onClick={() => dispatch({ type: "CLOSE_MODAL" })} negative>
               OK
             </Button>

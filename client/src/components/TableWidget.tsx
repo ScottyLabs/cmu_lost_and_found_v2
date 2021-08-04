@@ -31,19 +31,16 @@ const TableWidget = (props: {
       <Table celled className="lf_table">
         <Table.Header>
           <Table.Row>
-            <Table.HeaderCell width={1}>Date Found</Table.HeaderCell>
-            <Table.HeaderCell width={1}>Time Found</Table.HeaderCell>
+            <Table.HeaderCell width={1}>When Found</Table.HeaderCell>
             <Table.HeaderCell>Name</Table.HeaderCell>
             <Table.HeaderCell>Where Found</Table.HeaderCell>
             <Table.HeaderCell>Description</Table.HeaderCell>
-            <Table.HeaderCell>Category</Table.HeaderCell>
             <Table.HeaderCell>Where to Retrieve</Table.HeaderCell>
             <Table.HeaderCell>Image</Table.HeaderCell>
             {props.isUser ? (
               <Table.HeaderCell>Available</Table.HeaderCell>
             ) : null}
             {props.isUser ? <Table.HeaderCell>Edit</Table.HeaderCell> : null}
-            {props.isUser ? <Table.HeaderCell>Delete</Table.HeaderCell> : null}
             {props.isUser ? (
               <Table.HeaderCell>Approved</Table.HeaderCell>
             ) : null}
@@ -74,12 +71,10 @@ const TableWidget = (props: {
                 (parseInt(h) >= 12 ? "PM" : "AM");
               return (
                 <Table.Row key={item._id}>
-                  <Table.Cell>{dateFormatted}</Table.Cell>
-                  <Table.Cell>{timeFormatted}</Table.Cell>
+                  <Table.Cell>{dateFormatted} <br></br> {timeFormatted}</Table.Cell>
                   <Table.Cell>{item.name}</Table.Cell>
                   <Table.Cell>{item.whereFound}</Table.Cell>
                   <Table.Cell>{item.description}</Table.Cell>
-                  <Table.Cell>{item.category}</Table.Cell>
                   <Table.Cell>{item.whereToRetrieve}</Table.Cell>
                   <Table.Cell>
                     <ImageModal image={item.image}></ImageModal>
@@ -103,15 +98,6 @@ const TableWidget = (props: {
                         id={item._id}
                         disabled={!props.isAdmin && item.approved}
                       ></EditButton>
-                    </Table.Cell>
-                  ) : null}
-                  {props.isUser ? (
-                    <Table.Cell>
-                      <DeleteButton
-                        id={item._id}
-                        fetchItems={props.fetchItems}
-                        disabled={!props.isAdmin && item.approved}
-                      ></DeleteButton>
                     </Table.Cell>
                   ) : null}
                   {props.isUser ? (

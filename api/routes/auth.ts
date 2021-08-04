@@ -1,6 +1,8 @@
 import { Request, Response, Router, NextFunction, response } from "express";
 import * as mongoose from "mongoose";
 import UserController from "../controllers/UserController";
+import { BuildingType } from "../enums/locationTypes";
+import { PermissionType } from "../enums/permissionType";
 import User, { IUser } from "../models/User"
 
 const router = Router();
@@ -18,7 +20,7 @@ function isUser(req: Request, res: Response, next: NextFunction) {
   if (!AUTHENTICATION_ENABLED) {
     return next();
   }
-  UserController.getByToken(token, (err: any, user: any) => {
+  UserController.getByToken(token, (err, user) => {
     if (err) {
       console.log(err)
       return res.status(500).send(err);
@@ -43,12 +45,12 @@ function isAdmin(req: Request, res: Response, next: NextFunction) {
   if (!AUTHENTICATION_ENABLED) {
     return next();
   }
-  UserController.getByToken(token, (err: any, user: any) => {
+  UserController.getByToken(token, (err: any, user: IUser) => {
     if (err) {
       console.log(err);
       return res.status(500).send(err);
     }
-    if (user && user.isAdmin) {
+    if (user && user.permissions.includes(`${String(BuildingType.ALL)}:${String(PermissionType.ADMIN)}`)) {
       req.body.user = user;
       return next();
     }
@@ -105,7 +107,6 @@ router.post("/register", (req: Request, res: Response) => {
           return res.json({
             token: token,
             user: user,
-            isAdmin: user.isAdmin,
           });
         })
       } else {
@@ -120,7 +121,6 @@ router.post("/register", (req: Request, res: Response) => {
             return res.json({
               token: token,
               user: user,
-              isAdmin: user.isAdmin,
             });
           }
         );
@@ -138,7 +138,7 @@ router.post("/logout", function (req: Request, res: Response, next) {
  */
 router.post("/isAdmin", async (req: Request, res: Response) => {
   let token: string = req.body.token;
-  UserController.getByToken(token, (err: any, user: any) => {
+  UserController.getByToken(token, (err: any, user: IUser) => {
     if (err) {
       console.log(err);
       return res.status(500).send(err);
@@ -149,7 +149,7 @@ router.post("/isAdmin", async (req: Request, res: Response) => {
       });
     }
     return res.json({
-      isAdmin: user.isAdmin
+      isAdmin: user.permissions.includes(`${String(BuildingType.ALL)}:${String(PermissionType.ADMIN)}`)
     });
     
   });

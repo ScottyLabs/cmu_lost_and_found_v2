@@ -1,4 +1,5 @@
 import { Request, Response, Router } from "express";
+import PermissionsController from "../controllers/PermissionsController";
 import User, { IUser } from "../models/User";
 import { isUser, isAdmin } from "./auth";
 
@@ -36,9 +37,11 @@ router.post('/all', isAdmin, async (req: Request, res: Response) => {
  */
 router.post('/updatePerm', isAdmin, async (req: Request, res: Response) => {
     let { username, perm, isChecked } = req.body;
-    if (perm !== "isAdmin") {
-        console.log("admin privilege doesn't exist");
-        return res.status(406).send({msg: "this admin privilege doesn't exist"})
+    
+    const permissionTuple = PermissionsController.parsePermission(perm)
+    if (!perm) {
+        console.log("Invalid permission");
+        return res.status(406).send({msg: "Invalid permission"})
     }
 
     User.findOneAndUpdate({username: username}, {[perm]: isChecked}, {runValidators: true, useFindAndModify: false, new: true}, (err, raw) => {

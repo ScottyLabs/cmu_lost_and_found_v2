@@ -7,11 +7,12 @@ const JWT_SECRET = process.env.JWT_SECRET;
 const TIME_TO_EXPIRE = 3600000;
 
 export interface IUser extends Document {
-  username: string,
-  password: string,
-  isAdmin: boolean,
-  checkPassword: (password: string) => boolean
-  generateAuthToken: () => string
+  username: string;
+  password: string;
+  isAdmin: boolean;
+  permissions: string[];
+  checkPassword: (password: string) => boolean;
+  generateAuthToken: () => string;
 }
 
 export interface IUserModel extends Model<IUser> {
@@ -27,7 +28,7 @@ const UserSchema = new Schema({
   username: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
   },
   password: {
     type: String,
@@ -36,7 +37,12 @@ const UserSchema = new Schema({
   isAdmin: {
     type: Boolean,
     default: false,
-  }
+  },
+  permissions: [
+    {
+      type: String,
+    },
+  ],
 });
 
 UserSchema.statics.generateHash = function (password: string) {
@@ -44,12 +50,15 @@ UserSchema.statics.generateHash = function (password: string) {
 };
 
 // checking if this password matches
-UserSchema.methods.checkPassword = function(password: string) {
+UserSchema.methods.checkPassword = function (password: string) {
   return bcrypt.compareSync(password, this.password);
 };
 
 UserSchema.methods.generateAuthToken = function () {
-  return jwt.sign({id: this._id.toString(), accessTime: Date.now()}, JWT_SECRET);
+  return jwt.sign(
+    { id: this._id.toString(), accessTime: Date.now() },
+    JWT_SECRET
+  );
 };
 
 UserSchema.statics.findOneByUsername = function (username: string) {
@@ -63,13 +72,19 @@ UserSchema.statics.findOneByUsername = function (username: string) {
  * @param  {String}   token    User's authentication token.
  * @param  {Function} callback args(err, user)
  */
-UserSchema.statics.getByToken = function(token: string, callback: (err: any, user: IUser) => void) {
+UserSchema.statics.getByToken = function (
+  token: string,
+  callback: (err: any, user: IUser) => void
+) {
   jwt.verify(
     token,
     JWT_SECRET,
-    function(err: any, payload: any) {
+    function (err: any, payload: any) {
       if (!payload) {
-        return callback("No token present. Did you forget to pass in the token with the API call?", null);
+        return callback(
+          "No token present. Did you forget to pass in the token with the API call?",
+          null
+        );
       }
       if (!payload.id || !payload.accessTime) {
         return callback("Bad token", null);
@@ -86,7 +101,6 @@ UserSchema.statics.getByToken = function(token: string, callback: (err: any, use
     }.bind(this)
   );
 };
-
 
 const User: IUserModel = model<IUser, IUserModel>("User", UserSchema, "users");
 

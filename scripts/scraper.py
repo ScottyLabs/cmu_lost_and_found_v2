@@ -38,7 +38,7 @@ def clean(s):
 def extract_url(s):
     # print(s)
     x = s.find('">')
-    if (x is not -1):
+    if (x != -1):
         k = s[x:].find('<')
         return ((s[x:])[2:k], "https://www.cs.cmu.edu/~lostfound/" + s[9:x])
     else:
@@ -84,6 +84,7 @@ for row in soup.find_all('tr'):
         info["description"] = clean(data[4])
         info["category"] = "Miscellaneous"  # for now
         info["whereToRetrieve"] = "GHC 6203, 412.268.8525, lostfound@cs.cmu.edu."  # for now
+        info["building"] = "GHC"  # for now
         info["imagePermission"] = True # for now
         if "claimed!" in clean(data[5]).lower():
             status = "claimed"

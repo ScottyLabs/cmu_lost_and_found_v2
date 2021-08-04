@@ -1,3 +1,5 @@
+import { BuildingType } from "../enums/locationTypes";
+
 export interface Item {
   _id: string;
   dateFound: string; // Ex: 2020-03-11T05:00:00.000Z
@@ -7,6 +9,7 @@ export interface Item {
   description: string;
   category: string;
   whereToRetrieve: string;
+  building: BuildingType;
   image: string;
   imagePermission: boolean;
   status: string;

@@ -19,7 +19,7 @@ export default function DeleteButton(props: {
       },
       (error) => {
         console.log(error);
-        history.push("/login");
+        alert("Unable to delete item")
       }
     );
   };

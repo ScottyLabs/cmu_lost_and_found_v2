@@ -1,5 +1,5 @@
 export interface User {
     username: string;
-    isAdmin: boolean;
+    permissions: string[];
     password:string;
   }

@@ -252,6 +252,7 @@ router.post("/editItem", isUser, async (req: Request, res: Response) => {
       return res.status(404).send(new Error("Item not found"));
     }
   } catch (err) {
+    console.error(err)
     return res.status(500).send(err);
   }
 });

@@ -3,7 +3,7 @@ import * as mongoose from "mongoose";
 import UserController from "../controllers/UserController";
 import { BuildingType } from "../enums/locationTypes";
 import { PermissionType } from "../enums/permissionType";
-import User, { IUser } from "../models/User"
+import User, { IUser } from "../models/User";
 
 const router = Router();
 
@@ -16,13 +16,13 @@ const AUTHENTICATION_ENABLED = true;
  */
 function isUser(req: Request, res: Response, next: NextFunction) {
   let token: string = req.body.token;
-  
+
   if (!AUTHENTICATION_ENABLED) {
     return next();
   }
   UserController.getByToken(token, (err, user) => {
     if (err) {
-      console.log(err)
+      console.log(err);
       return res.status(500).send(err);
     }
     if (user) {
@@ -50,7 +50,12 @@ function isAdmin(req: Request, res: Response, next: NextFunction) {
       console.log(err);
       return res.status(500).send(err);
     }
-    if (user && user.permissions.includes(`${String(BuildingType.ALL)}:${String(PermissionType.ADMIN)}`)) {
+    if (
+      user &&
+      user.permissions.includes(
+        `${String(BuildingType.ALL)}:${String(PermissionType.ADMIN)}`
+      )
+    ) {
       req.body.user = user;
       return next();
     }
@@ -59,7 +64,6 @@ function isAdmin(req: Request, res: Response, next: NextFunction) {
     });
   });
 }
-
 
 /**
  * Register a user with a username and password
@@ -73,60 +77,62 @@ function isAdmin(req: Request, res: Response, next: NextFunction) {
 router.post("/register", (req: Request, res: Response) => {
   let { username, password, isAdmin } = req.body;
 
-  UserController.createUser(username, password, isAdmin, (err:string, user:IUser) => {
-    if (err != null) {
-      return res.status(401).send(err);
+  UserController.createUser(
+    username,
+    password,
+    isAdmin,
+    (err: string, user: IUser) => {
+      if (err != null) {
+        return res.status(401).send(err);
+      }
+      return res.status(200).json({ user: user });
     }
-    return res.status(200).json({user: user});
-  })
-  
+  );
 });
 
 /**
-   * Login a user with a username and password.
-   * Otherwise, 401.
-   *
-   * body {
-   *  username, username
-   *  password: password
-   * }
-   *
-   */
-  router.post('/login',
-    function(req: Request, res: Response, next){
-      let username = req.body.username;
-      let password = req.body.password;
-      let token = req.body.token;
+ * Login a user with a username and password.
+ * Otherwise, 401.
+ *
+ * body {
+ *  username, username
+ *  password: password
+ * }
+ *
+ */
+router.post("/login", function (req: Request, res: Response, next) {
+  let username = req.body.username;
+  let password = req.body.password;
+  let token = req.body.token;
 
-      if (token) {
-        UserController.loginWithToken(token, (err, token, user) => {
-          if (err || !user) {
-            return res.status(400).send(err);
-          }
-          
-          return res.json({
-            token: token,
-            user: user,
-          });
-        })
-      } else {
-        UserController.loginWithPassword(
-          username,
-          password,
-          (err, token, user) => {
-            if (err || !user) {
-              return res.status(401).send(err);
-            }
-            
-            return res.json({
-              token: token,
-              user: user,
-            });
-          }
-        );
+  if (token) {
+    UserController.loginWithToken(token, (err, token, user) => {
+      if (err || !user) {
+        return res.status(400).send(err);
       }
 
-  });
+      return res.json({
+        token: token,
+        isAdmin: user.permissions.includes(
+          `${String(BuildingType.ALL)}:${String(PermissionType.ADMIN)}`
+        ),
+      });
+    });
+  } else {
+    UserController.loginWithPassword(username, password, (err, token, user) => {
+      if (err || !user) {
+        return res.status(401).send(err);
+      }
+
+      return res.json({
+        token: token,
+        isAdmin: user.permissions.includes(
+          `${String(BuildingType.ALL)}:${String(PermissionType.ADMIN)}`
+        ),
+      });
+    });
+  }
+});
 
 // UNUSED
 router.post("/logout", function (req: Request, res: Response, next) {
@@ -149,12 +155,12 @@ router.post("/isAdmin", async (req: Request, res: Response) => {
       });
     }
     return res.json({
-      isAdmin: user.permissions.includes(`${String(BuildingType.ALL)}:${String(PermissionType.ADMIN)}`)
+      isAdmin: user.permissions.includes(
+        `${String(BuildingType.ALL)}:${String(PermissionType.ADMIN)}`
+      ),
     });
-    
   });
 });
-
 
 export default router;
 export { isUser, isAdmin };

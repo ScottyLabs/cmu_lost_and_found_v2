@@ -4,6 +4,7 @@ import { Button, Grid, Modal, Form, Icon } from "semantic-ui-react";
 import { useHistory } from "react-router-dom";
 import { Item } from "../interface/item";
 import "./EditItem.css";
+import { BuildingType } from "../enums/locationTypes";
 
 function exampleReducer(dispatchState: any, action: any) {
   switch (action.type) {
@@ -53,6 +54,14 @@ const pickup = [
   { key: "tepper", text: "Tepper Building", value: "Tepper Building" },
 ];
 
+const buildings = Object.keys(BuildingType)
+  .filter((value) => value !== "ALL")
+  .map((key) => ({
+    key,
+    text: key,
+    value: key,
+  }));
+
 function EditItem(props: {
   fetchItems: Function;
   isAdmin: boolean;
@@ -77,6 +86,7 @@ function EditItem(props: {
     description: props.item.description,
     category: props.item.category,
     whereToRetrieve: props.item.whereToRetrieve,
+    building: props.item.building,
     image: props.item.image,
     imagePath: "",
     imageObject: null as any,
@@ -157,6 +167,7 @@ function EditItem(props: {
       timeFound,
       name,
       whereFound,
+      building,
       description,
       category,
       whereToRetrieve,
@@ -177,6 +188,7 @@ function EditItem(props: {
             timeFound: timeFound,
             name: name,
             whereFound: whereFound,
+            building: building,
             description: description,
             category: category,
             whereToRetrieve: whereToRetrieve,
@@ -193,6 +205,7 @@ function EditItem(props: {
             },
             (error) => {
               console.log(error);
+              alert("Unable to edit item")
             }
           );
         dispatch({ type: "CLOSE_MODAL" });
@@ -204,6 +217,7 @@ function EditItem(props: {
           description: state.description,
           category: state.category,
           whereToRetrieve: state.whereToRetrieve,
+          building: state.building,
           image: state.image,
           imageObject: state.imageObject,
           imagePath: state.imagePath,
@@ -215,7 +229,7 @@ function EditItem(props: {
       },
       (err) => {
         console.error(err);
-        history.push("/login");
+        alert("Unable to edit item")
       }
     );
   };
@@ -318,6 +332,16 @@ function EditItem(props: {
                   placeholder="Pick-Up Location"
                   name="whereToRetrieve"
                   value={state.whereToRetrieve}
+                  onChange={handleChange}
+                />
+                <Form.Select
+                  fluid
+                  required
+                  label="Building (Lost and Found Desk)"
+                  options={buildings}
+                  placeholder="Building (Lost and Found Desk)"
+                  name="building"
+                  value={state.building}
                   onChange={handleChange}
                 />
               </Form.Group>

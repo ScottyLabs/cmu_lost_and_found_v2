@@ -44,6 +44,7 @@ router.post("/add", isUser, async (req: Request, res: Response) => {
     status,
     approved,
     user,
+    notes,
   } = req.body;
   if (
     !PermissionsController.hasPermissionsWithUser(
@@ -66,6 +67,7 @@ router.post("/add", isUser, async (req: Request, res: Response) => {
     imagePermission: imagePermission,
     status: status,
     approved: approved,
+    notes: notes,
   });
   item.save((err) => {
     if (err) {
@@ -211,6 +213,7 @@ router.post("/editItem", isUser, async (req: Request, res: Response) => {
     status,
     approved,
     user,
+    notes,
   } = req.body;
   try {
     const item = await Item.findById(id);
@@ -238,6 +241,7 @@ router.post("/editItem", isUser, async (req: Request, res: Response) => {
             image: image,
             imagePermission: imagePermission,
             approved: approved,
+            notes: notes,
           },
           { runValidators: true, useFindAndModify: false }
         );

@@ -14,6 +14,7 @@ export interface IItem extends Document {
   imagePermission: string;
   status: "available" | "destroyed" | "claimed";
   approved: boolean;
+  notes: string;
 }
 
 const ItemSchema = new Schema({
@@ -61,6 +62,9 @@ const ItemSchema = new Schema({
     type: Boolean,
     required: true,
   },
+  notes: {
+    type: String,
+  }
 });
 
 const Item = model<IItem>("Item", ItemSchema, "items");

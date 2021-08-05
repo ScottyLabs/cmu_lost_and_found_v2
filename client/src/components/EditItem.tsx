@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { Button, Grid, Modal, Form, Icon } from "semantic-ui-react";
+import { Button, Grid, Modal, Form, Icon, TextArea } from "semantic-ui-react";
 import { useHistory } from "react-router-dom";
 import { Item } from "../interface/item";
 import "./EditItem.css";
@@ -93,6 +93,7 @@ function EditItem(props: {
     imagePermission: props.item.imagePermission,
     status: props.item.status,
     approved: props.item.approved,
+    notes: props.item.notes
   });
 
   const handleChange = (e: any, { name, value }: any) => {
@@ -175,6 +176,7 @@ function EditItem(props: {
       imagePermission,
       status,
       approved,
+      notes
     } = state;
 
     uploadImage(imageObject).then(
@@ -194,6 +196,7 @@ function EditItem(props: {
             imagePermission: imagePermission,
             status: status,
             approved: approved,
+            notes: notes
           })
           .then(
             (res) => {
@@ -221,6 +224,7 @@ function EditItem(props: {
           imagePermission: state.imagePermission,
           status: "available",
           approved: false,
+          notes: state.notes,
         });
         return res;
       },
@@ -349,6 +353,9 @@ function EditItem(props: {
                 value={state.imagePath}
                 onChange={handleFileChange}
               />
+              <TextArea placeholder="Notes" name="notes" value={state.notes} onChange={handleChange}/>
+              <Form.Group></Form.Group>
+              
               <Form.Group inline id="modal-actions">
                 <DeleteButton
                     id={props.id}

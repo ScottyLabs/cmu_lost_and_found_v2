@@ -13,4 +13,5 @@ export interface Item {
   imagePermission: boolean;
   status: string;
   approved: boolean;
+  notes: string;
 }

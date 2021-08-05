@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { Button, Grid, Modal, Form, Message } from "semantic-ui-react";
+import { Button, Grid, Modal, Form, Message, TextArea } from "semantic-ui-react";
 import { useHistory } from "react-router-dom";
 import "./AddItemButton.css";
 import { BuildingType } from "../enums/locationTypes";
@@ -83,6 +83,7 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
     imageObject: null as any,
     imagePermission: false,
     status: "available",
+    notes: "",
   });
 
   // Validation error states
@@ -166,8 +167,8 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
       imageObject,
       imagePermission,
       status,
+      notes,
     } = state;
-    console.log(props.isAdmin);
 
     let error = false;
 
@@ -201,6 +202,7 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
             imagePermission: imagePermission,
             status: status,
             approved: props.isAdmin,
+            notes: notes,
           })
           .then(
             (res) => {
@@ -227,6 +229,7 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
           imagePath: "",
           imagePermission: false,
           status: "available",
+          notes: "",
         });
         return res;
       },
@@ -251,7 +254,7 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
           onOpen={() => dispatch({ type: "OPEN_MODAL" })}
           onClose={() => dispatch({ type: "CLOSE_MODAL" })}
           trigger={
-            <Button color="red" style={{ width: "110px" }}>
+            <Button color="red" style={{ height: "47px", width: "110px", marginLeft: "2px" }}>
               Add Item
             </Button>
           }
@@ -358,6 +361,8 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
                 value={state.imagePath}
                 onChange={handleFileChange}
               />
+              <TextArea placeholder="Notes" name="notes" value={state.notes} onChange={handleChange}/>
+              <Form.Group></Form.Group>
               <Form.Group inline id="modal-actions">
                 <div
                   style={{

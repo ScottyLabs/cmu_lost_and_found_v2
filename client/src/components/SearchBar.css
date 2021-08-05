@@ -10,10 +10,11 @@
 }
 
 @media (max-width: 1180px) {
-  #search div.ui.icon.input {
-    max-width: none;
-    width: 100%;
-    font-size: 1.2em;
-    margin-bottom: 15px;
-  }
+  
+}
+#search div.ui.icon.input {
+  max-width: none;
+  width: 100%;
+  font-size: 1.2em;
+  margin-bottom: 15px;
 }

@@ -40,23 +40,23 @@
     text-align: left;
 }
 
-@media (max-width: 1180px) {
-    #table-widget {
-        display: none;
-    }
-    #cards-widget {
-        display: block;
-    }
-    #found-item-modal {
-        display: none;
-    }
-    #found-item-message {
-        display: block;
-    }
-    #admin-filter-bar {
-        position: sticky;
-        top: 0;
-        padding-top: 20px;
-        z-index: 1000;
-    }
+#table-widget {
+    display: none;
+}
+#cards-widget {
+    display: block;
+    justify-content: flex-start;
+}
+#found-item-modal {
+    display: none;
+}
+#found-item-message {
+    display: block;
+}
+#admin-filter-bar {
+    width: 100%;
+    position: sticky;
+    top: 0;
+    padding-top: 20px;
+    z-index: 1000;
 }

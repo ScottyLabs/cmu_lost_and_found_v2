@@ -1,5 +1,8 @@
 .ui.cards {
   justify-content: space-between;
+  /* Maybe switch this to display grid in the future, because last row is not spaced properly */
+  /* display: grid;
+  grid-template-columns: repeat(auto-fill, 400px); */
 }
 
 .card-wrapper {
@@ -8,7 +11,6 @@
 }
 
 .ui.card.item-card {
-  cursor: pointer;
   overflow: hidden;
   width: 100%;
 }
@@ -43,8 +45,14 @@
   }
 }
 
-@media (min-width: 1025px) {
+@media (min-width: 1025px) and (max-width: 1180px) {
   .card-wrapper {
     min-width: calc(33.33% - 20px);
+  }
+}
+
+@media (min-width: 1180px) {
+  .card-wrapper {
+    min-width: calc(25% - 20px);
   }
 }

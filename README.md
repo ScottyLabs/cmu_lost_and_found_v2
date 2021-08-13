@@ -14,7 +14,7 @@ npm install
 npm start
 ```
 
-The API currently runs on port 3080. The client (development only) runs on port 3000. For production, build the client and deploy it with the API on port 3080.
+Now, the website should be running at `localhost:3000`. The API currently runs on port 3080. The client (development only) runs on port 3000. For production, build the client and deploy it with the API on port 3080.
 
 Afterwards, you will need to create a new `.env` file. The `.env` file stores secret credentials. Run
 ```

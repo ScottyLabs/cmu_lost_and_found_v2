@@ -38,10 +38,6 @@ mongoose
 // Morgan is for logging
 app.use(morgan("dev"));
 
-app.get("/", (req, res, next) => {
-  res.sendFile(process.cwd() + "/client/build/index.html");
-});
-
 // api route
 app.use("/api/accounts", UserRouter);
 app.use("/api/auth", AuthRouter);
@@ -49,7 +45,7 @@ app.use("/api/items", ItemRouter);
 
 // handle undefined routes
 app.use("*", (req, res, next) => {
-  res.send("Make sure url is correct!!!");
+  res.sendFile(process.cwd() + "/client/build/index.html");
 });
 
 

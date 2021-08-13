@@ -40,6 +40,14 @@
     text-align: left;
 }
 
+
+#lost-item-message {
+    text-align: left;
+}
+#lost-item-message .header {
+    text-align: left;
+}
+
 #table-widget {
     display: none;
 }

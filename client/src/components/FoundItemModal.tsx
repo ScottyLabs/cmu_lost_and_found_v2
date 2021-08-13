@@ -44,6 +44,16 @@ export const foundItemMessage = (<>
   </p>
 </>);
 
+
+
+export const lostItemMessage = (<>
+  <p>
+    If you lost an item and would like to report it, please visit this <a href="https://forms.gle/recPKrhJ3Ykhina3A"> site</a>.         
+  
+  </p>
+  
+</>);
+
 function FoundItemModal(props: {
   id?: string;
   style?: any;

@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, {useState, useEffect} from "react";
-import { Grid, Message, Rail} from "semantic-ui-react";
+import { Grid, Message, Rail, Button} from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import TableWidget from "../components/TableWidget";
 import SearchBar from '../components/SearchBar';
@@ -8,7 +8,7 @@ import { Item } from "../interface/item";
 import CardWidget from "../components/CardWidget";
 import ItemCard from "../components/ItemCard";
 import "./TablePage.css";
-import FoundItemModal, { foundItemMessage } from "../components/FoundItemModal";
+import FoundItemModal, { foundItemMessage, lostItemMessage } from "../components/FoundItemModal";
 
 function TablePage() {
   const [items, setItems] = useState([]);
@@ -89,6 +89,11 @@ function TablePage() {
               <Message.Header>Found an item?</Message.Header>
               { foundItemMessage }
             </Message>
+            <Message id="lost-item-message" warning size='large'>
+              <Message.Header>Lost an item?</Message.Header>
+              { lostItemMessage }
+            </Message>
+            
             <div id="admin-filter-bar">
               <SearchBar input={input} onChange={updateInput} />
               {/* <div id="add-desktop">

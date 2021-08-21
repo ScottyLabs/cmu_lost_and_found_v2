@@ -2,8 +2,6 @@ steps:
 - name: 'gcr.io/cloud-builders/docker'
   args:
   - 'build'
-  - '--build-arg'
-  - 'LOGIN_SK="${_LOGIN_SK}"'
   - '-t'
   - 'us.gcr.io/scottylabs-apis-299115/cmu_lost_and_found_v2/lostandfoundtest'
   - '.'

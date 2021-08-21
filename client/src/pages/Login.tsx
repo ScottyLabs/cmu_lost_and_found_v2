@@ -15,12 +15,7 @@ function Login() {
     }
   }, []);
 
-  const popupCenter = (
-    url: string,
-    title: string,
-    w: number,
-    h: number
-  ): void => {
+  const popupCenter = (title: string, w: number, h: number): Window | null => {
     const dualScreenLeft =
       window.screenLeft !== undefined ? window.screenLeft : window.screenX;
     const dualScreenTop =
@@ -41,7 +36,7 @@ function Login() {
     const left = (width - w) / 2 / systemZoom + dualScreenLeft;
     const top = (height - h) / 2 / systemZoom + dualScreenTop;
     const newWindow = window.open(
-      url,
+      "about:blank",
       title,
       `
       scrollbars=yes,
@@ -53,6 +48,7 @@ function Login() {
     );
 
     newWindow?.focus();
+    return newWindow;
   };
 
   document.title = "CMU Lost and Found";
@@ -72,16 +68,20 @@ function Login() {
                 labelPosition="left"
                 onClick={() => {
                   setLoading(true);
+                  const loginWindow = popupCenter(
+                    "Login with CMU Email",
+                    400,
+                    600
+                  );
                   axios.get("/api/auth/signRequest").then((response) => {
                     if (response.data.token) {
-                      console.log(response.data.token)
-                      popupCenter(
-                        "https://login.scottylabs.org/login/" +
-                          response.data.token,
-                        "Login with CMU Email",
-                        400,
-                        600
-                      );
+                      if (loginWindow) {
+                        loginWindow.location.href =
+                          "https://login.scottylabs.org/login/" +
+                          response.data.token;
+                      } else {
+                        alert("Unable to create login request");
+                      }
                     }
                   });
                   window?.addEventListener(

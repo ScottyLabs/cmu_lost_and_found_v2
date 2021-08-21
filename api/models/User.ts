@@ -4,15 +4,15 @@ import * as jwt from "jsonwebtoken";
 import axios from "axios";
 import { schedule } from "node-cron";
 // jsonwebtoken secret for authentication purposes
-let JWT_SECRET: string;
+let JWT_PUBKEY: string;
 // time for access token to expire in milliseconds
 const TIME_TO_EXPIRE = 3600000;
 
 async function getLoginKey() {
-  JWT_SECRET = (await axios.get("https://login.scottylabs.org/login/pubkey")).data;
+  JWT_PUBKEY = (await axios.get("https://login.scottylabs.org/login/pubkey")).data;
 }
 
-if (!JWT_SECRET) {
+if (!JWT_PUBKEY) {
   getLoginKey();
 }
 
@@ -64,7 +64,7 @@ UserSchema.methods.checkPassword = function (password: string) {
 UserSchema.methods.generateAuthToken = function () {
   return jwt.sign(
     { id: this._id.toString(), accessTime: Date.now() },
-    JWT_SECRET
+    JWT_PUBKEY
   );
 };
 
@@ -85,7 +85,7 @@ UserSchema.statics.getByToken = function (
 ) {
   jwt.verify(
     token,
-    JWT_SECRET,
+    JWT_PUBKEY,
     { algorithms: ["RS256"] },
     function (err: any, payload: any) {
       if (err) {

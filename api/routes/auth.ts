@@ -4,6 +4,7 @@ import UserController from "../controllers/UserController";
 import { BuildingType } from "../enums/locationTypes";
 import { PermissionType } from "../enums/permissionType";
 import User, { IUser } from "../models/User";
+import * as jwt from "jsonwebtoken";
 
 const router = Router();
 
@@ -123,6 +124,19 @@ router.post("/login", function (req: Request, res: Response, next) {
   } else {
     return res.status(400).send(new Error("No token provided"));
   }
+});
+
+router.get("/signRequest", function (req, res) {
+  const loginRequest = jwt.sign(
+    {
+      redirectUrl: process.env.LNF_HOST,
+      restrictDomain: true,
+      applicationId: process.env.LOGIN_API_ID,
+    },
+    process.env.JWT_SECRET || "",
+    { algorithm: "RS256", expiresIn: "5 minutes" }
+  );
+  res.json({ token: loginRequest });
 });
 
 // UNUSED

@@ -1,13 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Button, Icon, Loader, Segment } from "semantic-ui-react";
-import LoginForm from "../components/LoginForm";
 import "./Login.css";
 import "semantic-ui-css/semantic.min.css";
 import axios from "axios";
-import jwt from "jsonwebtoken";
 import { useHistory } from "react-router";
-
-// let loginPK: string;
 
 function Login() {
   const [loading, setLoading] = useState(false);
@@ -76,29 +72,22 @@ function Login() {
                 labelPosition="left"
                 onClick={() => {
                   setLoading(true);
-                  const loginRequest = jwt.sign(
-                    {
-                      redirectUrl: "http://localhost:3000",
-                      restrictDomain: true,
-                      applicationId: process.env.REACT_APP_LOGIN_ID,
-                    },
-                    process.env.REACT_APP_LOGIN_SK || "",
-                    { algorithm: "RS256", expiresIn: "5 minutes" }
-                  );
-                  popupCenter(
-                    process.env.REACT_APP_LOGIN_ENDPOINT +
-                      "/login/" +
-                      loginRequest,
-                    "Login with CMU Email",
-                    400,
-                    600
-                  );
+                  axios.get("/api/auth/signRequest").then((response) => {
+                    if (response.data.token) {
+                      console.log(response.data.token)
+                      popupCenter(
+                        "https://login.scottylabs.org/login/" +
+                          response.data.token,
+                        "Login with CMU Email",
+                        400,
+                        600
+                      );
+                    }
+                  });
                   window?.addEventListener(
                     "message",
                     (event) => {
-                      if (
-                        event.origin !== process.env.REACT_APP_LOGIN_ENDPOINT
-                      ) {
+                      if (event.origin !== "https://login.scottylabs.org") {
                         return;
                       } else {
                         window.localStorage.setItem("lnf_token", event.data);

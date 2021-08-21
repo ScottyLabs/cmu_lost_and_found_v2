@@ -1,5 +1,7 @@
 # Also see cloudbuild.yaml
 FROM node:14 AS ui-build
+ARG LOGIN_SK
+ENV JWT_SECRET=${LOGIN_SK}
 WORKDIR /usr/src/app
 COPY client/ ./client/
 RUN cd client && npm install && npm run build

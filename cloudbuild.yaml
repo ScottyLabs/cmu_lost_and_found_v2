@@ -1,4 +1,4 @@
-steps:
+steps: 
 - name: 'gcr.io/cloud-builders/docker'
   args:
   - 'build'
@@ -11,3 +11,10 @@ steps:
   - '-t'
   - 'gcr.io/cmu_lost_and_found/image'
   - '.'
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/cmu_lost_and_found/image']
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  entrypoint: gcloud
+  args: ['run', 'deploy', 'lostandfoundtest', '--image', 'gcr.io/cmu_lost_and_found/image', '--region', 'us-east4', '--platform', 'managed']
+images:
+- gcr.io/cmu_lost_and_found/image

@@ -3,14 +3,18 @@ steps:
   args:
   - 'build'
   - '--build-arg'
-  - 'REACT_APP_LOGIN_SK="${_LOGIN_SK}"'
+  - 'REACT_APP_LOGIN_SK="${LOGIN_SK}"'
   - '--build-arg'
-  - 'REACT_APP_LOGIN_ID="${_LOGIN_ID}"'
+  - 'REACT_APP_LOGIN_ID="${LOGIN_ID}"'
   - '--build-arg'
-  - 'REACT_APP_LOGIN_ENDPOINT="${_LOGIN_ENDPOINT}"'
+  - 'REACT_APP_LOGIN_ENDPOINT="${LOGIN_ENDPOINT}"'
   - '-t'
   - 'us.gcr.io/scottylabs-apis-299115/cmu_lost_and_found_v2/lostandfoundtest'
   - '.'
+  env:
+  - LOGIN_SK=${_LOGIN_SK}
+  - LOGIN_ID=${_LOGIN_ID}
+  - LOGIN_ENDPOINT=${_LOGIN_ENDPOINT}
 - name: 'gcr.io/cloud-builders/docker'
   args: ['push', 'us.gcr.io/scottylabs-apis-299115/cmu_lost_and_found_v2/lostandfoundtest']
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'

@@ -1,3 +1,4 @@
+# Also see cloudbuild.yaml
 FROM node:14 AS ui-build
 WORKDIR /usr/src/app
 COPY client/ ./client/

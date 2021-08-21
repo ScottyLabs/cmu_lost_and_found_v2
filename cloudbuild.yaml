@@ -1,0 +1,15 @@
+steps: 
+- name: 'gcr.io/cloud-builders/docker'
+  args:
+  - 'build'
+  - '-t'
+  - 'us.gcr.io/scottylabs-apis-299115/cmu_lost_and_found_v2/lostandfoundtest'
+  - '.'
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'us.gcr.io/scottylabs-apis-299115/cmu_lost_and_found_v2/lostandfoundtest']
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  entrypoint: gcloud
+  args: ['run', 'deploy', 'lostandfoundtest', '--image', 'us.gcr.io/scottylabs-apis-299115/cmu_lost_and_found_v2/lostandfoundtest', '--region', 'us-east4', '--platform', 'managed']
+images:
+- us.gcr.io/scottylabs-apis-299115/cmu_lost_and_found_v2/lostandfoundtest
+timeout: 900s

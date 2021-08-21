@@ -9,12 +9,12 @@ steps:
   - '--build-arg'
   - 'REACT_APP_LOGIN_ENDPOINT="${_LOGIN_ENDPOINT}"'
   - '-t'
-  - 'gcr.io/cmu_lost_and_found/image'
+  - 'gcr.io/cmu_lost_and_found_v2/lostandfoundtest'
   - '.'
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'gcr.io/cmu_lost_and_found/image']
+  args: ['push', 'gcr.io/cmu_lost_and_found_v2/lostandfoundtest']
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   entrypoint: gcloud
-  args: ['run', 'deploy', 'lostandfoundtest', '--image', 'gcr.io/cmu_lost_and_found/image', '--region', 'us-east4', '--platform', 'managed']
+  args: ['run', 'deploy', 'lostandfoundtest', '--image', 'gcr.io/cmu_lost_and_found_v2/lostandfoundtest', '--region', 'us-east4', '--platform', 'managed']
 images:
-- gcr.io/cmu_lost_and_found/image
+- gcr.io/cmu_lost_and_found_v2/lostandfoundtest

@@ -23,14 +23,14 @@ function isUser(req: Request, res: Response, next: NextFunction) {
   UserController.getByToken(token, (err, user) => {
     if (err) {
       console.log(err);
-      return res.status(500).send(err);
+      return res.status(401).send(err);
     }
     if (user) {
       req.body.user = user;
       return next();
     }
     return res.status(401).send({
-      message: "Failed authentication for admin",
+      message: "Failed authentication for user",
     });
   });
 }
@@ -58,6 +58,10 @@ function isAdmin(req: Request, res: Response, next: NextFunction) {
     ) {
       req.body.user = user;
       return next();
+    } else if (user) {
+      return res.status(403).send({
+        message: "Insufficient privileges",
+      });
     }
     return res.status(401).send({
       message: "Failed authentication for admin",
@@ -74,21 +78,21 @@ function isAdmin(req: Request, res: Response, next: NextFunction) {
  *  isAdmin: false
  * }
  */
-router.post("/register", (req: Request, res: Response) => {
-  let { username, password, isAdmin } = req.body;
+// router.post("/register", (req: Request, res: Response) => {
+//   let { username, password, isAdmin } = req.body;
 
-  UserController.createUser(
-    username,
-    password,
-    isAdmin,
-    (err: string, user: IUser) => {
-      if (err != null) {
-        return res.status(401).send(err);
-      }
-      return res.status(200).json({ user: user });
-    }
-  );
-});
+//   UserController.createUser(
+//     username,
+//     password,
+//     isAdmin,
+//     (err: string, user: IUser) => {
+//       if (err != null) {
+//         return res.status(401).send(err);
+//       }
+//       return res.status(200).json({ user: user });
+//     }
+//   );
+// });
 
 /**
  * Login a user with a username and password.
@@ -101,8 +105,6 @@ router.post("/register", (req: Request, res: Response) => {
  *
  */
 router.post("/login", function (req: Request, res: Response, next) {
-  let username = req.body.username;
-  let password = req.body.password;
   let token = req.body.token;
 
   if (token) {
@@ -119,18 +121,7 @@ router.post("/login", function (req: Request, res: Response, next) {
       });
     });
   } else {
-    UserController.loginWithPassword(username, password, (err, token, user) => {
-      if (err || !user) {
-        return res.status(401).send(err);
-      }
-
-      return res.json({
-        token: token,
-        isAdmin: user.permissions.includes(
-          `${String(BuildingType.ALL)}:${String(PermissionType.ADMIN)}`
-        ),
-      });
-    });
+    return res.status(400).send(new Error("No token provided"));
   }
 });
 

@@ -4,6 +4,7 @@ import { Button, Form, Grid, Icon, Label, Modal } from "semantic-ui-react";
 import { User } from "../interface/user";
 import { BuildingType } from "../enums/locationTypes";
 import { PermissionType } from "../enums/permissionType";
+import { useHistory } from "react-router";
 
 function exampleReducer(dispatchState: any, action: any) {
   switch (action.type) {
@@ -40,6 +41,7 @@ export default function EditPermissions(props: {
   user: User;
   fetchUsers: Function;
 }) {
+  const history = useHistory();
   const [permissions, setPermissions] = useState<string[]>(
     props.user.permissions
   );
@@ -161,6 +163,10 @@ export default function EditPermissions(props: {
                     (error) => {
                       console.log(error);
                       alert("Unable to edit permissions");
+                      if (error?.response?.status === 401) {
+                        window.localStorage.removeItem("lnf_token");
+                        history.push("/login");
+                      }
                       dispatch({ type: "CLOSE_MODAL" });
                     }
                   );

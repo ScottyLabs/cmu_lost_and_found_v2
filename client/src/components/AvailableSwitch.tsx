@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Toggle from "react-toggle";
 import axios from "axios";
 import "./ApproveSwitch.css";
+import { useHistory } from "react-router";
 
 // Admin-side claim/unclaim button that sets backend claim status to claimed/unclaimed
 export default function AvailableSwitch(props: {
@@ -10,6 +11,7 @@ export default function AvailableSwitch(props: {
   disabled: boolean;
   fetchItems: Function;
 }) {
+  const history = useHistory();
   const [state, setState] = useState({
     isAvailable: props.isAvailable,
   });
@@ -30,6 +32,13 @@ export default function AvailableSwitch(props: {
         },
         (error) => {
           console.error(error);
+          if (error?.response?.status === 401) {
+            window.localStorage.removeItem("lnf_token");
+            history.push("/login");
+          } else if (error?.response?.status === 403) {
+            window.localStorage.setItem("lnf_isAdmin", "false");
+            history.push("/");
+          }
         }
       );
   };

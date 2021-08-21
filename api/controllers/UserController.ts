@@ -1,6 +1,7 @@
 import { BuildingType } from "../enums/locationTypes";
 import { PermissionType } from "../enums/permissionType";
 import User, { IUser } from "../models/User";
+import * as jwt from "jsonwebtoken";
 
 export default class UserController {
   /**
@@ -40,10 +41,34 @@ export default class UserController {
     callback: (err: any, token: string, user: IUser) => void
   ) {
     User.getByToken(token, (err: any, user: IUser) => {
-      if (err || !user) {
+      if (err) {
         return callback(err, null, null);
+      } else if (!user) {
+        const tokenContents = jwt.decode(token);
+        const newUser = new User();
+        newUser.username = (tokenContents as jwt.JwtPayload).email;
+        newUser.permissions = [];
+        newUser.save(function (err, user) {
+          if (err) {
+            if (
+              err.name === "MongoError" &&
+              (err.code === 11000 || err.code === 11001)
+            ) {
+              return callback(
+                "An account for this username already exists.",
+                null,
+                user
+              );
+            }
+            return callback(err.toString(), null, user);
+          } else {
+            // success
+            return callback(null, token, user);
+          }
+        });
+      } else {
+        return callback(err, token, user);
       }
-      return callback(err, user.generateAuthToken(), user);
     });
   }
 

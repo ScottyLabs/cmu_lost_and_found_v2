@@ -1,36 +1,55 @@
 import React from "react";
 import "./App.css";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 import Home from "./pages/Home";
-import AdminLogin from "./pages/AdminLogin";
+import Login from "./pages/Login";
 import Admin from "./pages/Admin";
 import TablePage from "./pages/TablePage";
 // import Settings from "./pages/Settings";
 import Accounts from "./pages/Accounts";
+import { useEffect } from "react";
 
 function App() {
   return (
     <div className="App">
       <Switch>
-        <Route exact strict path="/">
-          <TablePage />
-        </Route>
+        <PrivateRoute exact strict path="/" component={TablePage} />
         <Route path="/login">
-          <AdminLogin />
+          <Login />
         </Route>
-        <Route path="/admin">
+        <PrivateRoute path="/admin">
           <Admin />
-        </Route>
+        </PrivateRoute>
         {/* <Route path="/items">
           <TablePage />
         </Route> */}
-        <Route path="/accounts">
+        <PrivateRoute path="/accounts">
           <Accounts />
-        </Route>
+        </PrivateRoute>
       </Switch>
     </div>
   );
 }
 
-export default App;
+function PrivateRoute({ component: Component, ...rest }: any) {
+  const token = window.localStorage.getItem("lnf_token")
+  return (
+    <Route
+      {...rest}
+      render={(props) =>
+        token ? (
+          <Component {...props} />
+        ) : (
+          <Redirect
+            to={{
+              pathname: "/login",
+              state: { from: props.location },
+            }}
+          />
+        )
+      }
+    />
+  );
+}
 
+export default App;

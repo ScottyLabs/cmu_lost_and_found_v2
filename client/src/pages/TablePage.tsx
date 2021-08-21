@@ -1,58 +1,70 @@
 import axios from "axios";
-import React, {useState, useEffect} from "react";
-import { Grid, Message, Rail, Button} from "semantic-ui-react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Grid, Message, Rail, Button, Icon } from "semantic-ui-react";
+import { Link, useHistory } from "react-router-dom";
 import TableWidget from "../components/TableWidget";
-import SearchBar from '../components/SearchBar';
+import SearchBar from "../components/SearchBar";
 import { Item } from "../interface/item";
 import CardWidget from "../components/CardWidget";
 import ItemCard from "../components/ItemCard";
 import "./TablePage.css";
-import FoundItemModal, { foundItemMessage, lostItemMessage } from "../components/FoundItemModal";
+import FoundItemModal, {
+  foundItemMessage,
+  lostItemMessage,
+} from "../components/FoundItemModal";
+import LogoutButton from "../components/LogoutButton";
 
 function TablePage() {
+  const history = useHistory();
   const [items, setItems] = useState([]);
 
   //what is from the search
-  const [input, setInput] = useState('');
+  const [input, setInput] = useState("");
   //unfiltered list
   const [itemListDefault, setItemListDefault] = useState([]);
   //filtered list
   const [itemList, setItemList] = useState([]);
 
   const fetchItems = () => {
-    axios.get(`/api/items/all`).then(
-      (res) => {
-        console.log(res);
-        setItems(res.data);
+    axios
+      .post(`/api/items/all`, {
+        token: localStorage.getItem("lnf_token"),
+      })
+      .then(
+        (res) => {
+          console.log(res);
+          setItems(res.data);
 
-        //added
-        setItemListDefault(res.data);
-        setItemList(res.data);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+          //added
+          setItemListDefault(res.data);
+          setItemList(res.data);
+        },
+        (error) => {
+          console.log(error);
+          if (error?.response?.status === 401) {
+            window.localStorage.removeItem("lnf_token");
+            history.push("/login");
+          }
+        }
+      );
   };
-  
- //modify items 
+
+  //modify items
   const updateInput = async (input: string) => {
     let inputName = input.toLowerCase();
     const filtered = itemListDefault.filter((item: Item) => {
-     return item.name.toLowerCase().includes(inputName) ||
-      item.description.toLowerCase().includes(inputName)
-    })
+      return (
+        item.name.toLowerCase().includes(inputName) ||
+        item.description.toLowerCase().includes(inputName)
+      );
+    });
     setInput(input);
     setItemList(filtered);
- }
-
+  };
 
   useEffect(() => {
     fetchItems();
   }, []);
-  
-
 
   return (
     <Grid>
@@ -72,6 +84,15 @@ function TablePage() {
                   <img src="/dog-logo.png" alt="CMU Lost and Found Logo"></img>
                 </Link>
               </Rail>
+              <LogoutButton />
+              {window.localStorage.getItem("lnf_isAdmin") === "true" ? (
+                <Link to="/admin">
+                  <Button icon color="teal" labelPosition="left">
+                    <Icon name="key" />
+                    Admin Panel
+                  </Button>
+                </Link>
+              ) : null}
               {/* <Link to="/Settings"><Button icon><Icon name='setting'/></Button></Link> */}
             </div>
             <h1 className="title">Carnegie Mellon University</h1>
@@ -85,15 +106,15 @@ function TablePage() {
                 <a href="mailto:lostfound@cs.cmu.edu">lostfound@cs.cmu.edu</a>.
               </p>
             </div>
-            <Message id="found-item-message" warning size='large'>
+            <Message id="found-item-message" warning size="large">
               <Message.Header>Found an item?</Message.Header>
-              { foundItemMessage }
+              {foundItemMessage}
             </Message>
-            <Message id="lost-item-message" warning size='large'>
+            <Message id="lost-item-message" warning size="large">
               <Message.Header>Lost an item?</Message.Header>
-              { lostItemMessage }
+              {lostItemMessage}
             </Message>
-            
+
             <div id="admin-filter-bar">
               <SearchBar input={input} onChange={updateInput} />
               {/* <div id="add-desktop">
@@ -102,7 +123,8 @@ function TablePage() {
                   isAdmin={isAdmin}
                 ></AddItemButton>
               </div> */}
-              <FoundItemModal id="found-item-modal"
+              <FoundItemModal
+                id="found-item-modal"
                 style={{ padding: "11px 11px", width: "110px" }}
               ></FoundItemModal>
             </div>

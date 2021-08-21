@@ -1,78 +1,77 @@
-import axios from 'axios'
-import React, {useState} from 'react'
-import { Button, Grid, Modal, Form, Checkbox } from 'semantic-ui-react'
-import "./AddUser.css"
+import axios from "axios";
+import React, { useState } from "react";
+import { useHistory } from "react-router";
+import { Button, Grid, Modal, Form, Checkbox } from "semantic-ui-react";
+import "./AddUser.css";
 
 function exampleReducer(dispatchState: any, action: any) {
-    switch (action.type) {
-      case 'CONFIG_CLOSE_ON_DIMMER_CLICK':
-        return { ...dispatchState, closeOnDimmerClick: action.value }
-      case 'CONFIG_CLOSE_ON_ESCAPE':
-        return { ...dispatchState, closeOnEscape: action.value }
-      case 'OPEN_MODAL':
-        return { ...dispatchState, open: true }
-      case 'CLOSE_MODAL':
-        return { ...dispatchState, open: false }
-      default:
-        throw new Error()
-    }
+  switch (action.type) {
+    case "CONFIG_CLOSE_ON_DIMMER_CLICK":
+      return { ...dispatchState, closeOnDimmerClick: action.value };
+    case "CONFIG_CLOSE_ON_ESCAPE":
+      return { ...dispatchState, closeOnEscape: action.value };
+    case "OPEN_MODAL":
+      return { ...dispatchState, open: true };
+    case "CLOSE_MODAL":
+      return { ...dispatchState, open: false };
+    default:
+      throw new Error();
   }
+}
 
-
-function AddUser(props: {
-  fetchUsers: Function;
-}) {
+function AddUser(props: { fetchUsers: Function }) {
+  const history = useHistory();
   const [dispatchState, dispatch] = React.useReducer(exampleReducer, {
     closeOnEscape: false,
     closeOnDimmerClick: false,
     open: false,
     dimmer: undefined,
-  })
-  const { open, closeOnEscape, closeOnDimmerClick } = dispatchState
+  });
+  const { open, closeOnEscape, closeOnDimmerClick } = dispatchState;
 
   const [state, setState] = useState({
     username: "",
     password: "",
-    isAdmin: false
+    isAdmin: false,
   });
 
-  const handleChange = (e: any, {name, value}: any) => {
-    setState({...state, [name]: value});
-  }
-  const handlePermissionChange = (e: any, {name, value}: any) => {
-    
+  const handleChange = (e: any, { name, value }: any) => {
+    setState({ ...state, [name]: value });
+  };
+  const handlePermissionChange = (e: any, { name, value }: any) => {
     value = !value;
 
-    console.log(value)
-    setState({...state, [name]: value});
-  }
+    console.log(value);
+    setState({ ...state, [name]: value });
+  };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const {username, password, isAdmin} = state;
+    const { username, password, isAdmin } = state;
     axios
       .post(`/api/auth/register`, {
         token: localStorage.getItem("lnf_token"),
         username: username,
         password: password,
-        isAdmin: isAdmin
+        isAdmin: isAdmin,
       })
       .then(
         (res) => {
           console.log("Added");
           console.log(res);
           props.fetchUsers();
-          
         },
         (error) => {
           console.log(error);
+          if (error?.response?.status === 401) {
+            window.localStorage.removeItem("lnf_token");
+            history.push("/login");
+          }
         }
       );
-    dispatch({ type: 'CLOSE_MODAL' });
-    setState({ username: "",  password:"", isAdmin: false });
-  }
-
-
+    dispatch({ type: "CLOSE_MODAL" });
+    setState({ username: "", password: "", isAdmin: false });
+  };
 
   return (
     <Grid columns={1}>
@@ -83,7 +82,11 @@ function AddUser(props: {
           open={open}
           onOpen={() => dispatch({ type: "OPEN_MODAL" })}
           onClose={() => dispatch({ type: "CLOSE_MODAL" })}
-          trigger={<Button color="red" id="add-user">Add User</Button>}
+          trigger={
+            <Button color="red" id="add-user">
+              Add User
+            </Button>
+          }
         >
           <Modal.Header>Add User</Modal.Header>
           <Modal.Content>
@@ -111,14 +114,14 @@ function AddUser(props: {
                 <Form.Input
                   required
                   fluid
-                  control = {Checkbox}
+                  control={Checkbox}
                   label="Admin Permission"
                   name="isAdmin"
                   placeholder="Admin Permission"
                   value={state.isAdmin}
                   onChange={handlePermissionChange}
                 />
-                </Form.Group>
+              </Form.Group>
               <Form.Group inline id="modal-actions">
                 <Button
                   onClick={() => dispatch({ type: "CLOSE_MODAL" })}
@@ -139,4 +142,4 @@ function AddUser(props: {
   );
 }
 
-export default AddUser
+export default AddUser;

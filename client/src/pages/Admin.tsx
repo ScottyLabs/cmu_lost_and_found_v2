@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { Grid, Button, Icon, Rail} from "semantic-ui-react";
+import { Grid, Button, Icon, Rail } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import "./Admin.css";
 import AddItemButton from "../components/AddItemButton";
@@ -52,19 +52,27 @@ function Admin() {
   const [itemList, setItemList] = useState([]);
 
   const fetchItems = () => {
-    axios.get(`/api/items/all`).then(
-      (res) => {
-        console.log("Claimed!");
-        console.log(res);
-        setItems(res.data);
-        //added
-        setItemListDefault(res.data);
-        setItemList(res.data);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+    axios
+      .post(`/api/items/all`, {
+        token: window.localStorage.getItem("lnf_token"),
+      })
+      .then(
+        (res) => {
+          console.log("Claimed!");
+          console.log(res);
+          setItems(res.data);
+          //added
+          setItemListDefault(res.data);
+          setItemList(res.data);
+        },
+        (error) => {
+          console.log(error);
+          if (error?.response?.status === 401) {
+            window.localStorage.removeItem("lnf_token");
+            history.push("/login");
+          }
+        }
+      );
   };
   const history = useHistory();
   useEffect(() => {
@@ -89,12 +97,18 @@ function Admin() {
   // safe from a security perspective because backend will independently check if user is an admin
   const isAdmin = localStorage.getItem("lnf_isAdmin") === "true";
 
+  useEffect(() => {
+    if (!isAdmin) {
+      history.push("/");
+    }
+  }, []);
+
   return (
     <Grid>
       <Grid.Row>
         <Grid.Column width={16}>
           <main>
-            <Link to="/admin">
+            <Link to="/">
               <img
                 src="/dog-logo.png"
                 id="logo-mobile"
@@ -103,14 +117,17 @@ function Admin() {
             </Link>
             <div id="settings">
               <Rail attached internal position="left" id="logo-desktop">
-                <Link to="/admin">
+                <Link to="/">
                   <img src="/dog-logo.png" alt="CMU Lost and Found Logo"></img>
                 </Link>
               </Rail>
               <LogoutButton />
               {isAdmin ? (
                 <Link to="/accounts">
-                  <Button size="large" color="teal" icon="id card"></Button>
+                  <Button color="teal" icon labelPosition="left">
+                    <Icon name="id card" />
+                    Accounts
+                  </Button>
                 </Link>
               ) : null}
             </div>
@@ -146,6 +163,6 @@ function Admin() {
       </Grid.Row>
     </Grid>
   );
-};
+}
 
 export default Admin;

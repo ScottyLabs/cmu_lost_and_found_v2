@@ -1,10 +1,22 @@
 import { Model, Query, Schema, Document, model } from "mongoose";
 import * as bcrypt from "bcryptjs";
 import * as jwt from "jsonwebtoken";
+import axios from "axios";
+import { schedule } from "node-cron";
 // jsonwebtoken secret for authentication purposes
-const JWT_SECRET = process.env.JWT_SECRET;
+let JWT_SECRET: string;
 // time for access token to expire in milliseconds
 const TIME_TO_EXPIRE = 3600000;
+
+async function getLoginKey() {
+  JWT_SECRET = (await axios.get("https://login.scottylabs.org/login/pubkey")).data;
+}
+
+if (!JWT_SECRET) {
+  getLoginKey();
+}
+
+schedule("0 0 * * *", getLoginKey);
 
 export interface IUser extends Document {
   username: string;
@@ -32,11 +44,6 @@ const UserSchema = new Schema({
   },
   password: {
     type: String,
-    required: true,
-  },
-  isAdmin: {
-    type: Boolean,
-    default: false,
   },
   permissions: [
     {
@@ -79,25 +86,25 @@ UserSchema.statics.getByToken = function (
   jwt.verify(
     token,
     JWT_SECRET,
+    { algorithms: ["RS256"] },
     function (err: any, payload: any) {
+      if (err) {
+        return callback(err, null);
+      }
       if (!payload) {
         return callback(
           "No token present. Did you forget to pass in the token with the API call?",
           null
         );
       }
-      if (!payload.id || !payload.accessTime) {
+      if (
+        payload.applicationId !== process.env.LOGIN_API_ID ||
+        !payload.email
+      ) {
         return callback("Bad token", null);
       }
-      let id: string = payload.id;
-      let accessTime: number = payload.accessTime;
-      if (err) {
-        return callback(err, null);
-      }
-      if (Date.now() > accessTime + TIME_TO_EXPIRE) {
-        return callback("Token has expired. Please login again.", null);
-      }
-      this.findOne({ _id: id }, callback);
+      const email: string = payload.email;
+      this.findOne({ username: email }, callback);
     }.bind(this)
   );
 };

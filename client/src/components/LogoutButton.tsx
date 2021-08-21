@@ -6,16 +6,18 @@ export default function LogoutButton(props: { }) {
   const history = useHistory();
   return (
     <Button
-      icon="log out"
+      icon
       color="blue"
-      size="large"
+      labelPosition="left"
       onClick={() => {
         console.log("logout");
         localStorage.removeItem("lnf_token");
         localStorage.removeItem("lnf_isAdmin");
-        history.replace("/");
+        history.replace("/login");
       }}
     >
+      <Icon name="sign out" />
+      Sign out
     </Button>
   );
 }

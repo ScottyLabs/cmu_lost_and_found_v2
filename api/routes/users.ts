@@ -40,7 +40,7 @@ router.post("/updatePerm", isAdmin, async (req: Request, res: Response) => {
   const permissionArray: Array<[BuildingType, PermissionType]> = perm
     .map((value: string) => PermissionsController.parsePermission(value))
     .filter((value: [BuildingType, PermissionType]) => value);
-  if (permissionArray.length > 0) {
+  if (permissionArray) {
     try {
       const toUpdate = await User.findOneByUsername(username);
       if (toUpdate) {

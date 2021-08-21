@@ -1,6 +1,13 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { Button, Grid, Modal, Form, Message, TextArea } from "semantic-ui-react";
+import {
+  Button,
+  Grid,
+  Modal,
+  Form,
+  Message,
+  TextArea,
+} from "semantic-ui-react";
 import { useHistory } from "react-router-dom";
 import "./AddItemButton.css";
 import { BuildingType } from "../enums/locationTypes";
@@ -145,6 +152,10 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
           (error) => {
             console.error(error);
             reject(error);
+            if (error?.response?.status === 401) {
+              window.localStorage.removeItem("lnf_token");
+              history.push("/login");
+            }
             return;
           }
         );
@@ -212,7 +223,14 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
             },
             (error) => {
               console.log(error);
-              alert("Unable to create item")
+              alert("Unable to create item");
+              if (error?.response?.status === 401) {
+                window.localStorage.removeItem("lnf_token");
+                history.push("/login");
+              } else if (error?.response?.status === 403) {
+                window.localStorage.setItem("lnf_isAdmin", "false");
+                history.push("/");
+              }
             }
           );
         dispatch({ type: "CLOSE_MODAL" });
@@ -254,7 +272,10 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
           onOpen={() => dispatch({ type: "OPEN_MODAL" })}
           onClose={() => dispatch({ type: "CLOSE_MODAL" })}
           trigger={
-            <Button color="red" style={{ height: "47px", width: "110px", marginLeft: "2px" }}>
+            <Button
+              color="red"
+              style={{ height: "47px", width: "110px", marginLeft: "2px" }}
+            >
               Add Item
             </Button>
           }
@@ -361,7 +382,12 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
                 value={state.imagePath}
                 onChange={handleFileChange}
               />
-              <TextArea placeholder="Notes" name="notes" value={state.notes} onChange={handleChange}/>
+              <TextArea
+                placeholder="Notes"
+                name="notes"
+                value={state.notes}
+                onChange={handleChange}
+              />
               <Form.Group></Form.Group>
               <Form.Group inline id="modal-actions">
                 <div

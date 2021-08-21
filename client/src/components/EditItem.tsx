@@ -93,7 +93,7 @@ function EditItem(props: {
     imagePermission: props.item.imagePermission,
     status: props.item.status,
     approved: props.item.approved,
-    notes: props.item.notes
+    notes: props.item.notes,
   });
 
   const handleChange = (e: any, { name, value }: any) => {
@@ -153,6 +153,13 @@ function EditItem(props: {
           (error) => {
             console.error(error);
             reject(error);
+            if (error?.response?.status === 401) {
+              window.localStorage.removeItem("lnf_token");
+              history.push("/");
+            } else if (error?.response?.status === 403) {
+              window.localStorage.setItem("lnf_isAdmin", "false");
+              history.push("/");
+            }
             return;
           }
         );
@@ -176,7 +183,7 @@ function EditItem(props: {
       imagePermission,
       status,
       approved,
-      notes
+      notes,
     } = state;
 
     uploadImage(imageObject).then(
@@ -196,7 +203,7 @@ function EditItem(props: {
             imagePermission: imagePermission,
             status: status,
             approved: approved,
-            notes: notes
+            notes: notes,
           })
           .then(
             (res) => {
@@ -206,7 +213,14 @@ function EditItem(props: {
             },
             (error) => {
               console.log(error);
-              alert("Unable to edit item")
+              alert("Unable to edit item");
+              if (error?.response?.status === 401) {
+                window.localStorage.removeItem("lnf_token");
+                history.push("/login");
+              } else if (error?.response?.status === 403) {
+                window.localStorage.setItem("lnf_isAdmin", "false");
+                history.push("/");
+              }
             }
           );
         dispatch({ type: "CLOSE_MODAL" });
@@ -230,7 +244,7 @@ function EditItem(props: {
       },
       (err) => {
         console.error(err);
-        alert("Unable to edit item")
+        alert("Unable to edit item");
       }
     );
   };
@@ -353,14 +367,19 @@ function EditItem(props: {
                 value={state.imagePath}
                 onChange={handleFileChange}
               />
-              <TextArea placeholder="Notes" name="notes" value={state.notes} onChange={handleChange}/>
+              <TextArea
+                placeholder="Notes"
+                name="notes"
+                value={state.notes}
+                onChange={handleChange}
+              />
               <Form.Group></Form.Group>
-              
+
               <Form.Group inline id="modal-actions">
                 <DeleteButton
-                    id={props.id}
-                    fetchItems={props.fetchItems}
-                    disabled={props.disabled}
+                  id={props.id}
+                  fetchItems={props.fetchItems}
+                  disabled={props.disabled}
                 ></DeleteButton>
                 <div
                   style={{
@@ -370,7 +389,6 @@ function EditItem(props: {
                     width: "100%",
                   }}
                 >
-                  
                   <Button
                     type="button" // needs to be set because type="submit" is the default
                     onClick={() => dispatch({ type: "CLOSE_MODAL" })}

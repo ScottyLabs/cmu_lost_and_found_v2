@@ -1,0 +1,22 @@
+#login {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 95vh;
+}
+
+#login-box {
+  min-width: 350px;
+}
+
+#login-button {
+  margin-top: 10px;
+}
+
+@media (max-width: 425px) {
+  #admin-login {
+    width: 300px;
+  }
+}

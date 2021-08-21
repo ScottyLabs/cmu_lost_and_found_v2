@@ -13,7 +13,7 @@ const router = Router();
 /**
  * Returns all items in database, according to schema specified in Item.ts
  */
-router.get("/all", async (req: Request, res: Response) => {
+router.post("/all", isUser, async (req: Request, res: Response) => {
   Item.find()
     .sort({ dateFound: -1, timeFound: -1 })
     .exec(function (err, docs) {
@@ -138,7 +138,7 @@ router.post("/updateStatus", isUser, async (req: Request, res: Response) => {
         );
         return res.status(200).send({ msg: updatedItem });
       } else {
-        return res.status(400).send(new Error("Item not found"));
+        return res.status(403).send(new Error("Insufficient privileges"));
       }
     } else {
       return res.status(404).send(new Error("Item not found"));

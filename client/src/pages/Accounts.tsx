@@ -11,7 +11,6 @@ import AddUser from "../components/AddUser";
 import LogoutButton from "../components/LogoutButton";
 import { useHistory } from "react-router-dom";
 
-
 function Accounts() {
   // const users = [
   //   {
@@ -38,22 +37,28 @@ function Accounts() {
 
   const fetchUsers = () => {
     axios
-      .post(`/api/accounts/all`, {token: localStorage.getItem("lnf_token")})
+      .post(`/api/accounts/all`, { token: localStorage.getItem("lnf_token") })
       .then(
         (res) => {
           console.log("Retrieved users!");
           console.log(res);
           setUsers(res.data);
-                 //added
-        setUserListDefault(res.data);
-        setUserList(res.data);
+          //added
+          setUserListDefault(res.data);
+          setUserList(res.data);
         },
         (error) => {
           console.log(error);
-          history.push("/login");
+          if (error?.response?.status === 401) {
+            window.localStorage.removeItem("lnf_token");
+            history.push("/login");
+          } else if (error?.response?.status === 403) {
+            window.localStorage.setItem("lnf_isAdmin", "false");
+            history.push("/");
+          }
         }
       );
-  }
+  };
 
   useEffect(() => {
     console.log("Effect used!");
@@ -111,7 +116,6 @@ function Accounts() {
       </Grid.Row>
     </Grid>
   );
-
-};
+}
 
 export default Accounts;

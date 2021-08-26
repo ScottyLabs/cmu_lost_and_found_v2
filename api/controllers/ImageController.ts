@@ -20,12 +20,11 @@ export default class ImageController {
      */
 
     public static sendImageToDrive(imageName : string, dataURL : any, callback : Function) {
-        // Load client secrets from a local file.
-        fs.readFile('credentials.json', (err : any, content : any) => {
-            if (err) return console.log('Error loading client secret file:', err);
-            // Authorize a client with credentials, then call the Google Drive API.
-            this.authorize(JSON.parse(content), this.addImage(imageName, dataURL, callback));
-        });
+        // Load client secrets from env file.
+        this.authorize(
+          JSON.parse(process.env.GCLOUD_CREDENTIALS),
+          this.addImage(imageName, dataURL, callback)
+        );
     }
 
     private static addImage(imageName : string, dataURL : any, callback : Function) { 

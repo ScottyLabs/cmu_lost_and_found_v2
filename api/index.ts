@@ -1,13 +1,6 @@
 // loads the .env file
 require("dotenv").config();
 
-import fs from 'fs';
-if (!process.env.JWT_SECRET || process.env.JWT_SECRET === "") {
-  if (fs.existsSync('./key')) {
-    process.env.JWT_SECRET = fs.readFileSync('./key').toString().trim();
-  }
-}
-
 import express from "express";
 import morgan from "morgan";
 import cors from "cors";

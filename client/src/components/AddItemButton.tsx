@@ -142,11 +142,11 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
           (res) => {
             console.log("Image uploaded successfully");
             console.log(res);
-            let finalURL = res.data.msg.fileId;
-            console.log(
-              "https://drive.google.com/uc?export=view&id=" + finalURL
-            );
-            resolve("https://drive.google.com/uc?export=view&id=" + finalURL);
+            let finalID = res.data.msg.fileId;
+            let finalURL =
+              "https://drive.google.com/thumbnail?id=" + finalID + "&sz=w1000";
+            console.log(finalURL);
+            resolve(finalURL);
             return;
           },
           (error) => {

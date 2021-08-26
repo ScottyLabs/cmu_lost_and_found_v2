@@ -144,9 +144,9 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
             console.log(res);
             let finalURL = res.data.msg.fileId;
             console.log(
-              "http://drive.google.com/uc?export=view&id=" + finalURL
+              "https://drive.google.com/uc?export=view&id=" + finalURL
             );
-            resolve("http://drive.google.com/uc?export=view&id=" + finalURL);
+            resolve("https://drive.google.com/uc?export=view&id=" + finalURL);
             return;
           },
           (error) => {

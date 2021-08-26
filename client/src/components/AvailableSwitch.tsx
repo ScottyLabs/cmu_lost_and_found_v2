@@ -22,7 +22,7 @@ export default function AvailableSwitch(props: {
       .post(`/api/items/updateStatus`, {
         token: localStorage.getItem("lnf_token"),
         id: props.id,
-        status: isAvailable ? "available" : "claimed",
+        status: !isAvailable ? "available" : "claimed", // isAvailable indicates whether it was formerly available. If it was previously available, then it should no longer be available
       })
       .then(
         (res) => {

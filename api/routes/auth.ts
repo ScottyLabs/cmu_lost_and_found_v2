@@ -127,16 +127,29 @@ router.post("/login", function (req: Request, res: Response, next) {
 });
 
 router.get("/signRequest", function (req, res) {
-  const loginRequest = jwt.sign(
-    {
-      redirectUrl: process.env.LNF_HOST,
-      restrictDomain: true,
-      applicationId: process.env.LOGIN_API_ID,
-    },
-    process.env.JWT_SECRET || "",
-    { algorithm: "RS256", expiresIn: "5 minutes" }
-  );
-  res.json({ token: loginRequest });
+  try {
+    const loginRequest = jwt.sign(
+      {
+        redirectUrl: process.env.LNF_HOST,
+        restrictDomain: process.env.LNF_HOST.includes("localhost") ? false : true,
+        applicationId: process.env.LOGIN_API_ID,
+      },
+      process.env.JWT_SECRET || "",
+      { algorithm: "RS256", expiresIn: "5 minutes" }
+    );
+    res.json({ token: loginRequest });
+  } catch {
+    const loginRequest = jwt.sign(
+      {
+        redirectUrl: process.env.LNF_HOST,
+        restrictDomain: process.env.LNF_HOST.includes("localhost") ? false : true,
+        applicationId: process.env.LOGIN_API_ID,
+      },
+      process.env.JWT_SECRET || "",
+      { algorithm: "HS256", expiresIn: "5 minutes" }
+    );
+    res.json({ token: loginRequest });
+  }
 });
 
 // UNUSED

@@ -1,11 +1,10 @@
 // loads the .env file
 require("dotenv").config();
 
-import * as bodyParser from "body-parser";
-import * as express from "express";
-import * as morgan from "morgan";
-import * as cors from "cors";
-import * as mongoose from "mongoose";
+import express from "express";
+import morgan from "morgan";
+import cors from "cors";
+import mongoose from "mongoose";
 import UserRouter from "./routes/users";
 import AuthRouter from "./routes/auth";
 import ItemRouter from "./routes/items";
@@ -19,8 +18,8 @@ const database = process.env.MONGO_URI || "mongodb://localhost:27017";
 // https://github.com/seanpmaxwell/express-generator-typescript
 
 const app = express();
-app.use(bodyParser.json({limit: '5mb'}));
-app.use(bodyParser.urlencoded({limit: '5mb', extended: true }));
+app.use(express.json({limit: '5mb'}));
+app.use(express.urlencoded({limit: '5mb', extended: true }));
 app.use(express.static(process.cwd() + "/client/build/"));
 
 // Set up CORS policy

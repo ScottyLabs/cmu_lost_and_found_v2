@@ -131,7 +131,7 @@ router.get("/signRequest", function (req, res) {
     const loginRequest = jwt.sign(
       {
         redirectUrl: process.env.LNF_HOST,
-        restrictDomain: true,
+        restrictDomain: process.env.LNF_HOST.includes("localhost") ? false : true,
         applicationId: process.env.LOGIN_API_ID,
       },
       process.env.JWT_SECRET || "",
@@ -142,7 +142,7 @@ router.get("/signRequest", function (req, res) {
     const loginRequest = jwt.sign(
       {
         redirectUrl: process.env.LNF_HOST,
-        restrictDomain: true,
+        restrictDomain: process.env.LNF_HOST.includes("localhost") ? false : true,
         applicationId: process.env.LOGIN_API_ID,
       },
       process.env.JWT_SECRET || "",

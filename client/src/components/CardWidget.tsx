@@ -31,7 +31,7 @@ const CardWidget = (props: {
           {props.items
             .filter((item) => {
               return (
-                item.status === "available" ||
+                (item.status === "available" && item.approved) ||
                 (props.isAdmin && displayArchived)
               );
             })

@@ -95,15 +95,8 @@ function Login() {
                           .post("/api/auth/login", {
                             token: event.data,
                           })
-                          .then((response) => {
-                            if (response.data) {
-                              window.localStorage.setItem(
-                                "lnf_isAdmin",
-                                response.data.isAdmin
-                              );
-                              setLoading(false);
-                              history.push("/");
-                            }
+                          .then(() => {
+                            history.push("/");
                             setLoading(false);
                           })
                           .catch(() => {

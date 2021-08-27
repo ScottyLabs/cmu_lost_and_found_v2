@@ -1,7 +1,17 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useHistory } from "react-router";
-import { Button, Grid, Modal, Form, Checkbox } from "semantic-ui-react";
+import {
+  Button,
+  Grid,
+  Modal,
+  Form,
+  Checkbox,
+  Label,
+  Icon,
+} from "semantic-ui-react";
+import { BuildingType } from "../enums/locationTypes";
+import { PermissionType } from "../enums/permissionType";
 import "./AddUser.css";
 
 function exampleReducer(dispatchState: any, action: any) {
@@ -21,6 +31,19 @@ function exampleReducer(dispatchState: any, action: any) {
 
 function AddUser(props: { fetchUsers: Function }) {
   const history = useHistory();
+  const buildings = Object.keys(BuildingType).map((key) => ({
+    key,
+    text: key,
+    value: key,
+  }));
+
+  const actions = Object.keys(PermissionType)
+    .filter((value) => value !== "ALL")
+    .map((key) => ({
+      key,
+      text: key,
+      value: key,
+    }));
   const [dispatchState, dispatch] = React.useReducer(exampleReducer, {
     closeOnEscape: false,
     closeOnDimmerClick: false,
@@ -29,31 +52,18 @@ function AddUser(props: { fetchUsers: Function }) {
   });
   const { open, closeOnEscape, closeOnDimmerClick } = dispatchState;
 
-  const [state, setState] = useState({
-    username: "",
-    password: "",
-    isAdmin: false,
-  });
-
-  const handleChange = (e: any, { name, value }: any) => {
-    setState({ ...state, [name]: value });
-  };
-  const handlePermissionChange = (e: any, { name, value }: any) => {
-    value = !value;
-
-    console.log(value);
-    setState({ ...state, [name]: value });
-  };
+  const [username, setUsername] = useState("");
+  const [permissions, setPermissions] = useState<string[]>([]);
+  const [building, setBuilding] = useState("");
+  const [action, setAction] = useState("");
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const { username, password, isAdmin } = state;
     axios
-      .post(`/api/auth/register`, {
+      .post(`/api/auth/create`, {
         token: localStorage.getItem("lnf_token"),
         username: username,
-        password: password,
-        isAdmin: isAdmin,
+        permissions: permissions,
       })
       .then(
         (res) => {
@@ -70,7 +80,10 @@ function AddUser(props: { fetchUsers: Function }) {
         }
       );
     dispatch({ type: "CLOSE_MODAL" });
-    setState({ username: "", password: "", isAdmin: false });
+    setUsername("");
+    setPermissions([]);
+    setBuilding("");
+    setAction("");
   };
 
   return (
@@ -83,7 +96,11 @@ function AddUser(props: { fetchUsers: Function }) {
           onOpen={() => dispatch({ type: "OPEN_MODAL" })}
           onClose={() => dispatch({ type: "CLOSE_MODAL" })}
           trigger={
-            <Button color="red" id="add-user">
+            <Button
+              color="red"
+              id="add-user"
+              style={{ height: "47px", width: "110px", marginLeft: "2px" }}
+            >
               Add User
             </Button>
           }
@@ -95,37 +112,81 @@ function AddUser(props: { fetchUsers: Function }) {
               <Form.Input
                 required
                 fluid
-                label="Username"
+                label="Username (Andrew Email)"
                 placeholder="Username"
                 name="username"
-                value={state.username}
-                onChange={handleChange}
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
               />
-              <Form.Input
-                required
-                fluid
-                label="Password"
-                placeholder="Password"
-                name="password"
-                value={state.password}
-                onChange={handleChange}
-              />
+              <h3>Permissions</h3>
+              {permissions.length === 0 && (
+                <p>No permissions added yet for this user</p>
+              )}
+              {permissions.map((perm, index) => {
+                const [building, action] = perm.split(":");
+                const color =
+                  action === "ADMIN"
+                    ? "yellow"
+                    : "blue"
+                return (
+                  <Label
+                    color={color}
+                    image
+                    as="a"
+                    onClick={() => {
+                      setPermissions(
+                        permissions.filter((_value, idx) => idx !== index)
+                      );
+                    }}
+                  >
+                    {building}
+                    <Label.Detail>
+                      {action}
+                      <Icon name="delete" />
+                    </Label.Detail>
+                  </Label>
+                );
+              })}
+              <h3>Add Specific Permission</h3>
               <Form.Group widths="equal">
-                <Form.Input
-                  required
+                <Form.Select
                   fluid
-                  control={Checkbox}
-                  label="Admin Permission"
-                  name="isAdmin"
-                  placeholder="Admin Permission"
-                  value={state.isAdmin}
-                  onChange={handlePermissionChange}
+                  required
+                  options={buildings}
+                  placeholder="Building"
+                  name="building"
+                  value={building}
+                  onChange={(_e, { value }) => {
+                    setBuilding(String(value));
+                  }}
                 />
+                <Form.Select
+                  fluid
+                  required
+                  options={actions}
+                  placeholder="Action"
+                  name="action"
+                  value={action}
+                  onChange={(_e, { value }) => {
+                    setAction(String(value));
+                  }}
+                />
+                <Form.Button
+                  type="button"
+                  onClick={() => {
+                    setPermissions([...permissions, `${building}:${action}`]);
+                    setBuilding("");
+                    setAction("");
+                  }}
+                >
+                  Add Permission
+                </Form.Button>
               </Form.Group>
               <Form.Group inline id="modal-actions">
                 <Button
                   onClick={() => dispatch({ type: "CLOSE_MODAL" })}
                   negative
+                  type="button"
                 >
                   Cancel
                 </Button>

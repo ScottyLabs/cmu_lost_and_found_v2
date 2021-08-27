@@ -28,11 +28,8 @@ function isUser(req: Request, res: Response, next: NextFunction) {
     }
     if (user) {
       req.body.user = user;
-      return next();
     }
-    return res.status(401).send({
-      message: "Failed authentication for user",
-    });
+    return next();
   });
 }
 
@@ -95,6 +92,16 @@ function isAdmin(req: Request, res: Response, next: NextFunction) {
 //   );
 // });
 
+router.post("/create", isAdmin, (req, res) => {
+  let { username, permissions } = req.body;
+  UserController.createUser(username, permissions, (err: string, user: IUser) => {
+    if (err != null) {
+      return res.status(401).send(err);
+    }
+    return res.status(200).json({ user });
+  })
+});
+
 /**
  * Login a user with a username and password.
  * Otherwise, 401.
@@ -110,15 +117,12 @@ router.post("/login", function (req: Request, res: Response, next) {
 
   if (token) {
     UserController.loginWithToken(token, (err, token, user) => {
-      if (err || !user) {
+      if (err) {
         return res.status(400).send(err);
       }
 
       return res.json({
         token: token,
-        isAdmin: user.permissions.includes(
-          `${String(BuildingType.ALL)}:${String(PermissionType.ADMIN)}`
-        ),
       });
     });
   } else {

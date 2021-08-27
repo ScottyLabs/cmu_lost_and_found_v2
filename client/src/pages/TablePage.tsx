@@ -13,6 +13,7 @@ import FoundItemModal, {
   lostItemMessage,
 } from "../components/FoundItemModal";
 import LogoutButton from "../components/LogoutButton";
+import { User } from "../interface/user";
 
 function TablePage() {
   const history = useHistory();
@@ -25,6 +26,8 @@ function TablePage() {
   //filtered list
   const [itemList, setItemList] = useState([]);
 
+  const [user, setUser] = useState<User | null>(null);
+
   const fetchItems = () => {
     axios
       .post(`/api/items/all`, {
@@ -32,7 +35,6 @@ function TablePage() {
       })
       .then(
         (res) => {
-          console.log(res);
           setItems(res.data);
 
           //added
@@ -49,6 +51,20 @@ function TablePage() {
       );
   };
 
+  const getCurrentUser = () => {
+    axios.post('/api/accounts/currentUser', {
+      token: window.localStorage.getItem("lnf_token")
+    }).then(
+      (res) => {
+        if (res.data) {
+          setUser(res.data);
+        } else {
+          setUser({ username: "user", permissions: [] });
+        }
+      }
+    )
+  };
+
   //modify items
   const updateInput = async (input: string) => {
     let inputName = input.toLowerCase();
@@ -63,10 +79,11 @@ function TablePage() {
   };
 
   useEffect(() => {
+    getCurrentUser();
     fetchItems();
   }, []);
 
-  return (
+  return user && (
     <Grid>
       <Grid.Row>
         <Grid.Column width={16}>
@@ -85,7 +102,7 @@ function TablePage() {
                 </Link>
               </Rail>
               <LogoutButton />
-              {window.localStorage.getItem("lnf_isAdmin") === "true" ? (
+              {user.permissions?.length > 0 ? (
                 <Link to="/admin">
                   <Button icon color="teal" labelPosition="left">
                     <Icon name="key" />
@@ -141,9 +158,9 @@ function TablePage() {
               <TableWidget
                 items={itemList}
                 isUser={false}
-                isAdmin={false}
                 isArchived={false}
                 fetchItems={fetchItems}
+                user={user}
               ></TableWidget>
             </div>
             {/* <ItemCard name="bob"></ItemCard> */}

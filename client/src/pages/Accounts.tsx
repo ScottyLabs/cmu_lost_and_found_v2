@@ -33,6 +33,7 @@ function Accounts() {
   const [userListDefault, setUserListDefault] = useState([]);
   //filtered list
   const [userList, setUserList] = useState([]);
+  const [user, setUser] = useState<User | null>(null);
   const history = useHistory();
 
   const fetchUsers = () => {
@@ -53,17 +54,37 @@ function Accounts() {
             window.localStorage.removeItem("lnf_token");
             history.push("/login");
           } else if (error?.response?.status === 403) {
-            window.localStorage.setItem("lnf_isAdmin", "false");
             history.push("/");
           }
         }
       );
   };
 
+  const getCurrentUser = () => {
+    axios.post('/api/accounts/currentUser', {
+      token: window.localStorage.getItem("lnf_token")
+    }).then(
+      (res) => {
+        if (res.data) {
+          setUser(res.data);
+        } else {
+          setUser({ username: "user", permissions: [] });
+        }
+      }
+    )
+  };
+
   useEffect(() => {
     console.log("Effect used!");
+    getCurrentUser();
     fetchUsers();
   }, []);
+
+  useEffect(() => {
+    if (user && !user?.permissions?.includes("ALL:ADMIN")) {
+      history.push("/");
+    }
+  }, [user]);
 
   //modify users
   const updateInput = async (input: string) => {
@@ -74,7 +95,7 @@ function Accounts() {
     setUserList(filtered);
   };
 
-  return (
+  return user && (
     <Grid>
       <Grid.Row>
         <Grid.Column>

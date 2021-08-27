@@ -41,11 +41,7 @@ const UserTable = (props: { users: Array<User>; fetchUsers: Function }) => {
                   const color =
                     action === "ADMIN"
                       ? "yellow"
-                      : action === "CREATE"
-                      ? "green"
-                      : action === "UPDATE"
-                      ? "blue"
-                      : "red";
+                      : "blue"
                   return (
                     <Label color={color} image>
                       {building}

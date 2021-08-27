@@ -4,15 +4,15 @@ import { Item } from "../interface/item";
 import "./TableWidget.css";
 import ImageModal from "./ImageModal";
 import ApproveSwitch from "./ApproveSwitch";
-import DeleteButton from "./DeleteButton";
 import EditButton from "./EditItem";
 import AvailableSwitch from "./AvailableSwitch";
+import { User } from "../interface/user";
 const TableWidget = (props: {
   items: Array<Item>;
   isUser: boolean;
-  isAdmin: boolean;
   isArchived: boolean;
   fetchItems: Function;
+  user: User;
 }) => {
   const [displayArchived, setDisplayArchived] = useState(true);
 
@@ -69,9 +69,14 @@ const TableWidget = (props: {
                 m +
                 " " +
                 (parseInt(h) >= 12 ? "PM" : "AM");
+              let isAdmin =
+                props.user.permissions.includes("ALL:ADMIN") ||
+                props.user.permissions.includes(`${item.building}:ADMIN`);
               return (
                 <Table.Row key={item._id}>
-                  <Table.Cell>{dateFormatted} <br></br> {timeFormatted}</Table.Cell>
+                  <Table.Cell>
+                    {dateFormatted} <br></br> {timeFormatted}
+                  </Table.Cell>
                   <Table.Cell>{item.name}</Table.Cell>
                   <Table.Cell>{item.whereFound}</Table.Cell>
                   <Table.Cell>{item.description}</Table.Cell>
@@ -93,10 +98,10 @@ const TableWidget = (props: {
                     <Table.Cell>
                       <EditButton
                         fetchItems={props.fetchItems}
-                        isAdmin={props.isAdmin}
+                        isAdmin={isAdmin}
                         item={item}
                         id={item._id}
-                        disabled={!props.isAdmin && item.approved}
+                        disabled={false}
                       ></EditButton>
                     </Table.Cell>
                   ) : null}
@@ -106,7 +111,7 @@ const TableWidget = (props: {
                         id={item._id}
                         isApproved={item.approved}
                         fetchItems={props.fetchItems}
-                        disabled={!props.isAdmin}
+                        disabled={!isAdmin}
                       ></ApproveSwitch>
                     </Table.Cell>
                   ) : null}

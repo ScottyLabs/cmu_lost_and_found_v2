@@ -31,7 +31,6 @@ export default function LoginForm(props: any) {
           console.log(token);
           console.log(isAdmin);
           localStorage.setItem("lnf_token", token);
-          localStorage.setItem("lnf_isAdmin", isAdmin);
           console.log("Logged in");
           history.push("/admin");
           setState({ username: "", password: "" });

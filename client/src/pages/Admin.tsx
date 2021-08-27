@@ -11,6 +11,7 @@ import axios from "axios";
 import { Item } from "../interface/item";
 import SearchBar from "../components/SearchBar";
 import LogoutButton from "../components/LogoutButton";
+import { User } from "../interface/user";
 
 function Admin() {
   document.title = "CMU Lost and Found";
@@ -51,6 +52,8 @@ function Admin() {
   //filtered list
   const [itemList, setItemList] = useState([]);
 
+  const [user, setUser] = useState<User | null>(null);
+
   const fetchItems = () => {
     axios
       .post(`/api/items/all`, {
@@ -58,8 +61,6 @@ function Admin() {
       })
       .then(
         (res) => {
-          console.log("Claimed!");
-          console.log(res);
           setItems(res.data);
           //added
           setItemListDefault(res.data);
@@ -74,6 +75,21 @@ function Admin() {
         }
       );
   };
+
+  const getCurrentUser = () => {
+    axios.post('/api/accounts/currentUser', {
+      token: window.localStorage.getItem("lnf_token")
+    }).then(
+      (res) => {
+        if (res.data) {
+          setUser(res.data);
+        } else {
+          setUser({ username: "user", permissions: [] });
+        }
+      }
+    )
+  };
+
   const history = useHistory();
   useEffect(() => {
     if (localStorage.getItem("lnf_token") == null) {
@@ -81,6 +97,7 @@ function Admin() {
       history.push("/login");
       return;
     }
+    getCurrentUser();
     fetchItems();
   }, []);
 
@@ -95,15 +112,15 @@ function Admin() {
 
   // check a value in local storage to decide if account user is an admin for client-side use
   // safe from a security perspective because backend will independently check if user is an admin
-  const isAdmin = localStorage.getItem("lnf_isAdmin") === "true";
+  const isAdmin = user?.permissions.includes("ALL:ADMIN") ?? false;
 
   useEffect(() => {
-    if (!isAdmin) {
+    if (user && user?.permissions?.length === 0) {
       history.push("/");
     }
-  }, []);
+  }, [user]);
 
-  return (
+  return user && (
     <Grid>
       <Grid.Row>
         <Grid.Column width={16}>
@@ -153,9 +170,9 @@ function Admin() {
               <TableWidget
                 items={itemList}
                 isUser={true}
-                isAdmin={isAdmin}
                 isArchived={false}
                 fetchItems={fetchItems}
+                user={user}
               ></TableWidget>
             </div>
           </main>

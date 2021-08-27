@@ -36,7 +36,6 @@ export default function AvailableSwitch(props: {
             window.localStorage.removeItem("lnf_token");
             history.push("/login");
           } else if (error?.response?.status === 403) {
-            window.localStorage.setItem("lnf_isAdmin", "false");
             history.push("/");
           }
         }

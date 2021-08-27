@@ -3,14 +3,14 @@ import PermissionsController from "../controllers/PermissionsController";
 import { BuildingType } from "../enums/locationTypes";
 import { PermissionType } from "../enums/permissionType";
 import User, { IUser } from "../models/User";
-import { isAdmin } from "./auth";
+import { isAdmin, isUser } from "./auth";
 
 // https://github.com/seanpmaxwell/express-generator-typescript/tree/265df43a2cb23a4389a0361530bb741d1fc88c7b
 
 const router = Router();
 
 /******************************************************************************
- *                      Get All Users - "GET /api/accounts/all"
+ *                      Get All Users - "POST /api/accounts/all"
  ******************************************************************************/
 
 router.post("/all", isAdmin, async (req: Request, res: Response) => {
@@ -21,6 +21,14 @@ router.post("/all", isAdmin, async (req: Request, res: Response) => {
     }
     return res.status(200).json(docs);
   });
+});
+
+/******************************************************************************
+ *                      Get Current User - "POST /api/accounts/currentUser"
+ ******************************************************************************/
+
+router.post("/currentUser", isUser, (req, res) => {
+  return res.status(200).json(req.body.user);
 });
 
 /******************************************************************************

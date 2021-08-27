@@ -12,7 +12,6 @@ export default function LogoutButton(props: { }) {
       onClick={() => {
         console.log("logout");
         localStorage.removeItem("lnf_token");
-        localStorage.removeItem("lnf_isAdmin");
         history.replace("/login");
       }}
     >

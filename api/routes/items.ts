@@ -49,7 +49,7 @@ router.post("/add", isUser, async (req: Request, res: Response) => {
   if (
     !PermissionsController.hasPermissionsWithUser(
       building as BuildingType,
-      PermissionType.CREATE,
+      PermissionType.USER,
       user
     )
   ) {
@@ -93,7 +93,7 @@ router.post("/delete", isUser, async (req: Request, res: Response) => {
       if (
         PermissionsController.hasPermissionsWithUser(
           item.building as BuildingType,
-          PermissionType.DELETE,
+          item.approved ? PermissionType.ADMIN : PermissionType.USER,
           user
         )
       ) {
@@ -127,7 +127,7 @@ router.post("/updateStatus", isUser, async (req: Request, res: Response) => {
       if (
         PermissionsController.hasPermissionsWithUser(
           item.building as BuildingType,
-          PermissionType.UPDATE,
+          PermissionType.USER,
           user
         )
       ) {
@@ -211,7 +211,6 @@ router.post("/editItem", isUser, async (req: Request, res: Response) => {
     image,
     imagePermission,
     status,
-    approved,
     user,
     notes,
   } = req.body;
@@ -221,7 +220,7 @@ router.post("/editItem", isUser, async (req: Request, res: Response) => {
       if (
         PermissionsController.hasPermissionsWithUser(
           item.building as BuildingType,
-          PermissionType.UPDATE,
+          PermissionType.USER,
           user
         )
       ) {
@@ -240,7 +239,6 @@ router.post("/editItem", isUser, async (req: Request, res: Response) => {
             whereToRetrieve: whereToRetrieve,
             image: image,
             imagePermission: imagePermission,
-            approved: approved,
             notes: notes,
           },
           { runValidators: true, useFindAndModify: false }
@@ -270,17 +268,20 @@ router.post("/editItem", isUser, async (req: Request, res: Response) => {
 router.post("/addImage", isUser, async (req: Request, res: Response) => {
   let imageName = req.body.imageName;
   let dataURL = req.body.dataURL;
-  ImageController.sendImageToDrive(
-    imageName,
-    dataURL,
-    (err: any, finalURL: any) => {
-      if (err) {
-        console.log(err);
-        return res.status(401).send(err);
+  
+  if (req.body.user?.permissions?.length > 0) {
+    ImageController.sendImageToDrive(
+      imageName,
+      dataURL,
+      (err: any, finalURL: any) => {
+        if (err) {
+          console.log(err);
+          return res.status(401).send(err);
+        }
+        return res.status(200).send({ msg: finalURL });
       }
-      return res.status(200).send({ msg: finalURL });
-    }
-  );
+    );
+  }
 });
 // Item.updateOne({_id: id}, { $set: {status: status} }, {runValidators: true}, (err, raw) => {
 //   if (err) {

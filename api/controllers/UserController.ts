@@ -44,67 +44,24 @@ export default class UserController {
       if (err) {
         return callback(err, null, null);
       } else if (!user) {
-        const tokenContents = jwt.decode(token);
-        const newUser = new User();
-        newUser.username = (tokenContents as jwt.JwtPayload).email;
-        newUser.permissions = [];
-        newUser.save(function (err, user) {
-          if (err) {
-            if (
-              err.name === "MongoError" &&
-              (err.code === 11000 || err.code === 11001)
-            ) {
-              return callback(
-                "An account for this username already exists.",
-                null,
-                user
-              );
-            }
-            return callback(err.toString(), null, user);
-          } else {
-            // success
-            return callback(null, token, user);
-          }
-        });
+        return callback(null, token, null);
       } else {
         return callback(err, token, user);
       }
     });
   }
 
-  /**
-   * Determine whether or not a user can register.
-   * @param  {String}   username    Username of the user
-   * @param  {Function} callback args(err, true, false)
-   * @return {[type]}            [description]
-   */
-  public static canRegister(username: string, password: string) {
-    if (!password) {
-      return false;
-    }
-    return true;
-  }
-
   public static createUser(
     username: string,
-    password: string,
-    isAdmin: boolean,
+    permissions: string[],
     callback: (err: string, user: IUser) => void
   ) {
     username = username.toLowerCase();
 
     // Check that there isn't a user with this username already.
-    if (!this.canRegister(username, password)) {
-      return callback("Can't register, password too short", null);
-    }
     let u = new User();
     u.username = username;
-    u.password = User.generateHash(password);
-    if (isAdmin) {
-      u.permissions = [
-        `${String(BuildingType.ALL)}:${String(PermissionType.ADMIN)}`,
-      ];
-    }
+    u.permissions = permissions;
     u.save(function (err: any, user: IUser) {
       if (err) {
         // Duplicate key error codes

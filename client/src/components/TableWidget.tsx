@@ -101,7 +101,7 @@ const TableWidget = (props: {
                         isAdmin={isAdmin}
                         item={item}
                         id={item._id}
-                        disabled={!isAdmin && item.approved}
+                        disabled={false}
                       ></EditButton>
                     </Table.Cell>
                   ) : null}

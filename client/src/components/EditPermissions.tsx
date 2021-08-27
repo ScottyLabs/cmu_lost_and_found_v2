@@ -85,11 +85,7 @@ export default function EditPermissions(props: {
                 const color =
                   action === "ADMIN"
                     ? "yellow"
-                    : action === "CREATE"
-                    ? "green"
-                    : action === "UPDATE"
-                    ? "blue"
-                    : "red";
+                    : "blue";
                 return (
                   <Label
                     color={color}

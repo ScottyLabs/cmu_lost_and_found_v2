@@ -1,6 +1,4 @@
 export enum PermissionType {
-  CREATE = "CREATE",
-  UPDATE = "UPDATE",
-  DELETE = "DELETE",
+  USER = "USER",
   ADMIN = "ADMIN",
 }

@@ -49,7 +49,7 @@ router.post("/add", isUser, async (req: Request, res: Response) => {
   if (
     !PermissionsController.hasPermissionsWithUser(
       building as BuildingType,
-      PermissionType.CREATE,
+      PermissionType.USER,
       user
     )
   ) {
@@ -93,7 +93,7 @@ router.post("/delete", isUser, async (req: Request, res: Response) => {
       if (
         PermissionsController.hasPermissionsWithUser(
           item.building as BuildingType,
-          item.approved ? PermissionType.ADMIN : PermissionType.DELETE,
+          item.approved ? PermissionType.ADMIN : PermissionType.USER,
           user
         )
       ) {
@@ -127,7 +127,7 @@ router.post("/updateStatus", isUser, async (req: Request, res: Response) => {
       if (
         PermissionsController.hasPermissionsWithUser(
           item.building as BuildingType,
-          PermissionType.UPDATE,
+          PermissionType.USER,
           user
         )
       ) {
@@ -220,7 +220,7 @@ router.post("/editItem", isUser, async (req: Request, res: Response) => {
       if (
         PermissionsController.hasPermissionsWithUser(
           item.building as BuildingType,
-          PermissionType.UPDATE,
+          PermissionType.USER,
           user
         )
       ) {

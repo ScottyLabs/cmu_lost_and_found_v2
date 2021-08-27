@@ -47,6 +47,7 @@ router.post("/add", isUser, async (req: Request, res: Response) => {
     notes,
   } = req.body;
   if (
+    process.env.AUTH_ENABLED === "true" &&
     !PermissionsController.hasPermissionsWithUser(
       building as BuildingType,
       PermissionType.USER,

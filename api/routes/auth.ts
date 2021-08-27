@@ -8,9 +8,6 @@ import * as jwt from "jsonwebtoken";
 
 const router = Router();
 
-// set authenticate to false to disable authentication
-const AUTHENTICATION_ENABLED = true;
-
 /**
  * Using the access token provided, check to make sure that
  * you are, indeed, a verified user.
@@ -18,7 +15,7 @@ const AUTHENTICATION_ENABLED = true;
 function isUser(req: Request, res: Response, next: NextFunction) {
   let token: string = req.body.token;
 
-  if (!AUTHENTICATION_ENABLED) {
+  if (process.env.AUTH_ENABLED !== "true") {
     return next();
   }
   UserController.getByToken(token, (err, user) => {
@@ -40,7 +37,7 @@ function isUser(req: Request, res: Response, next: NextFunction) {
 function isAdmin(req: Request, res: Response, next: NextFunction) {
   let token: string = req.body.token;
 
-  if (!AUTHENTICATION_ENABLED) {
+  if (process.env.AUTH_ENABLED !== "true") {
     return next();
   }
   UserController.getByToken(token, (err: any, user: IUser) => {

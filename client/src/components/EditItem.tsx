@@ -157,7 +157,6 @@ function EditItem(props: {
               window.localStorage.removeItem("lnf_token");
               history.push("/");
             } else if (error?.response?.status === 403) {
-              window.localStorage.setItem("lnf_isAdmin", "false");
               history.push("/");
             }
             return;
@@ -218,7 +217,6 @@ function EditItem(props: {
                 window.localStorage.removeItem("lnf_token");
                 history.push("/login");
               } else if (error?.response?.status === 403) {
-                window.localStorage.setItem("lnf_isAdmin", "false");
                 history.push("/");
               }
             }

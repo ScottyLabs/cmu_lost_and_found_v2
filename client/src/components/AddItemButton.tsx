@@ -228,7 +228,6 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
                 window.localStorage.removeItem("lnf_token");
                 history.push("/login");
               } else if (error?.response?.status === 403) {
-                window.localStorage.setItem("lnf_isAdmin", "false");
                 history.push("/");
               }
             }
@@ -399,6 +398,7 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
                   }}
                 >
                   <Button
+                    type="button"
                     onClick={() => dispatch({ type: "CLOSE_MODAL" })}
                     negative
                   >

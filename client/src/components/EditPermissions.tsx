@@ -22,7 +22,6 @@ function exampleReducer(dispatchState: any, action: any) {
 }
 
 const buildings = Object.keys(BuildingType)
-  .filter((value) => value !== "ALL")
   .map((key) => ({
     key,
     text: key,
@@ -110,7 +109,7 @@ export default function EditPermissions(props: {
                   </Label>
                 );
               })}
-              <h3>Add New Permission</h3>
+              <h3>Add Specific Permission</h3>
               <Form.Group widths="equal">
                 <Form.Select
                   fluid

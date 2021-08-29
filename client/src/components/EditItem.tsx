@@ -6,6 +6,7 @@ import { Item } from "../interface/item";
 import "./EditItem.css";
 import { BuildingType } from "../enums/locationTypes";
 import DeleteButton from "./DeleteButton";
+import { User } from "../interface/user";
 
 function exampleReducer(dispatchState: any, action: any) {
   switch (action.type) {
@@ -65,7 +66,7 @@ const buildings = Object.keys(BuildingType)
 
 function EditItem(props: {
   fetchItems: Function;
-  isAdmin: boolean;
+  user: User;
   item: Item;
   id: string;
   disabled: boolean;
@@ -85,7 +86,6 @@ function EditItem(props: {
     name: props.item.name,
     whereFound: props.item.whereFound,
     description: props.item.description,
-    whereToRetrieve: props.item.whereToRetrieve,
     building: props.item.building,
     image: props.item.image,
     imagePath: "",
@@ -176,7 +176,6 @@ function EditItem(props: {
       whereFound,
       building,
       description,
-      whereToRetrieve,
       image,
       imageObject,
       imagePermission,
@@ -193,11 +192,10 @@ function EditItem(props: {
             token: localStorage.getItem("lnf_token"),
             dateFound: dateFound,
             timeFound: timeFound,
-            name: name,
             whereFound: whereFound,
+            name: name,
             building: building,
             description: description,
-            whereToRetrieve: whereToRetrieve,
             image: res === "" ? image : res, // use existing image if no new image was added
             imagePermission: imagePermission,
             status: status,
@@ -228,7 +226,6 @@ function EditItem(props: {
           name: state.name,
           whereFound: state.whereFound,
           description: state.description,
-          whereToRetrieve: state.whereToRetrieve,
           building: state.building,
           image: state.image,
           imageObject: state.imageObject,
@@ -340,16 +337,6 @@ function EditItem(props: {
                 <Form.Select
                   fluid
                   required
-                  label="Pick-Up Location"
-                  options={pickup}
-                  placeholder="Pick-Up Location"
-                  name="whereToRetrieve"
-                  value={state.whereToRetrieve}
-                  onChange={handleChange}
-                />
-                <Form.Select
-                  fluid
-                  required
                   label="Building (Lost and Found Desk)"
                   options={buildings}
                   placeholder="Building (Lost and Found Desk)"
@@ -377,7 +364,12 @@ function EditItem(props: {
                 <DeleteButton
                   id={props.id}
                   fetchItems={props.fetchItems}
-                  disabled={props.disabled}
+                  disabled={
+                    props.item.approved &&
+                    !props.user.permissions.some((value) =>
+                      value.includes("ADMIN")
+                    )
+                  }
                 ></DeleteButton>
                 <div
                   style={{

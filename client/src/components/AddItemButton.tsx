@@ -83,7 +83,6 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
     name: "",
     whereFound: "",
     description: "",
-    whereToRetrieve: "",
     building: "",
     image: "",
     imagePath: "",
@@ -99,7 +98,7 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
   // const[timeError, setTimeError] = useState(false);
   // const[locationError, setLocationError] = useState(false);
   // const[descriptionError, setDescriptionError] = useState(false);
-  const [pickupError, setPickupError] = useState(false);
+  const [buildingError, setBuildingError] = useState(false);
   const [formError, setFormError] = useState(false);
 
   const history = useHistory();
@@ -172,7 +171,6 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
       name,
       whereFound,
       description,
-      whereToRetrieve,
       building,
       image,
       imageObject,
@@ -183,11 +181,11 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
 
     let error = false;
 
-    if (whereToRetrieve === "") {
-      setPickupError(true);
+    if (building === "") {
+      setBuildingError(true);
       error = true;
     } else {
-      setPickupError(false);
+      setBuildingError(false);
     }
 
     if (error) {
@@ -208,7 +206,6 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
             whereFound: whereFound,
             building: building,
             description: description,
-            whereToRetrieve: whereToRetrieve,
             image: res,
             imagePermission: imagePermission,
             status: status,
@@ -240,7 +237,6 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
           whereFound: "",
           building: "",
           description: "",
-          whereToRetrieve: "",
           image: "",
           imageObject: null,
           imagePath: "",
@@ -340,8 +336,7 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
                 onChange={handleChange}
                 // error={descriptionError}
               />
-              <Form.Group widths="equal">
-                {/* <Form.Select
+              {/* <Form.Select
                   fluid
                   required
                   label="Item Category"
@@ -352,28 +347,17 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
                   onChange={handleChange}
                   error={categoryError}
                 /> */}
-                <Form.Select
-                  fluid
-                  required
-                  label="Pick-Up Location"
-                  options={pickup}
-                  placeholder="Pick-Up Location"
-                  name="whereToRetrieve"
-                  value={state.whereToRetrieve}
-                  onChange={handleChange}
-                  error={pickupError}
-                />
-                <Form.Select
-                  fluid
-                  required
-                  label="Building (Lost and Found Desk)"
-                  options={buildings}
-                  placeholder="Building (Lost and Found Desk)"
-                  name="building"
-                  value={state.building}
-                  onChange={handleChange}
-                />
-              </Form.Group>
+              <Form.Select
+                fluid
+                required
+                label="Building (Lost and Found Desk)"
+                options={buildings}
+                placeholder="Building (Lost and Found Desk)"
+                name="building"
+                value={state.building}
+                onChange={handleChange}
+                error={buildingError}
+              />
               <Form.Input
                 label="Image Upload"
                 name="imagePath"

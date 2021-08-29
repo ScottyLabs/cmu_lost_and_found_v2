@@ -1,4 +1,5 @@
 import { BuildingType } from "../enums/locationTypes";
+import { Building } from "./building";
 
 export interface Item {
   _id: string;
@@ -7,7 +8,7 @@ export interface Item {
   name: string;
   whereFound: string;
   description: string;
-  whereToRetrieve: string;
+  whereToRetrieve: Building;
   building: BuildingType;
   image: string;
   imagePermission: boolean;

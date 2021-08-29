@@ -8,7 +8,9 @@ import mongoose from "mongoose";
 import UserRouter from "./routes/users";
 import AuthRouter from "./routes/auth";
 import ItemRouter from "./routes/items";
-
+import BuildingRouter from "./routes/buildings";
+import { BuildingType } from "./enums/locationTypes";
+import Building from "./models/Building";
 
 const port = process.env.SERVER_PORT || 3080;
 const database = process.env.MONGO_URI || "mongodb://localhost:27017";
@@ -18,8 +20,8 @@ const database = process.env.MONGO_URI || "mongodb://localhost:27017";
 // https://github.com/seanpmaxwell/express-generator-typescript
 
 const app = express();
-app.use(express.json({limit: '5mb'}));
-app.use(express.urlencoded({limit: '5mb', extended: true }));
+app.use(express.json({ limit: "5mb" }));
+app.use(express.urlencoded({ limit: "5mb", extended: true }));
 app.use(express.static(process.cwd() + "/client/build/"));
 
 // Set up CORS policy
@@ -34,6 +36,18 @@ mongoose
   .then(() => console.log("Connected to " + database))
   .catch(() => console.log("Failed to connect to DB at: " + database));
 
+(async () => {
+  for (let building in BuildingType) {
+    if (building !== BuildingType.ALL) {
+      await Building.updateOne(
+        { name: String(building) },
+        { $setOnInsert: { name: String(building) } },
+        { upsert: true, setDefaultsOnInsert: true }
+      );
+    }
+  }
+})();
+
 // Morgan is for logging
 app.use(morgan("dev"));
 
@@ -41,12 +55,12 @@ app.use(morgan("dev"));
 app.use("/api/accounts", UserRouter);
 app.use("/api/auth", AuthRouter);
 app.use("/api/items", ItemRouter);
+app.use("/api/buildings", BuildingRouter);
 
 // handle undefined routes
 app.use("*", (req, res, next) => {
   res.sendFile(process.cwd() + "/client/build/index.html");
 });
-
 
 app.listen(port);
 console.log("App listening on port " + port);

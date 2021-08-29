@@ -31,7 +31,7 @@ const ItemCard = (props: {
         <Card.Content>
           <b>Found:</b> {props.item.whereFound} <br/>
           <b>Retrieve from&nbsp;</b>
-          {props.item.whereToRetrieve}
+          {props.item.whereToRetrieve.retrieveLocation}
         </Card.Content>
       </Card>
     </div>

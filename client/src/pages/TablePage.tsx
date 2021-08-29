@@ -118,9 +118,7 @@ function TablePage() {
               <p>
                 To retrieve an object, go to the location listed next to the
                 object on the table. You will be required to identify any lost
-                possessions. All items must be picked up in person. If you have
-                any inquiries, please send an email to{" "}
-                <a href="mailto:lostfound@cs.cmu.edu">lostfound@cs.cmu.edu</a>.
+                possessions. All items must be picked up in person.
               </p>
             </div>
             <Message id="found-item-message" warning size="large">

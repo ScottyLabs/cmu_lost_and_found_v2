@@ -32,27 +32,31 @@ const listItems = locations.map((d) => (
   </li>
 ));
 
-export const foundItemMessage = (<>
-  <p>
-    If you find a lost item, please take it to one of the following
-    locations:
-  </p>
-  <ul className="list">{listItems}</ul>
-  <p>
-    If you have any inquiries, please send an email to{" "}
-    <a href="mailto:lostfound@cs.cmu.edu">lostfound@cs.cmu.edu</a>.
-  </p>
-</>);
+export const foundItemMessage = (
+  <>
+    {/* <p>
+      If you find a lost item, please take it to one of the following locations:
+    </p>
+    <ul className="list">{listItems}</ul> */}
+    <p>
+      Please return it to the CUC Lost and Found.
+      If you have any inquiries, please send an email to{" "}
+      <a href="mailto:cucinfodesk@andrew.cmu.edu">cucinfodesk@andrew.cmu.edu</a>{" "}
+      or call 412-268-2107.
+    </p>
+  </>
+);
 
 
 
-export const lostItemMessage = (<>
-  <p>
-    If you lost an item and would like to report it, please visit this <a href="https://forms.gle/recPKrhJ3Ykhina3A"> site</a>.         
-  
-  </p>
-  
-</>);
+export const lostItemMessage = (
+  <>
+    <p>
+      If you lost an item and would like to report it, please visit this{" "}
+      <a href="https://forms.gle/wB8QUmZBQEpw2sNJA"> site</a>.
+    </p>
+  </>
+);
 
 function FoundItemModal(props: {
   id?: string;

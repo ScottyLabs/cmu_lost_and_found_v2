@@ -98,7 +98,7 @@ const TableWidget = (props: {
                     <Table.Cell>
                       <EditButton
                         fetchItems={props.fetchItems}
-                        isAdmin={isAdmin}
+                        user={props.user}
                         item={item}
                         id={item._id}
                         disabled={false}

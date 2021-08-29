@@ -4,7 +4,6 @@ import { Grid, Button, Icon, Rail } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import "./Admin.css";
 import AddItemButton from "../components/AddItemButton";
-import EditItemButton from "../components/EditItem";
 import TableWidget from "../components/TableWidget";
 import "semantic-ui-css/semantic.min.css";
 import axios from "axios";

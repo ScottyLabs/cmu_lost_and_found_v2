@@ -6,6 +6,7 @@ import { Item } from "../interface/item";
 import "./EditItem.css";
 import { BuildingType } from "../enums/locationTypes";
 import DeleteButton from "./DeleteButton";
+import { User } from "../interface/user";
 
 function exampleReducer(dispatchState: any, action: any) {
   switch (action.type) {
@@ -65,7 +66,7 @@ const buildings = Object.keys(BuildingType)
 
 function EditItem(props: {
   fetchItems: Function;
-  isAdmin: boolean;
+  user: User;
   item: Item;
   id: string;
   disabled: boolean;
@@ -377,7 +378,12 @@ function EditItem(props: {
                 <DeleteButton
                   id={props.id}
                   fetchItems={props.fetchItems}
-                  disabled={props.disabled}
+                  disabled={
+                    props.item.approved &&
+                    !props.user.permissions.some((value) =>
+                      value.includes("ADMIN")
+                    )
+                  }
                 ></DeleteButton>
                 <div
                   style={{

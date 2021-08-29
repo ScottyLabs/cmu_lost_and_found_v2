@@ -8,7 +8,6 @@ export interface IItem extends Document {
   whereFound: string;
   description: string;
   category: string;
-  whereToReceive: string;
   building: BuildingType;
   image: string;
   imagePermission: string;
@@ -35,10 +34,6 @@ const ItemSchema = new Schema({
     required: true,
   },
   description: {
-    type: String,
-    required: true,
-  },
-  whereToRetrieve: {
     type: String,
     required: true,
   },

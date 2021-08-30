@@ -15,4 +15,5 @@ export interface Item {
   status: string;
   approved: boolean;
   notes: string;
+  username: string;
 }

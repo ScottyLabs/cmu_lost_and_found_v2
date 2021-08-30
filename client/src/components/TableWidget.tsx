@@ -44,6 +44,7 @@ const TableWidget = (props: {
             {props.isUser ? (
               <Table.HeaderCell>Approved</Table.HeaderCell>
             ) : null}
+            <Table.HeaderCell>Last Modified By</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
         <Table.Body>
@@ -115,6 +116,7 @@ const TableWidget = (props: {
                       ></ApproveSwitch>
                     </Table.Cell>
                   ) : null}
+                  <Table.Cell>{item.username}</Table.Cell>
                 </Table.Row>
               );
             })}

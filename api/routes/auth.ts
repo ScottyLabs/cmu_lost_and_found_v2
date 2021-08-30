@@ -23,9 +23,10 @@ function isUser(req: Request, res: Response, next: NextFunction) {
       console.log(err);
       return res.status(401).send(err);
     }
-    if (user) {
-      req.body.user = user;
+    if (!user) {
+      return res.status(401).send("No such user found");
     }
+    req.body.user = user;
     return next();
   });
 }

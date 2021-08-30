@@ -42,8 +42,8 @@ router.post("/add", isUser, async (req: Request, res: Response) => {
     imagePermission,
     status,
     approved,
-    user,
     notes,
+    user,
   } = req.body;
   if (
     process.env.AUTH_ENABLED === "true" &&
@@ -67,6 +67,7 @@ router.post("/add", isUser, async (req: Request, res: Response) => {
     status: status,
     approved: approved,
     notes: notes,
+    username: user.username
   });
   item.save((err) => {
     if (err) {
@@ -209,8 +210,8 @@ router.post("/editItem", isUser, async (req: Request, res: Response) => {
     image,
     imagePermission,
     status,
-    user,
     notes,
+    user,
   } = req.body;
   try {
     const item = await Item.findById(id);
@@ -233,10 +234,10 @@ router.post("/editItem", isUser, async (req: Request, res: Response) => {
             whereFound: whereFound,
             building: building,
             description: description,
-            // category: category,
             image: image,
             imagePermission: imagePermission,
             notes: notes,
+            username: user.username
           },
           { runValidators: true, useFindAndModify: false }
         );

@@ -16,6 +16,7 @@ export interface IItem extends Document {
   status: "available" | "destroyed" | "claimed";
   approved: boolean;
   notes: string;
+  username: string;
 }
 
 const ItemSchema = new Schema(
@@ -63,6 +64,10 @@ const ItemSchema = new Schema(
     notes: {
       type: String,
     },
+    /** Username of the admin user who last modified the code */
+    username: {
+      type: String,
+    }
   },
   {
     toJSON: { virtuals: true },

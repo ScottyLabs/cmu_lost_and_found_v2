@@ -1,3 +1,7 @@
+/**
+ * Responsible for authentication on the backend.
+ */
+
 import { Request, Response, Router, NextFunction, response } from "express";
 import * as mongoose from "mongoose";
 import UserController from "../controllers/UserController";

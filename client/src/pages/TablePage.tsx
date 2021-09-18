@@ -118,7 +118,7 @@ function TablePage() {
               <p>
                 To retrieve an object, go to the location listed next to the
                 object on the table. You will be required to identify any lost
-                possessions. All items must be picked up in person.
+                possessions. All items must be picked up in person and a photo ID is required.
               </p>
             </div>
             <Message id="found-item-message" warning size="large">

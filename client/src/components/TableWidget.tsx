@@ -42,7 +42,7 @@ const TableWidget = (props: {
             ) : null}
             {props.isUser ? <Table.HeaderCell>Edit</Table.HeaderCell> : null}
             {props.isUser ? (
-              <Table.HeaderCell>Approved</Table.HeaderCell>
+              <Table.HeaderCell>Make Public</Table.HeaderCell>
             ) : null}
             <Table.HeaderCell>Last Modified By</Table.HeaderCell>
           </Table.Row>

@@ -14,7 +14,9 @@ const ItemCard = (props: {
   return (
     <div className="card-wrapper">
       <Card className="item-card" style={{height: "425px"}}>
-        <Image style={{height: "200px"}} src={props.item.image ? props.item.image : "default_image.png"} ui={false} loading="lazy" />
+        <div id="img-wrapper">
+          <Image src={props.item.image ? props.item.image : "default_image.png"} ui={false} loading="lazy" />
+        </div>
         <Card.Content>
           <Card.Header>
             {props.item.name} 

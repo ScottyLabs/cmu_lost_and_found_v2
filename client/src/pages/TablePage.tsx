@@ -125,10 +125,10 @@ function TablePage() {
               <Message.Header>Found an item?</Message.Header>
               {foundItemMessage}
             </Message>
-            <Message id="lost-item-message" warning size="large">
+            {/* <Message id="lost-item-message" warning size="large">
               <Message.Header>Lost an item?</Message.Header>
               {lostItemMessage}
-            </Message>
+            </Message> */}
 
             <div id="admin-filter-bar">
               <SearchBar input={input} onChange={updateInput} />
@@ -161,7 +161,6 @@ function TablePage() {
                 user={user}
               ></TableWidget>
             </div>
-            {/* <ItemCard name="bob"></ItemCard> */}
           </main>
         </Grid.Column>
       </Grid.Row>

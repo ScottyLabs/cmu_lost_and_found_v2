@@ -22,11 +22,6 @@
     margin-left: 5%;
 }
 
-/* .fields {
-    display: flex;
-    justify-content: center;
-} */
-
 #cards-widget {
     display: none;
 }
@@ -40,10 +35,10 @@
     text-align: left;
 }
 
-
 #lost-item-message {
     text-align: left;
 }
+
 #lost-item-message .header {
     text-align: left;
 }
@@ -51,16 +46,20 @@
 #table-widget {
     display: none;
 }
+
 #cards-widget {
     display: block;
     justify-content: flex-start;
 }
+
 #found-item-modal {
     display: none;
 }
+
 #found-item-message {
     display: block;
 }
+
 #admin-filter-bar {
     width: 100%;
     position: sticky;

@@ -15,9 +15,16 @@
   width: 100%;
 }
 
+#img-wrapper {
+  display: flex;
+  vertical-align: center;
+  background-color: white;
+}
+
 .ui.card img {
-  margin-top: 0;
+  margin: auto;
   max-width: none;
+  height: 200px;
 }
 
 .ui.card .header {

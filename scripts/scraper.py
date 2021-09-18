@@ -1,3 +1,7 @@
+'''
+Python script to parse the CS Lost and Found site (https://www.cs.cmu.edu/~lostfound/) and insert the data into the backend.
+NOTE: Please disable authentication by setting AUTH_ENABLED="false" in .env before running this script.
+'''
 import requests
 from bs4 import BeautifulSoup
 import re

@@ -118,17 +118,17 @@ function TablePage() {
               <p>
                 To retrieve an object, go to the location listed next to the
                 object on the table. You will be required to identify any lost
-                possessions. All items must be picked up in person.
+                possessions. All items must be picked up in person and a photo ID is required.
               </p>
             </div>
             <Message id="found-item-message" warning size="large">
               <Message.Header>Found an item?</Message.Header>
               {foundItemMessage}
             </Message>
-            <Message id="lost-item-message" warning size="large">
+            {/* <Message id="lost-item-message" warning size="large">
               <Message.Header>Lost an item?</Message.Header>
               {lostItemMessage}
-            </Message>
+            </Message> */}
 
             <div id="admin-filter-bar">
               <SearchBar input={input} onChange={updateInput} />
@@ -161,7 +161,6 @@ function TablePage() {
                 user={user}
               ></TableWidget>
             </div>
-            {/* <ItemCard name="bob"></ItemCard> */}
           </main>
         </Grid.Column>
       </Grid.Row>

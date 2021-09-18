@@ -353,7 +353,7 @@ function EditItem(props: {
                 onChange={handleFileChange}
               />
               <TextArea
-                placeholder="Notes"
+                placeholder="Andrew ID or driver license number of person who picked up item"
                 name="notes"
                 value={state.notes}
                 onChange={handleChange}

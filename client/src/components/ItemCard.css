@@ -28,7 +28,7 @@
 }
 
 .ui.card .header {
-  text-align: left;
+  text-align: center;
 }
 
 .ui.card::after {

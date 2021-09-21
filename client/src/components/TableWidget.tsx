@@ -38,11 +38,11 @@ const TableWidget = (props: {
             <Table.HeaderCell>Building</Table.HeaderCell>
             <Table.HeaderCell>Image</Table.HeaderCell>
             {props.isUser ? (
-              <Table.HeaderCell>Available</Table.HeaderCell>
+              <Table.HeaderCell>Make Public</Table.HeaderCell>
             ) : null}
             {props.isUser ? <Table.HeaderCell>Edit</Table.HeaderCell> : null}
             {props.isUser ? (
-              <Table.HeaderCell>Make Public</Table.HeaderCell>
+              <Table.HeaderCell>Approve</Table.HeaderCell>
             ) : null}
             <Table.HeaderCell>Last Modified By</Table.HeaderCell>
           </Table.Row>
@@ -70,6 +70,11 @@ const TableWidget = (props: {
                 m +
                 " " +
                 (parseInt(h) >= 12 ? "PM" : "AM");
+              let isBuilding = 
+                props.user.permissions.includes("ALL:ADMIN") || 
+                props.user.permissions.includes("ALL:USER") ||
+                props.user.permissions.includes(`${item.building}:ADMIN`) ||
+                props.user.permissions.includes(`${item.building}:USER`);
               let isAdmin =
                 props.user.permissions.includes("ALL:ADMIN") ||
                 props.user.permissions.includes(`${item.building}:ADMIN`);
@@ -90,7 +95,7 @@ const TableWidget = (props: {
                       <AvailableSwitch
                         id={item._id}
                         isAvailable={item.status === "available"}
-                        disabled={false}
+                        disabled={!isBuilding}
                         fetchItems={props.fetchItems}
                       ></AvailableSwitch>
                     </Table.Cell>
@@ -102,7 +107,7 @@ const TableWidget = (props: {
                         user={props.user}
                         item={item}
                         id={item._id}
-                        disabled={false}
+                        disabled={!isBuilding}
                       ></EditButton>
                     </Table.Cell>
                   ) : null}

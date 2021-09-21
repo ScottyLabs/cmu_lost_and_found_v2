@@ -71,6 +71,8 @@ const TableWidget = (props: {
                 " " +
                 (parseInt(h) >= 12 ? "PM" : "AM");
               let isBuilding = 
+                props.user.permissions.includes("ALL:ADMIN") || 
+                props.user.permissions.includes("ALL:USER") ||
                 props.user.permissions.includes(`${item.building}:ADMIN`) ||
                 props.user.permissions.includes(`${item.building}:USER`);
               let isAdmin =

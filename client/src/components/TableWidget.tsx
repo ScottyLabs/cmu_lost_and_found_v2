@@ -38,11 +38,11 @@ const TableWidget = (props: {
             <Table.HeaderCell>Building</Table.HeaderCell>
             <Table.HeaderCell>Image</Table.HeaderCell>
             {props.isUser ? (
-              <Table.HeaderCell>Available</Table.HeaderCell>
+              <Table.HeaderCell>Make Public</Table.HeaderCell>
             ) : null}
             {props.isUser ? <Table.HeaderCell>Edit</Table.HeaderCell> : null}
             {props.isUser ? (
-              <Table.HeaderCell>Make Public</Table.HeaderCell>
+              <Table.HeaderCell>Approve</Table.HeaderCell>
             ) : null}
             <Table.HeaderCell>Last Modified By</Table.HeaderCell>
           </Table.Row>

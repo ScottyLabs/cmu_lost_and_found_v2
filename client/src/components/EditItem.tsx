@@ -324,16 +324,6 @@ function EditItem(props: {
                 onChange={handleChange}
               />
               <Form.Group widths="equal">
-                {/* <Form.Select
-                  fluid
-                  required
-                  label="Item Category"
-                  options={categories}
-                  placeholder="Item Category"
-                  name="category"
-                  value={state.category}
-                  onChange={handleChange}
-                /> */}
                 <Form.Select
                   fluid
                   required
@@ -352,8 +342,9 @@ function EditItem(props: {
                 value={state.imagePath}
                 onChange={handleFileChange}
               />
-              <TextArea
-                placeholder="Andrew ID or driver license number of person who picked up item"
+              <Form.TextArea
+                label="Notes"
+                placeholder="Notes (AndrewID or driver's license number of person who picked up item)"
                 name="notes"
                 value={state.notes}
                 onChange={handleChange}

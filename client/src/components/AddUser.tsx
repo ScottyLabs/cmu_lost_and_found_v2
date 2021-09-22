@@ -173,6 +173,7 @@ function AddUser(props: { fetchUsers: Function }) {
                 />
                 <Form.Button
                   type="button"
+                  color="teal"
                   onClick={() => {
                     setPermissions([...permissions, `${building}:${action}`]);
                     setBuilding("");

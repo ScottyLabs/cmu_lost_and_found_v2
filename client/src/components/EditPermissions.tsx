@@ -129,7 +129,7 @@ export default function EditPermissions(props: {
                     setAction(String(value));
                   }}
                 />
-                <Form.Button>Add Permission</Form.Button>
+                <Form.Button color="teal">Add Permission</Form.Button>
               </Form.Group>
             </Form>
             <h3>Submit Changes</h3>

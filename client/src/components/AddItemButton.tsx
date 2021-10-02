@@ -337,17 +337,6 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
                 onChange={handleChange}
                 // error={descriptionError}
               />
-              {/* <Form.Select
-                  fluid
-                  required
-                  label="Item Category"
-                  options={categories}
-                  placeholder="Item Category"
-                  name="category"
-                  value={state.category}
-                  onChange={handleChange}
-                  error={categoryError}
-                /> */}
               <Form.Select
                 fluid
                 required
@@ -366,7 +355,8 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
                 value={state.imagePath}
                 onChange={handleFileChange}
               />
-              <TextArea
+              <Form.TextArea
+                label="Notes"
                 placeholder="Notes"
                 name="notes"
                 value={state.notes}

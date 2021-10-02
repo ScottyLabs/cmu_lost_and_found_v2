@@ -210,6 +210,7 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
             imagePermission: imagePermission,
             status: status,
             approved: props.isAdmin,
+            publicDisplay: false,
             notes: notes,
           })
           .then(

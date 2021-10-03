@@ -94,6 +94,7 @@ for row in soup.find_all('tr'):
             status = "available"
         info["status"] = status # for now
         info["approved"] = "true"
+        info["publicDisplay"] = "true"
 
         print(info)
         send_data(info)

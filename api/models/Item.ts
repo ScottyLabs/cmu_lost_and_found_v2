@@ -61,6 +61,10 @@ const ItemSchema = new Schema(
       type: Boolean,
       required: true,
     },
+    publicDisplay: {
+      type: Boolean,
+      required: true,
+    },
     notes: {
       type: String,
     },

@@ -27,6 +27,29 @@ export default function AvailableSwitch(props: {
       .then(
         (res) => {
           props.fetchItems();
+          if (isAvailable) {
+            axios
+              .post(`/api/items/updatePublicDisplayStatus`, {
+                token: localStorage.getItem("lnf_token"),
+                id: props.id,
+                publicDisplay: false,
+              })
+              .then(
+                (res) => {
+                  props.fetchItems();
+                  console.log(res);
+                },
+                (error) => {
+                  console.error(error);
+                  if (error?.response?.status === 401) {
+                    window.localStorage.removeItem("lnf_token");
+                    history.push("/login");
+                  } else if (error?.response?.status === 403) {
+                    history.push("/");
+                  }
+                }
+              );
+          }
           setState({ isAvailable: !isAvailable });
           console.log(res);
         },

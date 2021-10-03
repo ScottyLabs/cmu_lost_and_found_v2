@@ -42,6 +42,7 @@ router.post("/add", isUser, async (req: Request, res: Response) => {
     imagePermission,
     status,
     approved,
+    publicDisplay,
     notes,
     user,
   } = req.body;
@@ -66,6 +67,7 @@ router.post("/add", isUser, async (req: Request, res: Response) => {
     imagePermission: imagePermission,
     status: status,
     approved: approved,
+    publicDisplay: publicDisplay,
     notes: notes,
     username: user.username
   });
@@ -191,6 +193,48 @@ router.post(
 );
 
 /**
+ * Updates an item's publicDisplay status by id
+ * {
+ * id: id
+ * publicDisplay: publicDisplay
+ * }
+ */
+router.post(
+  "/updatePublicDisplayStatus",
+  isUser,
+  async (req: Request, res: Response) => {
+    let id = req.body.id;
+    let publicDisplay = req.body.publicDisplay;
+    const user = req.body.user;
+    try {
+      const item = await Item.findById(id);
+      if (item) {
+        if (
+          PermissionsController.hasPermissionsWithUser(
+            item.building as BuildingType,
+            PermissionType.USER,
+            user
+          )
+        ) {
+          const updatedItem = await Item.findByIdAndUpdate(
+            id,
+            { publicDisplay: publicDisplay },
+            { runValidators: true, useFindAndModify: false }
+          );
+          return res.status(200).send({ msg: updatedItem });
+        } else {
+          return res.status(403).send(new Error("Insufficient privileges"));
+        }
+      } else {
+        return res.status(404).send(new Error("Item not found"));
+      }
+    } catch (err) {
+      return res.status(500).send(err);
+    }
+  }
+);
+
+/**
  * Edits an item
  * {
  * id: id
@@ -281,12 +325,5 @@ router.post("/addImage", isUser, async (req: Request, res: Response) => {
     );
   }
 });
-// Item.updateOne({_id: id}, { $set: {status: status} }, {runValidators: true}, (err, raw) => {
-//   if (err) {
-//     console.log(err);
-//     return res.status(401).send({trace: err, msg: "can't find item in db"});
-//   }
-//   return res.status(200).send({msg: raw});
-// });
 
 export default router;

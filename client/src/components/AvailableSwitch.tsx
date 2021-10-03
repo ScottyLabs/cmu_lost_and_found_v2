@@ -65,5 +65,5 @@ export default function AvailableSwitch(props: {
       );
   };
 
-  return <Toggle disabled={props.disabled} defaultChecked={state.isAvailable} onChange={handleClick} />;
+  return <Toggle disabled={props.disabled} checked={state.isAvailable} onChange={handleClick} />;
 }

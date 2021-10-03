@@ -12,22 +12,17 @@ export default function PublicDisplaySwitch(props: {
   fetchItems: Function;
 }) {
   const history = useHistory();
-  const [state, setState] = useState({
-    isPublicDisplay: props.isPublicDisplay,
-  });
 
   const handleClick = () => {
-    const { isPublicDisplay } = state;
     axios
       .post(`/api/items/updatePublicDisplayStatus`, {
         token: localStorage.getItem("lnf_token"),
         id: props.id,
-        publicDisplay: !isPublicDisplay,
+        publicDisplay: !props.isPublicDisplay,
       })
       .then(
         (res) => {
           props.fetchItems();
-          setState({ isPublicDisplay: !isPublicDisplay });
           console.log(res);
         },
         (error) => {
@@ -42,5 +37,5 @@ export default function PublicDisplaySwitch(props: {
       );
   };
 
-  return <Toggle disabled={props.disabled} defaultChecked={state.isPublicDisplay} onChange={handleClick} />;
+  return <Toggle disabled={props.disabled} checked={props.isPublicDisplay} onChange={handleClick} />;
 }

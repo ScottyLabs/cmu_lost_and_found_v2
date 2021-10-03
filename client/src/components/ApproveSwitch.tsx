@@ -45,7 +45,7 @@ export default function ApproveSwitch(props: {
   return (
     <Toggle
       disabled={props.disabled}
-      defaultChecked={state.isApproved}
+      checked={state.isApproved}
       onChange={handleClick}
     />
   );

@@ -30,9 +30,9 @@ const ItemCard = (props: {
             {props.item.description}
           </Card.Description>
         </Card.Content>
-        <Card.Content>
-          <b>Found:</b> {props.item.whereFound} <br/>
-          <b>Retrieve from&nbsp;</b>
+        <Card.Content className="bottom-content">
+          <b>Found: </b>{props.item.whereFound} <br/>
+          <b>Retrieve From: </b>
           {props.item.whereToRetrieve.retrieveLocation}
         </Card.Content>
       </Card>

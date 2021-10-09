@@ -12,18 +12,6 @@ import LogoutButton from "../components/LogoutButton";
 import { useHistory } from "react-router-dom";
 
 function Accounts() {
-  // const users = [
-  //   {
-  //     username: "rwguo",
-  //     password: "bleh",
-  //     isAdmin: true,
-  //   },
-  //   {
-  //       username: "rwguo1",
-  //       password: "bleh",
-  //       isAdmin: true,
-  //     }
-  // ];
 
   document.title = "Lost and Found User Permissions";
   const [users, setUsers] = useState([]);
@@ -115,7 +103,7 @@ function Accounts() {
               </Rail>
               <LogoutButton />
               <Link to="/admin">
-                <Button size="large" color="teal" icon="arrow left"></Button>
+                <Button color="teal" icon="arrow left"></Button>
               </Link>
             </div>
             <h1 className="title">Carnegie Mellon University</h1>

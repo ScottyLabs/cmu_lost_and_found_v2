@@ -10,6 +10,10 @@
   margin-bottom: 10px;
 }
 
+.ui.card.item-card .bottom-content {
+  text-align: left;
+}
+
 .ui.card.item-card {
   overflow: hidden;
   width: 100%;

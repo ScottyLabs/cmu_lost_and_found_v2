@@ -97,7 +97,7 @@ function Accounts() {
             </Link>
             <div id="settings">
               <Rail attached internal position="left" id="logo-desktop">
-                <Link to="/admin">
+                <Link to="/">
                   <img src="/dog-logo.png" alt="CMU Lost and Found Logo"></img>
                 </Link>
               </Rail>

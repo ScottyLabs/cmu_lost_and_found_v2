@@ -95,12 +95,16 @@ function isAdmin(req: Request, res: Response, next: NextFunction) {
 
 router.post("/create", isAdmin, (req, res) => {
   let { username, permissions } = req.body;
-  UserController.createUser(username, permissions, (err: string, user: IUser) => {
-    if (err != null) {
-      return res.status(401).send(err);
+  UserController.createUser(
+    username,
+    permissions,
+    (err: string, user: IUser) => {
+      if (err != null) {
+        return res.status(401).send(err);
+      }
+      return res.status(200).json({ user });
     }
-    return res.status(200).json({ user });
-  })
+  );
 });
 
 /**
@@ -136,7 +140,9 @@ router.get("/signRequest", function (req, res) {
     const loginRequest = jwt.sign(
       {
         redirectUrl: process.env.LNF_HOST,
-        restrictDomain: process.env.LNF_HOST.includes("localhost") ? false : true,
+        restrictDomain: process.env.LNF_HOST.includes("localhost")
+          ? false
+          : true,
         applicationId: process.env.LOGIN_API_ID,
       },
       process.env.JWT_SECRET || "",
@@ -147,7 +153,9 @@ router.get("/signRequest", function (req, res) {
     const loginRequest = jwt.sign(
       {
         redirectUrl: process.env.LNF_HOST,
-        restrictDomain: process.env.LNF_HOST.includes("localhost") ? false : true,
+        restrictDomain: process.env.LNF_HOST.includes("localhost")
+          ? false
+          : true,
         applicationId: process.env.LOGIN_API_ID,
       },
       process.env.JWT_SECRET || "",
@@ -170,12 +178,10 @@ router.post("/isAdmin", async (req: Request, res: Response) => {
   UserController.getByToken(token, (err: any, user: IUser) => {
     if (err) {
       console.log(err);
-      return res.status(500).send(err);
+      return res.status(401).send(err);
     }
     if (!user) {
-      return res.status(500).send({
-        message: "User not found",
-      });
+      return res.status(404).send(new Error("User not found"));
     }
     return res.json({
       isAdmin: user.permissions.includes(

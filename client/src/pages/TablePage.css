@@ -1,69 +1,82 @@
 .subtitle {
-    margin-top: 0px;
-    color: #872222;
+  margin-top: 0px;
+  color: #872222;
 }
 
 #description {
-    text-align: left;
-    font-size: 18px;
-    font-family: 'Lato';
-    margin: auto;
-    margin-bottom: 40px;
-    max-width: 80%;
-    padding: 10px;
+  text-align: left;
+  font-size: 18px;
+  font-family: "Lato";
+  margin: auto;
+  margin-bottom: 40px;
+  max-width: 80%;
+  padding: 10px;
 }
 
 #description p {
-    line-height: 1.25em;
+  line-height: 1.25em;
 }
 
 .location {
-    font-size: 16px;
-    margin-left: 5%;
+  font-size: 16px;
+  margin-left: 5%;
 }
 
 #cards-widget {
-    display: none;
+  display: none;
 }
 
 #found-item-message {
-    display: none;
-    text-align: left;
+  display: none;
+  text-align: left;
 }
 
 #found-item-message .header {
-    text-align: left;
+  text-align: left;
+}
+
+#feedback-form {
+  display: none;
+  text-align: left;
+}
+
+#feedback-form .header {
+  text-align: left;
+}
+
+#feedback-form {
+  display: block;
 }
 
 #lost-item-message {
-    text-align: left;
+  text-align: left;
 }
 
 #lost-item-message .header {
-    text-align: left;
+  text-align: left;
 }
 
 #table-widget {
-    display: none;
+  display: none;
 }
 
 #cards-widget {
-    display: block;
-    justify-content: flex-start;
+  display: block;
+  justify-content: flex-start;
 }
 
 #found-item-modal {
-    display: none;
+  display: none;
 }
 
 #found-item-message {
-    display: block;
+  display: block;
 }
 
 #admin-filter-bar {
-    width: 100%;
-    position: sticky;
-    top: 0;
-    padding-top: 20px;
-    z-index: 1000;
+  width: 100%;
+  position: sticky;
+  top: 0;
+  padding-top: 20px;
+  z-index: 1000;
 }

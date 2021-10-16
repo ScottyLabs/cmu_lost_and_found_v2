@@ -50,7 +50,7 @@ export const foundItemMessage = (
 export const feedbackForm = (
   <>
     <p>
-      To leave some feedback, please fill out this {" "}
+      To leave feedback, please fill out this {" "}
       <a href="https://forms.gle/QDnNyjdzUBnFUkno8" target="_blank">form</a>. Thanks!
     </p>
   </>

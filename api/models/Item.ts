@@ -16,6 +16,7 @@ export interface IItem extends Document {
   status: "available" | "destroyed" | "claimed";
   approved: boolean;
   notes: string;
+  identification: string;
   username: string;
 }
 
@@ -61,9 +62,14 @@ const ItemSchema = new Schema(
       type: Boolean,
       required: true,
     },
+<<<<<<< Updated upstream
     publicDisplay: {
       type: Boolean,
       required: true,
+=======
+    identification: {
+      type: String,
+>>>>>>> Stashed changes
     },
     notes: {
       type: String,

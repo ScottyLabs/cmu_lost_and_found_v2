@@ -42,7 +42,11 @@ router.post("/add", isUser, async (req: Request, res: Response) => {
     imagePermission,
     status,
     approved,
+<<<<<<< Updated upstream
     publicDisplay,
+=======
+    identification,
+>>>>>>> Stashed changes
     notes,
     user,
   } = req.body;
@@ -67,7 +71,11 @@ router.post("/add", isUser, async (req: Request, res: Response) => {
     imagePermission: imagePermission,
     status: status,
     approved: approved,
+<<<<<<< Updated upstream
     publicDisplay: publicDisplay,
+=======
+    identification: identification,
+>>>>>>> Stashed changes
     notes: notes,
     username: user.username
   });
@@ -254,6 +262,7 @@ router.post("/editItem", isUser, async (req: Request, res: Response) => {
     image,
     imagePermission,
     status,
+    identification,
     notes,
     user,
   } = req.body;
@@ -280,6 +289,7 @@ router.post("/editItem", isUser, async (req: Request, res: Response) => {
             description: description,
             image: image,
             imagePermission: imagePermission,
+            identification: identification,
             notes: notes,
             username: user.username
           },

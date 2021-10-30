@@ -89,6 +89,7 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
     imageObject: null as any,
     imagePermission: false,
     status: "available",
+    identification: "",
     notes: "",
   });
 
@@ -199,6 +200,7 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
       imageObject,
       imagePermission,
       status,
+      identification,
       notes,
     } = state;
 
@@ -233,7 +235,11 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
             imagePermission: imagePermission,
             status: status,
             approved: props.isAdmin,
+<<<<<<< Updated upstream
             publicDisplay: false,
+=======
+            identification: identification,
+>>>>>>> Stashed changes
             notes: notes,
           })
           .then(
@@ -266,6 +272,7 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
           imagePath: "",
           imagePermission: false,
           status: "available",
+          identification: "",
           notes: "",
         });
         return res;

@@ -13,13 +13,6 @@ import { User } from "../interface/user";
 
 function Policies() {
     document.title = "CMU Lost and Found";
-    const [items, setItems] = useState([]);
-    //what is from the search
-    const [input, setInput] = useState("");
-    //unfiltered list
-    const [itemListDefault, setItemListDefault] = useState([]);
-    //filtered list
-    const [itemList, setItemList] = useState([]);
 
     const [user, setUser] = useState<User | null>(null);
 

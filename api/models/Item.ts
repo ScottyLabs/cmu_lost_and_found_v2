@@ -62,14 +62,12 @@ const ItemSchema = new Schema(
       type: Boolean,
       required: true,
     },
-<<<<<<< Updated upstream
     publicDisplay: {
       type: Boolean,
       required: true,
-=======
+    },
     identification: {
       type: String,
->>>>>>> Stashed changes
     },
     notes: {
       type: String,

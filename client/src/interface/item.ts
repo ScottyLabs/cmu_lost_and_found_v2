@@ -14,11 +14,8 @@ export interface Item {
   imagePermission: boolean;
   status: string;
   approved: boolean;
-<<<<<<< Updated upstream
   publicDisplay: boolean;
-=======
   identification: string;
->>>>>>> Stashed changes
   notes: string;
   username: string;
 }

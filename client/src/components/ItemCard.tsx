@@ -1,7 +1,22 @@
 import React from "react";
-import { Card, Image } from "semantic-ui-react";
+import { Card, Image, Button, Modal } from "semantic-ui-react";
 import { Item } from "../interface/item";
 import "./ItemCard.css";
+
+function exampleReducer(dispatchState: any, action: any) {
+  switch (action.type) {
+    case "CONFIG_CLOSE_ON_DIMMER_CLICK":
+      return { ...dispatchState, closeOnDimmerClick: action.value };
+    case "CONFIG_CLOSE_ON_ESCAPE":
+      return { ...dispatchState, closeOnEscape: action.value };
+    case "OPEN_MODAL":
+      return { ...dispatchState, open: true };
+    case "CLOSE_MODAL":
+      return { ...dispatchState, open: false };
+    default:
+      throw new Error();
+  }
+}
 
 const ItemCard = (props: {
   item: Item,
@@ -11,12 +26,17 @@ const ItemCard = (props: {
   let [h, m] = props.item.timeFound.split(":");
   let timeFormatted = (parseInt(h) % 12) + (parseInt(h) % 12 === 0 ? 12 : 0) + ":" + m + " " + (parseInt(h) >= 12 ? "PM" : "AM");
 
+  const [dispatchState, dispatch] = React.useReducer(exampleReducer, {
+    closeOnEscape: true,
+    closeOnDimmerClick: false,
+    open: false,
+    dimmer: undefined,
+  });
+  const { open, closeOnEscape, closeOnDimmerClick } = dispatchState;
+
   return (
     <div className="card-wrapper">
-      <Card className="item-card" style={{height: "425px"}}>
-        <div id="img-wrapper">
-          <Image src={props.item.image ? props.item.image : "default_image.png"} ui={false} loading="lazy" />
-        </div>
+      <Card className="item-card" style={{height: "290px"}}>
         <Card.Content>
           <Card.Header>
             {props.item.name} 
@@ -28,6 +48,27 @@ const ItemCard = (props: {
           </Card.Meta>
           <Card.Description>
             {props.item.description}
+            <br></br> 
+            {props.item.image?.length > 0 ? (
+                <Modal
+                  closeOnEscape={closeOnEscape}
+                  closeOnDimmerClick={closeOnDimmerClick}
+                  open={open}
+                  onOpen={() => dispatch({ type: "OPEN_MODAL" })}
+                  onClose={() => dispatch({ type: "CLOSE_MODAL" })}
+                  trigger={<Button className="image-button">Show Image</Button>}
+                >
+                <Modal.Header>{props.item.name}</Modal.Header>
+                <Modal.Content style={{margin: "auto", maxWidth: "100%", padding: "30px", fontSize: "18px"}}>
+                  {/* Need to stop modal from closing when enter key is pressed */}
+                  <img className = "card-img" src={props.item.image}></img>
+                  <Button className="image-button" onClick={() => dispatch({ type: "CLOSE_MODAL" })} negative>
+                    Close
+                  </Button>
+                </Modal.Content>
+                </Modal>
+              )
+              : null}
           </Card.Description>
         </Card.Content>
         <Card.Content className="bottom-content">

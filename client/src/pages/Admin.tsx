@@ -147,7 +147,10 @@ function Admin() {
                 </Link>
               ) : null}
               <Link to="/">
-                <Button color="red" icon="arrow left"></Button>
+                <Button color="red" icon labelPosition="left" onClick={() => history.push("/")}>
+                  <Icon name="list" />
+                  Homepage
+                </Button>
               </Link>
             </div>
 

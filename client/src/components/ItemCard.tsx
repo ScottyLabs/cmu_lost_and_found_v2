@@ -37,7 +37,7 @@ const ItemCard = (props: {
   return (
     <div className="card-wrapper">
       <Card className="item-card" style={{height: "290px"}}>
-        <Card.Content>
+        <Card.Content className="top-content">
           <Card.Header>
             {props.item.name} 
           </Card.Header>
@@ -69,6 +69,7 @@ const ItemCard = (props: {
                 </Modal>
               )
               : null}
+              
           </Card.Description>
         </Card.Content>
         <Card.Content className="bottom-content">

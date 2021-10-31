@@ -27,6 +27,10 @@
   content: "";
 }
 
+.ui.card.item-card .top-content {
+  padding-top: 40px;
+}
+
 @media (max-width: 480px) {
   .card-wrapper {
     min-width: 100%;

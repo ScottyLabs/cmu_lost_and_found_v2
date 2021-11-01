@@ -40,8 +40,6 @@ function Policies() {
     getCurrentUser();
     }, []);
 
-    const isAdmin = user?.permissions.includes("ALL:ADMIN") ?? false;
-
     return user && (
     <Grid>
       <Grid.Row>
@@ -61,11 +59,11 @@ function Policies() {
                 </Link>
               </Rail>
               <LogoutButton />
-              {isAdmin ? (
-                <Link to="/accounts">
-                  <Button color="teal" icon labelPosition="left" onClick={() => history.push("/accounts")}>
-                    <Icon name="id card" />
-                    Accounts
+              {user.permissions?.length > 0 ? (
+                <Link to="/admin">
+                  <Button icon color="teal" labelPosition="left">
+                    <Icon name="key" />
+                    Admin Panel
                   </Button>
                 </Link>
               ) : null}

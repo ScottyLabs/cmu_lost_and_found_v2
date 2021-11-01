@@ -2,12 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { Grid, Button, Icon, Rail } from "semantic-ui-react";
 import { Link } from "react-router-dom";
-import AddItemButton from "../components/AddItemButton";
-import TableWidget from "../components/TableWidget";
 import "semantic-ui-css/semantic.min.css";
 import axios from "axios";
-import { Item } from "../interface/item";
-import SearchBar from "../components/SearchBar";
 import LogoutButton from "../components/LogoutButton";
 import { User } from "../interface/user";
 
@@ -32,12 +28,12 @@ function Policies() {
     
     const history = useHistory();
     useEffect(() => {
-    if (localStorage.getItem("lnf_token") == null) {
-        console.log("not logged in");
-        history.push("/login");
-        return;
-    }
-    getCurrentUser();
+      if (localStorage.getItem("lnf_token") == null) {
+          console.log("not logged in");
+          history.push("/login");
+          return;
+      }
+      getCurrentUser();
     }, []);
 
     return user && (

@@ -28,9 +28,6 @@ function App() {
         <PrivateRoute path="/about">
           <About />
         </PrivateRoute>
-        <PrivateRoute path="/policies">
-          <Policies />
-        </PrivateRoute>
       </Switch>
     </div>
   );

@@ -116,7 +116,7 @@ function TablePage() {
                 <Button color="purple" icon labelPosition="left">
                 <Icon name="check square outline" />
                   Policies
-                  </Button>
+                </Button>
               </Link>
               <Link to="/about">
                 <Button color="green" icon labelPosition="left">

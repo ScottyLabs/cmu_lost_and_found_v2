@@ -5,6 +5,7 @@ import Login from "./pages/Login";
 import Admin from "./pages/Admin";
 import TablePage from "./pages/TablePage";
 import Accounts from "./pages/Accounts";
+import Policies from "./pages/Policies";
 
 function App() {
   return (
@@ -16,6 +17,9 @@ function App() {
         </Route>
         <PrivateRoute path="/admin">
           <Admin />
+        </PrivateRoute>
+        <PrivateRoute path="/policies">
+          <Policies />
         </PrivateRoute>
         <PrivateRoute path="/accounts">
           <Accounts />

@@ -7,6 +7,8 @@ import ApproveSwitch from "./ApproveSwitch";
 import EditButton from "./EditItem";
 import AvailableSwitch from "./AvailableSwitch";
 import { User } from "../interface/user";
+import PublicDisplaySwitch from "./PublicDisplaySwitch";
+
 const TableWidget = (props: {
   items: Array<Item>;
   isUser: boolean;
@@ -39,6 +41,9 @@ const TableWidget = (props: {
             <Table.HeaderCell>Image</Table.HeaderCell>
             {props.isUser ? (
               <Table.HeaderCell>Make Public</Table.HeaderCell>
+            ) : null}
+            {props.isUser ? (
+              <Table.HeaderCell>Available For Pickup</Table.HeaderCell>
             ) : null}
             {props.isUser ? <Table.HeaderCell>Edit</Table.HeaderCell> : null}
             {props.isUser ? (
@@ -90,6 +95,16 @@ const TableWidget = (props: {
                   <Table.Cell>
                     <ImageModal image={item.image}></ImageModal>
                   </Table.Cell>
+                  {props.isUser ? (
+                    <Table.Cell>
+                      <PublicDisplaySwitch
+                        id={item._id}
+                        isPublicDisplay={item.publicDisplay}
+                        disabled={!item.approved || !isBuilding || item.status !== "available"}
+                        fetchItems={props.fetchItems}
+                      ></PublicDisplaySwitch>
+                    </Table.Cell>
+                  ) : null}
                   {props.isUser ? (
                     <Table.Cell>
                       <AvailableSwitch

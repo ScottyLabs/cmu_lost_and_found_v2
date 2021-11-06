@@ -163,6 +163,29 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
     });
   };
 
+  const handleOnOpen = () => {
+    axios
+      .post(`/api/auth/isAdmin`, {
+        token: localStorage.getItem("lnf_token"),
+      })
+      .then(
+        (res) => {
+          console.log(res);
+          dispatch({ type: "OPEN_MODAL" });
+        },
+        (error) => {
+          console.log(error);
+          alert("Unable to create item");
+          if (error?.response?.status === 401) {
+            window.localStorage.removeItem("lnf_token");
+            history.push("/login");
+          } else if (error?.response?.status === 404) {
+            history.push("/");
+          }
+        }
+      );
+  };
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const {
@@ -210,6 +233,7 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
             imagePermission: imagePermission,
             status: status,
             approved: props.isAdmin,
+            publicDisplay: false,
             notes: notes,
           })
           .then(
@@ -264,7 +288,7 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
           closeOnEscape={closeOnEscape}
           closeOnDimmerClick={closeOnDimmerClick}
           open={open}
-          onOpen={() => dispatch({ type: "OPEN_MODAL" })}
+          onOpen={handleOnOpen}
           onClose={() => dispatch({ type: "CLOSE_MODAL" })}
           trigger={
             <Button

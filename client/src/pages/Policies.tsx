@@ -63,6 +63,12 @@ function Policies() {
                   </Button>
                 </Link>
               ) : null}
+              <Link to="/about">
+                <Button color="green" icon labelPosition="left">
+                <Icon name="info circle" />
+                  About
+                </Button>
+              </Link>
               <Link to="/">
                 <Button color="red" icon labelPosition="left" onClick={() => history.push("/")}>
                   <Icon name="list" />

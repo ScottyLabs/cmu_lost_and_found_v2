@@ -113,13 +113,13 @@ function TablePage() {
               ) : null}
               {/* <Link to="/Settings"><Button icon><Icon name='setting'/></Button></Link> */}
               <Link to="/policies">
-                <Button color="red" icon labelPosition="left">
+                <Button color="purple" icon labelPosition="left">
                 <Icon name="check square outline" />
                   Policies
                   </Button>
               </Link>
               <Link to="/about">
-                <Button color="olive" icon labelPosition="left">
+                <Button color="green" icon labelPosition="left">
                 <Icon name="info circle" />
                   About
                 </Button>

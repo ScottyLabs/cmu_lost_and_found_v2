@@ -59,14 +59,20 @@ function About() {
                 </Link>
               </Rail>
               <LogoutButton />
-              {isAdmin ? (
-                <Link to="/accounts">
-                  <Button color="teal" icon labelPosition="left" onClick={() => history.push("/accounts")}>
-                    <Icon name="id card" />
-                    Accounts
+              {user.permissions?.length > 0 ? (
+                <Link to="/admin">
+                  <Button icon color="teal" labelPosition="left">
+                    <Icon name="key" />
+                    Admin Panel
                   </Button>
                 </Link>
               ) : null}
+              <Link to="/policies">
+                <Button color="purple" icon labelPosition="left">
+                <Icon name="check square outline" />
+                  Policies
+                  </Button>
+              </Link>
               <Link to="/">
                 <Button color="red" icon labelPosition="left" onClick={() => history.push("/")}>
                   <Icon name="list" />

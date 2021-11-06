@@ -28,20 +28,14 @@ const UserTable = (props: { users: Array<User>; fetchUsers: Function }) => {
           return (
             <Table.Row key={user.username}>
               <Table.Cell>
-                {user.username}{" "}
-                {isAdmin && (
-                  <Label horizontal color="yellow">
-                    Admin
-                  </Label>
-                )}
+                {user.username}
               </Table.Cell>
               <Table.Cell>
                 {user.permissions.map((perm, index) => {
                   const [building, action] = perm.split(":");
-                  const color =
-                    action === "ADMIN"
-                      ? "yellow"
-                      : "blue"
+                  /* blue for users, yellow for admin with access to all, green for */
+                  /* admin with access to specific buildings */
+                  const color = action !== "ADMIN" ? "blue" : building !== "ALL" ? "green" : "yellow";
                   return (
                     <Label color={color} image>
                       {building}

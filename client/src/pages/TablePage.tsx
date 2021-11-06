@@ -10,6 +10,7 @@ import ItemCard from "../components/ItemCard";
 import "./TablePage.css";
 import FoundItemModal, {
   foundItemMessage,
+  feedbackForm,
   lostItemMessage,
 } from "../components/FoundItemModal";
 import LogoutButton from "../components/LogoutButton";
@@ -115,7 +116,7 @@ function TablePage() {
                 <Button color="red" icon labelPosition="left">
                 <Icon name="check square outline" />
                   Policies
-                  </Button>
+                </Button>
               </Link>
               <Link to="/about">
                 <Button color="olive" icon labelPosition="left">
@@ -136,6 +137,11 @@ function TablePage() {
             <Message id="found-item-message" warning size="large">
               <Message.Header>Found an item?</Message.Header>
               {foundItemMessage}
+            </Message>
+            
+            <Message id="feedback-form" warning size="large">
+              <Message.Header>Have feedback?</Message.Header>
+              {feedbackForm}
             </Message>
             {/* <Message id="lost-item-message" warning size="large">
               <Message.Header>Lost an item?</Message.Header>

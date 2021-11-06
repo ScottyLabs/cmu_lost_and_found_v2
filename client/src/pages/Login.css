@@ -15,8 +15,17 @@
   margin-top: 10px;
 }
 
+#login-message {
+  margin-top: 30px;
+  width: 50%;
+}
+
 @media (max-width: 425px) {
   #admin-login {
+    width: 300px;
+  }
+
+  #login-message {
     width: 300px;
   }
 }

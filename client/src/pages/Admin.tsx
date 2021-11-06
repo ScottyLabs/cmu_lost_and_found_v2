@@ -140,12 +140,18 @@ function Admin() {
               <LogoutButton />
               {isAdmin ? (
                 <Link to="/accounts">
-                  <Button color="teal" icon labelPosition="left">
+                  <Button color="teal" icon labelPosition="left" onClick={() => history.push("/accounts")}>
                     <Icon name="id card" />
                     Accounts
                   </Button>
                 </Link>
               ) : null}
+              <Link to="/">
+                <Button color="red" icon labelPosition="left" onClick={() => history.push("/")}>
+                  <Icon name="list" />
+                  Homepage
+                </Button>
+              </Link>
             </div>
 
             <h1 className="title">Carnegie Mellon University</h1>

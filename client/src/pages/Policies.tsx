@@ -104,4 +104,5 @@ function Policies() {
     </Grid>
   );
 }
+
 export default Policies;

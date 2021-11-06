@@ -111,6 +111,18 @@ function TablePage() {
                 </Link>
               ) : null}
               {/* <Link to="/Settings"><Button icon><Icon name='setting'/></Button></Link> */}
+              <Link to="/policies">
+                <Button color="red" icon labelPosition="left">
+                <Icon name="check square outline" />
+                  Policies
+                  </Button>
+              </Link>
+              <Link to="/about">
+                <Button color="olive" icon labelPosition="left">
+                <Icon name="info circle" />
+                  About
+                </Button>
+              </Link>
             </div>
             <h1 className="title">Carnegie Mellon University</h1>
             <h2 className="subtitle">Lost and Found Website</h2>

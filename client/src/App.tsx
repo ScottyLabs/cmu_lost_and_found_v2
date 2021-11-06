@@ -5,6 +5,8 @@ import Login from "./pages/Login";
 import Admin from "./pages/Admin";
 import TablePage from "./pages/TablePage";
 import Accounts from "./pages/Accounts";
+import Policies from "./pages/Policies";
+import About from "./pages/About";
 
 function App() {
   return (
@@ -19,6 +21,12 @@ function App() {
         </PrivateRoute>
         <PrivateRoute path="/accounts">
           <Accounts />
+        </PrivateRoute>
+        <PrivateRoute path="/about">
+          <About />
+        </PrivateRoute>
+        <PrivateRoute path="/policies">
+          <Policies />
         </PrivateRoute>
       </Switch>
     </div>

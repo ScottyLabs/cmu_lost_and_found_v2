@@ -382,6 +382,13 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
                 value={state.imagePath}
                 onChange={handleFileChange}
               />
+              <Form.Input
+                label="Identification"
+                placeholder="andrewID/driver's license"
+                name="identification"
+                value={state.identification}
+                onChange={handleChange}
+              />
               <Form.TextArea
                 label="Notes"
                 placeholder="Notes"

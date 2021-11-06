@@ -348,7 +348,7 @@ function EditItem(props: {
               />
               <Form.Input
                 label="Identification"
-                placeholder="andrewID/driver license"
+                placeholder="andrewID/driver's license"
                 name="identification"
                 value={state.identification}
                 onChange={handleChange}

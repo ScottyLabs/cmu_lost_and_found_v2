@@ -348,14 +348,13 @@ function EditItem(props: {
               />
               <Form.Input
                 label="Identification"
-                placeholder="andrewID/driver's license"
+                placeholder="AndrewID or driver's license number"
                 name="identification"
                 value={state.identification}
                 onChange={handleChange}
               />
               <Form.TextArea
                 label="Notes"
-                placeholder="Notes (AndrewID or driver's license number of person who picked up item)"
                 name="notes"
                 value={state.notes}
                 onChange={handleChange}

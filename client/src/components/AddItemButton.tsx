@@ -384,14 +384,13 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
               />
               <Form.Input
                 label="Identification"
-                placeholder="andrewID/driver's license"
+                placeholder="AndrewID or driver's license number"
                 name="identification"
                 value={state.identification}
                 onChange={handleChange}
               />
               <Form.TextArea
                 label="Notes"
-                placeholder="Notes"
                 name="notes"
                 value={state.notes}
                 onChange={handleChange}

@@ -89,6 +89,7 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
     imageObject: null as any,
     imagePermission: false,
     status: "available",
+    identification: "",
     notes: "",
   });
 
@@ -199,6 +200,7 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
       imageObject,
       imagePermission,
       status,
+      identification,
       notes,
     } = state;
 
@@ -234,6 +236,7 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
             status: status,
             approved: props.isAdmin,
             publicDisplay: false,
+            identification: identification,
             notes: notes,
           })
           .then(
@@ -266,6 +269,7 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
           imagePath: "",
           imagePermission: false,
           status: "available",
+          identification: "",
           notes: "",
         });
         return res;
@@ -378,9 +382,15 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
                 value={state.imagePath}
                 onChange={handleFileChange}
               />
+              <Form.Input
+                label="Identification"
+                placeholder="AndrewID or driver's license number"
+                name="identification"
+                value={state.identification}
+                onChange={handleChange}
+              />
               <Form.TextArea
                 label="Notes"
-                placeholder="Notes"
                 name="notes"
                 value={state.notes}
                 onChange={handleChange}

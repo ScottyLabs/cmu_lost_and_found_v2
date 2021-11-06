@@ -93,6 +93,7 @@ function EditItem(props: {
     imagePermission: props.item.imagePermission,
     status: props.item.status,
     approved: props.item.approved,
+    identification: props.item.identification,
     notes: props.item.notes,
   });
 
@@ -181,6 +182,7 @@ function EditItem(props: {
       imagePermission,
       status,
       approved,
+      identification,
       notes,
     } = state;
 
@@ -200,6 +202,7 @@ function EditItem(props: {
             imagePermission: imagePermission,
             status: status,
             approved: approved,
+            identification: identification,
             notes: notes,
           })
           .then(
@@ -233,6 +236,7 @@ function EditItem(props: {
           imagePermission: state.imagePermission,
           status: "available",
           approved: false,
+          identification: state.identification,
           notes: state.notes,
         });
         return res;
@@ -342,9 +346,15 @@ function EditItem(props: {
                 value={state.imagePath}
                 onChange={handleFileChange}
               />
+              <Form.Input
+                label="Identification"
+                placeholder="AndrewID or driver's license number"
+                name="identification"
+                value={state.identification}
+                onChange={handleChange}
+              />
               <Form.TextArea
                 label="Notes"
-                placeholder="Notes (AndrewID or driver's license number of person who picked up item)"
                 name="notes"
                 value={state.notes}
                 onChange={handleChange}

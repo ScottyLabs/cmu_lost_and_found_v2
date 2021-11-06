@@ -19,6 +19,9 @@ function App() {
         <PrivateRoute path="/admin">
           <Admin />
         </PrivateRoute>
+        <PrivateRoute path="/policies">
+          <Policies />
+        </PrivateRoute>
         <PrivateRoute path="/accounts">
           <Accounts />
         </PrivateRoute>

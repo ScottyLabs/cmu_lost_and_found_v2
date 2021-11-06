@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Icon, Loader, Segment } from "semantic-ui-react";
+import { Button, Icon, Loader, Segment, Message } from "semantic-ui-react";
 import "./Login.css";
 import "semantic-ui-css/semantic.min.css";
 import axios from "axios";
@@ -116,7 +116,15 @@ function Login() {
           )}
         </Segment>
       </Segment.Group>
-    </div>
+      <Message id="login-message" warning size="large">
+        <p>
+          If you are not affiliated with Carnegie Mellon University, please 
+          reach out to the Cohon University Center Lost &amp; Found Desk by emailing 
+          <a href="mailto:cucinfodesk@andrew.cmu.edu"> cucinfodesk@andrew.cmu.edu </a> 
+          or by calling 412-268-2107.
+        </p>
+      </Message>
+    </div> 
   );
 }
 

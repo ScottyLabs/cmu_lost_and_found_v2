@@ -43,6 +43,7 @@ router.post("/add", isUser, async (req: Request, res: Response) => {
     status,
     approved,
     publicDisplay,
+    identification,
     notes,
     user,
   } = req.body;
@@ -68,6 +69,7 @@ router.post("/add", isUser, async (req: Request, res: Response) => {
     status: status,
     approved: approved,
     publicDisplay: publicDisplay,
+    identification: identification,
     notes: notes,
     username: user.username
   });
@@ -254,6 +256,7 @@ router.post("/editItem", isUser, async (req: Request, res: Response) => {
     image,
     imagePermission,
     status,
+    identification,
     notes,
     user,
   } = req.body;
@@ -280,6 +283,7 @@ router.post("/editItem", isUser, async (req: Request, res: Response) => {
             description: description,
             image: image,
             imagePermission: imagePermission,
+            identification: identification,
             notes: notes,
             username: user.username
           },

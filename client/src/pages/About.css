@@ -1,0 +1,18 @@
+h3 {
+  text-align: left;
+  font-family: "Lato";
+  margin: auto;
+  margin-bottom: 0px;
+  max-width: 80%;
+  padding: 10px;
+  padding-bottom: 0px;
+}
+
+ul#description {
+  columns: 2;
+}
+
+li {
+  margin-left: 20px;
+  line-height: 1.5em;
+}

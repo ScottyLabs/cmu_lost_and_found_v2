@@ -6,7 +6,6 @@ import {
   Grid,
   Modal,
   Form,
-  Checkbox,
   Label,
   Icon,
 } from "semantic-ui-react";
@@ -57,8 +56,40 @@ function AddUser(props: { fetchUsers: Function }) {
   const [building, setBuilding] = useState("");
   const [action, setAction] = useState("");
 
+  const alertText = "There are multiple overlapping permissions associated with this user. Do you still wish to proceed?"
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+    e.preventDefault(); 
+    var compare = -1
+    for (let i = 0; i < permissions.length; i++) {
+      if (permissions[i].includes("ALL:ADMIN")) {
+        if (compare == -1) 
+          compare = 2
+        else {
+          let res = window.confirm(alertText);
+          if (!res)
+            return;
+        }
+      }
+      else if (permissions[i].includes("ADMIN")) {
+        if (compare == -1 || compare == 1) 
+          compare = 1
+        else {
+          let res = window.confirm(alertText);
+          if (!res)
+            return;
+        }
+      }
+      else {
+        if (compare == -1 || compare == 0) 
+          compare = 0
+        else {
+          let res = window.confirm(alertText);
+          if (!res)
+            return;
+        }
+      }
+    }
     axios
       .post(`/api/auth/create`, {
         token: localStorage.getItem("lnf_token"),

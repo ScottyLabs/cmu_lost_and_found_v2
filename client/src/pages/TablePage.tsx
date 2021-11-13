@@ -90,11 +90,7 @@ function TablePage() {
         <Grid.Column width={16}>
           <main>
             <Link to="/">
-              <img
-                src="/dog-logo.png"
-                id="logo-mobile"
-                alt="CMU Lost and Found Logo"
-              ></img>
+              <img src="/dog-logo.png" id="logo-mobile" alt="CMU Lost and Found Logo"></img>
             </Link>
             <div id="settings">
               <Rail attached internal position="left" id="logo-desktop">
@@ -127,7 +123,7 @@ function TablePage() {
             </div>
             <h1 className="title">Carnegie Mellon University</h1>
             <h2 className="subtitle">Lost and Found Website</h2>
-            <div className="text">
+            <div id="description">
               <p>
                 To retrieve an object, go to the location listed next to the
                 object on the table. You will be required to identify any lost

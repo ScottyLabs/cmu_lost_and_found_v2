@@ -42,11 +42,7 @@ function Policies() {
         <Grid.Column width={16}>
           <main>
             <Link to="/">
-              <img
-                src="/dog-logo.png"
-                id="logo-mobile"
-                alt="CMU Lost and Found Logo"
-              ></img>
+              <img src="/dog-logo.png" id="logo-mobile" alt="CMU Lost and Found Logo"></img>
             </Link>
             <div id="settings">
               <Rail attached internal position="left" id="logo-desktop">
@@ -63,6 +59,12 @@ function Policies() {
                   </Button>
                 </Link>
               ) : null}
+              <Link to="/about">
+                <Button color="orange" icon labelPosition="left">
+                <Icon name="info circle" />
+                  About
+                </Button>
+              </Link>
               <Link to="/">
                 <Button color="red" icon labelPosition="left" onClick={() => history.push("/")}>
                   <Icon name="list" />
@@ -70,36 +72,31 @@ function Policies() {
                 </Button>
               </Link>
             </div>
-
             <h1 className="title">Carnegie Mellon University</h1>
             <h2 className="subtitle">Lost and Found - Policies</h2>
+            <div id="about">
+              <div id="description">
+                <h2> General </h2>
+                The Cohon University Center Information Desk maintains a lost and found for the campus. The following policy will be adhered to regarding items turned into the lost and found.
+                All items turned in will be labeled with the date on which it was turned in. The items are stored in a closet behind the Information Desk.
+                Items will be held in lost and found for no longer than 30 days.
+                <ul>
+                    <li> ID cards and credit cards will be shredded and discarded </li>
+                    <li> Cell phones will be recycled </li>
+                    <li> Any money turned in will be absorbed into the Jared L. Cohon University Center account </li>
+                    <li> Personal items such as clothing and bags will be donated to charity </li>
+                    <li> All other items that cannot be donated will be discarded </li>
+                </ul>
+                <h2> Valuable Items </h2>
+                <ul>
+                    <li> Any items deemed to be worth more than $50 will be recorded on a spreadsheet and locked in the safe, where it can be accessed only by the Cohon University Center staff. </li>
+                    <li> These items can only be returned if a staff member is available to open the safe. </li>
+                    <li> Patrons must present identification before these items will be returned, and may be asked for additional verification to confirm ownership. </li>
+                </ul>
+              </div>
+            </div>
           </main>
         </Grid.Column>
-      </Grid.Row>
-      <Grid.Row>
-        <div id="description">
-            The Cohon University Center Information Desk maintains a lost and found for the campus. The following policy will be adhered to regarding items turned into the lost and found.
-
-            All items turned in will be labeled with the date on which it was turned in. The items are stored in a closet behind the Information Desk.
-
-            Items will be held in lost and found for no longer than 30 days.
-
-            <ul>
-                <li> ID cards and credit cards will be shredded and discarded </li>
-                <li> Cell phones will be recycled </li>
-                <li> Any money turned in will be absorbed into the Jared L. Cohon University Center account </li>
-                <li> Personal items such as clothing and bags will be donated to charity </li>
-                <li> All other items that cannot be donated will be discarded </li>
-            </ul>
-
-            <h2> Valuable Items </h2>
-
-            <ul>
-                <li> Any items deemed to be worth more than $50 will be recorded on a spreadsheet and locked in the safe, where it can be accessed only by the Cohon University Center staff. </li>
-                <li> These items can only be returned if a staff member is available to open the safe. </li>
-                <li> Patrons must present identification before these items will be returned, and may be asked for additional verification to confirm ownership. </li>
-            </ul>
-        </div>
       </Grid.Row>
     </Grid>
   );

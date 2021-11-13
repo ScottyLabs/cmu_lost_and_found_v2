@@ -38,11 +38,7 @@ function About() {
         <Grid.Column width={16}>
           <main>
             <Link to="/">
-              <img
-                src="/dog-logo.png"
-                id="logo-mobile"
-                alt="CMU Lost and Found Logo"
-              ></img>
+              <img src="/dog-logo.png" id="logo-mobile" alt="CMU Lost and Found Logo"></img>
             </Link>
             <div id="settings">
               <Rail attached internal position="left" id="logo-desktop">
@@ -74,38 +70,40 @@ function About() {
             </div>
             <h1 className="title">Carnegie Mellon University</h1>
             <h2 className="subtitle">Lost and Found - About</h2>
-            <h3>About this Website:</h3>
-            <div className="text">
-              <p>
-                  This website displays information about 
-                  lost items registered with all the lost and found centers on 
-                  campus. Users can browse through items and get information about 
-                  where and when it was found, and where they can retrieve it.
-              </p>
+            <div id="policy">
+              <div id="description">
+                <h2>About this Website</h2>
+                <p>
+                    This website displays information about 
+                    lost items registered with all the lost and found centers on 
+                    campus. Users can browse through items and get information about 
+                    where and when it was found, and where they can retrieve it.
+                </p>
+                <h2>Mission Statement</h2>
+                <p>
+                    There are many lost and found centers scattered throughout campus. 
+                    As there is little communication between these centers, students 
+                    often have to visit multiple locations to find their lost item. 
+                    This website seeks to fix this problem by providing a digital interface 
+                    that compiles all the lost items on campus in one location.
+                </p>
+                <h2>Contributors</h2>
+                <ul id="contributors">
+                  <li>Richard Guo (Project Lead)</li>
+                  <li>Elizabeth Louie (Project Lead)</li>
+                  <li>Jackie Yang (Project Lead)</li>
+                  <li>Michael Crotty</li>
+                  <li>Daniel Gunawan</li>
+                  <li>Brian Lee</li>
+                  <li>Victoria Lee</li>
+                  <li>Cathy Li</li>
+                  <li>Michelle Li</li>
+                  <li>Yerim Song</li>
+                  <li>Clara Wang</li>
+                  <li>Rachel Wei</li>
+                </ul>
+              </div>
             </div>
-            <h3>Mission Statement:</h3>
-            <p className="text">
-                There are many lost and found centers scattered throughout campus. 
-                As there is little communication between these centers, students 
-                often have to visit multiple locations to find their lost item. 
-                This website seeks to fix this problem by providing a digital interface 
-                that compiles all the lost items on campus in one location.
-            </p>
-            <h3>Contributors:</h3>
-            <ul className="text">
-              <li>Richard Guo (Project Lead)</li>
-              <li>Elizabeth Louie (Project Lead)</li>
-              <li>Jackie Yang (Project Lead)</li>
-              <li>Michael Crotty</li>
-              <li>Daniel Gunawan</li>
-              <li>Brian Lee</li>
-              <li>Victoria Lee</li>
-              <li>Cathy Li</li>
-              <li>Michelle Li</li>
-              <li>Yerim Song</li>
-              <li>Clara Wang</li>
-              <li>Rachel Wei</li>
-            </ul>
           </main>
         </Grid.Column>
       </Grid.Row>

@@ -3,7 +3,7 @@
   color: #872222;
 }
 
-.text {
+#description {
   text-align: left;
   font-size: 18px;
   font-family: "Lato";
@@ -13,7 +13,7 @@
   padding: 10px;
 }
 
-.text p {
+#description p {
   line-height: 1.25em;
 }
 

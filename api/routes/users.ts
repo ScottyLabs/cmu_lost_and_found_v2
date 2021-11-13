@@ -93,4 +93,28 @@ router.post("/delete", isAdmin, async (req: Request, res: Response) => {
   });
 });
 
+/**
+ * Update notification status
+ * {
+ *  username: "bob",
+ *  notif: true or false
+ * }
+ */
+ router.post("/updateNotif", async (req: Request, res: Response) => {
+  let { username, notif } = req.body;
+  const toUpdate = await User.findOneByUsername(username);
+  if (toUpdate) {
+    const updated = await User.findByIdAndUpdate(
+      toUpdate._id,
+        {
+          notif: notif,
+        },
+        { runValidators: true, useFindAndModify: false, new: true }
+      );
+      return res.status(200).send({ msg: updated });
+  } else {
+      return res.status(404).send(new Error("User not found"));
+  }
+});
+
 export default router;

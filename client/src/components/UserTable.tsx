@@ -7,6 +7,7 @@ import DeleteUser from "../components/DeleteUser";
 import { BuildingType } from "../enums/locationTypes";
 import { PermissionType } from "../enums/permissionType";
 import EditPermissions from "./EditPermissions";
+import NotificationSwitch from "./NotificationSwitch";
 
 const UserTable = (props: { users: Array<User>; fetchUsers: Function }) => {
   console.log("Creating table");
@@ -17,6 +18,7 @@ const UserTable = (props: { users: Array<User>; fetchUsers: Function }) => {
           <Table.HeaderCell>Username</Table.HeaderCell>
           <Table.HeaderCell>Permissions</Table.HeaderCell>
           <Table.HeaderCell>Edit Permissions</Table.HeaderCell>
+          <Table.HeaderCell>Notifications</Table.HeaderCell>
           <Table.HeaderCell>Delete</Table.HeaderCell>
         </Table.Row>
       </Table.Header>
@@ -47,6 +49,13 @@ const UserTable = (props: { users: Array<User>; fetchUsers: Function }) => {
               <Table.Cell>
                 <EditPermissions
                   user={user}
+                  fetchUsers={props.fetchUsers}
+                />
+              </Table.Cell>
+              <Table.Cell>
+                <NotificationSwitch
+                  username={user.username}
+                  notif={user.notif}
                   fetchUsers={props.fetchUsers}
                 />
               </Table.Cell>

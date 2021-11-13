@@ -9,14 +9,9 @@ import LogoutButton from "../components/LogoutButton";
 import { User } from "../interface/user";
 function About() {
     document.title = "CMU Lost and Found";
-    const [items, setItems] = useState([]);
-    //what is from the search
-    const [input, setInput] = useState("");
-    //unfiltered list
-    const [itemListDefault, setItemListDefault] = useState([]);
-    //filtered list
-    const [itemList, setItemList] = useState([]);
+
     const [user, setUser] = useState<User | null>(null);
+
     const getCurrentUser = () => {
         axios.post('/api/accounts/currentUser', {
           token: window.localStorage.getItem("lnf_token")
@@ -32,14 +27,14 @@ function About() {
       };
     const history = useHistory();
     useEffect(() => {
-    if (localStorage.getItem("lnf_token") == null) {
-        console.log("not logged in");
-        history.push("/login");
-        return;
-    }
-    getCurrentUser();
+      if (localStorage.getItem("lnf_token") == null) {
+          console.log("not logged in");
+          history.push("/login");
+          return;
+      }
+      getCurrentUser();
     }, []);
-    const isAdmin = user?.permissions.includes("ALL:ADMIN") ?? false;
+
     return user && (
     <Grid>
       <Grid.Row>

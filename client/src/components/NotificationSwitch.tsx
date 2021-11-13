@@ -12,11 +12,10 @@ export default function NotificationSwitch(props: {
   const history = useHistory();
 
   const handleClick = () => {
-    console.log("inhandle")
     axios
       .post(`/api/accounts/updateNotif`, {
         token: localStorage.getItem("lnf_token"),
-        username: "elouie2@andrew.cmu.edu",
+        username: props.username,
         notif: !props.notif,
       })
       .then(

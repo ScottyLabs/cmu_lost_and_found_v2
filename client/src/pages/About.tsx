@@ -56,7 +56,7 @@ function About() {
                 </Link>
               ) : null}
               <Link to="/policies">
-                <Button color="purple" icon labelPosition="left">
+                <Button color="violet" icon labelPosition="left">
                 <Icon name="check square outline" />
                   Policies
                   </Button>

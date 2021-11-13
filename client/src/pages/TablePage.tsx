@@ -118,6 +118,12 @@ function TablePage() {
                   Policies
                 </Button>
               </Link>
+              <Link to="/about">
+                <Button color="orange" icon labelPosition="left">
+                <Icon name="info circle" />
+                  About
+                </Button>
+              </Link>
             </div>
             <h1 className="title">Carnegie Mellon University</h1>
             <h2 className="subtitle">Lost and Found Website</h2>

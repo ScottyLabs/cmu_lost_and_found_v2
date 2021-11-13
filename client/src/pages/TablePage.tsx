@@ -127,7 +127,7 @@ function TablePage() {
             </div>
             <h1 className="title">Carnegie Mellon University</h1>
             <h2 className="subtitle">Lost and Found Website</h2>
-            <div id="description">
+            <div className="text">
               <p>
                 To retrieve an object, go to the location listed next to the
                 object on the table. You will be required to identify any lost

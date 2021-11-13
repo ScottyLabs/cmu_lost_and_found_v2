@@ -9,13 +9,6 @@ import LogoutButton from "../components/LogoutButton";
 import { User } from "../interface/user";
 function About() {
     document.title = "CMU Lost and Found";
-    const [items, setItems] = useState([]);
-    //what is from the search
-    const [input, setInput] = useState("");
-    //unfiltered list
-    const [itemListDefault, setItemListDefault] = useState([]);
-    //filtered list
-    const [itemList, setItemList] = useState([]);
     const [user, setUser] = useState<User | null>(null);
     const getCurrentUser = () => {
         axios.post('/api/accounts/currentUser', {
@@ -39,7 +32,6 @@ function About() {
     }
     getCurrentUser();
     }, []);
-    const isAdmin = user?.permissions.includes("ALL:ADMIN") ?? false;
     return user && (
     <Grid>
       <Grid.Row>
@@ -82,8 +74,8 @@ function About() {
             </div>
             <h1 className="title">Carnegie Mellon University</h1>
             <h2 className="subtitle">Lost and Found - About</h2>
-            <h3>About this website:</h3>
-            <div id="description">
+            <h3>About this Website:</h3>
+            <div className="text">
               <p>
                   This website displays information about 
                   lost items registered with all the lost and found centers on 
@@ -91,8 +83,8 @@ function About() {
                   where and when it was found, and where they can retrieve it.
               </p>
             </div>
-            <h3>Mission statement:</h3>
-            <p id="description">
+            <h3>Mission Statement:</h3>
+            <p className="text">
                 There are many lost and found centers scattered throughout campus. 
                 As there is little communication between these centers, students 
                 often have to visit multiple locations to find their lost item. 
@@ -100,7 +92,7 @@ function About() {
                 that compiles all the lost items on campus in one location.
             </p>
             <h3>Contributors:</h3>
-            <ul id="description">
+            <ul className="text">
               <li>Richard Guo (Project Lead)</li>
               <li>Elizabeth Louie (Project Lead)</li>
               <li>Jackie Yang (Project Lead)</li>
@@ -110,7 +102,6 @@ function About() {
               <li>Victoria Lee</li>
               <li>Cathy Li</li>
               <li>Michelle Li</li>
-              <li>Nandini Neralagi</li>
               <li>Yerim Song</li>
               <li>Clara Wang</li>
               <li>Rachel Wei</li>

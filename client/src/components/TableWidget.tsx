@@ -8,6 +8,29 @@ import EditButton from "./EditItem";
 import AvailableSwitch from "./AvailableSwitch";
 import { User } from "../interface/user";
 import PublicDisplaySwitch from "./PublicDisplaySwitch";
+import _ from 'lodash'
+
+function exampleReducer(state:any, action:any) {
+  switch (action.type) {
+    case 'CHANGE_SORT':
+      if (state.column === action.column) {
+        return {
+          ...state,
+          data: state.data.slice().reverse(),
+          direction:
+            state.direction === 'ascending' ? 'descending' : 'ascending',
+        }
+      }
+
+      return {
+        column: action.column,
+        data: _.sortBy(state.data, [action.column]),
+        direction: 'ascending',
+      }
+    default:
+      throw new Error()
+  }
+}
 
 const TableWidget = (props: {
   items: Array<Item>;
@@ -22,6 +45,13 @@ const TableWidget = (props: {
     setDisplayArchived(data.checked);
   };
 
+  const [state, dispatch] = React.useReducer(exampleReducer, {
+    column: null,
+    data: props.items,
+    direction: null,
+  })
+  const { column, data, direction } = state
+
   return (
     <Form>
       {/* {props.isUser ? (
@@ -30,11 +60,17 @@ const TableWidget = (props: {
           onClick={updateDisplayArchived}
         />
       ) : null} */}
-      <Table celled className="lf_table">
+      <Table sortable celled className="lf_table">
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell width={1}>When Found</Table.HeaderCell>
-            <Table.HeaderCell>Name</Table.HeaderCell>
+            {/* <Table.HeaderCell>Name</Table.HeaderCell> */}
+            <Table.HeaderCell
+            sorted={column === 'name' ? direction : null}
+            onClick={() => dispatch({ type: 'CHANGE_SORT', column: 'name' })}
+            >
+              Name
+            </Table.HeaderCell>
             <Table.HeaderCell>Where Found</Table.HeaderCell>
             <Table.HeaderCell>Description</Table.HeaderCell>
             <Table.HeaderCell>Building</Table.HeaderCell>

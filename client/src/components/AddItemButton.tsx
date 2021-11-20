@@ -213,10 +213,34 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
       setFormError(false);
     }
 
+<<<<<<< HEAD
     const offset = date.getTimezoneOffset();
     let currentDate = new Date(date.getTime() - offset * 60 * 1000);
     const dateFound = currentDate.toISOString().slice(0, 10);
     const timeFound = currentDate.toISOString().slice(11, 16);
+=======
+    axios({
+      method: 'POST',
+      url: `https://api.mailgun.net/v3/scottylabs.org/messages`,
+      auth: {
+          username: 'api',
+          password: 'key'
+      },
+      params: {
+          from: 'Scotty Labs Lost and Found',
+          to: 'michellejli7777@gmail.com',
+          subject: 'New Item Added: Approval Needed',
+          text: 'pls approve item'
+      }
+    }).then(
+        response => {
+            console.log(response)
+        },
+        reject => {
+            console.log(reject)
+        }
+    )
+>>>>>>> c46fb36... Basic mailgun api call - no key
 
     uploadImage(imageObject).then(
       (res) => {

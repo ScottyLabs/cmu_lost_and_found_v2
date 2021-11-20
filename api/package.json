@@ -18,7 +18,7 @@
     "@types/cors": "^2.8.8",
     "@types/mongoose": "^5.7.37",
     "@types/morgan": "^1.9.2",
-    "axios": "^0.21.4",
+    "axios": "^0.21.1",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",

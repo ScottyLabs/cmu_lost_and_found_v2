@@ -1,7 +1,9 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { Button, Grid, Modal, Form, Icon, TextArea } from "semantic-ui-react";
+import { Button, Grid, Modal, Form, Icon } from "semantic-ui-react";
 import { useHistory } from "react-router-dom";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import { Item } from "../interface/item";
 import "./EditItem.css";
 import { BuildingType } from "../enums/locationTypes";
@@ -81,8 +83,13 @@ function EditItem(props: {
   const history = useHistory();
 
   const [state, setState] = useState({
-    dateFound: new Date(props.item.dateFound).toISOString().substring(0, 10),
-    timeFound: props.item.timeFound,
+    date: new Date(
+      new Date(props.item.dateFound).toISOString().substring(0, 10) +
+        "T" +
+        (props.item.timeFound.trim().length > 4
+          ? props.item.timeFound.trim()
+          : "0" + props.item.timeFound.trim())
+    ),
     name: props.item.name,
     whereFound: props.item.whereFound,
     description: props.item.description,
@@ -171,8 +178,7 @@ function EditItem(props: {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const {
-      dateFound,
-      timeFound,
+      date,
       name,
       whereFound,
       building,
@@ -185,6 +191,11 @@ function EditItem(props: {
       identification,
       notes,
     } = state;
+
+    const offset = date.getTimezoneOffset();
+    let currentDate = new Date(date.getTime() - offset * 60 * 1000);
+    const dateFound = currentDate.toISOString().slice(0, 10);
+    const timeFound = currentDate.toISOString().slice(11, 16);
 
     uploadImage(imageObject).then(
       (res) => {
@@ -224,8 +235,7 @@ function EditItem(props: {
           );
         dispatch({ type: "CLOSE_MODAL" });
         setState({
-          dateFound: state.dateFound,
-          timeFound: state.timeFound,
+          date: state.date,
           name: state.name,
           whereFound: state.whereFound,
           description: state.description,
@@ -247,11 +257,6 @@ function EditItem(props: {
       }
     );
   };
-
-  let currentDate = new Date();
-  const offset = currentDate.getTimezoneOffset();
-  currentDate = new Date(currentDate.getTime() - offset * 60 * 1000);
-  let todayDate = currentDate.toISOString().slice(0, 10);
 
   return (
     <Grid columns={1}>
@@ -288,27 +293,22 @@ function EditItem(props: {
                 onChange={handleChange}
               />
               <Form.Group widths="equal">
-                <Form.Input
-                  required
-                  fluid
-                  label="Date Found"
-                  name="dateFound"
-                  type="date"
-                  placeholder="MM/DD/YYY"
-                  max={todayDate}
-                  value={state.dateFound}
-                  onChange={handleChange}
-                />
-                <Form.Input
-                  required
-                  fluid
-                  label="Time Found"
-                  name="timeFound"
-                  type="time"
-                  placeholder="HH:MM"
-                  value={state.timeFound}
-                  onChange={handleChange}
-                />
+                <Form.Field required>
+                  <label>Date and Time Found</label>
+                  <DatePicker
+                    selected={state.date}
+                    name="date"
+                    onChange={(date: Date) =>
+                      setState({ ...state, ["date"]: date })
+                    }
+                    dateFormat="MM/dd/yyyy hh:mm aa"
+                    maxDate={new Date()}
+                    showTimeSelect
+                    timeFormat="hh:mm aa"
+                    timeIntervals={5}
+                    timeCaption="Time"
+                  />
+                </Form.Field>
                 <Form.Input
                   required
                   fluid

@@ -1,14 +1,9 @@
 import axios from "axios";
 import React, { useState } from "react";
-import {
-  Button,
-  Grid,
-  Modal,
-  Form,
-  Message,
-  TextArea,
-} from "semantic-ui-react";
+import { Button, Grid, Modal, Form, Message } from "semantic-ui-react";
 import { useHistory } from "react-router-dom";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import "./AddItemButton.css";
 import { BuildingType } from "../enums/locationTypes";
 
@@ -78,8 +73,7 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
   const { open, closeOnEscape, closeOnDimmerClick } = dispatchState;
 
   const [state, setState] = useState({
-    dateFound: "",
-    timeFound: "",
+    date: new Date(),
     name: "",
     whereFound: "",
     description: "",
@@ -190,8 +184,7 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const {
-      dateFound,
-      timeFound,
+      date,
       name,
       whereFound,
       description,
@@ -219,6 +212,11 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
     } else {
       setFormError(false);
     }
+
+    const offset = date.getTimezoneOffset();
+    let currentDate = new Date(date.getTime() - offset * 60 * 1000);
+    const dateFound = currentDate.toISOString().slice(0, 10);
+    const timeFound = currentDate.toISOString().slice(11, 16);
 
     uploadImage(imageObject).then(
       (res) => {
@@ -258,8 +256,7 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
           );
         dispatch({ type: "CLOSE_MODAL" });
         setState({
-          dateFound: "",
-          timeFound: "",
+          date: new Date(),
           name: "",
           whereFound: "",
           building: "",
@@ -279,11 +276,6 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
       }
     );
   };
-
-  let currentDate = new Date();
-  const offset = currentDate.getTimezoneOffset();
-  currentDate = new Date(currentDate.getTime() - offset * 60 * 1000);
-  let todayDate = currentDate.toISOString().slice(0, 10);
 
   return (
     <Grid columns={1}>
@@ -321,29 +313,22 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
                 // error={nameError}
               />
               <Form.Group widths="equal">
-                <Form.Input
-                  required
-                  fluid
-                  label="Date Found"
-                  name="dateFound"
-                  type="date"
-                  placeholder="MM/DD/YYY"
-                  max={todayDate}
-                  value={state.dateFound}
-                  onChange={handleChange}
-                  // error={dateError}
-                />
-                <Form.Input
-                  required
-                  fluid
-                  label="Time Found"
-                  name="timeFound"
-                  type="time"
-                  placeholder="HH:MM"
-                  value={state.timeFound}
-                  onChange={handleChange}
-                  // error={timeError}
-                />
+                <Form.Field required>
+                  <label>Date and Time Found</label>
+                  <DatePicker
+                    selected={state.date}
+                    name="date"
+                    onChange={(date: Date) =>
+                      setState({ ...state, ["date"]: date })
+                    }
+                    dateFormat="MM/dd/yyyy hh:mm aa"
+                    maxDate={new Date()}
+                    showTimeSelect
+                    timeFormat="hh:mm aa"
+                    timeIntervals={5}
+                    timeCaption="Time"
+                  />
+                </Form.Field>
                 <Form.Input
                   required
                   fluid

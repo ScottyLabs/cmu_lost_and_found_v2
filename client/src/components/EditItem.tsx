@@ -382,7 +382,32 @@ function EditItem(props: {
                 >
                   <Button
                     type="button" // needs to be set because type="submit" is the default
-                    onClick={() => dispatch({ type: "CLOSE_MODAL" })}
+                    onClick={() => {
+                      dispatch({ type: "CLOSE_MODAL" });
+                      setState({
+                        date: new Date(
+                          new Date(props.item.dateFound)
+                            .toISOString()
+                            .substring(0, 10) +
+                            "T" +
+                            (props.item.timeFound.trim().length > 4
+                              ? props.item.timeFound.trim()
+                              : "0" + props.item.timeFound.trim())
+                        ),
+                        name: props.item.name,
+                        whereFound: props.item.whereFound,
+                        description: props.item.description,
+                        building: props.item.building,
+                        image: props.item.image,
+                        imagePath: "",
+                        imageObject: null as any,
+                        imagePermission: props.item.imagePermission,
+                        status: props.item.status,
+                        approved: props.item.approved,
+                        identification: props.item.identification,
+                        notes: props.item.notes,
+                      });
+                    }}
                     negative
                   >
                     Cancel

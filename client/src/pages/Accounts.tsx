@@ -1,4 +1,4 @@
-import { Button, Grid, Icon, Rail } from "semantic-ui-react";
+import { Button, Grid, Rail } from "semantic-ui-react";
 import "./Accounts.css";
 import "semantic-ui-css/semantic.min.css";
 import axios from "axios";

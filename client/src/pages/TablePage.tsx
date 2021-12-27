@@ -1,12 +1,11 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { Grid, Message, Rail, Button, Icon } from "semantic-ui-react";
+import { Dropdown, Grid, Message, Rail } from "semantic-ui-react";
 import { Link, useHistory } from "react-router-dom";
 import TableWidget from "../components/TableWidget";
 import SearchBar from "../components/SearchBar";
 import { Item } from "../interface/item";
 import CardWidget from "../components/CardWidget";
-import ItemCard from "../components/ItemCard";
 import "./TablePage.css";
 import FoundItemModal, {
   foundItemMessage,
@@ -90,11 +89,7 @@ function TablePage() {
         <Grid.Column width={16}>
           <main>
             <Link to="/">
-              <img
-                src="/dog-logo.png"
-                id="logo-mobile"
-                alt="CMU Lost and Found Logo"
-              ></img>
+              <img src="/dog-logo.png" id="logo-mobile" alt="CMU Lost and Found Logo"></img>
             </Link>
             <div id="settings">
               <Rail attached internal position="left" id="logo-desktop">
@@ -103,21 +98,15 @@ function TablePage() {
                 </Link>
               </Rail>
               <LogoutButton />
-              {user.permissions?.length > 0 ? (
-                <Link to="/admin">
-                  <Button icon color="teal" labelPosition="left">
-                    <Icon name="key" />
-                    Admin Panel
-                  </Button>
-                </Link>
-              ) : null}
-              {/* <Link to="/Settings"><Button icon><Icon name='setting'/></Button></Link> */}
-              <Link to="/policies">
-                <Button color="red" icon labelPosition="left">
-                <Icon name="check square outline" />
-                  Policies
-                </Button>
-              </Link>
+              <Dropdown icon='bars' floating button className='icon teal'>
+                <Dropdown.Menu>
+                  {user.permissions?.length > 0 ? (
+                    <Dropdown.Item onClick={() => history.push("/admin")}><Link to="/admin">Admin Panel</Link></Dropdown.Item>
+                  ) : null}
+                  <Dropdown.Item onClick={() => history.push("/about")}><Link to="/about">About</Link></Dropdown.Item>
+                  <Dropdown.Item onClick={() => history.push("/policies")}><Link to="/policies">Policies</Link></Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
             </div>
             <h1 className="title">Carnegie Mellon University</h1>
             <h2 className="subtitle">Lost and Found Website</h2>

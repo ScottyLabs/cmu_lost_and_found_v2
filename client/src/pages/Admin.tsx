@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { Grid, Button, Icon, Rail } from "semantic-ui-react";
+import { Grid, Rail, Dropdown } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import "./Admin.css";
 import AddItemButton from "../components/AddItemButton";
@@ -14,35 +14,7 @@ import { User } from "../interface/user";
 
 function Admin() {
   document.title = "CMU Lost and Found";
-
-  // const _items = [
-  //   {
-  //     id: "1",
-  //     dateFound: "11/12/20",
-  //     timeFound: "11:12 am",
-  //     name: "Phone",
-  //     whereFound: "Tepper",
-  //     description: "pink iPhone",
-  //     whereToRetrieve: "gates",
-  //     image:
-  //       "https://i.pcmag.com/imagery/reviews/03xdTO0Ka4H4KvEgtSPg4c2-12.1569479325.fit_lpad.size_357x209.jpg",
-  //     imagePermission: false,
-  //     status: "available",
-  //   },
-  //   {
-  //     id: "2",
-  //     dateFound: "12/12/20",
-  //     timeFound: "12:12 am",
-  //     name: "Cat",
-  //     whereFound: "Tepper",
-  //     description: "pink iPhone",
-  //     whereToRetrieve: "gates",
-  //     image:
-  //       "https://i.pcmag.com/imagery/reviews/03xdTO0Ka4H4KvEgtSPg4c2-12.1569479325.fit_lpad.size_357x209.jpg",
-  //     imagePermission: false,
-  //     status: "available",
-  //   },
-  // ];
+  
   const [items, setItems] = useState([]);
   //what is from the search
   const [input, setInput] = useState("");
@@ -138,24 +110,17 @@ function Admin() {
                 </Link>
               </Rail>
               <LogoutButton />
-              {isAdmin ? (
-                <Link to="/accounts">
-                  <Button color="teal" icon labelPosition="left" onClick={() => history.push("/accounts")}>
-                    <Icon name="id card" />
-                    Accounts
-                  </Button>
-                </Link>
-              ) : null}
-              <Link to="/">
-                <Button color="red" icon labelPosition="left" onClick={() => history.push("/")}>
-                  <Icon name="list" />
-                  Homepage
-                </Button>
-              </Link>
+              <Dropdown icon='bars' floating button className='icon teal'>
+                <Dropdown.Menu>
+                  <Dropdown.Item onClick={() => history.push("/")}><Link to="/">Home</Link></Dropdown.Item>
+                  {isAdmin ? (
+                    <Dropdown.Item onClick={() => history.push("/accounts")}><Link to="/accounts">Accounts</Link></Dropdown.Item>
+                  ) : null}
+                </Dropdown.Menu>
+              </Dropdown>
             </div>
-
             <h1 className="title">Carnegie Mellon University</h1>
-            <h2 className="subtitle">Lost and Found Admin Panel - Items</h2>
+            <h2 className="subtitle">Lost and Found - Admin Panel</h2>
             <div id="add-mobile">
               <AddItemButton
                 fetchItems={fetchItems}

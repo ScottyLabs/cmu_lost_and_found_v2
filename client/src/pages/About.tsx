@@ -2,16 +2,14 @@ import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { Grid, Rail, Dropdown } from "semantic-ui-react";
 import { Link } from "react-router-dom";
+import "./About.css";
 import "semantic-ui-css/semantic.min.css";
 import axios from "axios";
 import LogoutButton from "../components/LogoutButton";
 import { User } from "../interface/user";
-
-function Policies() {
+function About() {
     document.title = "CMU Lost and Found";
-
     const [user, setUser] = useState<User | null>(null);
-
     const getCurrentUser = () => {
         axios.post('/api/accounts/currentUser', {
           token: window.localStorage.getItem("lnf_token")
@@ -25,17 +23,15 @@ function Policies() {
           }
         )
       };
-    
     const history = useHistory();
     useEffect(() => {
-      if (localStorage.getItem("lnf_token") == null) {
-          console.log("not logged in");
-          history.push("/login");
-          return;
-      }
-      getCurrentUser();
+    if (localStorage.getItem("lnf_token") == null) {
+        console.log("not logged in");
+        history.push("/login");
+        return;
+    }
+    getCurrentUser();
     }, []);
-
     return user && (
     <Grid>
       <Grid.Row>
@@ -57,30 +53,43 @@ function Policies() {
                   {user.permissions?.length > 0 ? (
                     <Dropdown.Item onClick={() => history.push("/admin")}><Link to="/admin">Admin Panel</Link></Dropdown.Item>
                   ) : null}
-                  <Dropdown.Item onClick={() => history.push("/about")}><Link to="/about">About</Link></Dropdown.Item>
+                  <Dropdown.Item onClick={() => history.push("/policies")}><Link to="/policies">Policies</Link></Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
             </div>
             <h1 className="title">Carnegie Mellon University</h1>
-            <h2 className="subtitle">Lost and Found - Policies</h2>
-            <div id="about">
+            <h2 className="subtitle">Lost and Found - About</h2>
+            <div id="policy">
               <div id="description">
-                <h2> General </h2>
-                The Cohon University Center Information Desk maintains a lost and found for the campus. The following policy will be adhered to regarding items turned into the lost and found.
-                All items turned in will be labeled with the date on which it was turned in. The items are stored in a closet behind the Information Desk.
-                Items will be held in lost and found for no longer than 30 days.
-                <ul>
-                    <li> ID cards and credit cards will be shredded and discarded </li>
-                    <li> Cell phones will be recycled </li>
-                    <li> Any money turned in will be absorbed into the Jared L. Cohon University Center account </li>
-                    <li> Personal items such as clothing and bags will be donated to charity </li>
-                    <li> All other items that cannot be donated will be discarded </li>
-                </ul>
-                <h2> Valuable Items </h2>
-                <ul>
-                    <li> Any items deemed to be worth more than $50 will be recorded on a spreadsheet and locked in the safe, where it can be accessed only by the Cohon University Center staff. </li>
-                    <li> These items can only be returned if a staff member is available to open the safe. </li>
-                    <li> Patrons must present identification before these items will be returned, and may be asked for additional verification to confirm ownership. </li>
+                <h2>About this Website</h2>
+                <p>
+                    This website displays information about 
+                    lost items registered with all the lost and found centers on 
+                    campus. Users can browse through items and get information about 
+                    where and when it was found, and where they can retrieve it.
+                </p>
+                <h2>Mission Statement</h2>
+                <p>
+                    There are many lost and found centers scattered throughout campus. 
+                    As there is little communication between these centers, students 
+                    often have to visit multiple locations to find their lost item. 
+                    This website seeks to fix this problem by providing a digital interface 
+                    that compiles all the lost items on campus in one location.
+                </p>
+                <h2>Contributors</h2>
+                <ul id="contributors">
+                  <li>Richard Guo (Project Lead)</li>
+                  <li>Elizabeth Louie (Project Lead)</li>
+                  <li>Jackie Yang (Project Lead)</li>
+                  <li>Michael Crotty</li>
+                  <li>Daniel Gunawan</li>
+                  <li>Brian Lee</li>
+                  <li>Victoria Lee</li>
+                  <li>Cathy Li</li>
+                  <li>Michelle Li</li>
+                  <li>Yerim Song</li>
+                  <li>Clara Wang</li>
+                  <li>Rachel Wei</li>
                 </ul>
               </div>
             </div>
@@ -90,5 +99,4 @@ function Policies() {
     </Grid>
   );
 }
-export default Policies;
-    
+export default About;

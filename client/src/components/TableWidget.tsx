@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Table } from "semantic-ui-react";
+import { Table, Pagination } from "semantic-ui-react";
 import { Item } from "../interface/item";
 import "./TableWidget.css";
 import ImageModal from "./ImageModal";
@@ -16,20 +16,16 @@ const TableWidget = (props: {
   fetchItems: Function;
   user: User;
 }) => {
-  const [displayArchived, setDisplayArchived] = useState(true);
+  
+  const numberOfItems = 30;
+  const [state, setState] = useState({ page: 1 });
 
-  const updateDisplayArchived = (evt: any, data: any) => {
-    setDisplayArchived(data.checked);
+  const handlePageChange = (e: any, value: any) => {
+    setState({ page: value.activePage });
   };
 
   return (
-    <Form>
-      {/* {props.isUser ? (
-        <Form.Checkbox
-          label="Show Archived Items"
-          onClick={updateDisplayArchived}
-        />
-      ) : null} */}
+    <div>
       <Table celled className="lf_table">
         <Table.Header>
           <Table.Row>
@@ -46,19 +42,19 @@ const TableWidget = (props: {
               <Table.HeaderCell>Available For Pickup</Table.HeaderCell>
             ) : null}
             {props.isUser ? <Table.HeaderCell>Edit</Table.HeaderCell> : null}
-            {props.isUser ? (
-              <Table.HeaderCell>Approve</Table.HeaderCell>
-            ) : null}
+            {props.isUser ? <Table.HeaderCell>Approve</Table.HeaderCell> : null}
             <Table.HeaderCell>Last Modified By</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
         <Table.Body>
           {props.items
+            .slice(
+              (state.page - 1) * numberOfItems,
+              (state.page - 1) * numberOfItems + numberOfItems
+            )
             .filter((item) => {
               return (
-                (item.status === "available" && item.approved) ||
-                (props.isUser &&
-                  (displayArchived || item.status === "available"))
+                (item.status === "available" && item.approved) || props.isUser
               );
             })
             .map((item: Item) => {
@@ -75,8 +71,8 @@ const TableWidget = (props: {
                 m +
                 " " +
                 (parseInt(h) >= 12 ? "PM" : "AM");
-              let isBuilding = 
-                props.user.permissions.includes("ALL:ADMIN") || 
+              let isBuilding =
+                props.user.permissions.includes("ALL:ADMIN") ||
                 props.user.permissions.includes("ALL:USER") ||
                 props.user.permissions.includes(`${item.building}:ADMIN`) ||
                 props.user.permissions.includes(`${item.building}:USER`);
@@ -100,7 +96,11 @@ const TableWidget = (props: {
                       <PublicDisplaySwitch
                         id={item._id}
                         isPublicDisplay={item.publicDisplay}
-                        disabled={!item.approved || !isBuilding || item.status !== "available"}
+                        disabled={
+                          !item.approved ||
+                          !isBuilding ||
+                          item.status !== "available"
+                        }
                         fetchItems={props.fetchItems}
                       ></PublicDisplaySwitch>
                     </Table.Cell>
@@ -142,7 +142,12 @@ const TableWidget = (props: {
             })}
         </Table.Body>
       </Table>
-    </Form>
+      <Pagination
+        activePage={state.page}
+        totalPages={Math.ceil(props.items.length / numberOfItems)}
+        onPageChange={handlePageChange}
+      />
+    </div>
   );
 };
 

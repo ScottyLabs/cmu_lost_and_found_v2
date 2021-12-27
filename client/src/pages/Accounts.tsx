@@ -5,6 +5,7 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { User } from "../interface/user";
 import { Link } from "react-router-dom";
+import DropdownMenu from "../components/DropdownMenu";
 import UserTable from "../components/UserTable";
 import SearchBar from "../components/SearchBar";
 import AddUser from "../components/AddUser";
@@ -83,6 +84,8 @@ function Accounts() {
     setUserList(filtered);
   };
 
+  const isAllAdmin = user?.permissions.includes("ALL:ADMIN") ?? false;
+
   return user && (
     <Grid>
       <Grid.Row>
@@ -102,9 +105,7 @@ function Accounts() {
                 </Link>
               </Rail>
               <LogoutButton />
-              <Link to="/admin">
-                <Button color="teal" icon="arrow left"></Button>
-              </Link>
+              <DropdownMenu page={"/accounts"} isAdmin={user.permissions?.length > 0} isAllAdmin={isAllAdmin}/>
             </div>
             <h1 className="title">Carnegie Mellon University</h1>
             <h2 className="subtitle">Lost and Found Admin Panel - Accounts</h2>

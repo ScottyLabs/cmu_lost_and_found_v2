@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Form, Card } from "semantic-ui-react";
 import { Item } from "../interface/item";
 import "./CardWidget.css";
-import ReactCardFlip from "react-card-flip";
 import ItemCard from "../components/ItemCard"
 
 

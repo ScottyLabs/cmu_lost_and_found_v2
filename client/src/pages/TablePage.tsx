@@ -1,7 +1,8 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { Dropdown, Grid, Message, Rail } from "semantic-ui-react";
+import { Grid, Message, Rail } from "semantic-ui-react";
 import { Link, useHistory } from "react-router-dom";
+import DropdownMenu from "../components/DropdownMenu";
 import SearchBar from "../components/SearchBar";
 import { Item } from "../interface/item";
 import CardWidget from "../components/CardWidget";
@@ -78,6 +79,8 @@ function TablePage() {
     fetchItems();
   }, []);
 
+  const isAllAdmin = user?.permissions.includes("ALL:ADMIN") ?? false;
+
   return user && (
     <Grid>
       <Grid.Row>
@@ -93,15 +96,7 @@ function TablePage() {
                 </Link>
               </Rail>
               <LogoutButton />
-              <Dropdown icon='bars' floating button className='icon teal'>
-                <Dropdown.Menu>
-                  {user.permissions?.length > 0 ? (
-                    <Dropdown.Item onClick={() => history.push("/admin")}><Link to="/admin">Admin Panel</Link></Dropdown.Item>
-                  ) : null}
-                  <Dropdown.Item onClick={() => history.push("/about")}><Link to="/about">About</Link></Dropdown.Item>
-                  <Dropdown.Item onClick={() => history.push("/policies")}><Link to="/policies">Policies</Link></Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
+              <DropdownMenu page={"/"} isAdmin={user.permissions?.length > 0} isAllAdmin={isAllAdmin}/>
             </div>
             <h1 className="title">Carnegie Mellon University</h1>
             <h2 className="subtitle">Lost and Found Website</h2>

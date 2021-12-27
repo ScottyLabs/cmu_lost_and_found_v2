@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { Grid, Rail, Dropdown } from "semantic-ui-react";
+import { Grid, Rail } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import "./Admin.css";
+import DropdownMenu from "../components/DropdownMenu";
 import AddItemButton from "../components/AddItemButton";
 import TableWidget from "../components/TableWidget";
 import "semantic-ui-css/semantic.min.css";
@@ -83,7 +84,7 @@ function Admin() {
 
   // check a value in local storage to decide if account user is an admin for client-side use
   // safe from a security perspective because backend will independently check if user is an admin
-  const isAdmin = user?.permissions.includes("ALL:ADMIN") ?? false;
+  const isAllAdmin = user?.permissions.includes("ALL:ADMIN") ?? false;
 
   useEffect(() => {
     if (user && user?.permissions?.length === 0) {
@@ -110,21 +111,14 @@ function Admin() {
                 </Link>
               </Rail>
               <LogoutButton />
-              <Dropdown icon='bars' floating button className='icon teal'>
-                <Dropdown.Menu>
-                  <Dropdown.Item onClick={() => history.push("/")}><Link to="/">Home</Link></Dropdown.Item>
-                  {isAdmin ? (
-                    <Dropdown.Item onClick={() => history.push("/accounts")}><Link to="/accounts">Accounts</Link></Dropdown.Item>
-                  ) : null}
-                </Dropdown.Menu>
-              </Dropdown>
+              <DropdownMenu page={"/admin"} isAdmin={user.permissions?.length > 0} isAllAdmin={isAllAdmin}/>
             </div>
             <h1 className="title">Carnegie Mellon University</h1>
             <h2 className="subtitle">Lost and Found - Admin Panel</h2>
             <div id="add-mobile">
               <AddItemButton
                 fetchItems={fetchItems}
-                isAdmin={isAdmin}
+                isAdmin={isAllAdmin}
               ></AddItemButton>
             </div>
             <div id="admin-filter-bar">
@@ -132,7 +126,7 @@ function Admin() {
               <div id="add-desktop">
                 <AddItemButton
                   fetchItems={fetchItems}
-                  isAdmin={isAdmin}
+                  isAdmin={isAllAdmin}
                 ></AddItemButton>
               </div>
             </div>

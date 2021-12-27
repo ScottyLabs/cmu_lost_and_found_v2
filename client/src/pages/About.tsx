@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { Grid, Rail, Dropdown } from "semantic-ui-react";
+import { Grid, Rail } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import "./About.css";
 import "semantic-ui-css/semantic.min.css";
 import axios from "axios";
+import DropdownMenu from "../components/DropdownMenu";
 import LogoutButton from "../components/LogoutButton";
 import { User } from "../interface/user";
 function About() {
@@ -32,6 +33,9 @@ function About() {
     }
     getCurrentUser();
     }, []);
+
+    const isAllAdmin = user?.permissions.includes("ALL:ADMIN") ?? false;
+
     return user && (
     <Grid>
       <Grid.Row>
@@ -47,15 +51,7 @@ function About() {
                 </Link>
               </Rail>
               <LogoutButton />
-              <Dropdown icon='bars' floating button className='icon teal'>
-                <Dropdown.Menu>
-                  <Dropdown.Item onClick={() => history.push("/")}><Link to="/">Home</Link></Dropdown.Item>
-                  {user.permissions?.length > 0 ? (
-                    <Dropdown.Item onClick={() => history.push("/admin")}><Link to="/admin">Admin Panel</Link></Dropdown.Item>
-                  ) : null}
-                  <Dropdown.Item onClick={() => history.push("/policies")}><Link to="/policies">Policies</Link></Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
+              <DropdownMenu page={"/about"} isAdmin={user.permissions?.length > 0} isAllAdmin={isAllAdmin}/>
             </div>
             <h1 className="title">Carnegie Mellon University</h1>
             <h2 className="subtitle">Lost and Found - About</h2>

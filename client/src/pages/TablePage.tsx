@@ -2,7 +2,6 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { Dropdown, Grid, Message, Rail } from "semantic-ui-react";
 import { Link, useHistory } from "react-router-dom";
-import TableWidget from "../components/TableWidget";
 import SearchBar from "../components/SearchBar";
 import { Item } from "../interface/item";
 import CardWidget from "../components/CardWidget";
@@ -10,14 +9,12 @@ import "./TablePage.css";
 import FoundItemModal, {
   foundItemMessage,
   feedbackForm,
-  lostItemMessage,
 } from "../components/FoundItemModal";
 import LogoutButton from "../components/LogoutButton";
 import { User } from "../interface/user";
 
 function TablePage() {
   const history = useHistory();
-  const [items, setItems] = useState([]);
 
   //what is from the search
   const [input, setInput] = useState("");
@@ -35,8 +32,6 @@ function TablePage() {
       })
       .then(
         (res) => {
-          setItems(res.data);
-
           //added
           setItemListDefault(res.data);
           setItemList(res.data);
@@ -126,25 +121,13 @@ function TablePage() {
               <Message.Header>Have feedback?</Message.Header>
               {feedbackForm}
             </Message>
-            {/* <Message id="lost-item-message" warning size="large">
-              <Message.Header>Lost an item?</Message.Header>
-              {lostItemMessage}
-            </Message> */}
-
             <div id="admin-filter-bar">
               <SearchBar input={input} onChange={updateInput} />
-              {/* <div id="add-desktop">
-                <AddItemButton
-                  fetchItems={fetchItems}
-                  isAdmin={isAdmin}
-                ></AddItemButton>
-              </div> */}
               <FoundItemModal
                 id="found-item-modal"
                 style={{ padding: "11px 11px", width: "110px" }}
               ></FoundItemModal>
             </div>
-
             <div id="cards-widget">
               <CardWidget
                 items={itemList}
@@ -152,15 +135,6 @@ function TablePage() {
                 isArchived={false}
                 fetchItems={fetchItems}
               ></CardWidget>
-            </div>
-            <div id="table-widget">
-              <TableWidget
-                items={itemList}
-                isUser={false}
-                isArchived={false}
-                fetchItems={fetchItems}
-                user={user}
-              ></TableWidget>
             </div>
           </main>
         </Grid.Column>

@@ -15,13 +15,13 @@ const TableWidget = (props: {
   isArchived: boolean;
   fetchItems: Function;
   user: User;
+  page: number;
+  setPage: Function;
 }) => {
   
   const numberOfItems = 30;
-  const [state, setState] = useState({ page: 1 });
-
   const handlePageChange = (e: any, value: any) => {
-    setState({ page: value.activePage });
+    props.setPage(value.activePage);
   };
 
   return (
@@ -49,8 +49,8 @@ const TableWidget = (props: {
         <Table.Body>
           {props.items
             .slice(
-              (state.page - 1) * numberOfItems,
-              (state.page - 1) * numberOfItems + numberOfItems
+              (props.page - 1) * numberOfItems,
+              (props.page - 1) * numberOfItems + numberOfItems
             )
             .filter((item) => {
               return (
@@ -143,7 +143,7 @@ const TableWidget = (props: {
         </Table.Body>
       </Table>
       <Pagination
-        activePage={state.page}
+        activePage={props.page}
         totalPages={Math.ceil(props.items.length / numberOfItems)}
         onPageChange={handlePageChange}
       />

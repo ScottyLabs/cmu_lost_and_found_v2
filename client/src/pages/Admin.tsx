@@ -25,6 +25,8 @@ function Admin() {
 
   const [user, setUser] = useState<User | null>(null);
 
+  const [page, setPage] = useState(1);
+
   const fetchItems = () => {
     axios
       .post(`/api/items/all`, {
@@ -79,6 +81,7 @@ function Admin() {
     });
     setInput(input);
     setItemList(filtered);
+    setPage(1);
   };
 
   // check a value in local storage to decide if account user is an admin for client-side use
@@ -143,6 +146,8 @@ function Admin() {
                 isArchived={false}
                 fetchItems={fetchItems}
                 user={user}
+                page={page}
+                setPage={setPage}
               ></TableWidget>
             </div>
           </main>

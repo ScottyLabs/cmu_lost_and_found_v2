@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { Grid, Button, Icon, Rail } from "semantic-ui-react";
+import { Grid, Button, Icon, Rail, Dropdown } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import "semantic-ui-css/semantic.min.css";
 import axios from "axios";
@@ -51,26 +51,15 @@ function Policies() {
                 </Link>
               </Rail>
               <LogoutButton />
-              {user.permissions?.length > 0 ? (
-                <Link to="/admin">
-                  <Button icon color="teal" labelPosition="left">
-                    <Icon name="key" />
-                    Admin Panel
-                  </Button>
-                </Link>
-              ) : null}
-              <Link to="/about">
-                <Button color="orange" icon labelPosition="left">
-                <Icon name="info circle" />
-                  About
-                </Button>
-              </Link>
-              <Link to="/">
-                <Button color="red" icon labelPosition="left" onClick={() => history.push("/")}>
-                  <Icon name="list" />
-                  Homepage
-                </Button>
-              </Link>
+              <Dropdown icon='bars' floating button className='icon teal'>
+                <Dropdown.Menu>
+                  <Dropdown.Item onClick={() => history.push("/")}><Link to="/">Home</Link></Dropdown.Item>
+                  {user.permissions?.length > 0 ? (
+                    <Dropdown.Item onClick={() => history.push("/admin")}><Link to="/admin">Admin Panel</Link></Dropdown.Item>
+                  ) : null}
+                  <Dropdown.Item onClick={() => history.push("/about")}><Link to="/about">About</Link></Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
             </div>
             <h1 className="title">Carnegie Mellon University</h1>
             <h2 className="subtitle">Lost and Found - Policies</h2>

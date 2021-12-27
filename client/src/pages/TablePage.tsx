@@ -1,12 +1,11 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { Dropdown, Grid, Message, Rail, Button, Icon } from "semantic-ui-react";
+import { Dropdown, Grid, Message, Rail } from "semantic-ui-react";
 import { Link, useHistory } from "react-router-dom";
 import TableWidget from "../components/TableWidget";
 import SearchBar from "../components/SearchBar";
 import { Item } from "../interface/item";
 import CardWidget from "../components/CardWidget";
-import ItemCard from "../components/ItemCard";
 import "./TablePage.css";
 import FoundItemModal, {
   foundItemMessage,

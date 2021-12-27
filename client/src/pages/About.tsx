@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { Grid, Button, Icon, Rail, Dropdown } from "semantic-ui-react";
+import { Grid, Rail, Dropdown } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import "./About.css";
 import "semantic-ui-css/semantic.min.css";

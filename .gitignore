@@ -2,6 +2,7 @@ node_modules
 dist
 build
 .DS_Store
+.nvmrc
 api/.env
 api/controllers/credentials.json
 api/credentials.json

@@ -6,6 +6,7 @@ import "./Admin.css";
 import DropdownMenu from "../components/DropdownMenu";
 import AddItemButton from "../components/AddItemButton";
 import TableWidget from "../components/TableWidget";
+import SortedTable from "../components/SortedTable";
 import "semantic-ui-css/semantic.min.css";
 import axios from "axios";
 import { Item } from "../interface/item";
@@ -134,7 +135,7 @@ function Admin() {
               </div>
             </div>
             <div id="table">
-              <TableWidget
+              <SortedTable 
                 items={itemList}
                 isUser={true}
                 isArchived={false}
@@ -142,7 +143,16 @@ function Admin() {
                 user={user}
                 page={page}
                 setPage={setPage}
-              ></TableWidget>
+              />
+              {/* <TableWidget
+                items={itemList}
+                isUser={true}
+                isArchived={false}
+                fetchItems={fetchItems}
+                user={user}
+                page={page}
+                setPage={setPage}
+              ></TableWidget> */}
             </div>
           </main>
         </Grid.Column>

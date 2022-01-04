@@ -6,6 +6,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./AddItemButton.css";
 import { BuildingType } from "../enums/locationTypes";
+import { User } from "../interface/user";
 
 function exampleReducer(dispatchState: any, action: any) {
   switch (action.type) {
@@ -95,6 +96,7 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
   // const[descriptionError, setDescriptionError] = useState(false);
   const [buildingError, setBuildingError] = useState(false);
   const [formError, setFormError] = useState(false);
+  const [userListDefault, setUserListDefault] = useState([]);
 
   const history = useHistory();
 
@@ -214,6 +216,7 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     const offset = date.getTimezoneOffset();
     let currentDate = new Date(date.getTime() - offset * 60 * 1000);
     const dateFound = currentDate.toISOString().slice(0, 10);
@@ -229,9 +232,67 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
       params: {
           from: 'Scotty Labs Lost and Found',
           to: 'michellejli7777@gmail.com',
+=======
+    // if user, send notifcation to admins with notifs on
+    if (!props.isAdmin) {
+      // get list of all users
+      axios
+        .post(`/api/accounts/all`, { token: localStorage.getItem("lnf_token") })
+        .then(
+          (res) => {
+            setUserListDefault(res.data);
+            console.log("Retrieved users!");
+            console.log(res);
+            sendEmails();
+          },
+          (error) => {
+            console.log(error);
+            if (error?.response?.status === 401) {
+              window.localStorage.removeItem("lnf_token");
+              history.push("/login");
+            } else if (error?.response?.status === 403) {
+              history.push("/");
+            }
+          }
+        );
+    }
+
+    const sendEmails = () => {
+      let emails = ""
+      // filter user list to find admins with notifs
+      userListDefault.forEach((user: User) => {
+        console.log(user.username)
+        if (user.notif && 
+        (user.permissions.includes("ALL:ADMIN") ||
+        user.permissions.includes(`${String(building)}:ADMIN`))) 
+        {
+          emails += (user.username + ', ')
+        }
+      })
+  
+      console.log("emails " + emails)
+
+      // send emails to admins with notifs on
+      if (emails != "") {
+        let data = {
+          emails: emails,
+>>>>>>> 22ab144... Sends email notifs when a non admin adds an item
           subject: 'New Item Added: Approval Needed',
-          text: 'pls approve item'
+          text: `Please approve the new item: ${String(name)}`
+        };
+    
+        axios.post('/api/email/sendEmail', data)
+        .then(
+          (res) => {
+            console.log("Emails sent!")
+            console.log(res);
+          },
+          (error) => {
+            console.log(error.response.data);
+          }
+        )
       }
+<<<<<<< HEAD
     }).then(
         response => {
             console.log(response)
@@ -241,6 +302,9 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
         }
     )
 >>>>>>> c46fb36... Basic mailgun api call - no key
+=======
+    }
+>>>>>>> 22ab144... Sends email notifs when a non admin adds an item
 
     uploadImage(imageObject).then(
       (res) => {

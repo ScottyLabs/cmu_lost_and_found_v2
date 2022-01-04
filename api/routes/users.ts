@@ -13,7 +13,7 @@ const router = Router();
  *                      Get All Users - "POST /api/accounts/all"
  ******************************************************************************/
 
-router.post("/all", isAdmin, async (req: Request, res: Response) => {
+router.post("/all", isUser, async (req: Request, res: Response) => {
   User.find((err, docs) => {
     if (err) {
       console.log(err);

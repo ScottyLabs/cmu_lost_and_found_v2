@@ -15,7 +15,6 @@ import { useHistory } from "react-router-dom";
 function Accounts() {
 
   document.title = "Lost and Found User Permissions";
-  const [users, setUsers] = useState([]);
   //what is from the search
   const [input, setInput] = useState("");
   //unfiltered list
@@ -32,7 +31,6 @@ function Accounts() {
         (res) => {
           console.log("Retrieved users!");
           console.log(res);
-          setUsers(res.data);
           //added
           setUserListDefault(res.data);
           setUserList(res.data);

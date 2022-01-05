@@ -214,24 +214,6 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
       setFormError(false);
     }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-    const offset = date.getTimezoneOffset();
-    let currentDate = new Date(date.getTime() - offset * 60 * 1000);
-    const dateFound = currentDate.toISOString().slice(0, 10);
-    const timeFound = currentDate.toISOString().slice(11, 16);
-=======
-    axios({
-      method: 'POST',
-      url: `https://api.mailgun.net/v3/scottylabs.org/messages`,
-      auth: {
-          username: 'api',
-          password: 'key'
-      },
-      params: {
-          from: 'Scotty Labs Lost and Found',
-          to: 'michellejli7777@gmail.com',
-=======
     // if user, send notifcation to admins with notifs on
     if (!props.isAdmin) {
       // get list of all users
@@ -272,14 +254,8 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
       if (emails.length > 0) {
         let data = {
           emails: emails,
-<<<<<<< HEAD
->>>>>>> 22ab144... Sends email notifs when a non admin adds an item
-          subject: 'New Item Added: Approval Needed',
-          text: `Please approve the new item: ${String(name)}`
-=======
           subject: "New Item Added: Approval Needed",
           text: `Please approve the new item: ${String(name)}`,
->>>>>>> 196374a... fix empty username list issue
         };
 
         axios.post("/api/email/sendEmail", data).then(
@@ -292,23 +268,11 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
           }
         );
       }
-<<<<<<< HEAD
-<<<<<<< HEAD
-    }).then(
-        response => {
-            console.log(response)
-        },
-        reject => {
-            console.log(reject)
-        }
-    )
->>>>>>> c46fb36... Basic mailgun api call - no key
-=======
-    }
->>>>>>> 22ab144... Sends email notifs when a non admin adds an item
-=======
     };
->>>>>>> 196374a... fix empty username list issue
+    const offset = date.getTimezoneOffset();
+    let currentDate = new Date(date.getTime() - offset * 60 * 1000);
+    const dateFound = currentDate.toISOString().slice(0, 10);
+    const timeFound = currentDate.toISOString().slice(11, 16);
 
     uploadImage(imageObject).then(
       (res) => {

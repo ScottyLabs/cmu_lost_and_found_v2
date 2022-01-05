@@ -96,7 +96,6 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
   // const[descriptionError, setDescriptionError] = useState(false);
   const [buildingError, setBuildingError] = useState(false);
   const [formError, setFormError] = useState(false);
-  const [userListDefault, setUserListDefault] = useState([]);
 
   const history = useHistory();
 
@@ -240,10 +239,9 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
         .post(`/api/accounts/all`, { token: localStorage.getItem("lnf_token") })
         .then(
           (res) => {
-            setUserListDefault(res.data);
             console.log("Retrieved users!");
             console.log(res);
-            sendEmails();
+            sendEmails(res.data);
           },
           (error) => {
             console.log(error);
@@ -257,41 +255,44 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
         );
     }
 
-    const sendEmails = () => {
-      let emails = ""
+    const sendEmails = (userList: User[]) => {
       // filter user list to find admins with notifs
-      userListDefault.forEach((user: User) => {
-        console.log(user.username)
-        if (user.notif && 
-        (user.permissions.includes("ALL:ADMIN") ||
-        user.permissions.includes(`${String(building)}:ADMIN`))) 
-        {
-          emails += (user.username + ', ')
-        }
-      })
-  
-      console.log("emails " + emails)
+      let emails: string[] = [];
+      userList.forEach((user: User) => {
+        console.log(user.username);
+        if (
+          user.notif &&
+          (user.permissions.includes("ALL:ADMIN") ||
+            user.permissions.includes(`${String(building)}:ADMIN`))
+        )
+          emails.push(user.username);
+      });
 
       // send emails to admins with notifs on
-      if (emails != "") {
+      if (emails.length > 0) {
         let data = {
           emails: emails,
+<<<<<<< HEAD
 >>>>>>> 22ab144... Sends email notifs when a non admin adds an item
           subject: 'New Item Added: Approval Needed',
           text: `Please approve the new item: ${String(name)}`
+=======
+          subject: "New Item Added: Approval Needed",
+          text: `Please approve the new item: ${String(name)}`,
+>>>>>>> 196374a... fix empty username list issue
         };
-    
-        axios.post('/api/email/sendEmail', data)
-        .then(
+
+        axios.post("/api/email/sendEmail", data).then(
           (res) => {
-            console.log("Emails sent!")
+            console.log("Emails sent!");
             console.log(res);
           },
           (error) => {
             console.log(error.response.data);
           }
-        )
+        );
       }
+<<<<<<< HEAD
 <<<<<<< HEAD
     }).then(
         response => {
@@ -305,6 +306,9 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
 =======
     }
 >>>>>>> 22ab144... Sends email notifs when a non admin adds an item
+=======
+    };
+>>>>>>> 196374a... fix empty username list issue
 
     uploadImage(imageObject).then(
       (res) => {

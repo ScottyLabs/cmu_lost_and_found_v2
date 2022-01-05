@@ -1,6 +1,5 @@
 import axios from "axios";
 import { Request, Response, Router } from "express";
-import e = require("express");
 
 const router = Router();
 
@@ -19,7 +18,7 @@ router.post("/sendEmail", async (req: Request, res: Response) => {
         },
         params: {
             from: 'Scotty Labs Lost and Found <lostandfound@scottylabs.org>',
-            to: emails,
+            to: emails.join(","),
             subject: subject,
             text: text
         }

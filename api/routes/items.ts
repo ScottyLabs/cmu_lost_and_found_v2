@@ -71,7 +71,11 @@ router.post("/add", isUser, async (req: Request, res: Response) => {
     publicDisplay: publicDisplay,
     identification: identification,
     notes: notes,
+<<<<<<< HEAD
     username: user.username
+=======
+    modified: [user.username],
+>>>>>>> 8395ff4... fix user notif settings
   });
   item.save((err) => {
     if (err) {
@@ -273,6 +277,7 @@ router.post("/editItem", isUser, async (req: Request, res: Response) => {
         const updatedItem = await Item.findByIdAndUpdate(
           id,
           {
+<<<<<<< HEAD
             status: status,
             token: token,
             dateFound: dateFound,
@@ -286,6 +291,25 @@ router.post("/editItem", isUser, async (req: Request, res: Response) => {
             identification: identification,
             notes: notes,
             username: user.username
+=======
+            $set: {
+              status: status,
+              token: token,
+              dateFound: dateFound,
+              timeFound: timeFound,
+              name: name,
+              whereFound: whereFound,
+              building: building,
+              description: description,
+              image: image,
+              imagePermission: imagePermission,
+              identification: identification,
+              notes: notes,
+            },
+            $push: {
+              modified: user.username,
+            },
+>>>>>>> 8395ff4... fix user notif settings
           },
           { runValidators: true, useFindAndModify: false }
         );

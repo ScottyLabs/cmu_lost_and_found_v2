@@ -95,6 +95,7 @@ function AddUser(props: { fetchUsers: Function }) {
         token: localStorage.getItem("lnf_token"),
         username: username,
         permissions: permissions,
+        notif: false,
       })
       .then(
         (res) => {

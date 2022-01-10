@@ -16,7 +16,7 @@ router.post("/sendEmail", async (req: Request, res: Response) => {
       from: "ScottyLabs Lost and Found <lostandfound@scottylabs.org>",
       to: emails.join(","),
       subject: subject,
-      text: text,
+      html: text,
     },
   }).then(
     (response) => {

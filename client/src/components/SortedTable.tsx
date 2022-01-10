@@ -2,6 +2,7 @@ import _ from 'lodash';
 import React, { useState } from 'react';
 import { Table, Pagination } from 'semantic-ui-react';
 import { Item } from "../interface/item";
+import "./TableWidget.css";
 import ImageModal from "./ImageModal";
 import ApproveSwitch from "./ApproveSwitch";
 import EditButton from "./EditItem";
@@ -55,41 +56,41 @@ const SortedTable = (props: {
 
   return (
     <div>
-      <Table sortable celled fixed>
+      <Table sortable celled className="lf_table">
         <Table.Header>
           <Table.Row>
-            <Table.HeaderCell>When Found</Table.HeaderCell>
-            <Table.HeaderCell>Name</Table.HeaderCell>
-            <Table.HeaderCell>Where Found</Table.HeaderCell>
-            <Table.HeaderCell>Description</Table.HeaderCell>
-            <Table.HeaderCell>Building</Table.HeaderCell>
-            <Table.HeaderCell>Image</Table.HeaderCell>
+            <Table.HeaderCell width={1} className="unclickable">When Found</Table.HeaderCell>
+            <Table.HeaderCell className="unclickable">Name</Table.HeaderCell>
+            <Table.HeaderCell className="unclickable">Where Found</Table.HeaderCell>
+            <Table.HeaderCell className="unclickable">Description</Table.HeaderCell>
+            <Table.HeaderCell className="unclickable">Building</Table.HeaderCell>
+            <Table.HeaderCell className="unclickable">Image</Table.HeaderCell>
             {props.isUser ? (
               <Table.HeaderCell
-                sorted={column === 'public' ? direction : null}
-                onClick={() => dispatch({ type: 'CHANGE_SORT', column: 'public' })}
+                sorted={column === 'publicDisplay' ? direction : null}
+                onClick={() => dispatch({ type: 'CHANGE_SORT', column: 'publicDisplay' })}
               >
                 Make Public
               </Table.HeaderCell>
             ) : null}
             {props.isUser ? (
               <Table.HeaderCell
-                sorted={column === 'available' ? direction : null}
-                onClick={() => dispatch({ type: 'CHANGE_SORT', column: 'available' })}
+                sorted={column === 'status' ? direction : null}
+                onClick={() => dispatch({ type: 'CHANGE_SORT', column: 'status' })}
               >
                 Available For Pickup
               </Table.HeaderCell>
             ) : null}
-            {props.isUser ? <Table.HeaderCell>Edit</Table.HeaderCell> : null}
+            {props.isUser ? <Table.HeaderCell className="unclickable">Edit</Table.HeaderCell> : null}
             {props.isUser ? (
               <Table.HeaderCell
-                sorted={column === 'approve' ? direction : null}
-                onClick={() => dispatch({ type: 'CHANGE_SORT', column: 'approve' })}
+                sorted={column === 'approved' ? direction : null}
+                onClick={() => dispatch({ type: 'CHANGE_SORT', column: 'approved' })}
               >
                 Approve
               </Table.HeaderCell>
             ) : null}
-            <Table.HeaderCell>Last Modified By</Table.HeaderCell>
+            <Table.HeaderCell className="unclickable">Last Modified By</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
         <Table.Body>

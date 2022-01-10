@@ -1,5 +1,11 @@
 table.ui.table.lf_table {
     scroll-behavior: auto;
-    /* width: 100%; */
-    /* background-color: blue; */
 }  
+
+.ui.sortable.table .unclickable {
+    cursor: default;
+}
+
+.ui.sortable.table .unclickable:hover {
+    background-color: #f9fafb;
+}

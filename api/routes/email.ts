@@ -13,7 +13,7 @@ router.post("/sendEmail", async (req: Request, res: Response) => {
       password: process.env.MAILGUN_KEY,
     },
     params: {
-      from: "Scotty Labs Lost and Found <lostandfound@scottylabs.org>",
+      from: "ScottyLabs Lost and Found <lostandfound@scottylabs.org>",
       to: emails.join(","),
       subject: subject,
       text: text,

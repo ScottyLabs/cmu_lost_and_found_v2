@@ -255,7 +255,7 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
         let data = {
           emails: emails,
           subject: "New Item Added: Approval Needed",
-          text: `Please approve the new item: ${String(name)}`,
+          text: `<p>Please approve the new item: ${String(name)}\nItem description: ${String(description)}\nBuilding: ${String(building)}\nVisit https://lostandfound.andrew.cmu.edu/admin to approve.</p>`,
         };
 
         axios.post("/api/email/sendEmail", data).then(

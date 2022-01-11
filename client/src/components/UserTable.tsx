@@ -24,20 +24,23 @@ const UserTable = (props: { users: Array<User>; fetchUsers: Function }) => {
       </Table.Header>
       <Table.Body>
         {props.users.map((user: User) => {
-          const isAdmin = user.permissions.includes(
-            `${String(BuildingType.ALL)}:${String(PermissionType.ADMIN)}`
+          const isAdmin = user.permissions.some((perm) =>
+            perm.endsWith(PermissionType.ADMIN)
           );
           return (
             <Table.Row key={user.username}>
-              <Table.Cell>
-                {user.username}
-              </Table.Cell>
+              <Table.Cell>{user.username}</Table.Cell>
               <Table.Cell>
                 {user.permissions.map((perm, index) => {
                   const [building, action] = perm.split(":");
                   /* blue for users, yellow for admin with access to all, green for */
                   /* admin with access to specific buildings */
-                  const color = action !== "ADMIN" ? "blue" : building !== "ALL" ? "green" : "yellow";
+                  const color =
+                    action !== PermissionType.ADMIN
+                      ? "blue"
+                      : building !== BuildingType.ALL
+                      ? "green"
+                      : "yellow";
                   return (
                     <Label color={color} image>
                       {building}
@@ -47,17 +50,16 @@ const UserTable = (props: { users: Array<User>; fetchUsers: Function }) => {
                 })}
               </Table.Cell>
               <Table.Cell>
-                <EditPermissions
-                  user={user}
-                  fetchUsers={props.fetchUsers}
-                />
+                <EditPermissions user={user} fetchUsers={props.fetchUsers} />
               </Table.Cell>
               <Table.Cell>
-                <NotificationSwitch
-                  username={user.username}
-                  notif={user.notif}
-                  fetchUsers={props.fetchUsers}
-                />
+                {isAdmin && (
+                  <NotificationSwitch
+                    username={user.username}
+                    notif={user.notif}
+                    fetchUsers={props.fetchUsers}
+                  />
+                )}
               </Table.Cell>
               <Table.Cell>
                 <DeleteUser

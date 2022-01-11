@@ -7,6 +7,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import "./AddItemButton.css";
 import { BuildingType } from "../enums/locationTypes";
 import { User } from "../interface/user";
+import emailbody from "../templates/html/emailbody";
 
 function exampleReducer(dispatchState: any, action: any) {
   switch (action.type) {
@@ -252,50 +253,20 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
 
       // send emails to admins with notifs on
       if (emails.length > 0) {
+        let subheaderTitle = "A New Item Has Been Added For Approval";
+        let subheaderContent = `<b>Item Name:</b> ${String(
+          name
+        )}<br><b>Item Description:</b> ${String(
+          description
+        )}<br><b>Building:</b> ${String(
+          building
+        )}<br>Visit the <a href=https://lostandfound.andrew.cmu.edu/admin>CMU Lost and Found site</a> to approve.`;
         let data = {
           emails: emails,
           subject: "New Item Added: Approval Needed",
-          text: `<html>
-          <!-- / Header -->
-          <table class="container header" border="0" cellpadding="0" cellspacing="0" width="620" style="width: 620px;">
-              <tr>
-                  <td style="padding: 30px 0 30px 0; border-bottom: solid 1px #eeeeee;" align="left">
-                          <img width="40em" src="https://i.imgur.com/ZkiYCGx.jpg" alt="Logo" style="vertical-align: middle;">	
-                          <!-- <span style="margin: 0 0 0 5px; vertical-align: middle; font-weight: 700;" class="suffix"></span> -->
-                      </a>
-                  </td>
-              </tr>
-          </table>
-          <!-- /// Header -->
-
-          <!-- / Hero subheader -->
-          <table class="container hero-subheader" border="0" cellpadding="0" cellspacing="0" width="620" style="width: 620px;">
-              <tr>
-                  <td class="hero-subheader__title" style="font-size: 28px; font-weight: bold; padding: 60px 0 15px 0;" align="left">A New Item Has Been Added</td>
-              </tr>
-
-              <tr>
-                  <td class="plane-preamble hero-subheader__content" style="font-size: 18px; line-height: 32px; color: #666666;" align="left">
-                    <strong>Item Name:</strong> ${String(name)}<br>
-                    <strong>Item Description:</strong> ${String(description)}<br>
-                    <strong>Building:</strong> ${String(building)}<br>
-                    Visit the <a href=https://lostandfound.andrew.cmu.edu/admin>CMU Lost and Found site</a> to approve.
-                  </td>
-              </tr>
-          </table>
-          <!-- /// Hero subheader -->
-
-          <!-- / Hero footer -->
-          <table class="container hero-subheader" border="0" cellpadding="0" cellspacing="0" width="620" style="width: 620px;">
-              <tr>
-                  <td class="hero-subheader__content" style="font-size: 18px; line-height: 32px; color: #666666; padding-top: 0px;" align="left">
-                      <p style="margin-top:24px">Thank you,</p>
-                      <p>ScottyLabs Lost and Found</p>
-                  </td>
-              </tr>
-          </table>
-          <!-- /// Hero subheader -->
-          </html>`,
+          text: emailbody
+            .replace("{subheader_title}", subheaderTitle)
+            .replace("{subheader_content}", subheaderContent),
         };
 
         axios.post("/api/email/sendEmail", data).then(

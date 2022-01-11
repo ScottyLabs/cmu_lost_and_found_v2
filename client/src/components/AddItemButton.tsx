@@ -8,6 +8,7 @@ import "./AddItemButton.css";
 import { BuildingType } from "../enums/locationTypes";
 import { User } from "../interface/user";
 import emailbody from "../templates/html/emailbody";
+import { PermissionType } from "../enums/permissionType";
 
 function exampleReducer(dispatchState: any, action: any) {
   switch (action.type) {
@@ -216,7 +217,7 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
     }
 
     // if user, send notifcation to admins with notifs on
-    if (!props.isAdmin) {
+    // if (!props.isAdmin) {
       // get list of all users
       axios
         .post(`/api/accounts/all`, { token: localStorage.getItem("lnf_token") })
@@ -236,17 +237,16 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
             }
           }
         );
-    }
+    // }
 
     const sendEmails = (userList: User[]) => {
       // filter user list to find admins with notifs
       let emails: string[] = [];
       userList.forEach((user: User) => {
-        console.log(user.username);
         if (
           user.notif &&
-          (user.permissions.includes("ALL:ADMIN") ||
-            user.permissions.includes(`${String(building)}:ADMIN`))
+          (user.permissions.includes(`${BuildingType.ALL}:${PermissionType.ADMIN}`) ||
+            user.permissions.includes(`${building}:${PermissionType.ADMIN}`))
         )
           emails.push(user.username);
       });

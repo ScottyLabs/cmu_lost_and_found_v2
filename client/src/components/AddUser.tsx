@@ -56,13 +56,13 @@ function AddUser(props: { fetchUsers: Function }) {
     e.preventDefault();
     var compare = -1;
     for (let i = 0; i < permissions.length; i++) {
-      if (permissions[i].includes("ALL:ADMIN")) {
+      if (permissions[i].includes(`${BuildingType.ALL}:${PermissionType.ADMIN}`)) {
         if (compare == -1) compare = 2;
         else {
           let res = window.confirm(alertText);
           if (!res) return;
         }
-      } else if (permissions[i].includes("ADMIN")) {
+      } else if (permissions[i].includes(PermissionType.ADMIN)) {
         if (compare == -1 || compare == 1) compare = 1;
         else {
           let res = window.confirm(alertText);
@@ -143,8 +143,8 @@ function AddUser(props: { fetchUsers: Function }) {
               {permissions.map((perm, index) => {
                 const [building, action] = perm.split(":");
                 const color =
-                  action === "ADMIN"
-                    ? building == "ALL"
+                  action === PermissionType.ADMIN
+                    ? building == BuildingType.ALL
                       ? "yellow"
                       : "green"
                     : "blue";

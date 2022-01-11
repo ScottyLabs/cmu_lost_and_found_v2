@@ -54,6 +54,7 @@ export default class UserController {
   public static createUser(
     username: string,
     permissions: string[],
+    notif: boolean,
     callback: (err: string, user: IUser) => void
   ) {
     username = username.toLowerCase();
@@ -62,6 +63,7 @@ export default class UserController {
     let u = new User();
     u.username = username;
     u.permissions = permissions;
+    u.notif = notif;
     u.save(function (err: any, user: IUser) {
       if (err) {
         // Duplicate key error codes

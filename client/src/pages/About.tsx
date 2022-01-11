@@ -19,7 +19,7 @@ function About() {
             if (res.data) {
               setUser(res.data);
             } else {
-              setUser({ username: "user", permissions: [] });
+              setUser({ username: "user", permissions: [], notif: false });
             }
           }
         )

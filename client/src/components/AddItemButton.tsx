@@ -6,6 +6,8 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./AddItemButton.css";
 import { BuildingType } from "../enums/locationTypes";
+import { User } from "../interface/user";
+import emailbody from "../templates/html/emailbody";
 
 function exampleReducer(dispatchState: any, action: any) {
   switch (action.type) {
@@ -213,6 +215,71 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
       setFormError(false);
     }
 
+    // if user, send notifcation to admins with notifs on
+    if (!props.isAdmin) {
+      // get list of all users
+      axios
+        .post(`/api/accounts/all`, { token: localStorage.getItem("lnf_token") })
+        .then(
+          (res) => {
+            console.log("Retrieved users!");
+            console.log(res);
+            sendEmails(res.data);
+          },
+          (error) => {
+            console.log(error);
+            if (error?.response?.status === 401) {
+              window.localStorage.removeItem("lnf_token");
+              history.push("/login");
+            } else if (error?.response?.status === 403) {
+              history.push("/");
+            }
+          }
+        );
+    }
+
+    const sendEmails = (userList: User[]) => {
+      // filter user list to find admins with notifs
+      let emails: string[] = [];
+      userList.forEach((user: User) => {
+        console.log(user.username);
+        if (
+          user.notif &&
+          (user.permissions.includes("ALL:ADMIN") ||
+            user.permissions.includes(`${String(building)}:ADMIN`))
+        )
+          emails.push(user.username);
+      });
+
+      // send emails to admins with notifs on
+      if (emails.length > 0) {
+        let subheaderTitle = "A New Item Has Been Added For Approval";
+        let subheaderContent = `<b>Item Name:</b> ${String(
+          name
+        )}<br><b>Item Description:</b> ${String(
+          description
+        )}<br><b>Building:</b> ${String(
+          building
+        )}<br>Visit the <a href=https://lostandfound.andrew.cmu.edu/admin>CMU Lost and Found site</a> to approve.`;
+        let data = {
+          emails: emails,
+          subject: "New Item Added: Approval Needed",
+          text: emailbody
+            .replace("{subheader_title}", subheaderTitle)
+            .replace("{subheader_content}", subheaderContent),
+        };
+
+        axios.post("/api/email/sendEmail", data).then(
+          (res) => {
+            console.log("Emails sent!");
+            console.log(res);
+          },
+          (error) => {
+            console.log(error.response.data);
+          }
+        );
+      }
+    };
     const offset = date.getTimezoneOffset();
     let currentDate = new Date(date.getTime() - offset * 60 * 1000);
     const dateFound = currentDate.toISOString().slice(0, 10);

@@ -94,10 +94,11 @@ function isAdmin(req: Request, res: Response, next: NextFunction) {
 // });
 
 router.post("/create", isAdmin, (req, res) => {
-  let { username, permissions } = req.body;
+  let { username, permissions, notif } = req.body;
   UserController.createUser(
     username,
     permissions,
+    notif,
     (err: string, user: IUser) => {
       if (err != null) {
         return res.status(401).send(err);

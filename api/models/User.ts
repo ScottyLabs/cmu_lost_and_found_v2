@@ -23,6 +23,7 @@ export interface IUser extends Document {
   password: string;
   isAdmin: boolean;
   permissions: string[];
+  notif: boolean;
   checkPassword: (password: string) => boolean;
   generateAuthToken: () => string;
 }
@@ -44,6 +45,9 @@ const UserSchema = new Schema({
   },
   password: {
     type: String,
+  },
+  notif: {
+    type: Boolean,
   },
   permissions: [
     {

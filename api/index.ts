@@ -9,6 +9,7 @@ import UserRouter from "./routes/users";
 import AuthRouter from "./routes/auth";
 import ItemRouter from "./routes/items";
 import BuildingRouter from "./routes/buildings";
+import EmailRouter from "./routes/email";
 import { BuildingType } from "./enums/locationTypes";
 import Building from "./models/Building";
 
@@ -56,6 +57,7 @@ app.use("/api/accounts", UserRouter);
 app.use("/api/auth", AuthRouter);
 app.use("/api/items", ItemRouter);
 app.use("/api/buildings", BuildingRouter);
+app.use("/api/email", EmailRouter);
 
 // handle undefined routes
 app.use("*", (req, res, next) => {

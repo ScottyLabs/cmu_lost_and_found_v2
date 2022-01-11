@@ -217,7 +217,7 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
     }
 
     // if user, send notifcation to admins with notifs on
-    // if (!props.isAdmin) {
+    if (!props.isAdmin) {
       // get list of all users
       axios
         .post(`/api/accounts/all`, { token: localStorage.getItem("lnf_token") })
@@ -237,7 +237,7 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
             }
           }
         );
-    // }
+    }
 
     const sendEmails = (userList: User[]) => {
       // filter user list to find admins with notifs

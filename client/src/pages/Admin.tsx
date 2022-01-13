@@ -13,6 +13,8 @@ import { Item } from "../interface/item";
 import SearchBar from "../components/SearchBar";
 import LogoutButton from "../components/LogoutButton";
 import { User } from "../interface/user";
+import { BuildingType } from "../enums/locationTypes";
+import { PermissionType } from "../enums/permissionType";
 
 function Admin() {
   document.title = "CMU Lost and Found";
@@ -59,7 +61,7 @@ function Admin() {
         if (res.data) {
           setUser(res.data);
         } else {
-          setUser({ username: "user", permissions: [] });
+          setUser({ username: "user", permissions: [], notif: false });
         }
       }
     )
@@ -88,7 +90,7 @@ function Admin() {
 
   // check a value in local storage to decide if account user is an admin for client-side use
   // safe from a security perspective because backend will independently check if user is an admin
-  const isAllAdmin = user?.permissions.includes("ALL:ADMIN") ?? false;
+  const isAllAdmin = user?.permissions.includes(`${BuildingType.ALL}:${PermissionType.ADMIN}`) ?? false;
 
   useEffect(() => {
     if (user && user?.permissions?.length === 0) {

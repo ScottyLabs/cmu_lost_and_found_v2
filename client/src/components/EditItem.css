@@ -7,6 +7,10 @@
     width: 60%;
 }
 
+.react-datepicker-popper {
+    z-index: 1001;
+}
+
 div .header {
     text-align: center;
 }

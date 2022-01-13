@@ -1,14 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useHistory } from "react-router";
-import {
-  Button,
-  Grid,
-  Modal,
-  Form,
-  Label,
-  Icon,
-} from "semantic-ui-react";
+import { Button, Grid, Modal, Form, Label, Icon } from "semantic-ui-react";
 import { BuildingType } from "../enums/locationTypes";
 import { PermissionType } from "../enums/permissionType";
 import "./AddUser.css";
@@ -56,37 +49,30 @@ function AddUser(props: { fetchUsers: Function }) {
   const [building, setBuilding] = useState("");
   const [action, setAction] = useState("");
 
-  const alertText = "There are multiple overlapping permissions associated with this user. Do you still wish to proceed?"
+  const alertText =
+    "There are multiple overlapping permissions associated with this user. Do you still wish to proceed?";
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault(); 
-    var compare = -1
+    e.preventDefault();
+    var compare = -1;
     for (let i = 0; i < permissions.length; i++) {
-      if (permissions[i].includes("ALL:ADMIN")) {
-        if (compare == -1) 
-          compare = 2
+      if (permissions[i].includes(`${BuildingType.ALL}:${PermissionType.ADMIN}`)) {
+        if (compare == -1) compare = 2;
         else {
           let res = window.confirm(alertText);
-          if (!res)
-            return;
+          if (!res) return;
         }
-      }
-      else if (permissions[i].includes("ADMIN")) {
-        if (compare == -1 || compare == 1) 
-          compare = 1
+      } else if (permissions[i].includes(PermissionType.ADMIN)) {
+        if (compare == -1 || compare == 1) compare = 1;
         else {
           let res = window.confirm(alertText);
-          if (!res)
-            return;
+          if (!res) return;
         }
-      }
-      else {
-        if (compare == -1 || compare == 0) 
-          compare = 0
+      } else {
+        if (compare == -1 || compare == 0) compare = 0;
         else {
           let res = window.confirm(alertText);
-          if (!res)
-            return;
+          if (!res) return;
         }
       }
     }
@@ -95,6 +81,7 @@ function AddUser(props: { fetchUsers: Function }) {
         token: localStorage.getItem("lnf_token"),
         username: username,
         permissions: permissions,
+        notif: false,
       })
       .then(
         (res) => {
@@ -156,9 +143,11 @@ function AddUser(props: { fetchUsers: Function }) {
               {permissions.map((perm, index) => {
                 const [building, action] = perm.split(":");
                 const color =
-                  action === "ADMIN"
-                    ? "yellow"
-                    : "blue"
+                  action === PermissionType.ADMIN
+                    ? building == BuildingType.ALL
+                      ? "yellow"
+                      : "green"
+                    : "blue";
                 return (
                   <Label
                     color={color}

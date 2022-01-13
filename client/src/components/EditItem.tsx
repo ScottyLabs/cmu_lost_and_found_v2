@@ -9,6 +9,7 @@ import "./EditItem.css";
 import { BuildingType } from "../enums/locationTypes";
 import DeleteButton from "./DeleteButton";
 import { User } from "../interface/user";
+import { PermissionType } from "../enums/permissionType";
 
 function exampleReducer(dispatchState: any, action: any) {
   switch (action.type) {
@@ -368,7 +369,7 @@ function EditItem(props: {
                   disabled={
                     props.item.approved &&
                     !props.user.permissions.some((value) =>
-                      value.includes("ADMIN")
+                      value.includes(PermissionType.ADMIN)
                     )
                   }
                 ></DeleteButton>

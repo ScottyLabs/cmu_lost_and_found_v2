@@ -1,4 +1,4 @@
-import { Button, Grid, Rail } from "semantic-ui-react";
+import { Grid, Rail } from "semantic-ui-react";
 import "./Accounts.css";
 import "semantic-ui-css/semantic.min.css";
 import axios from "axios";
@@ -11,11 +11,12 @@ import SearchBar from "../components/SearchBar";
 import AddUser from "../components/AddUser";
 import LogoutButton from "../components/LogoutButton";
 import { useHistory } from "react-router-dom";
+import { BuildingType } from "../enums/locationTypes";
+import { PermissionType } from "../enums/permissionType";
 
 function Accounts() {
 
   document.title = "Lost and Found User Permissions";
-  const [users, setUsers] = useState([]);
   //what is from the search
   const [input, setInput] = useState("");
   //unfiltered list
@@ -32,7 +33,6 @@ function Accounts() {
         (res) => {
           console.log("Retrieved users!");
           console.log(res);
-          setUsers(res.data);
           //added
           setUserListDefault(res.data);
           setUserList(res.data);
@@ -57,7 +57,7 @@ function Accounts() {
         if (res.data) {
           setUser(res.data);
         } else {
-          setUser({ username: "user", permissions: [] });
+          setUser({ username: "user", permissions: [], notif: false });
         }
       }
     )
@@ -70,7 +70,7 @@ function Accounts() {
   }, []);
 
   useEffect(() => {
-    if (user && !user?.permissions?.includes("ALL:ADMIN")) {
+    if (user && !user?.permissions?.includes(`${BuildingType.ALL}:${PermissionType.ADMIN}`)) {
       history.push("/");
     }
   }, [user]);
@@ -84,7 +84,7 @@ function Accounts() {
     setUserList(filtered);
   };
 
-  const isAllAdmin = user?.permissions.includes("ALL:ADMIN") ?? false;
+  const isAllAdmin = user?.permissions.includes(`${BuildingType.ALL}:${PermissionType.ADMIN}`) ?? false;
 
   return user && (
     <Grid>

@@ -7,6 +7,7 @@ import DeleteUser from "../components/DeleteUser";
 import { BuildingType } from "../enums/locationTypes";
 import { PermissionType } from "../enums/permissionType";
 import EditPermissions from "./EditPermissions";
+import NotificationSwitch from "./NotificationSwitch";
 
 const UserTable = (props: { users: Array<User>; fetchUsers: Function }) => {
   console.log("Creating table");
@@ -17,25 +18,29 @@ const UserTable = (props: { users: Array<User>; fetchUsers: Function }) => {
           <Table.HeaderCell>Username</Table.HeaderCell>
           <Table.HeaderCell>Permissions</Table.HeaderCell>
           <Table.HeaderCell>Edit Permissions</Table.HeaderCell>
+          <Table.HeaderCell>Notifications</Table.HeaderCell>
           <Table.HeaderCell>Delete</Table.HeaderCell>
         </Table.Row>
       </Table.Header>
       <Table.Body>
         {props.users.map((user: User) => {
-          const isAdmin = user.permissions.includes(
-            `${String(BuildingType.ALL)}:${String(PermissionType.ADMIN)}`
+          const isAdmin = user.permissions.some((perm) =>
+            perm.endsWith(PermissionType.ADMIN)
           );
           return (
             <Table.Row key={user.username}>
-              <Table.Cell>
-                {user.username}
-              </Table.Cell>
+              <Table.Cell>{user.username}</Table.Cell>
               <Table.Cell>
                 {user.permissions.map((perm, index) => {
                   const [building, action] = perm.split(":");
                   /* blue for users, yellow for admin with access to all, green for */
                   /* admin with access to specific buildings */
-                  const color = action !== "ADMIN" ? "blue" : building !== "ALL" ? "green" : "yellow";
+                  const color =
+                    action !== PermissionType.ADMIN
+                      ? "blue"
+                      : building !== BuildingType.ALL
+                      ? "green"
+                      : "yellow";
                   return (
                     <Label color={color} image>
                       {building}
@@ -45,10 +50,16 @@ const UserTable = (props: { users: Array<User>; fetchUsers: Function }) => {
                 })}
               </Table.Cell>
               <Table.Cell>
-                <EditPermissions
-                  user={user}
-                  fetchUsers={props.fetchUsers}
-                />
+                <EditPermissions user={user} fetchUsers={props.fetchUsers} />
+              </Table.Cell>
+              <Table.Cell>
+                {isAdmin && (
+                  <NotificationSwitch
+                    username={user.username}
+                    notif={user.notif}
+                    fetchUsers={props.fetchUsers}
+                  />
+                )}
               </Table.Cell>
               <Table.Cell>
                 <DeleteUser

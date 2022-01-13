@@ -13,7 +13,7 @@ const router = Router();
  *                      Get All Users - "POST /api/accounts/all"
  ******************************************************************************/
 
-router.post("/all", isAdmin, async (req: Request, res: Response) => {
+router.post("/all", isUser, async (req: Request, res: Response) => {
   User.find((err, docs) => {
     if (err) {
       console.log(err);
@@ -91,6 +91,30 @@ router.post("/delete", isAdmin, async (req: Request, res: Response) => {
     }
     return res.status(200).send({ msg: raw });
   });
+});
+
+/**
+ * Update notification status
+ * {
+ *  username: "bob",
+ *  notif: true or false
+ * }
+ */
+ router.post("/updateNotif", async (req: Request, res: Response) => {
+  let { username, notif } = req.body;
+  const toUpdate = await User.findOneByUsername(username);
+  if (toUpdate) {
+    const updated = await User.findByIdAndUpdate(
+      toUpdate._id,
+        {
+          notif: notif,
+        },
+        { runValidators: true, useFindAndModify: false, new: true }
+      );
+      return res.status(200).send({ msg: updated });
+  } else {
+      return res.status(404).send(new Error("User not found"));
+  }
 });
 
 export default router;

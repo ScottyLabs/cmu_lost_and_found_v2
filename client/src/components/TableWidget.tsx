@@ -10,6 +10,7 @@ import { User } from "../interface/user";
 import PublicDisplaySwitch from "./PublicDisplaySwitch";
 import { BuildingType } from "../enums/locationTypes";
 import { PermissionType } from "../enums/permissionType";
+import HistoryAccordion from "./HistoryAccordion";
 
 const TableWidget = (props: {
   items: Array<Item>;
@@ -20,11 +21,12 @@ const TableWidget = (props: {
   page: number;
   setPage: Function;
 }) => {
-  
   const numberOfItems = 30;
   const handlePageChange = (e: any, value: any) => {
     props.setPage(value.activePage);
   };
+
+  console.log(props.items);
 
   return (
     <div>
@@ -45,7 +47,7 @@ const TableWidget = (props: {
             ) : null}
             {props.isUser ? <Table.HeaderCell>Edit</Table.HeaderCell> : null}
             {props.isUser ? <Table.HeaderCell>Approve</Table.HeaderCell> : null}
-            <Table.HeaderCell>Last Modified By</Table.HeaderCell>
+            <Table.HeaderCell width={2}>History</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
         <Table.Body>
@@ -74,13 +76,25 @@ const TableWidget = (props: {
                 " " +
                 (parseInt(h) >= 12 ? "PM" : "AM");
               let isBuilding =
-                props.user.permissions.includes(`${BuildingType.ALL}:${PermissionType.ADMIN}`) ||
-                props.user.permissions.includes(`${BuildingType.ALL}:${PermissionType.USER}`) ||
-                props.user.permissions.includes(`${item.building}:${PermissionType.ADMIN}`) ||
-                props.user.permissions.includes(`${item.building}:${PermissionType.USER}`);
+                props.user.permissions.includes(
+                  `${BuildingType.ALL}:${PermissionType.ADMIN}`
+                ) ||
+                props.user.permissions.includes(
+                  `${BuildingType.ALL}:${PermissionType.USER}`
+                ) ||
+                props.user.permissions.includes(
+                  `${item.building}:${PermissionType.ADMIN}`
+                ) ||
+                props.user.permissions.includes(
+                  `${item.building}:${PermissionType.USER}`
+                );
               let isAdmin =
-                props.user.permissions.includes(`${BuildingType.ALL}:${PermissionType.ADMIN}`) ||
-                props.user.permissions.includes(`${item.building}:${PermissionType.ADMIN}`);
+                props.user.permissions.includes(
+                  `${BuildingType.ALL}:${PermissionType.ADMIN}`
+                ) ||
+                props.user.permissions.includes(
+                  `${item.building}:${PermissionType.ADMIN}`
+                );
               return (
                 <Table.Row key={item._id}>
                   <Table.Cell>
@@ -117,7 +131,7 @@ const TableWidget = (props: {
                       ></AvailableSwitch>
                     </Table.Cell>
                   ) : null}
-                  {props.isUser ? (
+                  {props.isUser && (
                     <Table.Cell>
                       <EditButton
                         fetchItems={props.fetchItems}
@@ -127,8 +141,8 @@ const TableWidget = (props: {
                         disabled={!isBuilding}
                       ></EditButton>
                     </Table.Cell>
-                  ) : null}
-                  {props.isUser ? (
+                  )}
+                  {props.isUser && (
                     <Table.Cell>
                       <ApproveSwitch
                         id={item._id}
@@ -137,8 +151,12 @@ const TableWidget = (props: {
                         disabled={!isAdmin}
                       ></ApproveSwitch>
                     </Table.Cell>
-                  ) : null}
-                  <Table.Cell>{item.username}</Table.Cell>
+                  )}
+                  <Table.Cell>
+                    <HistoryAccordion
+                      modified={item.modified}
+                    ></HistoryAccordion>
+                  </Table.Cell>
                 </Table.Row>
               );
             })}

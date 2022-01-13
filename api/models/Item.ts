@@ -18,6 +18,7 @@ export interface IItem extends Document {
   notes: string;
   identification: string;
   username: string;
+  modified: string[];
 }
 
 const ItemSchema = new Schema(
@@ -72,10 +73,14 @@ const ItemSchema = new Schema(
     notes: {
       type: String,
     },
-    /** Username of the admin user who last modified the code */
+    /** Username of the admin user who last modified the item */
     username: {
       type: String,
-    }
+    },
+    /** Usernames of the admin users who last modified the item */
+    modified: {
+      type: [String],
+    },
   },
   {
     toJSON: { virtuals: true },

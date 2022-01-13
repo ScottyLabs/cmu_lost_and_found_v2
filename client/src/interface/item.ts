@@ -18,4 +18,5 @@ export interface Item {
   identification: string;
   notes: string;
   username: string;
+  modified: string[];
 }

@@ -19,4 +19,5 @@ export interface Item {
   notes: string;
   username: string;
   modified: string[];
+  approver: string;
 }

@@ -155,6 +155,7 @@ const TableWidget = (props: {
                   <Table.Cell>
                     <HistoryAccordion
                       modified={item.modified}
+                      approver={item.approver}
                     ></HistoryAccordion>
                   </Table.Cell>
                 </Table.Row>

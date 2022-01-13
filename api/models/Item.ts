@@ -19,6 +19,7 @@ export interface IItem extends Document {
   identification: string;
   username: string;
   modified: string[];
+  approver: string;
 }
 
 const ItemSchema = new Schema(
@@ -81,6 +82,10 @@ const ItemSchema = new Schema(
     modified: {
       type: [String],
     },
+    /** Username of the admin user who approved the item */
+    approver: {
+      type: String,
+    }
   },
   {
     toJSON: { virtuals: true },

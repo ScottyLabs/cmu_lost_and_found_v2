@@ -5,7 +5,6 @@ import { isUser } from "./auth";
 import { BuildingType } from "../enums/locationTypes";
 import { PermissionType } from "../enums/permissionType";
 import PermissionsController from "../controllers/PermissionsController";
-import e = require("express");
 
 const router = Router();
 
@@ -15,6 +14,12 @@ const router = Router();
 router.post("/all", isUser, async (req: Request, res: Response) => {
   Item.updateMany({ modified: { $exists: false } }, [
     { $set: { modified: ["$username"] } },
+  ]).exec(function (err, docs) {
+    if (err) console.log(err);
+    else console.log(docs);
+  });
+  Item.updateMany({ approver: { $exists: false } }, [
+    { $set: { approver: null } },
   ]).exec(function (err, docs) {
     if (err) console.log(err);
     else console.log(docs);
@@ -79,6 +84,7 @@ router.post("/add", isUser, async (req: Request, res: Response) => {
     notes: notes,
     username: user.username,
     modified: [user.username],
+    approver: approved ? user.username : null,
   });
   item.save((err) => {
     if (err) {
@@ -185,7 +191,7 @@ router.post(
         ) {
           const updatedItem = await Item.findByIdAndUpdate(
             id,
-            { approved: approved },
+            { approved: approved, approver: approved ? user.username : null },
             { runValidators: true, useFindAndModify: false }
           );
           return res.status(200).send({ msg: updatedItem });

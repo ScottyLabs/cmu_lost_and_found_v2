@@ -83,7 +83,7 @@ export default function EditPermissions(props: {
               {permissions.map((perm, index) => {
                 const [building, action] = perm.split(":");
                 /* users = blue, admin all = yellow, other admin = green */
-                const color = action !== "ADMIN" ? "blue" : building !== "ALL" ? "green" : "yellow";
+                const color = action !== PermissionType.ADMIN ? "blue" : building !== BuildingType.ALL ? "green" : "yellow";
                 return (
                   <Label
                     color={color}

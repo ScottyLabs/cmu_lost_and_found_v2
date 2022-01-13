@@ -7,6 +7,8 @@ import axios from "axios";
 import DropdownMenu from "../components/DropdownMenu";
 import LogoutButton from "../components/LogoutButton";
 import { User } from "../interface/user";
+import { BuildingType } from "../enums/locationTypes";
+import { PermissionType } from "../enums/permissionType";
 
 function Policies() {
     document.title = "CMU Lost and Found";
@@ -37,7 +39,7 @@ function Policies() {
       getCurrentUser();
     }, []);
 
-    const isAllAdmin = user?.permissions.includes("ALL:ADMIN") ?? false;
+    const isAllAdmin = user?.permissions.includes(`${BuildingType.ALL}:${PermissionType.ADMIN}`) ?? false;
 
     return user && (
     <Grid>

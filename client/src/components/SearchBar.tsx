@@ -9,7 +9,7 @@ const SearchBar = (props: {input: string, onChange: Function}) => {
         id="searchbar"
         control={Input}
         value={props.input}
-        placeholder="Search Items..."
+        placeholder="Search..."
         onChange={(e: any) => props.onChange(e.target.value)}
         icon="search"
       />

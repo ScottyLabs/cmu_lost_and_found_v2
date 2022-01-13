@@ -13,6 +13,8 @@ import FoundItemModal, {
 } from "../components/FoundItemModal";
 import LogoutButton from "../components/LogoutButton";
 import { User } from "../interface/user";
+import { BuildingType } from "../enums/locationTypes";
+import { PermissionType } from "../enums/permissionType";
 
 function TablePage() {
   const history = useHistory();
@@ -79,7 +81,7 @@ function TablePage() {
     fetchItems();
   }, []);
 
-  const isAllAdmin = user?.permissions.includes("ALL:ADMIN") ?? false;
+  const isAllAdmin = user?.permissions.includes(`${BuildingType.ALL}:${PermissionType.ADMIN}`) ?? false;
 
   return user && (
     <Grid>

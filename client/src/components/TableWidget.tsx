@@ -8,6 +8,8 @@ import EditButton from "./EditItem";
 import AvailableSwitch from "./AvailableSwitch";
 import { User } from "../interface/user";
 import PublicDisplaySwitch from "./PublicDisplaySwitch";
+import { BuildingType } from "../enums/locationTypes";
+import { PermissionType } from "../enums/permissionType";
 
 const TableWidget = (props: {
   items: Array<Item>;
@@ -72,13 +74,13 @@ const TableWidget = (props: {
                 " " +
                 (parseInt(h) >= 12 ? "PM" : "AM");
               let isBuilding =
-                props.user.permissions.includes("ALL:ADMIN") ||
-                props.user.permissions.includes("ALL:USER") ||
-                props.user.permissions.includes(`${item.building}:ADMIN`) ||
-                props.user.permissions.includes(`${item.building}:USER`);
+                props.user.permissions.includes(`${BuildingType.ALL}:${PermissionType.ADMIN}`) ||
+                props.user.permissions.includes(`${BuildingType.ALL}:${PermissionType.USER}`) ||
+                props.user.permissions.includes(`${item.building}:${PermissionType.ADMIN}`) ||
+                props.user.permissions.includes(`${item.building}:${PermissionType.USER}`);
               let isAdmin =
-                props.user.permissions.includes("ALL:ADMIN") ||
-                props.user.permissions.includes(`${item.building}:ADMIN`);
+                props.user.permissions.includes(`${BuildingType.ALL}:${PermissionType.ADMIN}`) ||
+                props.user.permissions.includes(`${item.building}:${PermissionType.ADMIN}`);
               return (
                 <Table.Row key={item._id}>
                   <Table.Cell>

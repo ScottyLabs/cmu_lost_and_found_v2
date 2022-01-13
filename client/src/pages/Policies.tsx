@@ -59,25 +59,86 @@ function Policies() {
               <DropdownMenu page={"/policies"} isAdmin={user.permissions?.length > 0} isAllAdmin={isAllAdmin}/>
             </div>
             <h1 className="title">Carnegie Mellon University</h1>
-            <h2 className="subtitle">Lost and Found - Policies</h2>
+            <h2 className="subtitle">Lost and Found - Cohon University Center Policies</h2>
             <div id="about">
               <div id="description">
                 <h2> General </h2>
-                The Cohon University Center Information Desk maintains a lost and found for the campus. The following policy will be adhered to regarding items turned into the lost and found.
-                All items turned in will be labeled with the date on which it was turned in. The items are stored in a closet behind the Information Desk.
-                Items will be held in lost and found for no longer than 30 days.
+                <p>
+                  All Carnegie Mellon students, faculty, staff, and guests, are responsible for the security of their
+                  property; Carnegie Mellon accepts no responsibility for lost or stolen items while on Carnegie
+                  Mellon's on campus property, non-campus property, and adjacent public property, including all
+                  recognized Carnegie Mellon events.
+                </p>
+                <p>
+                  When made known through designated “lost and found” locations, Carnegie Mellon University
+                  will make a reasonable effort to return lost/abandoned property to its owner.
+                </p>
+                <p>
+                  Carnegie Mellon University complies with all applicable laws pertaining to lost/abandoned
+                  property.
+                </p>
+
+                <h2> Item Categorization </h2>
+                Carnegie Mellon University categorizes lost/abandoned property as follows:
                 <ul>
-                    <li> ID cards and credit cards will be shredded and discarded </li>
-                    <li> Cell phones will be recycled </li>
-                    <li> Any money turned in will be absorbed into the Jared L. Cohon University Center account </li>
-                    <li> Personal items such as clothing and bags will be donated to charity </li>
-                    <li> All other items that cannot be donated will be discarded </li>
+                    <li> Identifiable Property &mdash; Any item(s) that is believed to belong to a specific and identifiable individual </li>
+                    <li> Unidentifiable Property &mdash; Any item(s) with no ability to associate to a specific and identifiable individual </li>
+                    <li> High-Value Items &mdash; Any cash and jewelry with an estimated value over $50. Additionally, any electronic item with an estimated value over $500 </li>
+                    <li> General Items &mdash; Any item not considered a “High-Value” item, that still maintains some level of monetary value </li>
                 </ul>
-                <h2> Valuable Items </h2>
+                
+                <h2> Procedures </h2>
+                Procedures for Lost/Abandoned Property:
                 <ul>
-                    <li> Any items deemed to be worth more than $50 will be recorded on a spreadsheet and locked in the safe, where it can be accessed only by the Cohon University Center staff. </li>
-                    <li> These items can only be returned if a staff member is available to open the safe. </li>
-                    <li> Patrons must present identification before these items will be returned, and may be asked for additional verification to confirm ownership. </li>
+                  <li> 
+                    High Value Items 
+                    <ul>
+                      <li>
+                        Identifiable and unidentifiable property will be turned over to the Carnegie
+                        Mellon University Police Department (CMUPD) once received. High value items
+                        will not be listed on CMU's public “lost and found” website.
+                      </li>
+                      <li>
+                        If identifiable, the owner will be contacted and the property will be held by
+                        CMUPD for a period of 3 years before being turned over to the Pennsylvania
+                        State Treasurer.
+                      </li>
+                      <li>
+                        If not identifiable, the property will be held by CMUPD for a period of 1 year
+                        before being turned over to the Pennsylvania State Treasurer.
+                      </li>
+                    </ul>
+                  </li>
+                  <li> 
+                    General Items 
+                    <ul>
+                      <li>
+                        Identifiable property will be held at the Cohon University Center Information
+                        Desk. The owner will be notified and the property will be held for a minimum of
+                        90 days.
+                      </li>
+                      <li>
+                        Unidentifiable property will be documented via a public “lost and found” website,
+                        and the property will be held for a minimum of 90 days.
+                      </li>
+                      <li>
+                        If unclaimed, all property may be donated, given away, and/or discarded.
+                      </li>
+                    </ul>
+                  </li>
+                  <li> 
+                    Returning Property           
+                    <ul>
+                      <li>
+                        Anyone claiming property must present a CMU or government issued ID to verify
+                        identity, which will be recorded.
+                      </li>
+                      <li>
+                        Anyone claiming property may be asked to take further steps to verify their
+                        ownership.
+                      </li>
+                    </ul>
+                  </li>
                 </ul>
               </div>
             </div>

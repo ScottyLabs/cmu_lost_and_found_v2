@@ -24,6 +24,12 @@ router.post("/all", isUser, async (req: Request, res: Response) => {
     if (err) console.log(err);
     else console.log(docs);
   });
+  Item.updateMany({ returner: { $exists: false } }, [
+    { $set: { returner: null } },
+  ]).exec(function (err, docs) {
+    if (err) console.log(err);
+    else console.log(docs);
+  });
   Item.find()
     .populate("whereToRetrieve")
     .sort({ dateFound: -1, timeFound: -1 })
@@ -85,6 +91,7 @@ router.post("/add", isUser, async (req: Request, res: Response) => {
     username: user.username,
     modified: [user.username],
     approver: approved ? user.username : null,
+    returner: null,
   });
   item.save((err) => {
     if (err) {
@@ -150,7 +157,10 @@ router.post("/updateStatus", isUser, async (req: Request, res: Response) => {
       ) {
         const updatedItem = await Item.findByIdAndUpdate(
           id,
-          { status: status },
+          {
+            status: status,
+            returner: status === "claimed" ? user.username : null,
+          },
           { runValidators: true, useFindAndModify: false }
         );
         return res.status(200).send({ msg: updatedItem });

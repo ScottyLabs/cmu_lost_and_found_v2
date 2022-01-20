@@ -492,6 +492,7 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
                 value={state.notes}
                 onChange={handleChange}
               />
+              <Form.Group></Form.Group>
               <Form.Group inline id="modal-actions">
                 <div
                   style={{

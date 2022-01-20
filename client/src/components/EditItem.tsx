@@ -94,6 +94,8 @@ function EditItem(props: {
     name: props.item.name,
     whereFound: props.item.whereFound,
     description: props.item.description,
+    value: props.item.value,
+    identifiable: props.item.identifiable,
     building: props.item.building,
     image: props.item.image,
     imagePath: "",
@@ -111,8 +113,8 @@ function EditItem(props: {
     console.log(name);
     setState({ ...state, [name]: value });
   };
-  const handleRadioChange = (e: any, value: any) => {
-    setState({ ...state, imagePermission: value === "true" });
+  const handleRadioChange = (e: any, { name, value }: any) => {
+    setState({ ...state, [name]: value === "true" });
   };
   const handleFileChange = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -184,6 +186,8 @@ function EditItem(props: {
       whereFound,
       building,
       description,
+      value,
+      identifiable,
       image,
       imageObject,
       imagePermission,
@@ -210,6 +214,8 @@ function EditItem(props: {
             name: name,
             building: building,
             description: description,
+            value: value,
+            identifiable: identifiable,
             image: res === "" ? image : res, // use existing image if no new image was added
             imagePermission: imagePermission,
             status: status,
@@ -240,6 +246,8 @@ function EditItem(props: {
           name: state.name,
           whereFound: state.whereFound,
           description: state.description,
+          value: state.value,
+          identifiable: state.identifiable,
           building: state.building,
           image: state.image,
           imageObject: state.imageObject,
@@ -328,6 +336,42 @@ function EditItem(props: {
                 value={state.description}
                 onChange={handleChange}
               />
+              <Form.Group inline>
+                <Form.Field required>
+                  <label>Value</label>
+                </Form.Field>
+                <Form.Radio
+                  label="General"
+                  name="value"
+                  value="general"
+                  checked={state.value === "general"}
+                  onChange={handleChange}
+                />
+                <Form.Radio
+                  label="High Value"
+                  name="value"
+                  value="high value"
+                  checked={state.value === "high value"}
+                  onChange={handleChange}
+                />
+                <Form.Field required>
+                  <label>Identifiable</label>
+                </Form.Field>
+                <Form.Radio
+                  label="Yes"
+                  name="identifiable"
+                  value="true"
+                  checked={state.identifiable}
+                  onChange={handleRadioChange}
+                />
+                <Form.Radio
+                  label="No"
+                  name="identifiable"
+                  value="false"
+                  checked={!state.identifiable}
+                  onChange={handleRadioChange}
+                />
+              </Form.Group>
               <Form.Group widths="equal">
                 <Form.Select
                   fluid
@@ -398,6 +442,8 @@ function EditItem(props: {
                         name: props.item.name,
                         whereFound: props.item.whereFound,
                         description: props.item.description,
+                        value: props.item.value,
+                        identifiable: props.item.identifiable,
                         building: props.item.building,
                         image: props.item.image,
                         imagePath: "",

@@ -8,6 +8,8 @@ export interface Item {
   name: string;
   whereFound: string;
   description: string;
+  value: string;
+  identifiable: boolean;
   whereToRetrieve: Building;
   building: BuildingType;
   image: string;

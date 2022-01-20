@@ -12,6 +12,18 @@ const router = Router();
  * Returns all items in database, according to schema specified in Item.ts
  */
 router.post("/all", isUser, async (req: Request, res: Response) => {
+  Item.updateMany({ value: { $exists: false } }, [
+    { $set: { value: "general" } },
+  ]).exec(function (err, docs) {
+    if (err) console.log(err);
+    else console.log(docs);
+  });
+  Item.updateMany({ identifiable: { $exists: false } }, [
+    { $set: { identifiable: false } },
+  ]).exec(function (err, docs) {
+    if (err) console.log(err);
+    else console.log(docs);
+  });
   Item.find()
     .populate("whereToRetrieve")
     .sort({ dateFound: -1, timeFound: -1 })
@@ -36,12 +48,13 @@ router.post("/add", isUser, async (req: Request, res: Response) => {
     name,
     whereFound,
     description,
+    value,
+    identifiable,
     building,
     image,
     imagePermission,
     status,
     approved,
-    publicDisplay,
     identification,
     notes,
     user,
@@ -62,12 +75,14 @@ router.post("/add", isUser, async (req: Request, res: Response) => {
     name: name,
     whereFound: whereFound,
     description: description,
+    value: value,
+    identifiable: identifiable,
     building: building,
     image: image,
     imagePermission: imagePermission,
     status: status,
     approved: approved,
-    publicDisplay: publicDisplay,
+    publicDisplay: false,
     identification: identification,
     notes: notes,
     username: user.username,
@@ -257,6 +272,8 @@ router.post("/editItem", isUser, async (req: Request, res: Response) => {
     name,
     whereFound,
     description,
+    value,
+    identifiable,
     building,
     image,
     imagePermission,
@@ -289,10 +306,15 @@ router.post("/editItem", isUser, async (req: Request, res: Response) => {
                     whereFound: whereFound,
                     building: building,
                     description: description,
+                    value: value,
+                    identifiable: identifiable,
                     image: image,
                     imagePermission: imagePermission,
                     identification: identification,
                     notes: notes,
+                    publicDisplay: item.publicDisplay
+                      ? value == "general" && !identifiable
+                      : false,
                     username: user.username,
                   },
                 },
@@ -310,10 +332,15 @@ router.post("/editItem", isUser, async (req: Request, res: Response) => {
                     whereFound: whereFound,
                     building: building,
                     description: description,
+                    value: value,
+                    identifiable: identifiable,
                     image: image,
                     imagePermission: imagePermission,
                     identification: identification,
                     notes: notes,
+                    publicDisplay: item.publicDisplay
+                      ? value == "general" && !identifiable
+                      : false,
                     username: user.username,
                   },
                   $push: {

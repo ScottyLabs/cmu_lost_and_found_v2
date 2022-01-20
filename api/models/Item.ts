@@ -8,6 +8,8 @@ export interface IItem extends Document {
   name: string;
   whereFound: string;
   description: string;
+  value: "general" | "high value"
+  identifiable: boolean;
   category: string;
   whereToRetrieve: IBuilding;
   building: BuildingType;
@@ -15,6 +17,7 @@ export interface IItem extends Document {
   imagePermission: string;
   status: "available" | "destroyed" | "claimed";
   approved: boolean;
+  publicDisplay: boolean;
   notes: string;
   identification: string;
   username: string;
@@ -43,6 +46,15 @@ const ItemSchema = new Schema(
     },
     description: {
       type: String,
+      required: true,
+    },
+    value: {
+      type: String,
+      enum: ["general", "high value"],
+      required: true,
+    },
+    identifiable: {
+      type: Boolean,
       required: true,
     },
     building: {

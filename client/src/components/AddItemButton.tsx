@@ -80,6 +80,8 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
     name: "",
     whereFound: "",
     description: "",
+    value: "general",
+    identifiable: false,
     building: "",
     image: "",
     imagePath: "",
@@ -104,8 +106,8 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
   const handleChange = (e: any, { name, value }: any) => {
     setState({ ...state, [name]: value });
   };
-  const handleRadioChange = (e: any, value: any) => {
-    setState({ ...state, imagePermission: value === "true" });
+  const handleRadioChange = (e: any, { name, value }: any) => {
+    setState({ ...state, [name]: value === "true" });
   };
   const handleFileChange = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -191,6 +193,8 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
       name,
       whereFound,
       description,
+      value,
+      identifiable,
       building,
       image,
       imageObject,
@@ -245,7 +249,9 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
       userList.forEach((user: User) => {
         if (
           user.notif &&
-          (user.permissions.includes(`${BuildingType.ALL}:${PermissionType.ADMIN}`) ||
+          (user.permissions.includes(
+            `${BuildingType.ALL}:${PermissionType.ADMIN}`
+          ) ||
             user.permissions.includes(`${building}:${PermissionType.ADMIN}`))
         )
           emails.push(user.username);
@@ -296,11 +302,12 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
             whereFound: whereFound,
             building: building,
             description: description,
+            value: value,
+            identifiable: identifiable,
             image: res,
             imagePermission: imagePermission,
             status: status,
             approved: props.isAdmin,
-            publicDisplay: false,
             identification: identification,
             notes: notes,
           })
@@ -328,6 +335,8 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
           whereFound: "",
           building: "",
           description: "",
+          value: "general",
+          identifiable: false,
           image: "",
           imageObject: null,
           imagePath: "",
@@ -416,6 +425,42 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
                 onChange={handleChange}
                 // error={descriptionError}
               />
+              <Form.Group inline>
+                <Form.Field required>
+                  <label>Value</label>
+                </Form.Field>
+                <Form.Radio
+                  label="General"
+                  name="value"
+                  value="general"
+                  checked={state.value === "general"}
+                  onChange={handleChange}
+                />
+                <Form.Radio
+                  label="High Value"
+                  name="value"
+                  value="high value"
+                  checked={state.value === "high value"}
+                  onChange={handleChange}
+                />
+                <Form.Field required>
+                  <label>Identifiable</label>
+                </Form.Field>
+                <Form.Radio
+                  label="Yes"
+                  name="identifiable"
+                  value="true"
+                  checked={state.identifiable}
+                  onChange={handleRadioChange}
+                />
+                <Form.Radio
+                  label="No"
+                  name="identifiable"
+                  value="false"
+                  checked={!state.identifiable}
+                  onChange={handleRadioChange}
+                />
+              </Form.Group>
               <Form.Select
                 fluid
                 required
@@ -447,7 +492,6 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
                 value={state.notes}
                 onChange={handleChange}
               />
-              <Form.Group></Form.Group>
               <Form.Group inline id="modal-actions">
                 <div
                   style={{

@@ -115,7 +115,9 @@ const TableWidget = (props: {
                         disabled={
                           !item.approved ||
                           !isBuilding ||
-                          item.status !== "available"
+                          item.status !== "available" ||
+                          item.value === "high value" ||
+                          item.identifiable
                         }
                         fetchItems={props.fetchItems}
                       ></PublicDisplaySwitch>

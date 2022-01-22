@@ -5,7 +5,6 @@ import { isUser } from "./auth";
 import { BuildingType } from "../enums/locationTypes";
 import { PermissionType } from "../enums/permissionType";
 import PermissionsController from "../controllers/PermissionsController";
-import e = require("express");
 
 const router = Router();
 
@@ -37,12 +36,13 @@ router.post("/add", isUser, async (req: Request, res: Response) => {
     name,
     whereFound,
     description,
+    value,
+    identifiable,
     building,
     image,
     imagePermission,
     status,
     approved,
-    publicDisplay,
     identification,
     notes,
     user,
@@ -63,15 +63,20 @@ router.post("/add", isUser, async (req: Request, res: Response) => {
     name: name,
     whereFound: whereFound,
     description: description,
+    value: value,
+    identifiable: identifiable,
     building: building,
     image: image,
     imagePermission: imagePermission,
     status: status,
     approved: approved,
-    publicDisplay: publicDisplay,
+    publicDisplay: false,
     identification: identification,
     notes: notes,
-    username: user.username
+    username: user.username,
+    modified: [user.username],
+    approver: approved ? user.username : null,
+    returner: null,
   });
   item.save((err) => {
     if (err) {
@@ -137,7 +142,10 @@ router.post("/updateStatus", isUser, async (req: Request, res: Response) => {
       ) {
         const updatedItem = await Item.findByIdAndUpdate(
           id,
-          { status: status },
+          {
+            status: status,
+            returner: status === "claimed" ? user.username : null,
+          },
           { runValidators: true, useFindAndModify: false }
         );
         return res.status(200).send({ msg: updatedItem });
@@ -178,7 +186,7 @@ router.post(
         ) {
           const updatedItem = await Item.findByIdAndUpdate(
             id,
-            { approved: approved },
+            { approved: approved, approver: approved ? user.username : null },
             { runValidators: true, useFindAndModify: false }
           );
           return res.status(200).send({ msg: updatedItem });
@@ -252,6 +260,8 @@ router.post("/editItem", isUser, async (req: Request, res: Response) => {
     name,
     whereFound,
     description,
+    value,
+    identifiable,
     building,
     image,
     imagePermission,
@@ -270,25 +280,63 @@ router.post("/editItem", isUser, async (req: Request, res: Response) => {
           user
         )
       ) {
-        const updatedItem = await Item.findByIdAndUpdate(
-          id,
-          {
-            status: status,
-            token: token,
-            dateFound: dateFound,
-            timeFound: timeFound,
-            name: name,
-            whereFound: whereFound,
-            building: building,
-            description: description,
-            image: image,
-            imagePermission: imagePermission,
-            identification: identification,
-            notes: notes,
-            username: user.username
-          },
-          { runValidators: true, useFindAndModify: false }
-        );
+        const updatedItem =
+          item.modified[item.modified.length - 1] === user.username
+            ? await Item.findByIdAndUpdate(
+                id,
+                {
+                  $set: {
+                    status: status,
+                    token: token,
+                    dateFound: dateFound,
+                    timeFound: timeFound,
+                    name: name,
+                    whereFound: whereFound,
+                    building: building,
+                    description: description,
+                    value: value,
+                    identifiable: identifiable,
+                    image: image,
+                    imagePermission: imagePermission,
+                    identification: identification,
+                    notes: notes,
+                    publicDisplay: item.publicDisplay
+                      ? value == "general" && !identifiable
+                      : false,
+                    username: user.username,
+                  },
+                },
+                { runValidators: true, useFindAndModify: false }
+              )
+            : await Item.findByIdAndUpdate(
+                id,
+                {
+                  $set: {
+                    status: status,
+                    token: token,
+                    dateFound: dateFound,
+                    timeFound: timeFound,
+                    name: name,
+                    whereFound: whereFound,
+                    building: building,
+                    description: description,
+                    value: value,
+                    identifiable: identifiable,
+                    image: image,
+                    imagePermission: imagePermission,
+                    identification: identification,
+                    notes: notes,
+                    publicDisplay: item.publicDisplay
+                      ? value == "general" && !identifiable
+                      : false,
+                    username: user.username,
+                  },
+                  $push: {
+                    modified: user.username,
+                  },
+                },
+                { runValidators: true, useFindAndModify: false }
+              );
         return res.status(200).send({ msg: updatedItem });
       } else {
         return res.status(403).send(new Error("Insufficient privileges"));

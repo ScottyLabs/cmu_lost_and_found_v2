@@ -8,6 +8,8 @@ export interface IItem extends Document {
   name: string;
   whereFound: string;
   description: string;
+  value: "general" | "high value"
+  identifiable: boolean;
   category: string;
   whereToRetrieve: IBuilding;
   building: BuildingType;
@@ -15,9 +17,13 @@ export interface IItem extends Document {
   imagePermission: string;
   status: "available" | "destroyed" | "claimed";
   approved: boolean;
+  publicDisplay: boolean;
   notes: string;
   identification: string;
   username: string;
+  modified: string[];
+  approver: string;
+  returner: string;
 }
 
 const ItemSchema = new Schema(
@@ -40,6 +46,15 @@ const ItemSchema = new Schema(
     },
     description: {
       type: String,
+      required: true,
+    },
+    value: {
+      type: String,
+      enum: ["general", "high value"],
+      required: true,
+    },
+    identifiable: {
+      type: Boolean,
       required: true,
     },
     building: {
@@ -72,10 +87,21 @@ const ItemSchema = new Schema(
     notes: {
       type: String,
     },
-    /** Username of the admin user who last modified the code */
+    /** Username of the admin user who last modified the item */
     username: {
       type: String,
-    }
+    },
+    /** Usernames of the admin users who last modified the item */
+    modified: {
+      type: [String],
+    },
+    /** Username of the admin user who approved the item */
+    approver: {
+      type: String,
+    },
+    returner: {
+      type: String,
+    },
   },
   {
     toJSON: { virtuals: true },

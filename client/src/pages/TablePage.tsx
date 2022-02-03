@@ -107,6 +107,8 @@ function TablePage() {
                 To retrieve an object, go to the location listed next to the
                 object on the table. You will be required to identify any lost
                 possessions. All items must be picked up in person and a photo ID is required.
+                For general inquiries, please contact{" "}
+                <a href="mailto:lost-and-found@cmu.edu">lost-and-found@cmu.edu</a>.
               </p>
             </div>
             <Message id="found-item-message" warning size="large">

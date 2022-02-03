@@ -88,7 +88,7 @@ function Policies() {
                 </ul>
                 
                 <h2> Procedures </h2>
-                Procedures for Lost/Abandoned Property:
+                Procedures for Lost/Abandoned Property*:
                 <ul>
                   <li> 
                     High Value Items 
@@ -140,6 +140,7 @@ function Policies() {
                     </ul>
                   </li>
                 </ul>
+                *Water bottles and any such items which may carry bodily fluids will not be accepted.
               </div>
             </div>
           </main>

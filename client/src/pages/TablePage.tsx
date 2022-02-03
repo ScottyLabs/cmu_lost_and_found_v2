@@ -50,20 +50,20 @@ function TablePage() {
   };
 
   const getCurrentUser = () => {
-    axios.post('/api/accounts/currentUser', {
-      token: window.localStorage.getItem("lnf_token")
-    }).then(
-      (res) => {
+    axios
+      .post("/api/accounts/currentUser", {
+        token: window.localStorage.getItem("lnf_token"),
+      })
+      .then((res) => {
         if (res.data) {
           setUser(res.data);
         } else {
           setUser({ username: "user", permissions: [], notif: false });
         }
-      }
-    )
+      });
   };
 
-  //modify items
+  // modify items
   const updateInput = async (input: string) => {
     let inputName = input.toLowerCase();
     const filtered = itemListDefault.filter((item: Item) => {
@@ -81,7 +81,9 @@ function TablePage() {
     fetchItems();
   }, []);
 
-  const isAllAdmin = user?.permissions.includes(`${BuildingType.ALL}:${PermissionType.ADMIN}`) ?? false;
+  const isAllAdmin =
+    user?.permissions.includes(`${BuildingType.ALL}:${PermissionType.ADMIN}`) ??
+    false;
 
   return user && (
     <Grid>

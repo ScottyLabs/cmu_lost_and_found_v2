@@ -48,6 +48,14 @@ function Login() {
     );
 
     newWindow?.focus();
+
+    const pollTimer = window.setInterval(() => {
+      if (newWindow && newWindow.closed !== false) {
+        window.clearInterval(pollTimer);
+        setLoading(false);
+      }
+    }, 200);
+
     return newWindow;
   };
 
@@ -89,6 +97,8 @@ function Login() {
                     (event) => {
                       if (event.origin !== "https://login.scottylabs.org") {
                         return;
+                      } else if (event.data === "error") {
+                        setLoading(false);
                       } else {
                         window.localStorage.setItem("lnf_token", event.data);
                         axios

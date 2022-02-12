@@ -262,14 +262,17 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
         let subheaderTitle = "A New Item Has Been Added For Approval";
         let subheaderContent = `<b>Item Name:</b> ${String(
           name
-        )}<br><b>Item Description:</b> ${String(
-          description
+        )}<br><b>Item Description:</b> ${String(description)}
+        <br><b>Item Value:</b> ${String(
+          value.charAt(0).toUpperCase() + value.slice(1)
         )}<br><b>Building:</b> ${String(
           building
         )}<br>Visit the <a href=https://lostandfound.andrew.cmu.edu/admin>CMU Lost and Found site</a> to approve.`;
         let data = {
           emails: emails,
-          subject: "New Item Added: Approval Needed",
+          subject:
+            "New Item Added: Approval Needed" +
+            (value === "high value" ? " - HIGH VALUE" : ""),
           text: emailbody
             .replace("{subheader_title}", subheaderTitle)
             .replace("{subheader_content}", subheaderContent),

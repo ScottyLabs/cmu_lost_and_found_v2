@@ -6,7 +6,6 @@ import "./Admin.css";
 import DropdownMenu from "../components/DropdownMenu";
 import AddItemButton from "../components/AddItemButton";
 import TableWidget from "../components/TableWidget";
-import SortedTable from "../components/SortedTable";
 import "semantic-ui-css/semantic.min.css";
 import axios from "axios";
 import { Item } from "../interface/item";
@@ -102,42 +101,52 @@ function Admin() {
     <Grid>
       <Grid.Row>
         <Grid.Column width={16}>
-          <main>
-            <Link to="/">
-              <img
-                src="/dog-logo.png"
-                id="logo-mobile"
-                alt="CMU Lost and Found Logo"
-              ></img>
-            </Link>
-            <div id="settings">
-              <Rail attached internal position="left" id="logo-desktop">
-                <Link to="/">
-                  <img src="/dog-logo.png" alt="CMU Lost and Found Logo"></img>
-                </Link>
-              </Rail>
-              <LogoutButton />
-              <DropdownMenu page={"/admin"} isAdmin={user.permissions?.length > 0} isAllAdmin={isAllAdmin}/>
-            </div>
-            <h1 className="title">Carnegie Mellon University</h1>
-            <h2 className="subtitle">Lost and Found - Admin Panel</h2>
-            <div id="add-mobile">
+          <Link to="/">
+            <img
+              src="/dog-logo.png"
+              id="logo-mobile"
+              alt="CMU Lost and Found Logo"
+            ></img>
+          </Link>
+          <div id="settings">
+            <Rail attached internal position="left" id="logo-desktop">
+              <Link to="/">
+                <img src="/dog-logo.png" alt="CMU Lost and Found Logo"></img>
+              </Link>
+            </Rail>
+            <LogoutButton />
+            <DropdownMenu page={"/admin"} isAdmin={user.permissions?.length > 0} isAllAdmin={isAllAdmin}/>
+          </div>
+          <h1 className="title">Carnegie Mellon University</h1>
+          <h2 className="subtitle">Lost and Found - Admin Panel</h2>
+        </Grid.Column>
+      </Grid.Row>
+     
+      <Grid.Row>
+        <Grid.Column width={16}>
+          <div id="add-mobile">
+            <AddItemButton
+              fetchItems={fetchItems}
+              isAdmin={isAllAdmin}
+            ></AddItemButton>
+          </div>
+          <div id="admin-filter-bar">
+            <SearchBar input={input} onChange={updateInput} />
+            <div id="add-desktop">
               <AddItemButton
                 fetchItems={fetchItems}
                 isAdmin={isAllAdmin}
               ></AddItemButton>
             </div>
-            <div id="admin-filter-bar">
-              <SearchBar input={input} onChange={updateInput} />
-              <div id="add-desktop">
-                <AddItemButton
-                  fetchItems={fetchItems}
-                  isAdmin={isAllAdmin}
-                ></AddItemButton>
-              </div>
-            </div>
+          </div>
+        </Grid.Column>
+      </Grid.Row>
+
+      <Grid.Row>
+        <Grid.Column width={16}>
+          <main>
             <div id="table">
-              <SortedTable 
+              <TableWidget
                 items={itemList}
                 isUser={true}
                 isArchived={false}
@@ -145,16 +154,7 @@ function Admin() {
                 user={user}
                 page={page}
                 setPage={setPage}
-              />
-              {/* <TableWidget
-                items={itemList}
-                isUser={true}
-                isArchived={false}
-                fetchItems={fetchItems}
-                user={user}
-                page={page}
-                setPage={setPage}
-              ></TableWidget> */}
+              ></TableWidget>
             </div>
           </main>
         </Grid.Column>

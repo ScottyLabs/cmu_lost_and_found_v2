@@ -45,21 +45,26 @@ function Policies() {
     <Grid>
       <Grid.Row>
         <Grid.Column width={16}>
+          <Link to="/">
+            <img src="/dog-logo.png" id="logo-mobile" alt="CMU Lost and Found Logo"></img>
+          </Link>
+          <div id="settings">
+            <Rail attached internal position="left" id="logo-desktop">
+              <Link to="/">
+                <img src="/dog-logo.png" alt="CMU Lost and Found Logo"></img>
+              </Link>
+            </Rail>
+            <LogoutButton />
+            <DropdownMenu page={"/policies"} isAdmin={user.permissions?.length > 0} isAllAdmin={isAllAdmin}/>
+          </div>
+          <h1 className="title">Carnegie Mellon University</h1>
+          <h2 className="subtitle">Lost and Found - Cohon University Center Policies</h2>
+        </Grid.Column>
+      </Grid.Row>
+
+      <Grid.Row>
+        <Grid.Column width={16}>
           <main>
-            <Link to="/">
-              <img src="/dog-logo.png" id="logo-mobile" alt="CMU Lost and Found Logo"></img>
-            </Link>
-            <div id="settings">
-              <Rail attached internal position="left" id="logo-desktop">
-                <Link to="/">
-                  <img src="/dog-logo.png" alt="CMU Lost and Found Logo"></img>
-                </Link>
-              </Rail>
-              <LogoutButton />
-              <DropdownMenu page={"/policies"} isAdmin={user.permissions?.length > 0} isAllAdmin={isAllAdmin}/>
-            </div>
-            <h1 className="title">Carnegie Mellon University</h1>
-            <h2 className="subtitle">Lost and Found - Cohon University Center Policies</h2>
             <div id="about">
               <div id="description">
                 <h2> General </h2>

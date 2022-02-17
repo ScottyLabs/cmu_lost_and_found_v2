@@ -86,40 +86,49 @@ function TablePage() {
   return user && (
     <Grid>
       <Grid.Row>
+        <Grid.Column width={16} id="">
+          <Link to="/">
+            <img src="/dog-logo.png" id="logo-mobile" alt="CMU Lost and Found Logo"></img>
+          </Link>
+          <div id="settings">
+            <Rail attached internal position="left" id="logo-desktop">
+              <Link to="/">
+                <img src="/dog-logo.png" alt="CMU Lost and Found Logo"></img>
+              </Link>
+            </Rail>
+            <LogoutButton />
+            <DropdownMenu page={"/"} isAdmin={user.permissions?.length > 0} isAllAdmin={isAllAdmin}/>
+          </div>
+          <h1 className="title">Carnegie Mellon University</h1>
+          <h2 className="subtitle">Lost and Found Website</h2>
+        </Grid.Column>
+      </Grid.Row>
+     
+      <Grid.Row>
         <Grid.Column width={16}>
-          <main>
-            <Link to="/">
-              <img src="/dog-logo.png" id="logo-mobile" alt="CMU Lost and Found Logo"></img>
-            </Link>
-            <div id="settings">
-              <Rail attached internal position="left" id="logo-desktop">
-                <Link to="/">
-                  <img src="/dog-logo.png" alt="CMU Lost and Found Logo"></img>
-                </Link>
-              </Rail>
-              <LogoutButton />
-              <DropdownMenu page={"/"} isAdmin={user.permissions?.length > 0} isAllAdmin={isAllAdmin}/>
-            </div>
-            <h1 className="title">Carnegie Mellon University</h1>
-            <h2 className="subtitle">Lost and Found Website</h2>
-            <div id="description">
-              <p>
-                To retrieve an object, go to the location listed next to the
-                object on the table. You will be required to identify any lost
-                possessions. All items must be picked up in person and a photo ID is required.
-                For general inquiries, please contact{" "}
-                <a href="mailto:lost-and-found@cmu.edu">lost-and-found@cmu.edu</a>.
-              </p>
-            </div>
-            <Message id="found-item-message" warning size="large">
-              <Message.Header>Found an item?</Message.Header>
-              {foundItemMessage}
-            </Message>
-            
-            <Message id="feedback-form" warning size="large">
-              <Message.Header>Have feedback?</Message.Header>
-              {feedbackForm}
-            </Message>
+          <div id="description">
+            <p>
+              To retrieve an object, go to the location listed next to the
+              object on the table. You will be required to identify any lost
+              possessions. All items must be picked up in person and a photo ID is required.
+              For general inquiries, please contact{" "}
+              <a href="mailto:lost-and-found@cmu.edu">lost-and-found@cmu.edu</a>.
+            </p>
+          </div>
+          <Message id="found-item-message" warning size="large">
+            <Message.Header>Found an item?</Message.Header>
+            {foundItemMessage}
+          </Message>
+          
+          <Message id="feedback-form" warning size="large">
+            <Message.Header>Have feedback?</Message.Header>
+            {feedbackForm}
+          </Message>
+        </Grid.Column>
+      </Grid.Row>
+
+      <Grid.Row>
+        <Grid.Column width={16}>
             <div id="admin-filter-bar">
               <SearchBar input={input} onChange={updateInput} />
               <FoundItemModal
@@ -127,6 +136,12 @@ function TablePage() {
                 style={{ padding: "11px 11px", width: "110px" }}
               ></FoundItemModal>
             </div>
+        </Grid.Column>
+      </Grid.Row>
+
+      <Grid.Row>
+        <Grid.Column width={16}>
+          <main>
             <div id="cards-widget">
               <CardWidget
                 items={itemList}

@@ -1,17 +1,31 @@
 .ui.cards {
   justify-content: space-between;
+
   /* Maybe switch this to display grid in the future, because last row is not spaced properly */
   /* display: grid;
   grid-template-columns: repeat(auto-fill, 400px); */
 }
-
+.grid {
+  grid-row: span 4; /* span 4 rows */
+  display: grid;
+  /* magic is here */
+  grid-template-rows: subgrid; /* create a sub-grid with the 4 parent grid rows */
+}
 .card-wrapper {
   width: 23%;
   margin-bottom: 25px;
+  display:flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  height: max-height;
+}
+.card-wrapper-outer{
+  height: max-height;
 }
 
-.ui.card.item-card .bottom-content {
+.ui.card.item-card.bottom-content {
   text-align: left;
+  padding-bottom: 15px;
 }
 
 .ui.card.item-card {
@@ -19,7 +33,7 @@
   width: 100%;
 }
 
-.ui.card .header {
+.ui.card.header {
   text-align: center;
 }
 
@@ -27,7 +41,7 @@
   content: "";
 }
 
-.ui.card.item-card .top-content {
+.ui.card.item-card.top-content {
   padding-top: 40px;
 }
 
@@ -40,6 +54,7 @@
 @media (min-width: 481px) and (max-width: 1024px) {
   .card-wrapper {
     min-width: calc(50% - 10px);
+    height: max-content;
   }
 }
 

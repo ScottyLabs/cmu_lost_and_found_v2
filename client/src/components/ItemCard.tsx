@@ -7,7 +7,7 @@ function exampleReducer(dispatchState: any, action: any) {
   switch (action.type) {
     case "CONFIG_CLOSE_ON_DIMMER_CLICK":
       return { ...dispatchState, closeOnDimmerClick: action.value };
-    case "CONFIG_CLOSE_ON_ESCAPE":
+    case "CONFI_CLOSE_ON_ESCAPE":
       return { ...dispatchState, closeOnEscape: action.value };
     case "OPEN_MODAL":
       return { ...dispatchState, open: true };
@@ -36,7 +36,7 @@ const ItemCard = (props: {
 
   return (
     <div className="card-wrapper">
-      <Card className="item-card" style={{height: "290px"}}>
+      <Card className="item-card"> 
         <Card.Content className="top-content">
           <Card.Header>
             {props.item.name} 

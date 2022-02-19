@@ -42,7 +42,6 @@ function About() {
     <Grid>
       <Grid.Row>
         <Grid.Column width={16}>
-          <main>
             <Link to="/">
               <img src="/dog-logo.png" id="logo-mobile" alt="CMU Lost and Found Logo"></img>
             </Link>
@@ -57,6 +56,12 @@ function About() {
             </div>
             <h1 className="title">Carnegie Mellon University</h1>
             <h2 className="subtitle">Lost and Found - About</h2>
+        </Grid.Column>
+      </Grid.Row>
+     
+      <Grid.Row>
+        <Grid.Column width={16}>
+          <main>
             <div id="policy">
               <div id="description">
                 <h2>About this Website</h2>

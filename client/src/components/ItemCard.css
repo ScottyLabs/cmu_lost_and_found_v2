@@ -23,9 +23,13 @@
   height: max-height;
 }
 
-.ui.card.item-card.bottom-content {
+.ui.card>.top-content {
+  padding: 30px;
+}
+
+.ui.card>.bottom-content {
   text-align: left;
-  padding-bottom: 15px;
+  padding: 30px;
 }
 
 .ui.card.item-card {

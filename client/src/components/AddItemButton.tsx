@@ -10,6 +10,7 @@ import { User } from "../interface/user";
 import emailbody from "../templates/html/emailbody";
 import { PermissionType } from "../enums/permissionType";
 import { TemplateType } from "../enums/templateTypes";
+import { UseTemplate } from "../templates/emailTemplates";
 
 function exampleReducer(dispatchState: any, action: any) {
   switch (action.type) {
@@ -263,6 +264,38 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
             }
           }
         );
+    }
+
+    const lostItemEmail = () => {
+      const emailTemplate = templateType + "-" + building;
+      console.log("Template:", emailTemplate, "\nSent to:", email)
+      const singleton = [email];
+      
+      let data = {
+        emails: singleton,
+        subject:
+          "Lost and Found: Your item has been found",
+        text: emailbody
+          .replace("{subheader_content}", UseTemplate(emailTemplate)),
+      };
+
+      // email does not send. FIGURE THAT OUT!
+      if (email.length > 0 && templateType != "" && building != "") {
+        axios.post("/api/email/sendEmail", data).then(
+          (res) => {
+            console.log("Email sent!");
+            console.log(res);
+          },
+          (error) => {
+            console.log(error.response.data);
+          }
+        );
+      }
+    };
+
+    if (email != "") {
+      lostItemEmail();
+      console.log("Emails Sent!");
     }
 
     const sendEmails = (userList: User[]) => {

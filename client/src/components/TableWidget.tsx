@@ -17,6 +17,7 @@ const TableWidget = (props: {
   isUser: boolean;
   isArchived: boolean;
   fetchItems: Function;
+  sortItems: Function;
   user: User;
   page: number;
   setPage: Function;
@@ -26,27 +27,120 @@ const TableWidget = (props: {
     props.setPage(value.activePage);
   };
 
-  console.log(props.items);
+  function reducer(state: any, action: any) {
+    switch (action.type) {
+      case "CHANGE_SORT":
+        if (state.column === action.column) {
+          const newdir =
+            state.direction === "ascending" ? "descending" : "ascending";
+          props.sortItems(action.column, newdir);
+          return {
+            ...state,
+            direction: newdir,
+          };
+        }
+        props.sortItems(action.column, "ascending");
+        return {
+          ...state,
+          column: action.column,
+          direction: "ascending",
+        };
+      default:
+        throw new Error();
+    }
+  }
+
+  const [state, dispatch] = React.useReducer(reducer, {
+    column: null,
+    direction: null,
+  });
 
   return (
     <div>
-      <Table celled className="lf_table">
+      <Table sortable celled className="lf_table">
         <Table.Header>
           <Table.Row>
-            <Table.HeaderCell width={1}>When Found</Table.HeaderCell>
-            <Table.HeaderCell>Name</Table.HeaderCell>
-            <Table.HeaderCell>Where Found</Table.HeaderCell>
-            <Table.HeaderCell>Description</Table.HeaderCell>
-            <Table.HeaderCell>Building</Table.HeaderCell>
-            <Table.HeaderCell>Image</Table.HeaderCell>
+            <Table.HeaderCell
+              width={1}
+              sorted={state.column === "whenFound" ? state.direction : null}
+              onClick={() =>
+                dispatch({
+                  type: "CHANGE_SORT",
+                  column: "whenFound",
+                })
+              }
+            >
+              When Found
+            </Table.HeaderCell>
+            <Table.HeaderCell
+              sorted={state.column === "name" ? state.direction : null}
+              onClick={() => dispatch({ type: "CHANGE_SORT", column: "name" })}
+            >
+              Name
+            </Table.HeaderCell>
+            <Table.HeaderCell
+              sorted={state.column === "whereFound" ? state.direction : null}
+              onClick={() =>
+                dispatch({ type: "CHANGE_SORT", column: "whereFound" })
+              }
+            >
+              Where Found
+            </Table.HeaderCell>
+            <Table.HeaderCell
+              sorted={state.column === "description" ? state.direction : null}
+              onClick={() =>
+                dispatch({ type: "CHANGE_SORT", column: "description" })
+              }
+            >
+              Description
+            </Table.HeaderCell>
+            <Table.HeaderCell
+              sorted={state.column === "building" ? state.direction : null}
+              onClick={() =>
+                dispatch({ type: "CHANGE_SORT", column: "building" })
+              }
+            >
+              Building
+            </Table.HeaderCell>
+            <Table.HeaderCell
+              sorted={state.column === "image" ? state.direction : null}
+              onClick={() => dispatch({ type: "CHANGE_SORT", column: "image" })}
+            >
+              Image
+            </Table.HeaderCell>
             {props.isUser ? (
-              <Table.HeaderCell>Make Public</Table.HeaderCell>
+              <Table.HeaderCell
+                sorted={
+                  state.column === "publicDisplay" ? state.direction : null
+                }
+                onClick={() =>
+                  dispatch({ type: "CHANGE_SORT", column: "publicDisplay" })
+                }
+              >
+                Make Public
+              </Table.HeaderCell>
             ) : null}
             {props.isUser ? (
-              <Table.HeaderCell>Available For Pickup</Table.HeaderCell>
+              <Table.HeaderCell
+                sorted={state.column === "status" ? state.direction : null}
+                onClick={() =>
+                  dispatch({ type: "CHANGE_SORT", column: "status" })
+                }
+              >
+                Available For Pickup
+              </Table.HeaderCell>
             ) : null}
             {props.isUser ? <Table.HeaderCell>Edit</Table.HeaderCell> : null}
-            {props.isUser ? <Table.HeaderCell>Approve</Table.HeaderCell> : null}
+            {props.isUser ? (
+              <Table.HeaderCell
+                sorted={state.column === "approved" ? state.direction : null}
+                onClick={() =>
+                  dispatch({ type: "CHANGE_SORT", column: "approved" })
+                }
+              >
+                Approve
+              </Table.HeaderCell>
+            ) : null}
             <Table.HeaderCell width={2}>History</Table.HeaderCell>
           </Table.Row>
         </Table.Header>

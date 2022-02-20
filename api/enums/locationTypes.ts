@@ -1,6 +1,9 @@
 export enum BuildingType {
-  GHC = "GHC",
-  TEPPER = "TEPPER",
   CUC = "CUC",
+  GHC = "GHC",
+  TEP = "TEPPER",
+  ROF = "RESIDENCE ON FIFTH",
+  MOR = "MOREWOOD",
+  DON = "DONNER",
   ALL = "ALL"
 }

@@ -25,39 +25,6 @@ function exampleReducer(dispatchState: any, action: any) {
   }
 }
 
-const categories = [
-  { key: "clothing", text: "Clothing", value: "Clothing" },
-  { key: "headphones", text: "Headphones", value: "Headphones" },
-  { key: "jewelry", text: "Jewelry", value: "Jewelry" },
-  { key: "keys", text: "Keys", value: "Keys" },
-  { key: "laptops", text: "Laptops", value: "Laptops" },
-  { key: "phones", text: "Phones", value: "Phones" },
-  { key: "students ids", text: "Student IDs", value: "Student IDs" },
-  { key: "tablets", text: "Tablets", value: "Tablets" },
-  { key: "umbrellas", text: "Umbrellas", value: "Umbrellas" },
-  { key: "water bottles", text: "Water Bottles", value: "Water Bottles" },
-  {
-    key: "other electronics",
-    text: "Other Electronics",
-    value: "Other Electronics",
-  },
-  { key: "miscellaneous", text: "Miscellaneous", value: "Miscellaneous" },
-];
-
-const pickup = [
-  {
-    key: "cohon",
-    text: "Cohon University Center",
-    value: "Cohon University Center",
-  },
-  {
-    key: "gates",
-    text: "GHC 6203, 412.268.8525, lostfound@cs.cmu.edu.",
-    value: "GHC 6203, 412.268.8525, lostfound@cs.cmu.edu.",
-  },
-  { key: "tepper", text: "Tepper Building", value: "Tepper Building" },
-];
-
 const buildings = Object.keys(BuildingType)
   .filter((value) => value !== "ALL")
   .map((key) => ({

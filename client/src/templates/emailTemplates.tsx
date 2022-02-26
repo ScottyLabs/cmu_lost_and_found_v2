@@ -1,25 +1,45 @@
-export function UseTemplate(templateType: string) {
+export function UseTemplate(templateType: string, building: string) {
+
+    const messageContents = () => {
+        let location = "";
+        let message = "";
+        switch (building) {
+            case "CUC":
+                location = "the Information Desk at the <b>Cohon University Center<\b>";
+                message = `We are located on the main floor of the <b>Cohon Center</b> by <b>Kirr Commons (black chairs)</b>
+                <br>If you need help getting into the building since it is currently ID Access Only on the weekends, please call the desk at <b>412-268-2107</b> for assistance.
+                <br>Our current hours are: 8am - midnight (Monday - Friday), and 9am - midnight (Saturday - Sunday).`;
+                break;
+            case "GHC":
+                location = "<b>Catherine Copetas' room<\b>";
+                // Message needed
+                message = `location? times to pick it up? uhhh`;
+                break;
+            case "TEP":
+                location = "<b>tepper building ?<\b>";
+                message = `location? times to pick it up? uhhh`;
+                break;
+            default:
+                return [];
+        }
+        return [location, message];
+    }
+
+    const [location, message] = messageContents();
+
     switch (templateType) {
-        case "CMUID-CUC":
+        case "CMUID":
             return `
-            Hello,
-            <br><br>Your <b>CMU ID</b> was found and turned into the Information Desk at the <b>Cohon University Center</b>. Please stop by at your convenience to retrieve your item. 
-            <br>We are located on the main floor of the <b>Cohon Center</b> by <b>Kirr Commons (black chairs)</b>. If you need help getting into the building since it is currently ID Access Only on the weekends, please call the desk at <b>412-268-2107</b> for assistance. 
-            <br>Our current hours are: 8am - midnight (Monday - Friday), and 9am - midnight (Saturday - Sunday).
-            <br><br>Thank you,
-            <br><b>CUC Lost and Found</b>`;
-            
-        case "OTHER-CUC":
+            Your CMU ID was found and turned into ${location}. 
+            Please stop by at your convenience to retrieve your item. 
+            <br>${message}`;
+        case "OTHER":
             return `
-            Hello,
-            <br><br>An <b>item containing your identifying information</b> was found and turned into the Information Desk at the Cohon University Center. Please stop by at your convenience to retrieve your item. 
-            <br>We are located on the main floor of the <b>Cohon Center</b> by <b>Kirr Commons (black chairs)</b>. If you need help getting into the building since it is currently ID Access Only on the weekends, please call the desk at <b>412-268-2107</b> for assistance. 
-            <br>Our current hours are: 8am - midnight (Monday - Friday), and 9am - midnight (Saturday - Sunday).
-            <br><br>Thank you,
-            <br><b>CUC Lost and Found</b>`;
+            An item containing your identifying information was found and turned into ${location}. 
+            Please stop by at your convenience to retrieve your item. 
+            <br>${message}`;
         default:
             return `
-            Hello,
-            <br>This email was sent in error. Please ignore.`;
+            This email was sent in error. Please ignore.`;
     }
 }

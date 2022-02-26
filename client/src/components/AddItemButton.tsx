@@ -276,10 +276,12 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
         subject:
           "Lost and Found: Your item has been found",
         text: emailbody
-          .replace("{subheader_content}", UseTemplate(emailTemplate)),
+          .replace("{subheader_title}", "Hello,")
+          .replace("{subheader_content}", UseTemplate(templateType, building)),
       };
 
-      // email does not send. FIGURE THAT OUT!
+      console.log(data);
+
       if (email.length > 0 && templateType != "" && building != "") {
         axios.post("/api/email/sendEmail", data).then(
           (res) => {
@@ -295,7 +297,6 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
 
     if (email != "") {
       lostItemEmail();
-      console.log("Emails Sent!");
     }
 
     const sendEmails = (userList: User[]) => {

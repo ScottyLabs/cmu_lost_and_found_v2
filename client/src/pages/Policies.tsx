@@ -88,7 +88,7 @@ function Policies() {
                 <ul>
                     <li> Identifiable Property &mdash; Any item(s) that is believed to belong to a specific and identifiable individual </li>
                     <li> Unidentifiable Property &mdash; Any item(s) with no ability to associate to a specific and identifiable individual </li>
-                    <li> High-Value Items &mdash; Any cash and jewelry with an estimated value over $50. Additionally, any electronic item with an estimated value over $500 </li>
+                    <li> High-Value Items &mdash; Any cash and jewelry with an estimated value over $50. Additionally, any item with an estimated value over $500 </li>
                     <li> General Items &mdash; Any item not considered a “High-Value” item, that still maintains some level of monetary value </li>
                 </ul>
                 

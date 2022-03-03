@@ -82,7 +82,8 @@ function Admin() {
     let inputName = input.toLowerCase();
     const filtered = itemListDefault.filter((item: Item) => {
       return (
-        item.whereFound.toLowerCase().includes(inputName));
+        item.description.toLowerCase().includes(inputName)) ||
+        item.whereFound.toLowerCase().includes(inputName);
     });
     setInput(input);
     setItemList(filtered);

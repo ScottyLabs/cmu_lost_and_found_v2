@@ -79,13 +79,17 @@ function Admin() {
 
   // modify items
   const updateInput = async (input: string) => {
+    let inputName = input.toLowerCase();
     const filtered = itemListDefault.filter((item: Item) => {
-      return item.name.toLowerCase().includes(input.toLowerCase());
+      return (
+        item.description.toLowerCase().includes(inputName)) ||
+        item.whereFound.toLowerCase().includes(inputName);
     });
     setInput(input);
     setItemList(filtered);
     setPage(1);
   };
+  
 
   // sort items
   const sortItems = async (column: string, direction: string) => {

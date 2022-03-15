@@ -10,6 +10,7 @@ const SearchBar = (props: {input: string, onChange: Function}) => {
         control={Input}
         value={props.input}
         placeholder="Search..."
+        //item.whereFound
         onChange={(e: any) => props.onChange(e.target.value)}
         icon="search"
       />

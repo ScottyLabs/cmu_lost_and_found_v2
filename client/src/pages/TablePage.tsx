@@ -8,6 +8,7 @@ import { Item } from "../interface/item";
 import CardWidget from "../components/CardWidget";
 import "./TablePage.css";
 import FoundItemModal, {
+  lostItemMessage,
   foundItemMessage,
   feedbackForm,
 } from "../components/FoundItemModal";
@@ -110,12 +111,15 @@ function TablePage() {
           <div id="description">
             <p>
               To retrieve an object, go to the location listed next to the
-              object on the table. You will be required to identify any lost
+              object on the corresponding card. You will be required to identify any lost
               possessions. All items must be picked up in person and a photo ID is required.
-              For general inquiries, please contact{" "}
-              <a href="mailto:lost-and-found@cmu.edu">lost-and-found@cmu.edu</a>.
             </p>
           </div>
+          <Message id="lost-item-message" warning size="large">
+            <Message.Header>Lost an item?</Message.Header>
+            {lostItemMessage}
+          </Message>
+
           <Message id="found-item-message" warning size="large">
             <Message.Header>Found an item?</Message.Header>
             {foundItemMessage}

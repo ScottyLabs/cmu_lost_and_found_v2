@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { Grid, Rail } from "semantic-ui-react";
+import { Grid, Rail, Button } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import "./Admin.css";
 import DropdownMenu from "../components/DropdownMenu";
@@ -138,6 +138,12 @@ function Admin() {
                 isAdmin={isAllAdmin}
               ></AddItemButton>
             </div>
+            <Button
+              color="red"
+              style={{ height: "47px", width: "110px", marginLeft: "2px" }}
+            >
+              Download Data
+            </Button>
           </div>
         </Grid.Column>
       </Grid.Row>

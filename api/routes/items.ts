@@ -12,6 +12,30 @@ const router = Router();
  * Returns all items in database, according to schema specified in Item.ts
  */
 router.post("/all", isUser, async (req: Request, res: Response) => {
+  Item.updateMany({ identification: null }, [
+    { $set: { identification: "" } },
+  ]).exec(function (err, docs) {
+    if (err) console.log(err);
+    else console.log(docs);
+  });
+  Item.updateMany({ identification: { $exists: false } }, [
+    { $set: { identification: "" } },
+  ]).exec(function (err, docs) {
+    if (err) console.log(err);
+    else console.log(docs);
+  });
+  Item.updateMany({ notes: null }, [
+    { $set: { notes: "" } },
+  ]).exec(function (err, docs) {
+    if (err) console.log(err);
+    else console.log(docs);
+  });
+  Item.updateMany({ notes: { $exists: false } }, [
+    { $set: { notes: "" } },
+  ]).exec(function (err, docs) {
+    if (err) console.log(err);
+    else console.log(docs);
+  });
   Item.find()
     .populate("whereToRetrieve")
     .sort({ dateFound: -1, timeFound: -1 })

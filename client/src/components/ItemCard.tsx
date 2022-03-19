@@ -47,7 +47,7 @@ const ItemCard = (props: {
                   onClose={() => dispatch({ type: "CLOSE_MODAL" })}
                   trigger={
                       <Button className="ui gray tiny circular icon button show-image">
-                        <i className="image outline large inverted icon"></i>
+                        <i className="image outline large icon"></i>
                       </Button>
                     }
                 >

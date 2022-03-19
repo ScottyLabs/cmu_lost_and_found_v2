@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import "./Admin.css";
 import DropdownMenu from "../components/DropdownMenu";
 import AddItemButton from "../components/AddItemButton";
+import DownloadDataButton from "../components/DownloadDataButton"
 import TableWidget from "../components/TableWidget";
 import "semantic-ui-css/semantic.min.css";
 import axios from "axios";
@@ -138,12 +139,10 @@ function Admin() {
                 isAdmin={isAllAdmin}
               ></AddItemButton>
             </div>
-            <Button
-              color="red"
-              style={{ height: "47px", width: "110px", marginLeft: "2px" }}
-            >
-              Download Data
-            </Button>
+              <DownloadDataButton
+                fetchItems={fetchItems}
+                isAdmin={isAllAdmin}
+              ></DownloadDataButton>
           </div>
         </Grid.Column>
       </Grid.Row>

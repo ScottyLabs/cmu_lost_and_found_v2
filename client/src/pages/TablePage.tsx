@@ -126,17 +126,11 @@ function TablePage() {
                 person and a photo ID is required.
               </p>
             </div>
-            <Message id="lost-item-message" warning size="large">
+            <Message id="faq-message" warning size="large">
               <Message.Header>Lost an item?</Message.Header>
               {lostItemMessage}
-            </Message>
-
-            <Message id="found-item-message" warning size="large">
               <Message.Header>Found an item?</Message.Header>
               {foundItemMessage}
-            </Message>
-
-            <Message id="feedback-form" warning size="large">
               <Message.Header>Have feedback?</Message.Header>
               {feedbackForm}
             </Message>

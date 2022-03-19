@@ -32,6 +32,19 @@ function DownloadDataButton(props: { fetchItems: Function; isAdmin: boolean }) {
   const printy = () => {
     console.log("bruh");
   };
+
+  function download () {
+    var element = document.createElement('a');
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent("hello"));
+    element.setAttribute('download', "file.txt");
+  
+    element.style.display = 'none';
+    document.body.appendChild(element);
+  
+    element.click();
+  
+    document.body.removeChild(element);
+  }  
   
   return (
     <Grid columns={1}>
@@ -39,7 +52,7 @@ function DownloadDataButton(props: { fetchItems: Function; isAdmin: boolean }) {
             <Button
               color="red"
               style={{ height: "47px", width: "110px", marginLeft: "2px" }}
-              onClick={printy}
+              onClick={download}
             >
               Download Data
             </Button>

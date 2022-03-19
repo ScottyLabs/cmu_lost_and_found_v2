@@ -5,18 +5,19 @@ export function UseTemplate(templateType: string, building: string) {
         let message = "";
         switch (building) {
             case "CUC":
-                location = "the Information Desk at the <b>Cohon University Center<\b>";
+                location = "the Information Desk at the <b>Cohon University Center</b>";
                 message = `We are located on the main floor of the <b>Cohon Center</b> by <b>Kirr Commons (black chairs)</b>
                 <br>If you need help getting into the building since it is currently ID Access Only on the weekends, please call the desk at <b>412-268-2107</b> for assistance.
                 <br>Our current hours are: 8am - midnight (Monday - Friday), and 9am - midnight (Saturday - Sunday).`;
                 break;
             case "GHC":
-                location = "<b>Catherine Copetas' room<\b>";
+                location = "<b>Catherine Copetas' room</b>";
                 // Message needed
                 message = `location? times to pick it up? uhhh`;
                 break;
             case "TEP":
-                location = "<b>tepper building ?<\b>";
+                location = "<b>tepper building ?</b>";
+                // Message needed
                 message = `location? times to pick it up? uhhh`;
                 break;
             default:

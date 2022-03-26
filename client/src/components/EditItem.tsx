@@ -65,7 +65,8 @@ const buildings = Object.keys(BuildingType)
     key,
     text: key,
     value: key,
-  }));
+  }))
+  .sort((a, b) => (a.text > b.text) ? 1 : -1);
 
 function EditItem(props: {
   fetchItems: Function;

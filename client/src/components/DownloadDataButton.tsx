@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./DownloadDataButton.css";
+import { Item } from "../interface/item";
 import { BuildingType } from "../enums/locationTypes";
 import { User } from "../interface/user";
 import emailbody from "../templates/html/emailbody";
@@ -27,15 +28,17 @@ function exampleReducer(dispatchState: any, action: any) {
   }
 }
 
-function DownloadDataButton(props: { fetchItems: Function; isAdmin: boolean }) {
+function DownloadDataButton(props: { fetchItems: Function; items: Item[] }) {
     
   const printy = () => {
+    props.fetchItems();
+    console.log(props.items[1]);
     console.log("bruh");
   };
 
   function download () {
     var element = document.createElement('a');
-    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent("hello"));
+    // element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent("hello"));
     element.setAttribute('download', "file.txt");
   
     element.style.display = 'none';
@@ -52,7 +55,7 @@ function DownloadDataButton(props: { fetchItems: Function; isAdmin: boolean }) {
             <Button
               color="red"
               style={{ height: "47px", width: "110px", marginLeft: "2px" }}
-              onClick={download}
+              onClick={printy}
             >
               Download Data
             </Button>

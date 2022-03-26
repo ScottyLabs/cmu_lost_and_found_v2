@@ -12,7 +12,6 @@ import emailbody from "../templates/html/emailbody";
 import { PermissionType } from "../enums/permissionType";
 import { TemplateType } from "../enums/templateTypes";
 import { UseTemplate } from "../templates/emailTemplates";
-import MongoClient from "mongodb";
 
 function exampleReducer(dispatchState: any, action: any) {
   switch (action.type) {
@@ -32,34 +31,27 @@ function exampleReducer(dispatchState: any, action: any) {
 function DownloadDataButton(props: { fetchItems: Function; items: Item[] }) {
     
   const printy = () => {
-    props.fetchItems();
-    console.log(props.items[1]);
-    console.log("bruh");
-
-    const ObjectsToCsv = require('objects-to-csv');
- 
-    (async () => {
-      const csv = new ObjectsToCsv(props.items);
-     
-      // Save to file:
-      // await csv.toDisk('./test.csv');
-     
-      // Return the CSV file as string:
-      console.log(await csv.toString());
-    })();
   };
 
   function download () {
+    props.fetchItems();
+    console.log(props.items[1]);
+
     var element = document.createElement('a');
-    // element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent("hello"));
-    element.setAttribute('download', "file.txt");
-  
-    element.style.display = 'none';
-    document.body.appendChild(element);
-  
-    element.click();
-  
-    document.body.removeChild(element);
+    const ObjectsToCsv = require('objects-to-csv');
+    
+    (async () => {
+      const csv = new ObjectsToCsv(props.items);
+      element.setAttribute('download', "file.txt");
+      const csvItems = await csv.toString()
+      element.href        = 'data:attachment/csv,' +  encodeURIComponent(csvItems);
+      element.target      = '_blank';
+      element.download    = 'lostAndFoundData.csv';
+      element.style.display = 'none';
+      document.body.appendChild(element);
+      element.click();
+      document.body.removeChild(element);
+    })();
   }  
   
   return (
@@ -68,7 +60,7 @@ function DownloadDataButton(props: { fetchItems: Function; items: Item[] }) {
             <Button
               color="red"
               style={{ height: "47px", width: "110px", marginLeft: "2px" }}
-              onClick={printy}
+              onClick={download}
             >
               Download Data
             </Button>

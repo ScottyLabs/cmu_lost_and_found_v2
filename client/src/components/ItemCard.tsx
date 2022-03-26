@@ -38,25 +38,18 @@ const ItemCard = (props: {
     <div className="card-wrapper">
       <Card className="item-card"> 
         <Card.Content className="top-content">
-          <Card.Header>
-            {props.item.name} 
-          </Card.Header>
-          <Card.Meta>
-            <span className="date">
-              Found on {dateFormatted}, {timeFormatted}
-            </span>
-          </Card.Meta>
-          <Card.Description>
-            {props.item.description}
-            <br></br> 
-            {props.item.image?.length > 0 ? (
-                <Modal
+          {props.item.image?.length > 0 ? (
+              <Modal
                   closeOnEscape={closeOnEscape}
                   closeOnDimmerClick={closeOnDimmerClick}
                   open={open}
                   onOpen={() => dispatch({ type: "OPEN_MODAL" })}
                   onClose={() => dispatch({ type: "CLOSE_MODAL" })}
-                  trigger={<Button className="image-button">Show Image</Button>}
+                  trigger={
+                      <Button className="ui gray mini circular icon button show-image">
+                        <i className="image outline large icon"></i>
+                      </Button>
+                    }
                 >
                 <Modal.Header>{props.item.name}</Modal.Header>
                 <Modal.Content style={{margin: "auto", maxWidth: "100%", padding: "30px", fontSize: "18px"}}>
@@ -66,10 +59,20 @@ const ItemCard = (props: {
                     Close
                   </Button>
                 </Modal.Content>
-                </Modal>
+              </Modal>
               )
-              : null}
-              
+              : null} 
+          <Card.Header>
+            {props.item.name}  
+          </Card.Header>
+          <Card.Meta>
+            <span className="date">
+              Found on {dateFormatted}, {timeFormatted}
+            </span>
+          </Card.Meta>
+          <Card.Description>
+            {props.item.description}
+            <br></br>     
           </Card.Description>
         </Card.Content>
         <Card.Content className="bottom-content">

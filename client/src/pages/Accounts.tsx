@@ -113,7 +113,7 @@ function Accounts() {
               <AddUser fetchUsers={fetchUsers}></AddUser>
             </div>
             <div id="admin-filter-bar">
-              <SearchBar input={input} onChange={updateInput} />
+              <SearchBar input={input} onChange={updateInput} placeholder={"Search..."} />
               <div id="add-user-desktop">
                 <AddUser fetchUsers={fetchUsers}></AddUser>
               </div>

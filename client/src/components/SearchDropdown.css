@@ -1,0 +1,17 @@
+#searchdropdown {
+    border-radius: .28571429rem;
+    border: 2px solid #c2c1c1;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+@media (max-width: 1180px) {
+
+}
+
+#searchdropdown {
+    max-width: none;
+    width: 30%;
+    font-size: 1.2em;
+    margin-bottom: 15px;
+}

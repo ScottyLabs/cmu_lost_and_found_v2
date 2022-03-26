@@ -119,7 +119,7 @@ function TablePage() {
               {feedbackForm}
             </Message>
             <div id="admin-filter-bar">
-              <SearchBar input={input} onChange={updateInput} />
+            <SearchBar input={input} onChange={updateInput} placeholder={"Search..."} />
               <FoundItemModal
                 id="found-item-modal"
                 style={{ padding: "11px 11px", width: "110px" }}

@@ -14,6 +14,7 @@ import LogoutButton from "../components/LogoutButton";
 import { User } from "../interface/user";
 import { BuildingType } from "../enums/locationTypes";
 import { PermissionType } from "../enums/permissionType";
+import SearchDropdown from "../components/SearchDropdown";
 
 function Admin() {
   document.title = "CMU Lost and Found";
@@ -29,6 +30,8 @@ function Admin() {
   const [user, setUser] = useState<User | null>(null);
 
   const [page, setPage] = useState(1);
+
+  const [selected, setSelected] = useState("");
 
   const fetchItems = () => {
     axios
@@ -77,11 +80,42 @@ function Admin() {
     fetchItems();
   }, []);
 
+  const isWithinRange = (date1: Date, date2: Date, date: Date) => {
+    return date >= date1 && date <= date2
+  }
+
+  const subtractDays = (date: Date, days: any) => {
+    return (new Date(date.getTime() - (days * 24 * 60 * 60 * 1000)));
+  }
+
   //modify items
   const updateInput = async (input: string) => {
-    const filtered = itemListDefault.filter((item: Item) => {
-      return item.name.toLowerCase().includes(input.toLowerCase());
-    });
+    var filtered;
+    if (selected == 'Search oldest items by days') {
+      filtered = itemListDefault.filter((item: Item) => {
+        var minDate = -8640000000000000;
+        return isWithinRange (new Date(minDate), 
+               subtractDays(new Date(), input), new Date(item.dateFound));
+      });
+    }
+    else if (selected == 'Search by location') {
+      filtered = itemListDefault.filter((item: Item) => {
+        return item.whereFound.toLowerCase().includes(input.toLowerCase());
+      });
+    }
+    else if (input != "" && selected == 'Search recent items by days') {
+      var days = parseInt(input);
+      filtered = itemListDefault.filter((item: Item) => {
+        return isWithinRange (subtractDays(new Date(), days + 1), 
+                              new Date(), new Date(item.dateFound));
+      });
+    }
+    else {
+      filtered = itemListDefault.filter((item: Item) => {
+        return item.name.toLowerCase().includes(input.toLowerCase());
+      });
+    }
+    
     setInput(input);
     setItemList(filtered);
     setPage(1);
@@ -127,7 +161,9 @@ function Admin() {
               ></AddItemButton>
             </div>
             <div id="admin-filter-bar">
-              <SearchBar input={input} onChange={updateInput} />
+              <SearchDropdown selected={selected} onChange={setSelected}/>
+              <SearchBar input={input} onChange={updateInput} placeholder={selected}/>
+
               <div id="add-desktop">
                 <AddItemButton
                   fetchItems={fetchItems}

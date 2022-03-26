@@ -141,7 +141,7 @@ function Admin() {
             </div>
               <DownloadDataButton
                 fetchItems={fetchItems}
-                isAdmin={isAllAdmin}
+                items={items}
               ></DownloadDataButton>
           </div>
         </Grid.Column>

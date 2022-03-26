@@ -10,7 +10,8 @@ import { User } from "../interface/user";
 import emailbody from "../templates/html/emailbody";
 import { PermissionType } from "../enums/permissionType";
 import { TemplateType } from "../enums/templateTypes";
-import { UseTemplate } from "../templates/emailTemplates";
+import { UseTemplate } from "../templates/emailTemplates";////
+//import PermissionsController from "../../../api/controllers/PermissionsController";
 
 function exampleReducer(dispatchState: any, action: any) {
   switch (action.type) {
@@ -85,7 +86,7 @@ const isValidEmail = (email: string) => {
       .match(emailValidatorRegex);
   };
 
-function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
+function AddItemButton(props: { fetchItems: Function; isAdmin: boolean; permissions: string[] }) {
   const [dispatchState, dispatch] = React.useReducer(exampleReducer, {
     closeOnEscape: false,
     closeOnDimmerClick: false,
@@ -416,6 +417,12 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
     );
   };
 
+  const buildplace = () => {
+    const build = props.permissions[0].split(":")[0]
+    if (build == "ALL") return ""
+    else return build 
+  }
+
   return (
     <Grid columns={1}>
       <Grid.Column>
@@ -529,9 +536,9 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
                 required
                 label="Building (Lost and Found Desk)"
                 options={buildings}
-                placeholder="Building (Lost and Found Desk)"
+                placeholder= {"Building (Lost and Found Desk)"} //{PermissionsController.parsePermission(props.permissions[0])[0]} //replace with building from user
                 name="building"
-                value={state.building}
+                value={buildplace()}
                 onChange={handleChange}
                 error={buildingError}
               />

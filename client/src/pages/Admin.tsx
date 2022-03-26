@@ -163,6 +163,7 @@ function Admin() {
               <AddItemButton
                 fetchItems={fetchItems}
                 isAdmin={isAllAdmin}
+                permissions = {user?.permissions}
               ></AddItemButton>
             </div>
             <div id="admin-filter-bar">
@@ -171,6 +172,7 @@ function Admin() {
                 <AddItemButton
                   fetchItems={fetchItems}
                   isAdmin={isAllAdmin}
+                  permissions = {user?.permissions}
                 ></AddItemButton>
               </div>
             </div>

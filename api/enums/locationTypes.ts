@@ -5,5 +5,6 @@ export enum BuildingType {
   ROF = "RESIDENCE ON FIFTH",
   MOR = "MOREWOOD",
   DON = "DONNER",
+  MUD = "MUDGE",
   ALL = "ALL"
 }

@@ -29,21 +29,25 @@ function exampleReducer(dispatchState: any, action: any) {
 }
 
 function DownloadDataButton(props: { fetchItems: Function; items: Item[] }) {
-    
-  const printy = () => {
-  };
+
 
   function download () {
     props.fetchItems();
-    console.log(props.items[1]);
 
     var element = document.createElement('a');
     const ObjectsToCsv = require('objects-to-csv');
+    const csv = require('csv');
+    const fs = require('fs');
     
     (async () => {
-      const csv = new ObjectsToCsv(props.items);
-      element.setAttribute('download', "file.txt");
+      const newItemList = props.items.map(({_id, imagePermission, approved, publicDisplay, whereToRetrieve, ...newItem}) => {
+        return newItem;
+      });
+
+      const csv = new ObjectsToCsv(newItemList);
       const csvItems = await csv.toString()
+
+      console.log(csv)
       element.href        = 'data:attachment/csv,' +  encodeURIComponent(csvItems);
       element.target      = '_blank';
       element.download    = 'lostAndFoundData.csv';

@@ -28,7 +28,7 @@ router.post("/all", isUser, async (req: Request, res: Response) => {
  * Adds an item to database
  * Should correspond to schema found in Item.ts
  */
-//TODO: Still need add item validation (in case some fields aren't satisfactory)
+// TODO: Still need add item validation (in case some fields aren't satisfactory)
 router.post("/add", isUser, async (req: Request, res: Response) => {
   let {
     dateFound,
@@ -90,7 +90,7 @@ router.post("/add", isUser, async (req: Request, res: Response) => {
 /**
  * Delete an item by id
  * {
- * id: id
+ *   id: id
  * }
  */
 router.post("/delete", isUser, async (req: Request, res: Response) => {
@@ -122,8 +122,8 @@ router.post("/delete", isUser, async (req: Request, res: Response) => {
 /**
  * Updates an item's status by id
  * {
- * id: id
- * status: status
+ *   id: id
+ *   status: status
  * }
  */
 router.post("/updateStatus", isUser, async (req: Request, res: Response) => {
@@ -163,8 +163,8 @@ router.post("/updateStatus", isUser, async (req: Request, res: Response) => {
 /**
  * Updates an item's approved status by id
  * {
- * id: id
- * approved: approved
+ *   id: id
+ *   approved: approved
  * }
  */
 router.post(
@@ -205,8 +205,8 @@ router.post(
 /**
  * Updates an item's publicDisplay status by id
  * {
- * id: id
- * publicDisplay: publicDisplay
+ *   id: id
+ *   publicDisplay: publicDisplay
  * }
  */
 router.post(
@@ -247,8 +247,8 @@ router.post(
 /**
  * Edits an item
  * {
- * id: id
- * status: status
+ *   id: id
+ *   status: status
  * }
  */
 router.post("/editItem", isUser, async (req: Request, res: Response) => {
@@ -353,8 +353,8 @@ router.post("/editItem", isUser, async (req: Request, res: Response) => {
 /**
  * Adds an image to Google Drive
  * {
- * imageName: imageName
- * dataURL: dataURL
+ *   imageName: imageName
+ *   dataURL: dataURL
  * }
  *
  * Returns the finalURL

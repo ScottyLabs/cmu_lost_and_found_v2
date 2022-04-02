@@ -25,7 +25,7 @@ app.use(express.json({ limit: "5mb" }));
 app.use(express.urlencoded({ limit: "5mb", extended: true }));
 app.use(express.static(process.cwd() + "/client/build/"));
 
-// Set up CORS policy
+// set up CORS policy
 app.use(cors());
 
 mongoose
@@ -49,7 +49,7 @@ mongoose
   }
 })();
 
-// Morgan is for logging
+// morgan is for logging
 app.use(morgan("dev"));
 
 // api route

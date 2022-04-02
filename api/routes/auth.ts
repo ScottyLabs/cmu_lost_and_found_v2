@@ -3,7 +3,6 @@
  */
 
 import { Request, Response, Router, NextFunction, response } from "express";
-import * as mongoose from "mongoose";
 import UserController from "../controllers/UserController";
 import { BuildingType } from "../enums/locationTypes";
 import { PermissionType } from "../enums/permissionType";
@@ -77,22 +76,6 @@ function isAdmin(req: Request, res: Response, next: NextFunction) {
  *  isAdmin: false
  * }
  */
-// router.post("/register", (req: Request, res: Response) => {
-//   let { username, password, isAdmin } = req.body;
-
-//   UserController.createUser(
-//     username,
-//     password,
-//     isAdmin,
-//     (err: string, user: IUser) => {
-//       if (err != null) {
-//         return res.status(401).send(err);
-//       }
-//       return res.status(200).json({ user: user });
-//     }
-//   );
-// });
-
 router.post("/create", isAdmin, (req, res) => {
   let { username, permissions, notif } = req.body;
   UserController.createUser(
@@ -164,11 +147,6 @@ router.get("/signRequest", function (req, res) {
     );
     res.json({ token: loginRequest });
   }
-});
-
-// UNUSED
-router.post("/logout", function (req: Request, res: Response, next) {
-  // TODO: no idea what to do here:
 });
 
 /**

@@ -11,7 +11,6 @@ import emailbody from "../templates/html/emailbody";
 import { PermissionType } from "../enums/permissionType";
 import { TemplateType } from "../enums/templateTypes";
 import { UseTemplate } from "../templates/emailTemplates";////
-//import PermissionsController from "../../../api/controllers/PermissionsController";
 
 function exampleReducer(dispatchState: any, action: any) {
   switch (action.type) {
@@ -418,9 +417,10 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean; permissi
   };
 
   const buildplace = () => {
+    //determine location of user 
     const build = props.permissions[0].split(":")[0]
     if (build == "ALL") return ""
-    else return build 
+    else return build //returns building permission
   }
 
   return (
@@ -536,7 +536,7 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean; permissi
                 required
                 label="Building (Lost and Found Desk)"
                 options={buildings}
-                placeholder= {"Building (Lost and Found Desk)"} //{PermissionsController.parsePermission(props.permissions[0])[0]} //replace with building from user
+                placeholder= {"Building (Lost and Found Desk)"}
                 name="building"
                 value={buildplace()}
                 onChange={handleChange}

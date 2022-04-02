@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Table, Pagination } from "semantic-ui-react";
 import { Item } from "../interface/item";
 import "./TableWidget.css";

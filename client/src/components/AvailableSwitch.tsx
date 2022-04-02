@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import Toggle from "react-toggle";
 import axios from "axios";
-import "./ApproveSwitch.css";
 import { useHistory } from "react-router";
+import "./ApproveSwitch.css";
 
-// Admin-side claim/unclaim button that sets backend claim status to claimed/unclaimed
+// admin-side switch that sets the backend status field to available/unavailable
 export default function AvailableSwitch(props: {
   id: string;
   isAvailable: boolean;
@@ -22,7 +22,7 @@ export default function AvailableSwitch(props: {
       .post(`/api/items/updateStatus`, {
         token: localStorage.getItem("lnf_token"),
         id: props.id,
-        status: !isAvailable ? "available" : "claimed", // isAvailable indicates whether it was formerly available. If it was previously available, then it should no longer be available
+        status: !isAvailable ? "available" : "claimed", // Indicates whether it was formerly available. If so, then it should no longer be available.
       })
       .then(
         (res) => {

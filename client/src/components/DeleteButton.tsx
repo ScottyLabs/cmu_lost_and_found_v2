@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React from "react";
 import { Button, Grid, Modal, Icon } from "semantic-ui-react";
 import { useHistory } from "react-router-dom";
 
@@ -66,7 +66,6 @@ export default function DeleteButton(props: {
               fontSize: "18px",
             }}
           >
-            {/* Need to stop modal from closing when enter key is pressed */}
             <p>Are you sure you wish to delete this item?</p>
             <Button
               onClick={() => {

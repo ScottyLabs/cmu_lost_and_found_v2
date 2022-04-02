@@ -2,7 +2,6 @@ import React from "react";
 import { Dropdown } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
-import "./DropdownMenu.css";
 
 const DropdownMenu = (props: {
   page: String;
@@ -14,7 +13,7 @@ const DropdownMenu = (props: {
 
   return (
     <Dropdown icon='bars' floating button className='icon teal'>
-      <Dropdown.Menu>
+      <Dropdown.Menu style={{ zIndex: 1000 }}>
         {props.page !== "/" ? (
           <Dropdown.Item onClick={() => history.push("/")}><Link to="/">Home</Link></Dropdown.Item>
         ) : null}

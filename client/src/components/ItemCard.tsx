@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Image, Button, Modal } from "semantic-ui-react";
+import { Card, Button, Modal } from "semantic-ui-react";
 import { Item } from "../interface/item";
 import "./ItemCard.css";
 
@@ -53,7 +53,6 @@ const ItemCard = (props: {
                 >
                 <Modal.Header>{props.item.name}</Modal.Header>
                 <Modal.Content style={{margin: "auto", maxWidth: "100%", padding: "30px", fontSize: "18px"}}>
-                  {/* Need to stop modal from closing when enter key is pressed */}
                   <img className = "card-img" src={props.item.image}></img>
                   <Button className="image-button" onClick={() => dispatch({ type: "CLOSE_MODAL" })} negative>
                     Close

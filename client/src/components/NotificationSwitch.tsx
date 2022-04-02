@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Toggle from "react-toggle";
 import axios from "axios";
 import "./ApproveSwitch.css";

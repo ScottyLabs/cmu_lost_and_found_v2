@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import Toggle from "react-toggle";
 import axios from "axios";
-import "./ApproveSwitch.css";
 import { useHistory } from "react-router";
+import "./ApproveSwitch.css";
 
-// Admin-side claim/unclaim button that sets backend claim status to claimed/unclaimed
+// admin-side switch that sets the backend approved field to true/false
 export default function ApproveSwitch(props: {
   id: string;
   isApproved: boolean;

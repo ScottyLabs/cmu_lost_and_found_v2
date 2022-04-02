@@ -3,14 +3,14 @@ import React, { useState } from "react";
 import { Button, Grid, Modal, Form, Message } from "semantic-ui-react";
 import { useHistory } from "react-router-dom";
 import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import "./AddItemButton.css";
 import { BuildingType } from "../enums/locationTypes";
 import { User } from "../interface/user";
 import emailbody from "../templates/html/emailbody";
 import { PermissionType } from "../enums/permissionType";
 import { TemplateType } from "../enums/templateTypes";
 import { UseTemplate } from "../templates/emailTemplates";
+import "react-datepicker/dist/react-datepicker.css";
+import "./AddItemButton.css";
 
 function exampleReducer(dispatchState: any, action: any) {
   switch (action.type) {
@@ -37,16 +37,15 @@ const buildings = Object.keys(BuildingType)
   .sort((a, b) => (a.text > b.text) ? 1 : -1);
 
 const templates = Object.keys(TemplateType)
-.filter((value) => value !== "ALL")
-.map((key) => ({
-  key,
-  text: key,
-  value: key,
-}));
+  .filter((value) => value !== "ALL")
+  .map((key) => ({
+    key,
+    text: key,
+    value: key,
+  }));
 
+// source: https://stackoverflow.com/questions/46155/whats-the-best-way-to-validate-an-email-address-in-javascript
 const emailValidatorRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-// Source: https://stackoverflow.com/questions/46155/whats-the-best-way-to-validate-an-email-address-in-javascript
-
 const isValidEmail = (email: string) => {
     return String(email)
       .toLowerCase()
@@ -81,12 +80,7 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
     notes: "",
   });
 
-  // Validation error states
-  // const[nameError, setNameError] = useState(false);
-  // const[dateError, setDateError] = useState(false);
-  // const[timeError, setTimeError] = useState(false);
-  // const[locationError, setLocationError] = useState(false);
-  // const[descriptionError, setDescriptionError] = useState(false);
+  // validation error states
   const [buildingError, setBuildingError] = useState(false);
   const [formError, setFormError] = useState(false);
 
@@ -313,6 +307,7 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
         );
       }
     };
+
     const offset = date.getTimezoneOffset();
     let currentDate = new Date(date.getTime() - offset * 60 * 1000);
     const dateFound = currentDate.toISOString().slice(0, 10);
@@ -404,7 +399,6 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
         >
           <Modal.Header>Add Item</Modal.Header>
           <Modal.Content>
-            {/* Need to stop modal from closing when enter key is pressed */}
             <Form onSubmit={handleSubmit} error={formError}>
               {formError ? (
                 <Message error content="Missing required field(s)" />
@@ -417,7 +411,6 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
                 name="name"
                 value={state.name}
                 onChange={handleChange}
-                // error={nameError}
               />
               <Form.Group widths="equal">
                 <Form.Field required>
@@ -444,7 +437,6 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
                   placeholder="Location"
                   value={state.whereFound}
                   onChange={handleChange}
-                  // error={locationError}
                 />
               </Form.Group>
               <Form.Input
@@ -454,7 +446,6 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
                 name="description"
                 value={state.description}
                 onChange={handleChange}
-                // error={descriptionError}
               />
               <Form.Group inline>
                 <Form.Field required>
@@ -563,7 +554,6 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
                   >
                     Cancel
                   </Button>
-                  {/* Need to close modal after validation of the form */}
                   <Button positive type="submit">
                     Add
                   </Button>

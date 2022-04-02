@@ -3,13 +3,13 @@ import React, { useState } from "react";
 import { Button, Grid, Modal, Form, Icon } from "semantic-ui-react";
 import { useHistory } from "react-router-dom";
 import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 import { Item } from "../interface/item";
-import "./EditItem.css";
 import { BuildingType } from "../enums/locationTypes";
 import DeleteButton from "./DeleteButton";
 import { User } from "../interface/user";
 import { PermissionType } from "../enums/permissionType";
+import "react-datepicker/dist/react-datepicker.css";
+import "./EditItem.css";
 
 function exampleReducer(dispatchState: any, action: any) {
   switch (action.type) {
@@ -25,39 +25,6 @@ function exampleReducer(dispatchState: any, action: any) {
       throw new Error();
   }
 }
-
-const categories = [
-  { key: "clothing", text: "Clothing", value: "Clothing" },
-  { key: "headphones", text: "Headphones", value: "Headphones" },
-  { key: "jewelry", text: "Jewelry", value: "Jewelry" },
-  { key: "keys", text: "Keys", value: "Keys" },
-  { key: "laptops", text: "Laptops", value: "Laptops" },
-  { key: "phones", text: "Phones", value: "Phones" },
-  { key: "students ids", text: "Student IDs", value: "Student IDs" },
-  { key: "tablets", text: "Tablets", value: "Tablets" },
-  { key: "umbrellas", text: "Umbrellas", value: "Umbrellas" },
-  { key: "water bottles", text: "Water Bottles", value: "Water Bottles" },
-  {
-    key: "other electronics",
-    text: "Other Electronics",
-    value: "Other Electronics",
-  },
-  { key: "miscellaneous", text: "Miscellaneous", value: "Miscellaneous" },
-];
-
-const pickup = [
-  {
-    key: "cohon",
-    text: "Cohon University Center",
-    value: "Cohon University Center",
-  },
-  {
-    key: "gates",
-    text: "GHC 6203, 412.268.8525, lostfound@cs.cmu.edu.",
-    value: "GHC 6203, 412.268.8525, lostfound@cs.cmu.edu.",
-  },
-  { key: "tepper", text: "Tepper Building", value: "Tepper Building" },
-];
 
 const buildings = Object.keys(BuildingType)
   .filter((value) => value !== "ALL")
@@ -81,6 +48,7 @@ function EditItem(props: {
     open: false,
     dimmer: undefined,
   });
+
   const { open, closeOnEscape, closeOnDimmerClick } = dispatchState;
   const history = useHistory();
 
@@ -114,9 +82,11 @@ function EditItem(props: {
     console.log(name);
     setState({ ...state, [name]: value });
   };
+
   const handleRadioChange = (e: any, { name, value }: any) => {
     setState({ ...state, [name]: value === "true" });
   };
+
   const handleFileChange = (
     e: React.ChangeEvent<HTMLInputElement>,
     { name, value }: any
@@ -291,7 +261,6 @@ function EditItem(props: {
         >
           <Modal.Header>Edit Item</Modal.Header>
           <Modal.Content>
-            {/* Need to stop modal from closing when enter key is pressed */}
             <Form onSubmit={handleSubmit}>
               <Form.Input
                 required
@@ -460,7 +429,6 @@ function EditItem(props: {
                   >
                     Cancel
                   </Button>
-                  {/* Need to close modal after validation of the form */}
                   <Button positive type="submit">
                     Edit
                   </Button>

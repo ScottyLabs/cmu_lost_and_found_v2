@@ -4,7 +4,6 @@ import { useHistory } from "react-router";
 import { Button, Grid, Modal, Form, Label, Icon } from "semantic-ui-react";
 import { BuildingType } from "../enums/locationTypes";
 import { PermissionType } from "../enums/permissionType";
-import "./AddUser.css";
 
 function exampleReducer(dispatchState: any, action: any) {
   switch (action.type) {
@@ -49,8 +48,7 @@ function AddUser(props: { fetchUsers: Function }) {
   const [building, setBuilding] = useState("");
   const [action, setAction] = useState("");
 
-  const alertText =
-    "There are multiple overlapping permissions associated with this user. Do you still wish to proceed?";
+  const alertText = "There are multiple overlapping permissions associated with this user. Do you still wish to proceed?";
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -116,7 +114,6 @@ function AddUser(props: { fetchUsers: Function }) {
           trigger={
             <Button
               color="red"
-              id="add-user"
               style={{ height: "47px", width: "110px", marginLeft: "2px" }}
             >
               Add User
@@ -125,7 +122,6 @@ function AddUser(props: { fetchUsers: Function }) {
         >
           <Modal.Header>Add User</Modal.Header>
           <Modal.Content>
-            {/* Need to stop modal from closing when enter key is pressed */}
             <Form onSubmit={handleSubmit}>
               <Form.Input
                 required
@@ -211,7 +207,6 @@ function AddUser(props: { fetchUsers: Function }) {
                 >
                   Cancel
                 </Button>
-                {/* Need to close modal after validation of the form */}
                 <Button positive type="submit">
                   Add
                 </Button>

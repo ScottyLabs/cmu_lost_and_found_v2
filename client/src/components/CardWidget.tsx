@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import { Form, Card } from "semantic-ui-react";
 import { Item } from "../interface/item";
-import "./CardWidget.css";
 import ItemCard from "../components/ItemCard"
-
 
 const CardWidget = (props: {
   items: Array<Item>;

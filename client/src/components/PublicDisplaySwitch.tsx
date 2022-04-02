@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import Toggle from "react-toggle";
 import axios from "axios";
 import "./ApproveSwitch.css";
 import { useHistory } from "react-router";
 
-// Admin-side public display/not public display button that sets backend public display status to true/false
+// admin-side switch that sets backend public display field to true/false
 export default function PublicDisplaySwitch(props: {
   id: string;
   isPublicDisplay: boolean;

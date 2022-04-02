@@ -58,10 +58,6 @@ img {
   display: none;
 }
 
-#add-item {
-  justify-content: right;
-}
-
 @media (max-width: 840px) {
   #logo-mobile {
     display: inline;

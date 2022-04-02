@@ -71,7 +71,6 @@ export default function EditPermissions(props: {
         >
           <Modal.Header>Edit Permissions</Modal.Header>
           <Modal.Content>
-            {/* Need to stop modal from closing when enter key is pressed */}
             <Form
               onSubmit={() => {
                 setPermissions([...permissions, `${building}:${action}`]);

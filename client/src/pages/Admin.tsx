@@ -18,7 +18,7 @@ import SearchDropdown from "../components/SearchDropdown";
 
 function Admin() {
   document.title = "CMU Lost and Found";
-  
+
   const [items, setItems] = useState([]);
   //what is from the search
   const [input, setInput] = useState("");
@@ -56,17 +56,17 @@ function Admin() {
   };
 
   const getCurrentUser = () => {
-    axios.post('/api/accounts/currentUser', {
-      token: window.localStorage.getItem("lnf_token")
-    }).then(
-      (res) => {
+    axios
+      .post("/api/accounts/currentUser", {
+        token: window.localStorage.getItem("lnf_token"),
+      })
+      .then((res) => {
         if (res.data) {
           setUser(res.data);
         } else {
           setUser({ username: "user", permissions: [], notif: false });
         }
-      }
-    )
+      });
   };
 
   const history = useHistory();
@@ -111,8 +111,17 @@ function Admin() {
       });
     }
     else {
+      // filtered = itemListDefault.filter((item: Item) => {
+      //   return item.name.toLowerCase().includes(input.toLowerCase());
+      // });
+      let inputName = input.toLowerCase();
       filtered = itemListDefault.filter((item: Item) => {
-        return item.name.toLowerCase().includes(input.toLowerCase());
+        return (
+          item.description.toLowerCase().includes(inputName) ||
+          item.whereFound.toLowerCase().includes(inputName) ||
+          item.identification.toLowerCase().includes(inputName) ||
+          item.notes.toLowerCase().includes(inputName)
+        );
       });
     }
     
@@ -121,9 +130,33 @@ function Admin() {
     setPage(1);
   };
 
+  // sort items
+  const sortItems = async (column: string, direction: string) => {
+    var sorted = itemListDefault;
+    if (column === "whenFound") {
+      sorted = itemListDefault.sort((item1: any, item2: any) => {
+        const time1 = new Date(item1["dateFound"]).getTime();
+        const time2 = new Date(item2["dateFound"]).getTime();
+        return time1 === time2
+          ? item1["timeFound"].localeCompare(item2["timeFound"])
+          : time1 - time2;
+      });
+    } else {
+      sorted = itemListDefault.sort((item1: any, item2: any) => {
+        const str1 = String(item1[column]).replace(/\s+/g, "").toLowerCase();
+        const str2 = String(item2[column]).replace(/\s+/g, "").toLowerCase();
+        return str1.localeCompare(str2);
+      });
+    }
+    if (direction == "descending") sorted.reverse();
+    setItemList(sorted);
+  };
+
   // check a value in local storage to decide if account user is an admin for client-side use
   // safe from a security perspective because backend will independently check if user is an admin
-  const isAllAdmin = user?.permissions.includes(`${BuildingType.ALL}:${PermissionType.ADMIN}`) ?? false;
+  const isAllAdmin =
+    user?.permissions.includes(`${BuildingType.ALL}:${PermissionType.ADMIN}`) ??
+    false;
 
   useEffect(() => {
     if (user && user?.permissions?.length === 0) {
@@ -131,11 +164,11 @@ function Admin() {
     }
   }, [user]);
 
-  return user && (
-    <Grid>
-      <Grid.Row>
-        <Grid.Column width={16}>
-          <main>
+  return (
+    user && (
+      <Grid>
+        <Grid.Row>
+          <Grid.Column width={16}>
             <Link to="/">
               <img
                 src="/dog-logo.png"
@@ -150,10 +183,19 @@ function Admin() {
                 </Link>
               </Rail>
               <LogoutButton />
-              <DropdownMenu page={"/admin"} isAdmin={user.permissions?.length > 0} isAllAdmin={isAllAdmin}/>
+              <DropdownMenu
+                page={"/admin"}
+                isAdmin={user.permissions?.length > 0}
+                isAllAdmin={isAllAdmin}
+              />
             </div>
             <h1 className="title">Carnegie Mellon University</h1>
             <h2 className="subtitle">Lost and Found - Admin Panel</h2>
+          </Grid.Column>
+        </Grid.Row>
+
+        <Grid.Row>
+          <Grid.Column width={16}>
             <div id="add-mobile">
               <AddItemButton
                 fetchItems={fetchItems}
@@ -171,21 +213,29 @@ function Admin() {
                 ></AddItemButton>
               </div>
             </div>
-            <div id="table">
-              <TableWidget
-                items={itemList}
-                isUser={true}
-                isArchived={false}
-                fetchItems={fetchItems}
-                user={user}
-                page={page}
-                setPage={setPage}
-              ></TableWidget>
-            </div>
-          </main>
-        </Grid.Column>
-      </Grid.Row>
-    </Grid>
+          </Grid.Column>
+        </Grid.Row>
+
+        <Grid.Row>
+          <Grid.Column width={16}>
+            <main>
+              <div id="table">
+                <TableWidget
+                  items={itemList}
+                  isUser={true}
+                  isArchived={false}
+                  fetchItems={fetchItems}
+                  sortItems={sortItems}
+                  user={user}
+                  page={page}
+                  setPage={setPage}
+                ></TableWidget>
+              </div>
+            </main>
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
+    )
   );
 }
 

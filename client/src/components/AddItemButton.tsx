@@ -9,6 +9,8 @@ import { BuildingType } from "../enums/locationTypes";
 import { User } from "../interface/user";
 import emailbody from "../templates/html/emailbody";
 import { PermissionType } from "../enums/permissionType";
+import { TemplateType } from "../enums/templateTypes";
+import { UseTemplate } from "../templates/emailTemplates";
 
 function exampleReducer(dispatchState: any, action: any) {
   switch (action.type) {
@@ -66,6 +68,23 @@ const buildings = Object.keys(BuildingType)
     value: key,
   }));
 
+const templates = Object.keys(TemplateType)
+.filter((value) => value !== "ALL")
+.map((key) => ({
+  key,
+  text: key,
+  value: key,
+}));
+
+const emailValidatorRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+// Source: https://stackoverflow.com/questions/46155/whats-the-best-way-to-validate-an-email-address-in-javascript
+
+const isValidEmail = (email: string) => {
+    return String(email)
+      .toLowerCase()
+      .match(emailValidatorRegex);
+  };
+
 function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
   const [dispatchState, dispatch] = React.useReducer(exampleReducer, {
     closeOnEscape: false,
@@ -89,6 +108,8 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
     imagePermission: false,
     status: "available",
     identification: "",
+    email: "",
+    templateType: "",
     notes: "",
   });
 
@@ -201,6 +222,8 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
       imagePermission,
       status,
       identification,
+      email,
+      templateType,
       notes,
     } = state;
 
@@ -243,6 +266,39 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
         );
     }
 
+    const lostItemEmail = () => {
+      const emailTemplate = templateType + "-" + building;
+      console.log("Template:", emailTemplate, "\nSent to:", email)
+      const singleton = [email];
+      
+      let data = {
+        emails: singleton,
+        subject:
+          "Lost and Found: Your item has been found",
+        text: emailbody
+          .replace("{subheader_title}", "Hello,")
+          .replace("{subheader_content}", UseTemplate(templateType, building)),
+      };
+
+      console.log(data);
+
+      if (email.length > 0 && templateType != "" && building != "") {
+        axios.post("/api/email/sendEmail", data).then(
+          (res) => {
+            console.log("Email sent!");
+            console.log(res);
+          },
+          (error) => {
+            console.log(error.response.data);
+          }
+        );
+      }
+    };
+
+    if (email != "") {
+      lostItemEmail();
+    }
+
     const sendEmails = (userList: User[]) => {
       // filter user list to find admins with notifs
       let emails: string[] = [];
@@ -262,14 +318,17 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
         let subheaderTitle = "A New Item Has Been Added For Approval";
         let subheaderContent = `<b>Item Name:</b> ${String(
           name
-        )}<br><b>Item Description:</b> ${String(
-          description
+        )}<br><b>Item Description:</b> ${String(description)}
+        <br><b>Item Value:</b> ${String(
+          value.charAt(0).toUpperCase() + value.slice(1)
         )}<br><b>Building:</b> ${String(
           building
         )}<br>Visit the <a href=https://lostandfound.andrew.cmu.edu/admin>CMU Lost and Found site</a> to approve.`;
         let data = {
           emails: emails,
-          subject: "New Item Added: Approval Needed",
+          subject:
+            "New Item Added: Approval Needed" +
+            (value === "high value" ? " - HIGH VALUE" : ""),
           text: emailbody
             .replace("{subheader_title}", subheaderTitle)
             .replace("{subheader_content}", subheaderContent),
@@ -309,6 +368,8 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
             status: status,
             approved: props.isAdmin,
             identification: identification,
+            email: email,
+            templateType: templateType,
             notes: notes,
           })
           .then(
@@ -343,6 +404,8 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
           imagePermission: false,
           status: "available",
           identification: "",
+          email: "",
+          templateType: "",
           notes: "",
         });
         return res;
@@ -479,13 +542,36 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
                 value={state.imagePath}
                 onChange={handleFileChange}
               />
+              { state.identifiable ? 
               <Form.Input
                 label="Identification"
                 placeholder="AndrewID or driver's license number"
                 name="identification"
                 value={state.identification}
                 onChange={handleChange}
-              />
+              /> 
+              : null }
+              { state.identifiable ? 
+              <Form.Input
+                label="Email"
+                placeholder="Ex. bovick@andrew.cmu.edu"
+                name="email"
+                value={state.email}
+                onChange={handleChange}
+              /> 
+              : null }
+              { isValidEmail(state.email) ? 
+              <Form.Select
+                fluid
+                required
+                label="Template Type"
+                options={templates}
+                placeholder="CMU ID or item with PID"
+                name="templateType"
+                value={state.templateType}
+                onChange={handleChange}
+              /> 
+              : null }
               <Form.TextArea
                 label="Notes"
                 name="notes"

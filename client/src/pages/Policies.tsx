@@ -45,21 +45,26 @@ function Policies() {
     <Grid>
       <Grid.Row>
         <Grid.Column width={16}>
+          <Link to="/">
+            <img src="/dog-logo.png" id="logo-mobile" alt="CMU Lost and Found Logo"></img>
+          </Link>
+          <div id="settings">
+            <Rail attached internal position="left" id="logo-desktop">
+              <Link to="/">
+                <img src="/dog-logo.png" alt="CMU Lost and Found Logo"></img>
+              </Link>
+            </Rail>
+            <LogoutButton />
+            <DropdownMenu page={"/policies"} isAdmin={user.permissions?.length > 0} isAllAdmin={isAllAdmin}/>
+          </div>
+          <h1 className="title">Carnegie Mellon University</h1>
+          <h2 className="subtitle">Lost and Found - Cohon University Center Policies</h2>
+        </Grid.Column>
+      </Grid.Row>
+
+      <Grid.Row>
+        <Grid.Column width={16}>
           <main>
-            <Link to="/">
-              <img src="/dog-logo.png" id="logo-mobile" alt="CMU Lost and Found Logo"></img>
-            </Link>
-            <div id="settings">
-              <Rail attached internal position="left" id="logo-desktop">
-                <Link to="/">
-                  <img src="/dog-logo.png" alt="CMU Lost and Found Logo"></img>
-                </Link>
-              </Rail>
-              <LogoutButton />
-              <DropdownMenu page={"/policies"} isAdmin={user.permissions?.length > 0} isAllAdmin={isAllAdmin}/>
-            </div>
-            <h1 className="title">Carnegie Mellon University</h1>
-            <h2 className="subtitle">Lost and Found - Cohon University Center Policies</h2>
             <div id="about">
               <div id="description">
                 <h2> General </h2>
@@ -83,12 +88,12 @@ function Policies() {
                 <ul>
                     <li> Identifiable Property &mdash; Any item(s) that is believed to belong to a specific and identifiable individual </li>
                     <li> Unidentifiable Property &mdash; Any item(s) with no ability to associate to a specific and identifiable individual </li>
-                    <li> High-Value Items &mdash; Any cash and jewelry with an estimated value over $50. Additionally, any electronic item with an estimated value over $500 </li>
+                    <li> High-Value Items &mdash; Any cash and jewelry with an estimated value over $50. Additionally, any item with an estimated value over $500 </li>
                     <li> General Items &mdash; Any item not considered a “High-Value” item, that still maintains some level of monetary value </li>
                 </ul>
                 
                 <h2> Procedures </h2>
-                Procedures for Lost/Abandoned Property:
+                Procedures for Lost/Abandoned Property*:
                 <ul>
                   <li> 
                     High Value Items 
@@ -140,6 +145,7 @@ function Policies() {
                     </ul>
                   </li>
                 </ul>
+                *Water bottles and any such items which may carry bodily fluids will not be accepted.
               </div>
             </div>
           </main>

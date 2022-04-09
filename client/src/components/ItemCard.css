@@ -18,6 +18,8 @@
   flex-wrap: wrap;
   justify-content: space-between;
   height: max-height;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 .card-wrapper-outer{
   height: max-height;

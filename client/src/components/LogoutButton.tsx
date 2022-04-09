@@ -1,13 +1,16 @@
 import React from "react";
 import { Button, Icon } from "semantic-ui-react";
 import { useHistory } from "react-router-dom";
+import './LogoutButton.css';
 
 export default function LogoutButton(props: { }) {
   const history = useHistory();
   return (
+    <div id="logout">
     <Button
       icon
-      color="blue"
+      color='black'
+      style = {{color:'#FFFFFF'}}
       labelPosition="left"
       onClick={() => {
         console.log("logout");
@@ -15,8 +18,9 @@ export default function LogoutButton(props: { }) {
         history.replace("/login");
       }}
     >
-      <Icon name="sign out" />
+      <Icon name="sign out" style = {{color:'#FFFFFF'}}/>
       Sign out
     </Button>
+    </div>
   );
 }

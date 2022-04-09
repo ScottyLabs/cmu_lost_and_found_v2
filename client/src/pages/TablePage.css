@@ -1,6 +1,17 @@
-.subtitle {
-  margin-top: 0px;
+.title {
+  margin-top: 0%;
   color: #872222;
+  text-align: left;
+  margin-left: 15%;
+  padding-left: 4%;
+}
+
+.subtitle {
+  margin-top: 0%;
+  color: #872222;
+  text-align: left;
+  margin-left: 15%;
+  padding-left: 4%;
 }
 
 #description {
@@ -11,6 +22,7 @@
   margin-bottom: 40px;
   max-width: 80%;
   padding: 10px;
+  padding-top: 0ch;
 }
 
 #description p {

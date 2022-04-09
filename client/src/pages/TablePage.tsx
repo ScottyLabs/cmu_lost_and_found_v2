@@ -88,26 +88,25 @@ function TablePage() {
     <Grid>
       <Grid.Row>
         <Grid.Column width={16} id="">
+        <div id="settings">
+          <LogoutButton />
+          <DropdownMenu page={"/"} isAdmin={user.permissions?.length > 0} isAllAdmin={isAllAdmin}/>
+          </div>
           <Link to="/">
             <img src="/dog-logo.png" id="logo-mobile" alt="CMU Lost and Found Logo"></img>
           </Link>
+          <h1 className="title">Carnegie Mellon University</h1>
+          <h2 className="subtitle">Lost and Found Website</h2>
           <div id="settings">
             <Rail attached internal position="left" id="logo-desktop">
               <Link to="/">
                 <img src="/dog-logo.png" alt="CMU Lost and Found Logo"></img>
               </Link>
             </Rail>
-            <LogoutButton />
-            <DropdownMenu page={"/"} isAdmin={user.permissions?.length > 0} isAllAdmin={isAllAdmin}/>
-          </div>
-          <h1 className="title">Carnegie Mellon University</h1>
-          <h2 className="subtitle">Lost and Found Website</h2>
-        </Grid.Column>
-      </Grid.Row>
-     
-      <Grid.Row>
-        <Grid.Column width={16}>
-          <div id="description">
+            </div>
+          </Grid.Column>
+            <Grid.Column width={16} id="">
+            <div id="description">
             <p>
               To retrieve an object, go to the location listed next to the
               object on the table. You will be required to identify any lost
@@ -116,6 +115,11 @@ function TablePage() {
               <a href="mailto:lost-and-found@cmu.edu">lost-and-found@cmu.edu</a>.
             </p>
           </div>
+        </Grid.Column>
+      </Grid.Row>
+     
+      <Grid.Row>
+        <Grid.Column width={16}>
           <Message id="found-item-message" warning size="large">
             <Message.Header>Found an item?</Message.Header>
             {foundItemMessage}

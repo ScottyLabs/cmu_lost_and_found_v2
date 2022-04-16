@@ -94,6 +94,13 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean; permissi
   });
   const { open, closeOnEscape, closeOnDimmerClick } = dispatchState;
 
+  const buildplace = () => {
+    //determine location of user 
+    const build = props.permissions[0].split(":")[0]
+    if (build == "ALL") return ""
+    else return build //returns building permission
+  }
+
   const [state, setState] = useState({
     date: new Date(),
     name: "",
@@ -101,7 +108,7 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean; permissi
     description: "",
     value: "general",
     identifiable: false,
-    building: "",
+    building: buildplace(),
     image: "",
     imagePath: "",
     imageObject: null as any,
@@ -394,7 +401,7 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean; permissi
           date: new Date(),
           name: "",
           whereFound: "",
-          building: "",
+          building: buildplace(),
           description: "",
           value: "general",
           identifiable: false,
@@ -415,13 +422,6 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean; permissi
       }
     );
   };
-
-  const buildplace = () => {
-    //determine location of user 
-    const build = props.permissions[0].split(":")[0]
-    if (build == "ALL") return ""
-    else return build //returns building permission
-  }
 
   return (
     <Grid columns={1}>
@@ -538,7 +538,7 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean; permissi
                 options={buildings}
                 placeholder= {"Building (Lost and Found Desk)"}
                 name="building"
-                value={buildplace()}
+                value={state.building}
                 onChange={handleChange}
                 error={buildingError}
               />

@@ -10,7 +10,7 @@ import { User } from "../interface/user";
 import emailbody from "../templates/html/emailbody";
 import { PermissionType } from "../enums/permissionType";
 import { TemplateType } from "../enums/templateTypes";
-import { UseTemplate } from "../templates/emailTemplates";////
+import { UseTemplate } from "../templates/emailTemplates";
 
 function exampleReducer(dispatchState: any, action: any) {
   switch (action.type) {

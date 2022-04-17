@@ -1,0 +1,31 @@
+header {
+  margin-top: 25px;
+  margin-bottom: 25px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+#site-identity {
+  display: flex;
+  flex-grow: 1;
+  text-align: left;
+  align-items: center;
+}
+
+#page-titles {
+  width: 150%;
+}
+
+#navigation {
+  height: min-content;
+  margin-top: 40px;
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.title, .subtitle {
+  margin: 0;
+  color: #050707;
+  padding-left: 4%;
+}

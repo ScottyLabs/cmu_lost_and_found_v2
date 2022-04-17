@@ -19,7 +19,7 @@ export default function LogoutButton(props: { }) {
       }}
     >
       <Icon name="sign out" style = {{color:'#FFFFFF'}}/>
-      Sign out
+      Logout
     </Button>
     </div>
   );

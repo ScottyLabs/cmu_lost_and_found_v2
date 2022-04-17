@@ -1,8 +1,7 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { Grid, Message, Rail } from "semantic-ui-react";
-import { Link, useHistory } from "react-router-dom";
-import DropdownMenu from "../components/DropdownMenu";
+import { Grid, Message } from "semantic-ui-react";
+import { useHistory } from "react-router-dom";
 import SearchBar from "../components/SearchBar";
 import { Item } from "../interface/item";
 import CardWidget from "../components/CardWidget";
@@ -11,7 +10,7 @@ import FoundItemModal, {
   foundItemMessage,
   feedbackForm,
 } from "../components/FoundItemModal";
-import LogoutButton from "../components/LogoutButton";
+import Header from "../components/Header";
 import { User } from "../interface/user";
 import { BuildingType } from "../enums/locationTypes";
 import { PermissionType } from "../enums/permissionType";
@@ -88,25 +87,10 @@ function TablePage() {
     <Grid>
       <Grid.Row>
         <Grid.Column width={16} id="">
-        <div id="settings">
-          <LogoutButton />
-          <DropdownMenu page={"/"} isAdmin={user.permissions?.length > 0} isAllAdmin={isAllAdmin}/>
-          </div>
-          <Link to="/">
-            <img src="/dog-logo.png" id="logo-mobile" alt="CMU Lost and Found Logo"></img>
-          </Link>
-          <h1 className="title">Carnegie Mellon University</h1>
-          <h2 className="subtitle">Lost and Found Website</h2>
-          <div id="settings">
-            <Rail attached internal position="left" id="logo-desktop">
-              <Link to="/">
-                <img src="/dog-logo.png" alt="CMU Lost and Found Logo"></img>
-              </Link>
-            </Rail>
-            </div>
-          </Grid.Column>
-            <Grid.Column width={16} id="">
-            <div id="description">
+          <Header isAdmin={user.permissions?.length > 0} isAllAdmin={isAllAdmin}/>
+        </Grid.Column>
+        <Grid.Column width={16} id="">
+          <div id="description">
             <p>
               To retrieve an object, go to the location listed next to the
               object on the table. You will be required to identify any lost

@@ -124,7 +124,7 @@ function Admin() {
         );
       });
     }
-    
+
     setInput(input);
     setItemList(filtered);
     setPage(1);
@@ -200,6 +200,7 @@ function Admin() {
               <AddItemButton
                 fetchItems={fetchItems}
                 isAdmin={isAllAdmin}
+                permissions = {user?.permissions}
               ></AddItemButton>
             </div>
             <div id="admin-filter-bar">
@@ -210,6 +211,7 @@ function Admin() {
                 <AddItemButton
                   fetchItems={fetchItems}
                   isAdmin={isAllAdmin}
+                  permissions = {user?.permissions}
                 ></AddItemButton>
               </div>
             </div>

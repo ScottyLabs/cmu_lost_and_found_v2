@@ -85,7 +85,7 @@ const isValidEmail = (email: string) => {
       .match(emailValidatorRegex);
   };
 
-function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
+function AddItemButton(props: { fetchItems: Function; isAdmin: boolean; permissions: string[] }) {
   const [dispatchState, dispatch] = React.useReducer(exampleReducer, {
     closeOnEscape: false,
     closeOnDimmerClick: false,
@@ -94,6 +94,13 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
   });
   const { open, closeOnEscape, closeOnDimmerClick } = dispatchState;
 
+  const buildplace = () => {
+    //determine location of user 
+    const build = props.permissions[0].split(":")[0]
+    if (build == "ALL") return ""
+    else return build //returns building permission
+  }
+
   const [state, setState] = useState({
     date: new Date(),
     name: "",
@@ -101,7 +108,7 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
     description: "",
     value: "general",
     identifiable: false,
-    building: "",
+    building: buildplace(),
     image: "",
     imagePath: "",
     imageObject: null as any,
@@ -394,7 +401,7 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
           date: new Date(),
           name: "",
           whereFound: "",
-          building: "",
+          building: buildplace(),
           description: "",
           value: "general",
           identifiable: false,
@@ -529,7 +536,7 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
                 required
                 label="Building (Lost and Found Desk)"
                 options={buildings}
-                placeholder="Building (Lost and Found Desk)"
+                placeholder= {"Building (Lost and Found Desk)"}
                 name="building"
                 value={state.building}
                 onChange={handleChange}

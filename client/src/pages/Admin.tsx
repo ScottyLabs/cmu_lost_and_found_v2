@@ -98,9 +98,12 @@ function Admin() {
                subtractDays(new Date(), input), new Date(item.dateFound));
       });
     }
-    else if (selected == 'Search by location') {
+    else if (selected == 'Search by keyword') {
       filtered = itemListDefault.filter((item: Item) => {
-        return item.whereFound.toLowerCase().includes(input.toLowerCase());
+        return (
+          item.whereFound.toLowerCase().includes(input.toLowerCase()) ||
+          item.name.toLowerCase().includes(input.toLowerCase())
+        );
       });
     }
     else if (input != "" && selected == 'Search recent items by days') {
@@ -111,9 +114,6 @@ function Admin() {
       });
     }
     else {
-      // filtered = itemListDefault.filter((item: Item) => {
-      //   return item.name.toLowerCase().includes(input.toLowerCase());
-      // });
       let inputName = input.toLowerCase();
       filtered = itemListDefault.filter((item: Item) => {
         return (

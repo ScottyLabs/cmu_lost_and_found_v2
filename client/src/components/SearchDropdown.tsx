@@ -4,14 +4,9 @@ import "./SearchDropdown.css";
 
 const searchOptions = [
   {
-    key: 'Name',
-    text: 'Name',
-    value: 'Search by item name',
-  },
-  {
-    key: 'Location',
-    text: 'Location',
-    value: 'Search by location',
+    key: 'Keyword',
+    text: 'Keyword',
+    value: 'Search by keyword',
   },
   {
     key: 'Older than',

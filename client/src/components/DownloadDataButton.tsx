@@ -30,27 +30,61 @@ function exampleReducer(dispatchState: any, action: any) {
 
 function DownloadDataButton(props: { fetchItems: Function; items: Item[] }) {
 
-
   function download () {
     props.fetchItems();
-
     var element = document.createElement('a');
     const ObjectsToCsv = require('objects-to-csv');
-    const csv = require('csv');
-    const fs = require('fs');
-    
+    const whiteList = [
+      "_id",
+      "imagePermission",
+      "approved",
+      "publicDisplay",
+      "__v",
+      "whereToRetrieve"];
     (async () => {
-      const newItemList = props.items.map(({_id, imagePermission, approved, publicDisplay, whereToRetrieve, ...newItem}) => {
-        return newItem;
+      const newArr = props.items.map(({
+        dateFound, 
+        timeFound, 
+        name, 
+        whereFound, 
+        description,
+        building, 
+        image, 
+        publicDisplay, 
+        status, 
+        approved, 
+        approver, 
+        modified, 
+        value, 
+        identifiable, 
+        identification, 
+        notes,
+        ...rest}) => {
+        return { /* modifying to return rest does blacklist */
+          dateFound, 
+          timeFound, 
+          name, 
+          whereFound, 
+          description,
+          building, 
+          image, 
+          publicDisplay, 
+          status, 
+          approved, 
+          approver, 
+          modified, 
+          value, 
+          identifiable, 
+          identification, 
+          notes
+        };
       });
 
-      const csv = new ObjectsToCsv(newItemList);
-      const csvItems = await csv.toString()
-
-      console.log(csv)
-      element.href        = 'data:attachment/csv,' +  encodeURIComponent(csvItems);
-      element.target      = '_blank';
-      element.download    = 'lostAndFoundData.csv';
+      const csv = new ObjectsToCsv(newArr);
+      const csvItems = await csv.toString();
+      element.href = 'data:attachment/csv,' +  encodeURIComponent(csvItems);
+      element.target = '_blank';
+      element.download = 'lostAndFoundData.csv';
       element.style.display = 'none';
       document.body.appendChild(element);
       element.click();

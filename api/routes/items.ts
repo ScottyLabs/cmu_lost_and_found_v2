@@ -12,7 +12,7 @@ const router = Router();
  * Returns all items in database, according to schema specified in Item.ts
  */
 router.post("/all", isUser, async (req: Request, res: Response) => {
-  Item.find()
+  Item.find({}, {"__v": 0})
     .populate("whereToRetrieve")
     .sort({ dateFound: -1, timeFound: -1 })
     .exec(function (err, docs) {

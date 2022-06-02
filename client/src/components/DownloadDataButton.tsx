@@ -34,52 +34,19 @@ function DownloadDataButton(props: { fetchItems: Function; items: Item[] }) {
     props.fetchItems();
     var element = document.createElement('a');
     const ObjectsToCsv = require('objects-to-csv');
-    const whiteList = [
-      "_id",
-      "imagePermission",
-      "approved",
-      "publicDisplay",
-      "__v",
-      "whereToRetrieve"];
+    console.log("tracking");
+    console.log(props.items);
     (async () => {
       const newArr = props.items.map(({
-        dateFound, 
-        timeFound, 
-        name, 
-        whereFound, 
-        description,
-        building, 
-        image, 
-        publicDisplay, 
-        status, 
-        approved, 
-        approver, 
-        modified, 
-        value, 
-        identifiable, 
-        identification, 
-        notes,
+        _id,
+        id,
+        imagePermission,
+        approved,
+        publicDisplay,
+        whereToRetrieve,
         ...rest}) => {
-        return { /* modifying to return rest does blacklist */
-          dateFound, 
-          timeFound, 
-          name, 
-          whereFound, 
-          description,
-          building, 
-          image, 
-          publicDisplay, 
-          status, 
-          approved, 
-          approver, 
-          modified, 
-          value, 
-          identifiable, 
-          identification, 
-          notes
-        };
+        return rest;
       });
-
       const csv = new ObjectsToCsv(newArr);
       const csvItems = await csv.toString();
       element.href = 'data:attachment/csv,' +  encodeURIComponent(csvItems);
@@ -95,32 +62,13 @@ function DownloadDataButton(props: { fetchItems: Function; items: Item[] }) {
   return (
     <Grid columns={1}>
       <Grid.Column>
-            <Button
-              color="red"
-              style={{ height: "47px", width: "110px", marginLeft: "2px" }}
-              onClick={download}
-            >
-              Download Data
-            </Button>
-        {/* <Modal
-          closeOnEscape={closeOnEscape}
-          closeOnDimmerClick={closeOnDimmerClick}
-          open={open}
-          onOpen={handleOnOpen}
-          onClose={() => dispatch({ type: "CLOSE_MODAL" })}
-          trigger={
-            <Button
-              color="red"
-              style={{ height: "47px", width: "110px", marginLeft: "2px" }}
-            >
-              Download Data
-            </Button>
-          }
+        <Button
+          color="red"
+          style={{ height: "47px", width: "110px", marginLeft: "2px" }}
+          onClick={download}
         >
-          <Modal.Header>BBB</Modal.Header>
-          <Modal.Content>
-          </Modal.Content>
-        </Modal> */}
+          Download Data
+        </Button>
       </Grid.Column>
     </Grid>
   );

@@ -33,30 +33,31 @@ function DownloadDataButton(props: { fetchItems: Function; items: Item[] }) {
   function download () {
     props.fetchItems();
     var element = document.createElement('a');
-    const ObjectsToCsv = require('objects-to-csv');
-    console.log("tracking");
-    console.log(props.items);
-    (async () => {
-      const newArr = props.items.map(({
-        _id,
-        id,
-        imagePermission,
-        approved,
-        publicDisplay,
-        whereToRetrieve,
-        ...rest}) => {
-        return rest;
-      });
-      const csv = new ObjectsToCsv(newArr);
-      const csvItems = await csv.toString();
-      element.href = 'data:attachment/csv,' +  encodeURIComponent(csvItems);
-      element.target = '_blank';
-      element.download = 'lostAndFoundData.csv';
-      element.style.display = 'none';
-      document.body.appendChild(element);
-      element.click();
-      document.body.removeChild(element);
-    })();
+    /**
+     * This section is not compatible with static site generation
+     */
+    // const ObjectsToCsv = require('objects-to-csv');
+    // (async () => {
+    //   const newArr = props.items.map(({
+    //     _id,
+    //     id,
+    //     imagePermission,
+    //     approved,
+    //     publicDisplay,
+    //     whereToRetrieve,
+    //     ...rest}) => {
+    //     return rest;
+    //   });
+    //   const csv = new ObjectsToCsv(newArr);
+    //   const csvItems = await csv.toString();
+    //   element.href = 'data:attachment/csv,' +  encodeURIComponent(csvItems);
+    //   element.target = '_blank';
+    //   element.download = 'lostAndFoundData.csv';
+    //   element.style.display = 'none';
+    //   document.body.appendChild(element);
+    //   element.click();
+    //   document.body.removeChild(element);
+    // })();
   }  
   
   return (

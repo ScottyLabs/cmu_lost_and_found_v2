@@ -1,20 +1,20 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { Button, Grid, Modal, Icon } from "semantic-ui-react";
 import { useHistory } from "react-router-dom";
+import { Button, Grid, Modal, Icon } from "semantic-ui-react";
 
 function exampleReducer(dispatchState: any, action: any) {
   switch (action.type) {
-    case "CONFIG_CLOSE_ON_DIMMER_CLICK":
-      return { ...dispatchState, closeOnDimmerClick: action.value };
-    case "CONFIG_CLOSE_ON_ESCAPE":
-      return { ...dispatchState, closeOnEscape: action.value };
-    case "OPEN_MODAL":
-      return { ...dispatchState, open: true };
-    case "CLOSE_MODAL":
-      return { ...dispatchState, open: false };
-    default:
-      throw new Error();
+  case "CONFIG_CLOSE_ON_DIMMER_CLICK":
+    return { ...dispatchState, closeOnDimmerClick: action.value };
+  case "CONFIG_CLOSE_ON_ESCAPE":
+    return { ...dispatchState, closeOnEscape: action.value };
+  case "OPEN_MODAL":
+    return { ...dispatchState, open: true };
+  case "CLOSE_MODAL":
+    return { ...dispatchState, open: false };
+  default:
+    throw new Error();
   }
 }
 
@@ -71,7 +71,7 @@ export default function DeleteButton(props: {
             <Button
               onClick={() => {
                 axios
-                  .post(`/api/items/delete`, {
+                  .post("/api/items/delete", {
                     token: localStorage.getItem("lnf_token"),
                     id: props.id,
                   })

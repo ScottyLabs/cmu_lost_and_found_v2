@@ -1,6 +1,6 @@
+import axios from "axios";
 import React, { useState } from "react";
 import Toggle from "react-toggle";
-import axios from "axios";
 import "./ApproveSwitch.css";
 import { useHistory } from "react-router";
 
@@ -15,7 +15,7 @@ export default function PublicDisplaySwitch(props: {
 
   const handleClick = () => {
     axios
-      .post(`/api/items/updatePublicDisplayStatus`, {
+      .post("/api/items/updatePublicDisplayStatus", {
         token: localStorage.getItem("lnf_token"),
         id: props.id,
         publicDisplay: !props.isPublicDisplay,

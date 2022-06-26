@@ -2,13 +2,14 @@
  * Responsible for authentication on the backend.
  */
 
-import { Request, Response, Router, NextFunction, response } from "express";
-import * as mongoose from "mongoose";
 import UserController from "../controllers/UserController";
 import { BuildingType } from "../enums/locationTypes";
 import { PermissionType } from "../enums/permissionType";
 import User, { IUser } from "../models/User";
+
+import { Request, Response, Router, NextFunction, response } from "express";
 import * as jwt from "jsonwebtoken";
+import * as mongoose from "mongoose";
 
 const router = Router();
 
@@ -17,7 +18,7 @@ const router = Router();
  * you are, indeed, a verified user.
  */
 function isUser(req: Request, res: Response, next: NextFunction) {
-  let token: string = req.body.token;
+  const token: string = req.body.token;
 
   if (process.env.AUTH_ENABLED !== "true") {
     return next();
@@ -39,7 +40,7 @@ function isUser(req: Request, res: Response, next: NextFunction) {
  * you are, indeed, an admin.
  */
 function isAdmin(req: Request, res: Response, next: NextFunction) {
-  let token: string = req.body.token;
+  const token: string = req.body.token;
 
   if (process.env.AUTH_ENABLED !== "true") {
     return next();
@@ -94,7 +95,7 @@ function isAdmin(req: Request, res: Response, next: NextFunction) {
 // });
 
 router.post("/create", isAdmin, (req, res) => {
-  let { username, permissions, notif } = req.body;
+  const { username, permissions, notif } = req.body;
   UserController.createUser(
     username,
     permissions,
@@ -119,7 +120,7 @@ router.post("/create", isAdmin, (req, res) => {
  *
  */
 router.post("/login", function (req: Request, res: Response, next) {
-  let token = req.body.token;
+  const token = req.body.token;
 
   if (token) {
     UserController.loginWithToken(token, (err, token, user) => {
@@ -175,7 +176,7 @@ router.post("/logout", function (req: Request, res: Response, next) {
  * Checks if current user is admin
  */
 router.post("/isAdmin", async (req: Request, res: Response) => {
-  let token: string = req.body.token;
+  const token: string = req.body.token;
   UserController.getByToken(token, (err: any, user: IUser) => {
     if (err) {
       console.log(err);

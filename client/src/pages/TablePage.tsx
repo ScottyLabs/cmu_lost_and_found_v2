@@ -1,11 +1,9 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { Grid, Message, Rail } from "semantic-ui-react";
-import { Link, useHistory } from "react-router-dom";
-import DropdownMenu from "../components/DropdownMenu";
+
 import SearchBar from "../components/SearchBar";
-import { Item } from "../interface/item";
 import CardWidget from "../components/CardWidget";
+import DropdownMenu from "../components/DropdownMenu";
 import "./TablePage.css";
 import FoundItemModal, {
   lostItemMessage,
@@ -13,9 +11,13 @@ import FoundItemModal, {
   feedbackForm,
 } from "../components/FoundItemModal";
 import LogoutButton from "../components/LogoutButton";
-import { User } from "../interface/user";
 import { BuildingType } from "../enums/locationTypes";
 import { PermissionType } from "../enums/permissionType";
+import { Item } from "../interface/item";
+import { User } from "../interface/user";
+
+import { Link, useHistory } from "react-router-dom";
+import { Grid, Message, Rail } from "semantic-ui-react";
 
 function TablePage() {
   const history = useHistory();
@@ -31,7 +33,7 @@ function TablePage() {
 
   const fetchItems = () => {
     axios
-      .post(`/api/items/all`, {
+      .post("/api/items/all", {
         token: localStorage.getItem("lnf_token"),
       })
       .then(
@@ -66,7 +68,7 @@ function TablePage() {
 
   // modify items
   const updateInput = async (input: string) => {
-    let inputName = input.toLowerCase();
+    const inputName = input.toLowerCase();
     const filtered = itemListDefault.filter((item: Item) => {
       return (
         item.description.toLowerCase().includes(inputName) ||

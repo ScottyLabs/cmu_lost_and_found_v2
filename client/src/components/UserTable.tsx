@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { Label, Table } from "semantic-ui-react";
+
 import { User } from "../interface/user";
 import "./TableWidget.css";
 import DeleteUser from "../components/DeleteUser";
@@ -39,8 +40,8 @@ const UserTable = (props: { users: Array<User>; fetchUsers: Function }) => {
                     action !== PermissionType.ADMIN
                       ? "blue"
                       : building !== BuildingType.ALL
-                      ? "green"
-                      : "yellow";
+                        ? "green"
+                        : "yellow";
                   return (
                     <Label color={color} image>
                       {building}

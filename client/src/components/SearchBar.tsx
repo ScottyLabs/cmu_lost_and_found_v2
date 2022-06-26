@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import { Form, Input } from "semantic-ui-react";
 import "./SearchBar.css";
 
@@ -16,6 +16,6 @@ const SearchBar = (props: {input: string, onChange: Function}) => {
       />
     </Form>
   );
-}
+};
 
-export default SearchBar
+export default SearchBar;

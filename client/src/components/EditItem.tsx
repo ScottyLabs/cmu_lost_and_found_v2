@@ -1,8 +1,9 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { Button, Grid, Modal, Form, Icon } from "semantic-ui-react";
-import { useHistory } from "react-router-dom";
 import DatePicker from "react-datepicker";
+import { useHistory } from "react-router-dom";
+import { Button, Grid, Modal, Form, Icon } from "semantic-ui-react";
+
 import "react-datepicker/dist/react-datepicker.css";
 import { Item } from "../interface/item";
 import "./EditItem.css";
@@ -13,16 +14,16 @@ import { PermissionType } from "../enums/permissionType";
 
 function exampleReducer(dispatchState: any, action: any) {
   switch (action.type) {
-    case "CONFIG_CLOSE_ON_DIMMER_CLICK":
-      return { ...dispatchState, closeOnDimmerClick: action.value };
-    case "CONFIG_CLOSE_ON_ESCAPE":
-      return { ...dispatchState, closeOnEscape: action.value };
-    case "OPEN_MODAL":
-      return { ...dispatchState, open: true };
-    case "CLOSE_MODAL":
-      return { ...dispatchState, open: false };
-    default:
-      throw new Error();
+  case "CONFIG_CLOSE_ON_DIMMER_CLICK":
+    return { ...dispatchState, closeOnDimmerClick: action.value };
+  case "CONFIG_CLOSE_ON_ESCAPE":
+    return { ...dispatchState, closeOnEscape: action.value };
+  case "OPEN_MODAL":
+    return { ...dispatchState, open: true };
+  case "CLOSE_MODAL":
+    return { ...dispatchState, open: false };
+  default:
+    throw new Error();
   }
 }
 
@@ -140,21 +141,21 @@ function EditItem(props: {
     }
 
     return new Promise((resolve, reject) => {
-      let reader = new FileReader();
+      const reader = new FileReader();
 
       reader.onload = () => {
-        let data = {
+        const data = {
           token: localStorage.getItem("lnf_token"),
           imageName: imageName,
           dataURL: reader.result,
         };
         console.log("Trying to edit image");
 
-        axios.post(`/api/items/addImage`, data).then(
+        axios.post("/api/items/addImage", data).then(
           (res) => {
             console.log("Image uploaded successfully");
             console.log(res);
-            let finalURL = res.data.msg.fileId;
+            const finalURL = res.data.msg.fileId;
             console.log(
               "https://drive.google.com/uc?export=view&id=" + finalURL
             );
@@ -198,14 +199,14 @@ function EditItem(props: {
     } = state;
 
     const offset = date.getTimezoneOffset();
-    let currentDate = new Date(date.getTime() - offset * 60 * 1000);
+    const currentDate = new Date(date.getTime() - offset * 60 * 1000);
     const dateFound = currentDate.toISOString().slice(0, 10);
     const timeFound = currentDate.toISOString().slice(11, 16);
 
     uploadImage(imageObject).then(
       (res) => {
         axios
-          .post(`/api/items/editItem`, {
+          .post("/api/items/editItem", {
             id: props.id,
             token: localStorage.getItem("lnf_token"),
             dateFound: dateFound,

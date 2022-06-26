@@ -1,29 +1,29 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { Button, Grid, Modal, Form } from "semantic-ui-react";
 import { useHistory } from "react-router-dom";
+import { Button, Grid, Modal, Form } from "semantic-ui-react";
 
 function exampleReducer(dispatchState: any, action: any) {
   switch (action.type) {
-    case "CONFIG_CLOSE_ON_DIMMER_CLICK":
-      return { ...dispatchState, closeOnDimmerClick: action.value };
-    case "CONFIG_CLOSE_ON_ESCAPE":
-      return { ...dispatchState, closeOnEscape: action.value };
-    case "OPEN_MODAL":
-      return { ...dispatchState, open: true };
-    case "CLOSE_MODAL":
-      return { ...dispatchState, open: false };
-    default:
-      throw new Error();
+  case "CONFIG_CLOSE_ON_DIMMER_CLICK":
+    return { ...dispatchState, closeOnDimmerClick: action.value };
+  case "CONFIG_CLOSE_ON_ESCAPE":
+    return { ...dispatchState, closeOnEscape: action.value };
+  case "OPEN_MODAL":
+    return { ...dispatchState, open: true };
+  case "CLOSE_MODAL":
+    return { ...dispatchState, open: false };
+  default:
+    throw new Error();
   }
 }
 
-let locations = [
+const locations = [
   "Gates Hillman 6203",
-  `University Center Information Desk`,
-  `Residence on Fifth Front Desk`,
-  `Morewood Front Desk`,
-  `Donner Front Desk`,
+  "University Center Information Desk",
+  "Residence on Fifth Front Desk",
+  "Morewood Front Desk",
+  "Donner Front Desk",
 ];
 
 const listItems = locations.map((d) => (
@@ -51,7 +51,7 @@ export const feedbackForm = (
   <>
     <p>
       To leave feedback, please fill out this {" "}
-      <a href="https://forms.gle/QDnNyjdzUBnFUkno8" target="_blank">form</a>. Thanks!
+      <a href="https://forms.gle/QDnNyjdzUBnFUkno8" target="_blank" rel="noreferrer">form</a>. Thanks!
     </p>
   </>
 );

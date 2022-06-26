@@ -1,6 +1,7 @@
-import { Schema, Document, model } from "mongoose";
 import { BuildingType } from "../enums/locationTypes";
 import { IBuilding } from "./Building";
+
+import { Schema, Document, model } from "mongoose";
 
 export interface IItem extends Document {
   dateFound: Date;

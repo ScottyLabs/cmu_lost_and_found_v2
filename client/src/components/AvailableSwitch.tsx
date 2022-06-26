@@ -1,6 +1,6 @@
+import axios from "axios";
 import React, { useState } from "react";
 import Toggle from "react-toggle";
-import axios from "axios";
 import "./ApproveSwitch.css";
 import { useHistory } from "react-router";
 
@@ -19,7 +19,7 @@ export default function AvailableSwitch(props: {
   const handleClick = () => {
     const { isAvailable } = state;
     axios
-      .post(`/api/items/updateStatus`, {
+      .post("/api/items/updateStatus", {
         token: localStorage.getItem("lnf_token"),
         id: props.id,
         status: !isAvailable ? "available" : "claimed", // isAvailable indicates whether it was formerly available. If it was previously available, then it should no longer be available
@@ -29,7 +29,7 @@ export default function AvailableSwitch(props: {
           props.fetchItems();
           if (isAvailable) {
             axios
-              .post(`/api/items/updatePublicDisplayStatus`, {
+              .post("/api/items/updatePublicDisplayStatus", {
                 token: localStorage.getItem("lnf_token"),
                 id: props.id,
                 publicDisplay: false,

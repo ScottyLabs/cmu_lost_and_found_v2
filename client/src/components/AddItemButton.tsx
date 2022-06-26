@@ -1,29 +1,31 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { Button, Grid, Modal, Form, Message } from "semantic-ui-react";
-import { useHistory } from "react-router-dom";
-import DatePicker from "react-datepicker";
+
 import "react-datepicker/dist/react-datepicker.css";
 import "./AddItemButton.css";
 import { BuildingType } from "../enums/locationTypes";
-import { User } from "../interface/user";
-import emailbody from "../templates/html/emailbody";
 import { PermissionType } from "../enums/permissionType";
 import { TemplateType } from "../enums/templateTypes";
+import { User } from "../interface/user";
 import { UseTemplate } from "../templates/emailTemplates";
+import emailbody from "../templates/html/emailbody";
+
+import DatePicker from "react-datepicker";
+import { useHistory } from "react-router-dom";
+import { Button, Grid, Modal, Form, Message } from "semantic-ui-react";
 
 function exampleReducer(dispatchState: any, action: any) {
   switch (action.type) {
-    case "CONFIG_CLOSE_ON_DIMMER_CLICK":
-      return { ...dispatchState, closeOnDimmerClick: action.value };
-    case "CONFIG_CLOSE_ON_ESCAPE":
-      return { ...dispatchState, closeOnEscape: action.value };
-    case "OPEN_MODAL":
-      return { ...dispatchState, open: true };
-    case "CLOSE_MODAL":
-      return { ...dispatchState, open: false };
-    default:
-      throw new Error();
+  case "CONFIG_CLOSE_ON_DIMMER_CLICK":
+    return { ...dispatchState, closeOnDimmerClick: action.value };
+  case "CONFIG_CLOSE_ON_ESCAPE":
+    return { ...dispatchState, closeOnEscape: action.value };
+  case "OPEN_MODAL":
+    return { ...dispatchState, open: true };
+  case "CLOSE_MODAL":
+    return { ...dispatchState, open: false };
+  default:
+    throw new Error();
   }
 }
 
@@ -69,21 +71,21 @@ const buildings = Object.keys(BuildingType)
   }));
 
 const templates = Object.keys(TemplateType)
-.filter((value) => value !== "ALL")
-.map((key) => ({
-  key,
-  text: key,
-  value: key,
-}));
+  .filter((value) => value !== "ALL")
+  .map((key) => ({
+    key,
+    text: key,
+    value: key,
+  }));
 
 const emailValidatorRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 // Source: https://stackoverflow.com/questions/46155/whats-the-best-way-to-validate-an-email-address-in-javascript
 
 const isValidEmail = (email: string) => {
-    return String(email)
-      .toLowerCase()
-      .match(emailValidatorRegex);
-  };
+  return String(email)
+    .toLowerCase()
+    .match(emailValidatorRegex);
+};
 
 function AddItemButton(props: { fetchItems: Function; isAdmin: boolean; permissions: string[] }) {
   const [dispatchState, dispatch] = React.useReducer(exampleReducer, {
@@ -96,10 +98,10 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean; permissi
 
   const buildplace = () => {
     //determine location of user 
-    const build = props.permissions[0].split(":")[0]
-    if (build == "ALL") return ""
-    else return build //returns building permission
-  }
+    const build = props.permissions[0].split(":")[0];
+    if (build == "ALL") return "";
+    else return build; //returns building permission
+  };
 
   const [state, setState] = useState({
     date: new Date(),
@@ -156,21 +158,21 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean; permissi
     }
 
     return new Promise((resolve, reject) => {
-      let reader = new FileReader();
+      const reader = new FileReader();
 
       reader.onload = () => {
-        let data = {
+        const data = {
           imageName: imageName,
           dataURL: reader.result,
           token: localStorage.getItem("lnf_token"),
         };
 
-        axios.post(`/api/items/addImage`, data).then(
+        axios.post("/api/items/addImage", data).then(
           (res) => {
             console.log("Image uploaded successfully");
             console.log(res);
-            let finalID = res.data.msg.fileId;
-            let finalURL =
+            const finalID = res.data.msg.fileId;
+            const finalURL =
               "https://drive.google.com/thumbnail?id=" + finalID + "&sz=w1000";
             console.log(finalURL);
             resolve(finalURL);
@@ -193,7 +195,7 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean; permissi
 
   const handleOnOpen = () => {
     axios
-      .post(`/api/auth/isAdmin`, {
+      .post("/api/auth/isAdmin", {
         token: localStorage.getItem("lnf_token"),
       })
       .then(
@@ -254,7 +256,7 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean; permissi
     if (!props.isAdmin) {
       // get list of all users
       axios
-        .post(`/api/accounts/all`, { token: localStorage.getItem("lnf_token") })
+        .post("/api/accounts/all", { token: localStorage.getItem("lnf_token") })
         .then(
           (res) => {
             console.log("Retrieved users!");
@@ -275,10 +277,10 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean; permissi
 
     const lostItemEmail = () => {
       const emailTemplate = templateType + "-" + building;
-      console.log("Template:", emailTemplate, "\nSent to:", email)
+      console.log("Template:", emailTemplate, "\nSent to:", email);
       const singleton = [email];
       
-      let data = {
+      const data = {
         emails: singleton,
         subject:
           "Lost and Found: Your item has been found",
@@ -308,7 +310,7 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean; permissi
 
     const sendEmails = (userList: User[]) => {
       // filter user list to find admins with notifs
-      let emails: string[] = [];
+      const emails: string[] = [];
       userList.forEach((user: User) => {
         if (
           user.notif &&
@@ -322,16 +324,16 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean; permissi
 
       // send emails to admins with notifs on
       if (emails.length > 0) {
-        let subheaderTitle = "A New Item Has Been Added For Approval";
-        let subheaderContent = `<b>Item Name:</b> ${String(
+        const subheaderTitle = "A New Item Has Been Added For Approval";
+        const subheaderContent = `<b>Item Name:</b> ${String(
           name
         )}<br><b>Item Description:</b> ${String(description)}
         <br><b>Item Value:</b> ${String(
-          value.charAt(0).toUpperCase() + value.slice(1)
-        )}<br><b>Building:</b> ${String(
-          building
-        )}<br>Visit the <a href=https://lostandfound.andrew.cmu.edu/admin>CMU Lost and Found site</a> to approve.`;
-        let data = {
+    value.charAt(0).toUpperCase() + value.slice(1)
+  )}<br><b>Building:</b> ${String(
+  building
+)}<br>Visit the <a href=https://lostandfound.andrew.cmu.edu/admin>CMU Lost and Found site</a> to approve.`;
+        const data = {
           emails: emails,
           subject:
             "New Item Added: Approval Needed" +
@@ -353,14 +355,14 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean; permissi
       }
     };
     const offset = date.getTimezoneOffset();
-    let currentDate = new Date(date.getTime() - offset * 60 * 1000);
+    const currentDate = new Date(date.getTime() - offset * 60 * 1000);
     const dateFound = currentDate.toISOString().slice(0, 10);
     const timeFound = currentDate.toISOString().slice(11, 16);
 
     uploadImage(imageObject).then(
       (res) => {
         axios
-          .post(`/api/items/add`, {
+          .post("/api/items/add", {
             token: localStorage.getItem("lnf_token"),
             dateFound: dateFound,
             timeFound: timeFound,
@@ -550,35 +552,35 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean; permissi
                 onChange={handleFileChange}
               />
               { state.identifiable ? 
-              <Form.Input
-                label="Identification"
-                placeholder="AndrewID or driver's license number"
-                name="identification"
-                value={state.identification}
-                onChange={handleChange}
-              /> 
-              : null }
+                <Form.Input
+                  label="Identification"
+                  placeholder="AndrewID or driver's license number"
+                  name="identification"
+                  value={state.identification}
+                  onChange={handleChange}
+                /> 
+                : null }
               { state.identifiable ? 
-              <Form.Input
-                label="Email"
-                placeholder="Ex. bovick@andrew.cmu.edu"
-                name="email"
-                value={state.email}
-                onChange={handleChange}
-              /> 
-              : null }
+                <Form.Input
+                  label="Email"
+                  placeholder="Ex. bovick@andrew.cmu.edu"
+                  name="email"
+                  value={state.email}
+                  onChange={handleChange}
+                /> 
+                : null }
               { isValidEmail(state.email) ? 
-              <Form.Select
-                fluid
-                required
-                label="Template Type"
-                options={templates}
-                placeholder="CMU ID or item with PID"
-                name="templateType"
-                value={state.templateType}
-                onChange={handleChange}
-              /> 
-              : null }
+                <Form.Select
+                  fluid
+                  required
+                  label="Template Type"
+                  options={templates}
+                  placeholder="CMU ID or item with PID"
+                  name="templateType"
+                  value={state.templateType}
+                  onChange={handleChange}
+                /> 
+                : null }
               <Form.TextArea
                 label="Notes"
                 name="notes"

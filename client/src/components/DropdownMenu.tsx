@@ -1,11 +1,10 @@
 import React from "react";
+import { Link , useHistory } from "react-router-dom";
 import { Dropdown } from "semantic-ui-react";
-import { Link } from "react-router-dom";
-import { useHistory } from "react-router-dom";
 import "./DropdownMenu.css";
 
 const DropdownMenu = (props: {
-  page: String;
+  page: string;
   isAdmin: boolean;
   isAllAdmin: boolean;
 }) => {
@@ -32,7 +31,7 @@ const DropdownMenu = (props: {
         ) : null}
       </Dropdown.Menu>
     </Dropdown>
-  )
-}
+  );
+};
 
 export default DropdownMenu;

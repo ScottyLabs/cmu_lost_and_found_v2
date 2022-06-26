@@ -1,5 +1,6 @@
-import { Router } from "express";
 import Building from "../models/Building";
+
+import { Router } from "express";
 
 const router = Router();
 

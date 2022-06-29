@@ -4,11 +4,7 @@ module.exports = {
     browser: true,
     es2021: true,
   },
-  extends: [
-    "eslint:recommended",
-    "plugin:react/recommended",
-    "plugin:@typescript-eslint/recommended",
-  ],
+  extends: ["plugin:react/recommended"],
   ignorePatterns: ["build/", "node_modules/"],
   parser: "@typescript-eslint/parser",
   parserOptions: {
@@ -18,7 +14,6 @@ module.exports = {
     ecmaVersion: "latest",
     sourceType: "module",
   },
-  plugins: ["react", "@typescript-eslint"],
   rules: {
     indent: ["error", 2],
     "linebreak-style": ["error", "unix"],

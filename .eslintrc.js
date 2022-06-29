@@ -4,6 +4,8 @@ module.exports = {
     "eslint:recommended",
     "plugin:import/recommended",
     "plugin:import/typescript",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
   ],
   ignorePatterns: ["node_modules/"],
   rules: {

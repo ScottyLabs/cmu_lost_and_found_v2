@@ -1,10 +1,12 @@
 import axios from "axios";
-import React from "react";
+import * as React from "react";
 import { useHistory } from "react-router";
 import { Button, Icon } from "semantic-ui-react";
 
 export default function DeleteUser(props: {
   username: string;
+  // TODO: #128 Replace Function type with appropriate type
+  // eslint-disable-next-line @typescript-eslint/ban-types
   fetchUsers: Function;
 }) {
   const history = useHistory();

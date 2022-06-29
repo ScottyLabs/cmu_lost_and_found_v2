@@ -1,9 +1,10 @@
-import React from "react";
+import * as React from "react";
+import { useState } from "react";
 import { Icon, Image, Modal, Button } from "semantic-ui-react";
 import "./ImageModal.css";
 
 export default function ImageModal(props: { image: string }) {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   return (
     <div>
       {props.image === undefined || props.image === "" ? (

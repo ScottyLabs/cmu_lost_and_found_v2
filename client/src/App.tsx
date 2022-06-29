@@ -1,14 +1,14 @@
-import React from "react";
+import About from "./pages/About";
+import Accounts from "./pages/Accounts";
+import Admin from "./pages/Admin";
+import Login from "./pages/Login";
+import Policies from "./pages/Policies";
+import TablePage from "./pages/TablePage";
+
+import * as React from "react";
+import { Switch, Route, Redirect } from "react-router-dom";
 
 import "./App.css";
-import Login from "./pages/Login";
-import Admin from "./pages/Admin";
-import TablePage from "./pages/TablePage";
-import Accounts from "./pages/Accounts";
-import Policies from "./pages/Policies";
-import About from "./pages/About";
-
-import { Switch, Route, Redirect } from "react-router-dom";
 
 function App() {
   return (
@@ -35,6 +35,8 @@ function App() {
   );
 }
 
+// TODO: #138 Replace any with appropriate type
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function PrivateRoute({ component: Component, ...rest }: any) {
   const token = window.localStorage.getItem("lnf_token");
   return (

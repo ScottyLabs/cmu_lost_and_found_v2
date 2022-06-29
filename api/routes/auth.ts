@@ -1,3 +1,5 @@
+// TODO: #139 Replace any with appropriate type
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * Responsible for authentication on the backend.
  */
@@ -5,11 +7,10 @@
 import UserController from "../controllers/UserController";
 import { BuildingType } from "../enums/locationTypes";
 import { PermissionType } from "../enums/permissionType";
-import User, { IUser } from "../models/User";
+import { IUser } from "../models/User";
 
-import { Request, Response, Router, NextFunction, response } from "express";
+import { Request, Response, Router, NextFunction } from "express";
 import * as jwt from "jsonwebtoken";
-import * as mongoose from "mongoose";
 
 const router = Router();
 
@@ -119,11 +120,11 @@ router.post("/create", isAdmin, (req, res) => {
  * }
  *
  */
-router.post("/login", function (req: Request, res: Response, next) {
+router.post("/login", function (req: Request, res: Response, _next) {
   const token = req.body.token;
 
   if (token) {
-    UserController.loginWithToken(token, (err, token, user) => {
+    UserController.loginWithToken(token, (err, token, _user) => {
       if (err) {
         return res.status(400).send(err);
       }
@@ -168,9 +169,9 @@ router.get("/signRequest", function (req, res) {
 });
 
 // UNUSED
-router.post("/logout", function (req: Request, res: Response, next) {
-  // TODO: no idea what to do here:
-});
+// router.post("/logout", function (req: Request, res: Response, next) {
+//   // TODO: no idea what to do here:
+// });
 
 /**
  * Checks if current user is admin

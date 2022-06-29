@@ -85,6 +85,8 @@ router.post("/updatePerm", isAdmin, async (req: Request, res: Response) => {
 
 router.post("/delete", isAdmin, async (req: Request, res: Response) => {
   const { username } = req.body;
+  // TODO: #146 Replace any with appropriate type
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   User.findOneAndDelete({ username: username }, (err: any, raw: IUser) => {
     if (err) {
       console.log(err);

@@ -1,8 +1,6 @@
-import { BuildingType } from "../enums/locationTypes";
-import { PermissionType } from "../enums/permissionType";
+// TODO: #149 Replace any with appropriate types
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import User, { IUser } from "../models/User";
-
-import * as jwt from "jsonwebtoken";
 
 export default class UserController {
   /**

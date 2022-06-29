@@ -1,25 +1,28 @@
-import React, { useState, useEffect } from "react";
-import { useHistory , Link } from "react-router-dom";
+// TODO: #109 Fix @typescript-eslint/no-explicit-any in Admin.tsx
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 import "./Admin.css";
 import AddItemButton from "../components/AddItemButton";
 import DropdownMenu from "../components/DropdownMenu";
-import TableWidget from "../components/TableWidget";
 import "semantic-ui-css/semantic.min.css";
 import LogoutButton from "../components/LogoutButton";
 import SearchBar from "../components/SearchBar";
+import TableWidget from "../components/TableWidget";
 import { BuildingType } from "../enums/locationTypes";
 import { PermissionType } from "../enums/permissionType";
 import { Item } from "../interface/item";
 import { User } from "../interface/user";
 
 import axios from "axios";
+import * as React from "react";
+import { useState, useEffect } from "react";
+import { useHistory, Link } from "react-router-dom";
 import { Grid, Rail } from "semantic-ui-react";
 
 function Admin() {
   document.title = "CMU Lost and Found";
 
-  const [items, setItems] = useState([]);
+  const [_items, setItems] = useState([]);
   //what is from the search
   const [input, setInput] = useState("");
   //unfiltered list

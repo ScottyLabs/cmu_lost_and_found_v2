@@ -1,8 +1,10 @@
-import React from "react";
+import * as React from "react";
 import { Form, Input } from "semantic-ui-react";
 import "./SearchBar.css";
 
-const SearchBar = (props: {input: string, onChange: Function}) => {
+// TODO: #114 Replace Function annotation with appropriate type
+// eslint-disable-next-line @typescript-eslint/ban-types
+const SearchBar = (props: { input: string; onChange: Function }) => {
   return (
     <Form id="search">
       <Form.Field
@@ -11,6 +13,9 @@ const SearchBar = (props: {input: string, onChange: Function}) => {
         value={props.input}
         placeholder="Search..."
         //item.whereFound
+
+        // TODO: #115 Replace any with appropriate type: React.ChangeEvent<HTMLInputElement>
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         onChange={(e: any) => props.onChange(e.target.value)}
         icon="search"
       />

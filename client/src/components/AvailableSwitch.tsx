@@ -1,14 +1,17 @@
 import axios from "axios";
-import React, { useState } from "react";
+import * as React from "react";
+import { useState } from "react";
+import { useHistory } from "react-router";
 import Toggle from "react-toggle";
 import "./ApproveSwitch.css";
-import { useHistory } from "react-router";
 
 // Admin-side claim/unclaim button that sets backend claim status to claimed/unclaimed
 export default function AvailableSwitch(props: {
   id: string;
   isAvailable: boolean;
   disabled: boolean;
+  // TODO: #133 Replace bad Function type with appropriate type
+  // eslint-disable-next-line @typescript-eslint/ban-types
   fetchItems: Function;
 }) {
   const history = useHistory();
@@ -65,5 +68,11 @@ export default function AvailableSwitch(props: {
       );
   };
 
-  return <Toggle disabled={props.disabled} checked={state.isAvailable} onChange={handleClick} />;
+  return (
+    <Toggle
+      disabled={props.disabled}
+      checked={state.isAvailable}
+      onChange={handleClick}
+    />
+  );
 }

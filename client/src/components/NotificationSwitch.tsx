@@ -1,12 +1,14 @@
 import axios from "axios";
-import React, { useState } from "react";
+import * as React from "react";
+import { useHistory } from "react-router";
 import Toggle from "react-toggle";
 import "./ApproveSwitch.css";
-import { useHistory } from "react-router";
 
 export default function NotificationSwitch(props: {
   username: string;
   notif: boolean;
+  // TODO: #117 Replace bad Function type with appropriate type
+  // eslint-disable-next-line @typescript-eslint/ban-types
   fetchUsers: Function;
 }) {
   const history = useHistory();
@@ -35,5 +37,7 @@ export default function NotificationSwitch(props: {
       );
   };
 
-  return <Toggle disabled={false} checked={props.notif} onChange={handleClick} />;
+  return (
+    <Toggle disabled={false} checked={props.notif} onChange={handleClick} />
+  );
 }

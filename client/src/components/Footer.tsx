@@ -1,13 +1,5 @@
-import React from "react";
-import {
-  Button,
-  Confirm,
-  Grid,
-  Icon,
-  Label,
-  Popup,
-  Segment,
-} from "semantic-ui-react";
+import * as React from "react";
+import { Segment } from "semantic-ui-react";
 
 const footerStyle = {
   position: "absolute",
@@ -19,10 +11,10 @@ const footerStyle = {
 const footerTextStyle = {
   color: "black",
   backgroundColor: "blue",
-  width: "100px"
+  width: "100px",
 };
 
-const Footer = (props: any) => {
+const Footer = () => {
   return (
     <div style={{ position: "relative", marginTop: "1em" }}>
       <Segment style={footerStyle}>

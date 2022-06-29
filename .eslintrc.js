@@ -9,7 +9,14 @@ module.exports = {
   ],
   ignorePatterns: ["node_modules/"],
   rules: {
-    "@typescript-eslint/no-unused-vars": ["error"],
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        argsIgnorePattern: "^_",
+        varsIgnorePattern: "^_",
+        caughtErrorsIgnorePattern: "^_",
+      },
+    ],
     "@typescript-eslint/no-explicit-any": ["error"],
     "import/no-unresolved": "error",
     indent: ["error", 2],

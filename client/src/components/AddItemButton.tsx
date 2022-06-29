@@ -285,7 +285,6 @@ function AddItemButton(props: {
       const emailTemplate = templateType + "-" + building;
       console.log("Template:", emailTemplate, "\nSent to:", email);
       const singleton = [email];
-
       const data = {
         emails: singleton,
         subject: "Lost and Found: Your item has been found",

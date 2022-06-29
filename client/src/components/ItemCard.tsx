@@ -1,30 +1,31 @@
+import { Item } from "../interface/item";
+
 import React from "react";
 import { Card, Image, Button, Modal } from "semantic-ui-react";
-import { Item } from "../interface/item";
 import "./ItemCard.css";
 
 function exampleReducer(dispatchState: any, action: any) {
   switch (action.type) {
-    case "CONFIG_CLOSE_ON_DIMMER_CLICK":
-      return { ...dispatchState, closeOnDimmerClick: action.value };
-    case "CONFI_CLOSE_ON_ESCAPE":
-      return { ...dispatchState, closeOnEscape: action.value };
-    case "OPEN_MODAL":
-      return { ...dispatchState, open: true };
-    case "CLOSE_MODAL":
-      return { ...dispatchState, open: false };
-    default:
-      throw new Error();
+  case "CONFIG_CLOSE_ON_DIMMER_CLICK":
+    return { ...dispatchState, closeOnDimmerClick: action.value };
+  case "CONFI_CLOSE_ON_ESCAPE":
+    return { ...dispatchState, closeOnEscape: action.value };
+  case "OPEN_MODAL":
+    return { ...dispatchState, open: true };
+  case "CLOSE_MODAL":
+    return { ...dispatchState, open: false };
+  default:
+    throw new Error();
   }
 }
 
 const ItemCard = (props: {
   item: Item,
 }) => {
-  let date = new Date(props.item.dateFound).toISOString().substring(0, 10).split("-");
-  let dateFormatted = date[1] + "/" + date[2] + "/" + date[0];
-  let [h, m] = props.item.timeFound.split(":");
-  let timeFormatted = (parseInt(h) % 12) + (parseInt(h) % 12 === 0 ? 12 : 0) + ":" + m + " " + (parseInt(h) >= 12 ? "PM" : "AM");
+  const date = new Date(props.item.dateFound).toISOString().substring(0, 10).split("-");
+  const dateFormatted = date[1] + "/" + date[2] + "/" + date[0];
+  const [h, m] = props.item.timeFound.split(":");
+  const timeFormatted = (parseInt(h) % 12) + (parseInt(h) % 12 === 0 ? 12 : 0) + ":" + m + " " + (parseInt(h) >= 12 ? "PM" : "AM");
 
   const [dispatchState, dispatch] = React.useReducer(exampleReducer, {
     closeOnEscape: true,
@@ -39,29 +40,29 @@ const ItemCard = (props: {
       <Card className="item-card"> 
         <Card.Content className="top-content">
           {props.item.image?.length > 0 ? (
-              <Modal
-                  closeOnEscape={closeOnEscape}
-                  closeOnDimmerClick={closeOnDimmerClick}
-                  open={open}
-                  onOpen={() => dispatch({ type: "OPEN_MODAL" })}
-                  onClose={() => dispatch({ type: "CLOSE_MODAL" })}
-                  trigger={
-                      <Button className="ui gray mini circular icon button show-image">
-                        <i className="image outline large icon"></i>
-                      </Button>
-                    }
-                >
-                <Modal.Header>{props.item.name}</Modal.Header>
-                <Modal.Content style={{margin: "auto", maxWidth: "100%", padding: "30px", fontSize: "18px"}}>
-                  {/* Need to stop modal from closing when enter key is pressed */}
-                  <img className = "card-img" src={props.item.image}></img>
-                  <Button className="image-button" onClick={() => dispatch({ type: "CLOSE_MODAL" })} negative>
+            <Modal
+              closeOnEscape={closeOnEscape}
+              closeOnDimmerClick={closeOnDimmerClick}
+              open={open}
+              onOpen={() => dispatch({ type: "OPEN_MODAL" })}
+              onClose={() => dispatch({ type: "CLOSE_MODAL" })}
+              trigger={
+                <Button className="ui gray mini circular icon button show-image">
+                  <i className="image outline large icon"></i>
+                </Button>
+              }
+            >
+              <Modal.Header>{props.item.name}</Modal.Header>
+              <Modal.Content style={{margin: "auto", maxWidth: "100%", padding: "30px", fontSize: "18px"}}>
+                {/* Need to stop modal from closing when enter key is pressed */}
+                <img className = "card-img" src={props.item.image}></img>
+                <Button className="image-button" onClick={() => dispatch({ type: "CLOSE_MODAL" })} negative>
                     Close
-                  </Button>
-                </Modal.Content>
-              </Modal>
-              )
-              : null} 
+                </Button>
+              </Modal.Content>
+            </Modal>
+          )
+            : null} 
           <Card.Header>
             {props.item.name}  
           </Card.Header>
@@ -83,6 +84,6 @@ const ItemCard = (props: {
       </Card>
     </div>
   );
-}
+};
 
 export default ItemCard;

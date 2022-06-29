@@ -28,7 +28,7 @@ const Footer = (props: any) => {
       <Segment style={footerStyle}>
         <p style={footerTextStyle}>
           Developed with ❤️ by
-          <a href="https://scottylabs.org/" target="_blank">
+          <a href="https://scottylabs.org/" target="_blank" rel="noreferrer">
             {" "}
             ScottyLabs
           </a>

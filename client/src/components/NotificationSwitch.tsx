@@ -1,6 +1,6 @@
+import axios from "axios";
 import React, { useState } from "react";
 import Toggle from "react-toggle";
-import axios from "axios";
 import "./ApproveSwitch.css";
 import { useHistory } from "react-router";
 
@@ -13,7 +13,7 @@ export default function NotificationSwitch(props: {
 
   const handleClick = () => {
     axios
-      .post(`/api/accounts/updateNotif`, {
+      .post("/api/accounts/updateNotif", {
         token: localStorage.getItem("lnf_token"),
         username: props.username,
         notif: !props.notif,

@@ -1,16 +1,17 @@
 import React, { useState } from "react";
 import { Table, Pagination } from "semantic-ui-react";
-import { Item } from "../interface/item";
+
 import "./TableWidget.css";
-import ImageModal from "./ImageModal";
-import ApproveSwitch from "./ApproveSwitch";
-import EditButton from "./EditItem";
-import AvailableSwitch from "./AvailableSwitch";
-import { User } from "../interface/user";
-import PublicDisplaySwitch from "./PublicDisplaySwitch";
 import { BuildingType } from "../enums/locationTypes";
 import { PermissionType } from "../enums/permissionType";
+import { Item } from "../interface/item";
+import { User } from "../interface/user";
+import ApproveSwitch from "./ApproveSwitch";
+import AvailableSwitch from "./AvailableSwitch";
+import EditButton from "./EditItem";
 import HistoryAccordion from "./HistoryAccordion";
+import ImageModal from "./ImageModal";
+import PublicDisplaySwitch from "./PublicDisplaySwitch";
 
 const TableWidget = (props: {
   items: Array<Item>;
@@ -29,24 +30,24 @@ const TableWidget = (props: {
 
   function reducer(state: any, action: any) {
     switch (action.type) {
-      case "CHANGE_SORT":
-        if (state.column === action.column) {
-          const newdir =
+    case "CHANGE_SORT":
+      if (state.column === action.column) {
+        const newdir =
             state.direction === "ascending" ? "descending" : "ascending";
-          props.sortItems(action.column, newdir);
-          return {
-            ...state,
-            direction: newdir,
-          };
-        }
-        props.sortItems(action.column, "ascending");
+        props.sortItems(action.column, newdir);
         return {
           ...state,
-          column: action.column,
-          direction: "ascending",
+          direction: newdir,
         };
-      default:
-        throw new Error();
+      }
+      props.sortItems(action.column, "ascending");
+      return {
+        ...state,
+        column: action.column,
+        direction: "ascending",
+      };
+    default:
+      throw new Error();
     }
   }
 
@@ -156,20 +157,20 @@ const TableWidget = (props: {
               );
             })
             .map((item: Item) => {
-              let date = new Date(item.dateFound)
+              const date = new Date(item.dateFound)
                 .toISOString()
                 .substring(0, 10)
                 .split("-");
-              let dateFormatted = date[1] + "/" + date[2] + "/" + date[0];
-              let [h, m] = item.timeFound.split(":");
-              let timeFormatted =
+              const dateFormatted = date[1] + "/" + date[2] + "/" + date[0];
+              const [h, m] = item.timeFound.split(":");
+              const timeFormatted =
                 (parseInt(h) % 12) +
                 (parseInt(h) % 12 === 0 ? 12 : 0) +
                 ":" +
                 m +
                 " " +
                 (parseInt(h) >= 12 ? "PM" : "AM");
-              let isBuilding =
+              const isBuilding =
                 props.user.permissions.includes(
                   `${BuildingType.ALL}:${PermissionType.ADMIN}`
                 ) ||
@@ -182,7 +183,7 @@ const TableWidget = (props: {
                 props.user.permissions.includes(
                   `${item.building}:${PermissionType.USER}`
                 );
-              let isAdmin =
+              const isAdmin =
                 props.user.permissions.includes(
                   `${BuildingType.ALL}:${PermissionType.ADMIN}`
                 ) ||

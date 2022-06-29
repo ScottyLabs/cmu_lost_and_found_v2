@@ -1,8 +1,10 @@
+import { Item } from "../interface/item";
+
 import React, { useState } from "react";
 import { Form, Card } from "semantic-ui-react";
-import { Item } from "../interface/item";
+
 import "./CardWidget.css";
-import ItemCard from "../components/ItemCard"
+import ItemCard from "../components/ItemCard";
 
 
 const CardWidget = (props: {
@@ -27,22 +29,22 @@ const CardWidget = (props: {
       ) : null}
 
       <Card.Group>
-          {props.items
-            .filter((item) => {
-              return (
-                (item.status === "available" && item.approved && item.publicDisplay) ||
+        {props.items
+          .filter((item) => {
+            return (
+              (item.status === "available" && item.approved && item.publicDisplay) ||
                 (props.isAdmin && displayArchived)
-              );
-            })
-            .map((item: Item) => { 
-              return (
-                <ItemCard key={item._id} item={item}></ItemCard>
-              );
-            })
-          }
+            );
+          })
+          .map((item: Item) => { 
+            return (
+              <ItemCard key={item._id} item={item}></ItemCard>
+            );
+          })
+        }
       </Card.Group>
     </Form>
-  )
-}
+  );
+};
 
 export default CardWidget;

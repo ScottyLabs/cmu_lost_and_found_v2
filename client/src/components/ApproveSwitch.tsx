@@ -1,6 +1,6 @@
+import axios from "axios";
 import React, { useState } from "react";
 import Toggle from "react-toggle";
-import axios from "axios";
 import "./ApproveSwitch.css";
 import { useHistory } from "react-router";
 
@@ -19,7 +19,7 @@ export default function ApproveSwitch(props: {
   const handleClick = () => {
     const { isApproved } = state;
     axios
-      .post(`/api/items/updateApprovedStatus`, {
+      .post("/api/items/updateApprovedStatus", {
         token: localStorage.getItem("lnf_token"),
         id: props.id,
         approved: !isApproved,
@@ -29,7 +29,7 @@ export default function ApproveSwitch(props: {
           props.fetchItems();
           if (isApproved) {
             axios
-              .post(`/api/items/updatePublicDisplayStatus`, {
+              .post("/api/items/updatePublicDisplayStatus", {
                 token: localStorage.getItem("lnf_token"),
                 id: props.id,
                 publicDisplay: false,

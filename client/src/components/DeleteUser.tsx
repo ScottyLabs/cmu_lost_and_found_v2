@@ -1,7 +1,7 @@
-import React from "react";
 import axios from "axios";
-import { Button, Icon } from "semantic-ui-react";
+import React from "react";
 import { useHistory } from "react-router";
+import { Button, Icon } from "semantic-ui-react";
 
 export default function DeleteUser(props: {
   username: string;
@@ -16,7 +16,7 @@ export default function DeleteUser(props: {
       size="tiny"
       onClick={() => {
         axios
-          .post(`/api/accounts/delete`, {
+          .post("/api/accounts/delete", {
             token: localStorage.getItem("lnf_token"),
             username: props.username,
           })

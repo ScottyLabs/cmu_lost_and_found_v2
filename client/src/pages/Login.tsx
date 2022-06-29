@@ -1,8 +1,8 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Button, Icon, Loader, Segment, Message } from "semantic-ui-react";
 import "./Login.css";
 import "semantic-ui-css/semantic.min.css";
-import axios from "axios";
 import { useHistory } from "react-router";
 
 function Login() {
@@ -24,13 +24,13 @@ function Login() {
     const width = window.innerWidth
       ? window.innerWidth
       : document.documentElement.clientWidth
-      ? document.documentElement.clientWidth
-      : window.screen.width;
+        ? document.documentElement.clientWidth
+        : window.screen.width;
     const height = window.innerHeight
       ? window.innerHeight
       : document.documentElement.clientHeight
-      ? document.documentElement.clientHeight
-      : window.screen.height;
+        ? document.documentElement.clientHeight
+        : window.screen.height;
 
     const systemZoom = width / window.screen.availWidth;
     const left = (width - w) / 2 / systemZoom + dualScreenLeft;
@@ -128,13 +128,17 @@ function Login() {
       </Segment.Group>
       <Message id="login-message" warning size="large">
         <p>
-          If you are not affiliated with Carnegie Mellon University, please 
-          reach out to the Cohon University Center Lost &amp; Found Desk by emailing 
-          <a href="mailto:cucinfodesk@andrew.cmu.edu"> cucinfodesk@andrew.cmu.edu </a> 
+          If you are not affiliated with Carnegie Mellon University, please
+          reach out to the Cohon University Center Lost &amp; Found Desk by
+          emailing
+          <a href="mailto:cucinfodesk@andrew.cmu.edu">
+            {" "}
+            cucinfodesk@andrew.cmu.edu{" "}
+          </a>
           or by calling 412-268-2107.
         </p>
       </Message>
-    </div> 
+    </div>
   );
 }
 

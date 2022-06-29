@@ -1,12 +1,14 @@
 import React from "react";
+
 import "./App.css";
-import { Switch, Route, Redirect } from "react-router-dom";
 import Login from "./pages/Login";
 import Admin from "./pages/Admin";
 import TablePage from "./pages/TablePage";
 import Accounts from "./pages/Accounts";
 import Policies from "./pages/Policies";
 import About from "./pages/About";
+
+import { Switch, Route, Redirect } from "react-router-dom";
 
 function App() {
   return (
@@ -34,7 +36,7 @@ function App() {
 }
 
 function PrivateRoute({ component: Component, ...rest }: any) {
-  const token = window.localStorage.getItem("lnf_token")
+  const token = window.localStorage.getItem("lnf_token");
   return (
     <Route
       {...rest}

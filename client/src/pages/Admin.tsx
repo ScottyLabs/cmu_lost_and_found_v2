@@ -1,19 +1,20 @@
 import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
-import { Grid, Rail } from "semantic-ui-react";
-import { Link } from "react-router-dom";
+import { useHistory , Link } from "react-router-dom";
+
 import "./Admin.css";
-import DropdownMenu from "../components/DropdownMenu";
 import AddItemButton from "../components/AddItemButton";
+import DropdownMenu from "../components/DropdownMenu";
 import TableWidget from "../components/TableWidget";
 import "semantic-ui-css/semantic.min.css";
-import axios from "axios";
-import { Item } from "../interface/item";
-import SearchBar from "../components/SearchBar";
 import LogoutButton from "../components/LogoutButton";
-import { User } from "../interface/user";
+import SearchBar from "../components/SearchBar";
 import { BuildingType } from "../enums/locationTypes";
 import { PermissionType } from "../enums/permissionType";
+import { Item } from "../interface/item";
+import { User } from "../interface/user";
+
+import axios from "axios";
+import { Grid, Rail } from "semantic-ui-react";
 
 function Admin() {
   document.title = "CMU Lost and Found";
@@ -32,7 +33,7 @@ function Admin() {
 
   const fetchItems = () => {
     axios
-      .post(`/api/items/all`, {
+      .post("/api/items/all", {
         token: window.localStorage.getItem("lnf_token"),
       })
       .then(
@@ -79,7 +80,7 @@ function Admin() {
 
   // modify items
   const updateInput = async (input: string) => {
-    let inputName = input.toLowerCase();
+    const inputName = input.toLowerCase();
     const filtered = itemListDefault.filter((item: Item) => {
       return (
         item.name.toLowerCase().includes(inputName) ||
@@ -96,7 +97,7 @@ function Admin() {
 
   // sort items
   const sortItems = async (column: string, direction: string) => {
-    var sorted = itemListDefault;
+    let sorted = itemListDefault;
     if (column === "whenFound") {
       sorted = itemListDefault.sort((item1: any, item2: any) => {
         const time1 = new Date(item1["dateFound"]).getTime();
@@ -164,7 +165,7 @@ function Admin() {
               <AddItemButton
                 fetchItems={fetchItems}
                 isAdmin={isAllAdmin}
-                permissions = {user?.permissions}
+                permissions={user?.permissions}
               ></AddItemButton>
             </div>
             <div id="admin-filter-bar">
@@ -173,7 +174,7 @@ function Admin() {
                 <AddItemButton
                   fetchItems={fetchItems}
                   isAdmin={isAllAdmin}
-                  permissions = {user?.permissions}
+                  permissions={user?.permissions}
                 ></AddItemButton>
               </div>
             </div>

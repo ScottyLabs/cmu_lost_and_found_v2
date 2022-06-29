@@ -1,7 +1,7 @@
-import React, { useState } from "react";
 import axios from "axios";
-import { Button, Form } from "semantic-ui-react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
+import { Button, Form } from "semantic-ui-react";
 import "./LoginForm.css";
 
 export default function LoginForm(props: any) {
@@ -20,14 +20,14 @@ export default function LoginForm(props: any) {
     e.preventDefault();
     const { username, password } = state;
     axios
-      .post(`/api/auth/login`, {
+      .post("/api/auth/login", {
         username: username,
         password: password,
       })
       .then(
         (res) => {
-          let token = res.data.token;
-          let isAdmin = res.data.isAdmin;
+          const token = res.data.token;
+          const isAdmin = res.data.isAdmin;
           console.log(token);
           console.log(isAdmin);
           localStorage.setItem("lnf_token", token);

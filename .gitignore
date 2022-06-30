@@ -9,3 +9,4 @@ api/credentials.json
 api/token.json
 keys
 key
+.env

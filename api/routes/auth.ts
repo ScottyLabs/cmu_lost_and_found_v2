@@ -152,7 +152,8 @@ router.get("/signRequest", function (req, res) {
       { algorithm: "RS256", expiresIn: "5 minutes" }
     );
     res.json({ token: loginRequest });
-  } catch {
+  } catch (e) {
+    console.log(e);
     const loginRequest = jwt.sign(
       {
         redirectUrl: process.env.LNF_HOST,

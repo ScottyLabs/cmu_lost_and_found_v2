@@ -55,7 +55,7 @@ export default class ImageController {
       drive.files.create(
         {
           // TODO: #143 Check bad overload on G Drive API
-          resource: fileMetadata,
+          requestBody: fileMetadata,
           media: media,
           fields: "id",
         },
@@ -75,7 +75,7 @@ export default class ImageController {
               {
                 fileId: file.data.id,
                 // TODO: #142 Check bad overload
-                resource: body,
+                requestBody: body,
                 auth: auth,
               },
               (err: any, _res: any) => {

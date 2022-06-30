@@ -12,16 +12,16 @@ import "./AddUser.css";
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function exampleReducer(dispatchState: any, action: any) {
   switch (action.type) {
-  case "CONFIG_CLOSE_ON_DIMMER_CLICK":
-    return { ...dispatchState, closeOnDimmerClick: action.value };
-  case "CONFIG_CLOSE_ON_ESCAPE":
-    return { ...dispatchState, closeOnEscape: action.value };
-  case "OPEN_MODAL":
-    return { ...dispatchState, open: true };
-  case "CLOSE_MODAL":
-    return { ...dispatchState, open: false };
-  default:
-    throw new Error();
+    case "CONFIG_CLOSE_ON_DIMMER_CLICK":
+      return { ...dispatchState, closeOnDimmerClick: action.value };
+    case "CONFIG_CLOSE_ON_ESCAPE":
+      return { ...dispatchState, closeOnEscape: action.value };
+    case "OPEN_MODAL":
+      return { ...dispatchState, open: true };
+    case "CLOSE_MODAL":
+      return { ...dispatchState, open: false };
+    default:
+      throw new Error();
   }
 }
 

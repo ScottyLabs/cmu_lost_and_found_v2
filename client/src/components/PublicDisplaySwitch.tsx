@@ -1,14 +1,16 @@
 import axios from "axios";
-import React, { useState } from "react";
+import * as React from "react";
+import { useHistory } from "react-router";
 import Toggle from "react-toggle";
 import "./ApproveSwitch.css";
-import { useHistory } from "react-router";
 
 // Admin-side public display/not public display button that sets backend public display status to true/false
 export default function PublicDisplaySwitch(props: {
   id: string;
   isPublicDisplay: boolean;
   disabled: boolean;
+  // TODO: #116 Replace bad Function type with appropriate type
+  // eslint-disable-next-line @typescript-eslint/ban-types
   fetchItems: Function;
 }) {
   const history = useHistory();
@@ -37,5 +39,11 @@ export default function PublicDisplaySwitch(props: {
       );
   };
 
-  return <Toggle disabled={props.disabled} checked={props.isPublicDisplay} onChange={handleClick} />;
+  return (
+    <Toggle
+      disabled={props.disabled}
+      checked={props.isPublicDisplay}
+      onChange={handleClick}
+    />
+  );
 }

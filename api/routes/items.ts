@@ -368,6 +368,8 @@ router.post("/addImage", isUser, async (req: Request, res: Response) => {
     ImageController.sendImageToDrive(
       imageName,
       dataURL,
+      // TODO: #147 Replace any with appropriate type
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (err: any, finalURL: any) => {
         if (err) {
           console.log(err);

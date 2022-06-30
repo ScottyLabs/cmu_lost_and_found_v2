@@ -1,6 +1,3 @@
-import React, { useState, useEffect } from "react";
-import { useHistory , Link } from "react-router-dom";
-
 import "./About.css";
 import "semantic-ui-css/semantic.min.css";
 import DropdownMenu from "../components/DropdownMenu";
@@ -10,7 +7,11 @@ import { PermissionType } from "../enums/permissionType";
 import { User } from "../interface/user";
 
 import axios from "axios";
+import * as React from "react";
+import { useState, useEffect } from "react";
+import { useHistory, Link } from "react-router-dom";
 import { Grid, Rail } from "semantic-ui-react";
+
 function About() {
   document.title = "CMU Lost and Found";
   const [user, setUser] = useState<User | null>(null);

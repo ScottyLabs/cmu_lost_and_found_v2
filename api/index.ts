@@ -1,5 +1,6 @@
-// loads the .env file
-require("dotenv").config();
+// Disabled for conventions
+/* eslint-disable import/no-named-as-default-member */
+import "dotenv/config";
 
 import { BuildingType } from "./enums/locationTypes";
 import Building from "./models/Building";
@@ -61,7 +62,7 @@ app.use("/api/buildings", BuildingRouter);
 app.use("/api/email", EmailRouter);
 
 // handle undefined routes
-app.use("*", (req, res, next) => {
+app.use("*", (req, res, _next) => {
   res.sendFile(process.cwd() + "/client/build/index.html");
 });
 

@@ -1,8 +1,8 @@
-import React from "react";
+import * as React from "react";
 import { useHistory } from "react-router-dom";
 import { Button, Icon } from "semantic-ui-react";
 
-export default function LogoutButton(props: { }) {
+export default function LogoutButton() {
   const history = useHistory();
   return (
     <Button

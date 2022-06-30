@@ -1,25 +1,29 @@
+// TODO: #129 Replace any type with appropriate annotation
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from "axios";
-import React, { useState } from "react";
+import * as React from "react";
 import { useHistory } from "react-router-dom";
 import { Button, Grid, Modal, Icon } from "semantic-ui-react";
 
 function exampleReducer(dispatchState: any, action: any) {
   switch (action.type) {
-  case "CONFIG_CLOSE_ON_DIMMER_CLICK":
-    return { ...dispatchState, closeOnDimmerClick: action.value };
-  case "CONFIG_CLOSE_ON_ESCAPE":
-    return { ...dispatchState, closeOnEscape: action.value };
-  case "OPEN_MODAL":
-    return { ...dispatchState, open: true };
-  case "CLOSE_MODAL":
-    return { ...dispatchState, open: false };
-  default:
-    throw new Error();
+    case "CONFIG_CLOSE_ON_DIMMER_CLICK":
+      return { ...dispatchState, closeOnDimmerClick: action.value };
+    case "CONFIG_CLOSE_ON_ESCAPE":
+      return { ...dispatchState, closeOnEscape: action.value };
+    case "OPEN_MODAL":
+      return { ...dispatchState, open: true };
+    case "CLOSE_MODAL":
+      return { ...dispatchState, open: false };
+    default:
+      throw new Error();
   }
 }
 
 export default function DeleteButton(props: {
   id: string;
+  // TODO: #130 Replace bad Function type with appropriate type
+  // eslint-disable-next-line @typescript-eslint/ban-types
   fetchItems: Function;
   disabled: boolean;
   style?: any;

@@ -1,5 +1,7 @@
-import React, { useState } from "react";
-import { Table, Pagination } from "semantic-ui-react";
+// TODO: #113 Replace any type annotations with appropriate type
+/* eslint-disable @typescript-eslint/no-explicit-any */
+// TODO: #112 Replace bad Function type with appropriate function type
+/* eslint-disable @typescript-eslint/ban-types */
 
 import "./TableWidget.css";
 import { BuildingType } from "../enums/locationTypes";
@@ -12,6 +14,9 @@ import EditButton from "./EditItem";
 import HistoryAccordion from "./HistoryAccordion";
 import ImageModal from "./ImageModal";
 import PublicDisplaySwitch from "./PublicDisplaySwitch";
+
+import * as React from "react";
+import { Table, Pagination } from "semantic-ui-react";
 
 const TableWidget = (props: {
   items: Array<Item>;
@@ -30,24 +35,24 @@ const TableWidget = (props: {
 
   function reducer(state: any, action: any) {
     switch (action.type) {
-    case "CHANGE_SORT":
-      if (state.column === action.column) {
-        const newdir =
+      case "CHANGE_SORT":
+        if (state.column === action.column) {
+          const newdir =
             state.direction === "ascending" ? "descending" : "ascending";
-        props.sortItems(action.column, newdir);
+          props.sortItems(action.column, newdir);
+          return {
+            ...state,
+            direction: newdir,
+          };
+        }
+        props.sortItems(action.column, "ascending");
         return {
           ...state,
-          direction: newdir,
+          column: action.column,
+          direction: "ascending",
         };
-      }
-      props.sortItems(action.column, "ascending");
-      return {
-        ...state,
-        column: action.column,
-        direction: "ascending",
-      };
-    default:
-      throw new Error();
+      default:
+        throw new Error();
     }
   }
 

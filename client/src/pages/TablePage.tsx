@@ -1,7 +1,3 @@
-import axios from "axios";
-import React, { useState, useEffect } from "react";
-
-import SearchBar from "../components/SearchBar";
 import CardWidget from "../components/CardWidget";
 import DropdownMenu from "../components/DropdownMenu";
 import "./TablePage.css";
@@ -11,11 +7,15 @@ import FoundItemModal, {
   feedbackForm,
 } from "../components/FoundItemModal";
 import LogoutButton from "../components/LogoutButton";
+import SearchBar from "../components/SearchBar";
 import { BuildingType } from "../enums/locationTypes";
 import { PermissionType } from "../enums/permissionType";
 import { Item } from "../interface/item";
 import { User } from "../interface/user";
 
+import axios from "axios";
+import * as React from "react";
+import { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { Grid, Message, Rail } from "semantic-ui-react";
 

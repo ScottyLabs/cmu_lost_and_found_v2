@@ -1,10 +1,14 @@
+// TODO: #118 Replace all any types with appropriate annotations
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import axios from "axios";
-import React, { useState } from "react";
+import * as React from "react";
+import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Button, Form } from "semantic-ui-react";
 import "./LoginForm.css";
 
-export default function LoginForm(props: any) {
+export default function LoginForm() {
   const [state, setState] = useState({
     username: "",
     password: "",

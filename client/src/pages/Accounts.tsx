@@ -1,5 +1,3 @@
-import { Grid, Rail } from "semantic-ui-react";
-
 import "./Accounts.css";
 import "semantic-ui-css/semantic.min.css";
 import AddUser from "../components/AddUser";
@@ -12,8 +10,10 @@ import { PermissionType } from "../enums/permissionType";
 import { User } from "../interface/user";
 
 import axios from "axios";
-import React, { useState, useEffect } from "react";
-import { Link , useHistory } from "react-router-dom";
+import * as React from "react";
+import { useState, useEffect } from "react";
+import { Link, useHistory } from "react-router-dom";
+import { Grid, Rail } from "semantic-ui-react";
 
 function Accounts() {
   document.title = "Lost and Found User Permissions";

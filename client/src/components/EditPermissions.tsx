@@ -3,31 +3,33 @@ import { PermissionType } from "../enums/permissionType";
 import { User } from "../interface/user";
 
 import axios from "axios";
-import React, { useState } from "react";
+import * as React from "react";
+import { useState } from "react";
 import { useHistory } from "react-router";
 import { Button, Form, Grid, Icon, Label, Modal } from "semantic-ui-react";
 
+// TODO: #124 Replace any annotations with appropriate types
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function exampleReducer(dispatchState: any, action: any) {
   switch (action.type) {
-  case "CONFIG_CLOSE_ON_DIMMER_CLICK":
-    return { ...dispatchState, closeOnDimmerClick: action.value };
-  case "CONFIG_CLOSE_ON_ESCAPE":
-    return { ...dispatchState, closeOnEscape: action.value };
-  case "OPEN_MODAL":
-    return { ...dispatchState, open: true };
-  case "CLOSE_MODAL":
-    return { ...dispatchState, open: false };
-  default:
-    throw new Error();
+    case "CONFIG_CLOSE_ON_DIMMER_CLICK":
+      return { ...dispatchState, closeOnDimmerClick: action.value };
+    case "CONFIG_CLOSE_ON_ESCAPE":
+      return { ...dispatchState, closeOnEscape: action.value };
+    case "OPEN_MODAL":
+      return { ...dispatchState, open: true };
+    case "CLOSE_MODAL":
+      return { ...dispatchState, open: false };
+    default:
+      throw new Error();
   }
 }
 
-const buildings = Object.keys(BuildingType)
-  .map((key) => ({
-    key,
-    text: key,
-    value: key,
-  }));
+const buildings = Object.keys(BuildingType).map((key) => ({
+  key,
+  text: key,
+  value: key,
+}));
 
 const actions = Object.keys(PermissionType)
   .filter((value) => value !== "ALL")
@@ -39,6 +41,8 @@ const actions = Object.keys(PermissionType)
 
 export default function EditPermissions(props: {
   user: User;
+  // TODO: #125 Replace bad Function type with the appropriate annotation
+  // eslint-disable-next-line @typescript-eslint/ban-types
   fetchUsers: Function;
 }) {
   const history = useHistory();
@@ -84,8 +88,15 @@ export default function EditPermissions(props: {
               {permissions.map((perm, index) => {
                 const [building, action] = perm.split(":");
                 /* users = blue, admin all = yellow, other admin = green */
-                const color = action !== PermissionType.ADMIN ? "blue" : building !== BuildingType.ALL ? "green" : "yellow";
+                const color =
+                  action !== PermissionType.ADMIN
+                    ? "blue"
+                    : building !== BuildingType.ALL
+                    ? "green"
+                    : "yellow";
                 return (
+                  // TODO: #123 Fix missing React key prop in iterator
+                  // eslint-disable-next-line react/jsx-key
                   <Label
                     color={color}
                     image

@@ -9,7 +9,7 @@ export interface IItem extends Document {
   name: string;
   whereFound: string;
   description: string;
-  value: "general" | "high value"
+  value: "general" | "high value";
   identifiable: boolean;
   category: string;
   whereToRetrieve: IBuilding;

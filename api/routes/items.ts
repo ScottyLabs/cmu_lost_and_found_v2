@@ -284,60 +284,60 @@ router.post("/editItem", isUser, async (req: Request, res: Response) => {
         const updatedItem =
           item.modified[item.modified.length - 1] === user.username
             ? await Item.findByIdAndUpdate(
-              id,
-              {
-                $set: {
-                  status: status,
-                  token: token,
-                  dateFound: dateFound,
-                  timeFound: timeFound,
-                  name: name,
-                  whereFound: whereFound,
-                  building: building,
-                  description: description,
-                  value: value,
-                  identifiable: identifiable,
-                  image: image,
-                  imagePermission: imagePermission,
-                  identification: identification,
-                  notes: notes,
-                  publicDisplay: item.publicDisplay
-                    ? value == "general" && !identifiable
-                    : false,
-                  username: user.username,
+                id,
+                {
+                  $set: {
+                    status: status,
+                    token: token,
+                    dateFound: dateFound,
+                    timeFound: timeFound,
+                    name: name,
+                    whereFound: whereFound,
+                    building: building,
+                    description: description,
+                    value: value,
+                    identifiable: identifiable,
+                    image: image,
+                    imagePermission: imagePermission,
+                    identification: identification,
+                    notes: notes,
+                    publicDisplay: item.publicDisplay
+                      ? value == "general" && !identifiable
+                      : false,
+                    username: user.username,
+                  },
                 },
-              },
-              { runValidators: true, useFindAndModify: false }
-            )
+                { runValidators: true, useFindAndModify: false }
+              )
             : await Item.findByIdAndUpdate(
-              id,
-              {
-                $set: {
-                  status: status,
-                  token: token,
-                  dateFound: dateFound,
-                  timeFound: timeFound,
-                  name: name,
-                  whereFound: whereFound,
-                  building: building,
-                  description: description,
-                  value: value,
-                  identifiable: identifiable,
-                  image: image,
-                  imagePermission: imagePermission,
-                  identification: identification,
-                  notes: notes,
-                  publicDisplay: item.publicDisplay
-                    ? value == "general" && !identifiable
-                    : false,
-                  username: user.username,
+                id,
+                {
+                  $set: {
+                    status: status,
+                    token: token,
+                    dateFound: dateFound,
+                    timeFound: timeFound,
+                    name: name,
+                    whereFound: whereFound,
+                    building: building,
+                    description: description,
+                    value: value,
+                    identifiable: identifiable,
+                    image: image,
+                    imagePermission: imagePermission,
+                    identification: identification,
+                    notes: notes,
+                    publicDisplay: item.publicDisplay
+                      ? value == "general" && !identifiable
+                      : false,
+                    username: user.username,
+                  },
+                  $push: {
+                    modified: user.username,
+                  },
                 },
-                $push: {
-                  modified: user.username,
-                },
-              },
-              { runValidators: true, useFindAndModify: false }
-            );
+                { runValidators: true, useFindAndModify: false }
+              );
         return res.status(200).send({ msg: updatedItem });
       } else {
         return res.status(403).send(new Error("Insufficient privileges"));

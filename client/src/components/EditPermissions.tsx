@@ -95,11 +95,10 @@ export default function EditPermissions(props: {
                     ? "green"
                     : "yellow";
                 return (
-                  // TODO: #123 Fix missing React key prop in iterator
-                  // eslint-disable-next-line react/jsx-key
                   <Label
                     color={color}
                     image
+                    key={index}
                     as="a"
                     onClick={() => {
                       setPermissions(

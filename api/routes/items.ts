@@ -13,6 +13,12 @@ const router = Router();
  * Returns all items in database, according to schema specified in Item.ts
  */
 router.post("/all", isUser, async (req: Request, res: Response) => {
+  Item.updateMany({ archived: { $exists: false } }, [
+    { $set: { archived: false } },
+  ]).exec(function (err, docs) {
+    if (err) console.log(err);
+    else console.log(docs);
+  });
   Item.find()
     .populate("whereToRetrieve")
     .sort({ dateFound: -1, timeFound: -1 })

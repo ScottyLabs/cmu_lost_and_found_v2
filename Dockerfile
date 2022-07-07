@@ -4,8 +4,8 @@ WORKDIR /usr/src/app
 COPY package.json .
 COPY .eslintrc.js .
 COPY .prettierrc  .
-COPY client/ ./client/
-RUN npm install
+COPY ./client/ ./client/
+RUN npm install --ignore-scripts
 WORKDIR /usr/src/app/client
 RUN npm install && npm run build
 
@@ -14,8 +14,8 @@ WORKDIR /usr/src/app
 COPY package.json .
 COPY .eslintrc.js .
 COPY .prettierrc  .
-COPY api/ ./api/
-RUN npm install
+COPY ./api/ ./api/
+RUN npm install --ignore-scripts
 WORKDIR /usr/src/app/api
 RUN npm install && npm run build
 

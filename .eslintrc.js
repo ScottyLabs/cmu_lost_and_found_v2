@@ -8,7 +8,8 @@ module.exports = {
     "plugin:@typescript-eslint/recommended",
     "plugin:prettier/recommended",
   ],
-  ignorePatterns: ["node_modules/"],
+  ignorePatterns: ["node_modules/", ".husky/", ".github/", "scripts/"],
+  parser: "@typescript-eslint/parser",
   rules: {
     "prettier/prettier": "error",
     "arrow-body-style": "off",

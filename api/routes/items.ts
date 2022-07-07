@@ -121,6 +121,48 @@ router.post("/delete", isUser, async (req: Request, res: Response) => {
 });
 
 /**
+ * Archives items by ids
+ * {
+ * ids: ids
+ * archived: archived
+ * }
+ */
+router.post("/archive", isUser, async (req: Request, res: Response) => {
+  const ids = req.body.ids;
+  const archived = req.body.archived;
+  const user = req.body.user;
+  let updatedItems = []
+  for (const id of ids) {
+    try {
+      const item = await Item.findById(id);
+      if (item) {
+        if (
+          PermissionsController.hasPermissionsWithUser(
+            item.building as BuildingType,
+            PermissionType.USER,
+            user
+          )
+        ) {
+          const updatedItem = await Item.findByIdAndUpdate(
+            id,
+            { archived: archived },
+            { runValidators: true, useFindAndModify: false }
+          );
+          updatedItems.push(updatedItem);
+        } else {
+          return res.status(403).send(new Error("Insufficient privileges"));
+        }
+      } else {
+        return res.status(404).send(new Error("Item not found"));
+      }
+    } catch (err) {
+      return res.status(500).send(err);
+    }
+  }
+  return res.status(200).send({ msg: updatedItems });
+});
+
+/**
  * Updates an item's status by id
  * {
  * id: id

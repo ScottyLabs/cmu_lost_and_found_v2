@@ -3,7 +3,7 @@ import PermissionsController from "../controllers/PermissionsController";
 import { BuildingType } from "../enums/locationTypes";
 import { PermissionType } from "../enums/permissionType";
 import Item from "../models/Item";
-import { isUser } from "./auth";
+import { isUser, isAdmin } from "./auth";
 
 import { Request, Response, Router } from "express";
 
@@ -121,7 +121,7 @@ router.post("/delete", isUser, async (req: Request, res: Response) => {
 });
 
 /**
- * Archives items by ids
+ * Set archived status of items by ids
  * {
  * ids: ids
  * archived: archived
@@ -131,7 +131,7 @@ router.post("/archive", isUser, async (req: Request, res: Response) => {
   const ids = req.body.ids;
   const archived = req.body.archived;
   const user = req.body.user;
-  let updatedItems = []
+  let updatedItems = [];
   for (const id of ids) {
     try {
       const item = await Item.findById(id);
@@ -160,6 +160,40 @@ router.post("/archive", isUser, async (req: Request, res: Response) => {
     }
   }
   return res.status(200).send({ msg: updatedItems });
+});
+
+/**
+ * Archives items older than the given days
+ * {
+ * days: days
+ * }
+ */
+router.post("/archiveByDays", isAdmin, async (req: Request, res: Response) => {
+  const days = req.body.days;
+  const ObjectID = require("mongodb").ObjectID;
+  Item.updateMany(
+    {
+      $and: [
+        {
+          archived: false,
+        },
+        {
+          _id: {
+            $lt: ObjectID.createFromTime(
+              Date.now() / 1000 - days * 24 * 60 * 60
+            ),
+          },
+        },
+      ],
+    },
+    [{ $set: { archived: true } }]
+  ).exec(function (err, docs) {
+    if (err) {
+      console.log(err);
+      return res.status(401).send(err);
+    }
+    return res.status(200).json(docs);
+  });
 });
 
 /**

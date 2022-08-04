@@ -60,7 +60,6 @@ const TableWidget = (props: {
     column: null,
     direction: null,
   });
-
   return (
     <div>
       <Table sortable celled className="lf_table">
@@ -158,7 +157,9 @@ const TableWidget = (props: {
             )
             .filter((item) => {
               return (
-                (item.status === "available" && item.approved) || props.isUser
+                ((item.status === "available" && item.approved) ||
+                  props.isUser) &&
+                !item.archived
               );
             })
             .map((item: Item) => {

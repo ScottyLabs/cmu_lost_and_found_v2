@@ -18,6 +18,7 @@ import * as React from "react";
 import { useState, useEffect } from "react";
 import { useHistory, Link } from "react-router-dom";
 import { Grid, Rail } from "semantic-ui-react";
+import BulkArchiveButton from "../components/BulkArchiveButton";
 
 function Admin() {
   document.title = "CMU Lost and Found";
@@ -180,6 +181,9 @@ function Admin() {
                   permissions={user?.permissions}
                 ></AddItemButton>
               </div>
+              {/* <div id="bulkarchive-desktop">
+                <BulkArchiveButton fetchItems={fetchItems}></BulkArchiveButton>
+              </div> */}
             </div>
           </Grid.Column>
         </Grid.Row>

@@ -19,6 +19,7 @@ export interface IItem extends Document {
   status: "available" | "destroyed" | "claimed";
   approved: boolean;
   publicDisplay: boolean;
+  archived: boolean;
   notes: string;
   identification: string;
   username: string;

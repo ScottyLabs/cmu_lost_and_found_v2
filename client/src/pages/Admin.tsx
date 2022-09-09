@@ -3,6 +3,7 @@
 
 import "./Admin.css";
 import AddItemButton from "../components/AddItemButton";
+// import BulkArchiveButton from "../components/BulkArchiveButton";
 import DropdownMenu from "../components/DropdownMenu";
 import "semantic-ui-css/semantic.min.css";
 import LogoutButton from "../components/LogoutButton";
@@ -16,9 +17,9 @@ import { User } from "../interface/user";
 import axios from "axios";
 import * as React from "react";
 import { useState, useEffect } from "react";
+
 import { useHistory, Link } from "react-router-dom";
 import { Grid, Rail } from "semantic-ui-react";
-import BulkArchiveButton from "../components/BulkArchiveButton";
 
 function Admin() {
   document.title = "CMU Lost and Found";

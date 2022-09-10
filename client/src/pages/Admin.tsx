@@ -17,7 +17,6 @@ import { User } from "../interface/user";
 import axios from "axios";
 import * as React from "react";
 import { useState, useEffect } from "react";
-
 import { useHistory, Link } from "react-router-dom";
 import { Grid, Rail } from "semantic-ui-react";
 

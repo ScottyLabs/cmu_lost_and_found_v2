@@ -157,8 +157,6 @@ function TablePage() {
               <div id="cards-widget">
                 <CardWidget
                   items={itemList}
-                  isAdmin={false}
-                  isArchived={false}
                   fetchItems={fetchItems}
                 ></CardWidget>
               </div>

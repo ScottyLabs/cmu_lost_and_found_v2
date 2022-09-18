@@ -195,7 +195,6 @@ function Admin() {
                 <TableWidget
                   items={itemList}
                   isUser={true}
-                  isArchived={false}
                   fetchItems={fetchItems}
                   sortItems={sortItems}
                   user={user}

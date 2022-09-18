@@ -10,10 +10,17 @@ import { Request, Response, Router } from "express";
 const router = Router();
 
 /**
- * Returns all items in database, according to schema specified in Item.ts
+ * Returns items in database, according to schema specified in Item.ts
+ * When optional field onlyArchived is specified, we only fetch items
+ * corresponding to that field value, otherwise we only fetch items
+ * that are not archived by default
+ * {
+ * onlyArchived: onlyArchived
+ * }
  */
 router.post("/all", isUser, async (req: Request, res: Response) => {
-  Item.find()
+  const onlyArchived = req.body.onlyArchived ?? false;
+  Item.find({ archived: onlyArchived })
     .populate("whereToRetrieve")
     .sort({ dateFound: -1, timeFound: -1 })
     .exec(function (err, docs) {

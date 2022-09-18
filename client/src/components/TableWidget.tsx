@@ -21,7 +21,6 @@ import { Table, Pagination } from "semantic-ui-react";
 const TableWidget = (props: {
   items: Array<Item>;
   isUser: boolean;
-  isArchived: boolean;
   fetchItems: Function;
   sortItems: Function;
   user: User;
@@ -157,9 +156,7 @@ const TableWidget = (props: {
             )
             .filter((item) => {
               return (
-                ((item.status === "available" && item.approved) ||
-                  props.isUser) &&
-                !item.archived
+                (item.status === "available" && item.approved) || props.isUser
               );
             })
             .map((item: Item) => {

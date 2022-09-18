@@ -2,8 +2,7 @@ import ItemCard from "../components/ItemCard";
 import { Item } from "../interface/item";
 
 import * as React from "react";
-import { useState } from "react";
-import { Form, Card } from "semantic-ui-react";
+import { Card } from "semantic-ui-react";
 
 import "./CardWidget.css";
 

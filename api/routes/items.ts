@@ -19,6 +19,12 @@ const router = Router();
  * }
  */
 router.post("/all", isUser, async (req: Request, res: Response) => {
+  Item.updateMany({ archived: { $exists: false } }, [
+    { $set: { archived: false } },
+  ]).exec(function (err, docs) {
+    if (err) console.log(err);
+    else console.log(docs);
+  });
   const onlyArchived = req.body.onlyArchived ?? false;
   Item.find({ archived: onlyArchived })
     .populate("whereToRetrieve")
@@ -85,6 +91,7 @@ router.post("/add", isUser, async (req: Request, res: Response) => {
     modified: [user.username],
     approver: approved ? user.username : null,
     returner: null,
+    archived: false,
   });
   item.save((err) => {
     if (err) {

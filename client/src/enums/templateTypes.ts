@@ -1,5 +1,4 @@
 export enum TemplateType {
-    CMUID = "CMUID",
-    OTHER = "OTHER",
-  }
-  
+  CMUID = "CMUID",
+  OTHER = "OTHER",
+}

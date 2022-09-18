@@ -1,7 +1,9 @@
+// TODO: #129 Replace any type with appropriate annotation
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from "axios";
-import React, { useState } from "react";
-import { Button, Grid, Modal, Icon } from "semantic-ui-react";
+import * as React from "react";
 import { useHistory } from "react-router-dom";
+import { Button, Grid, Modal, Icon } from "semantic-ui-react";
 
 function exampleReducer(dispatchState: any, action: any) {
   switch (action.type) {
@@ -20,6 +22,8 @@ function exampleReducer(dispatchState: any, action: any) {
 
 export default function DeleteButton(props: {
   id: string;
+  // TODO: #130 Replace bad Function type with appropriate type
+  // eslint-disable-next-line @typescript-eslint/ban-types
   fetchItems: Function;
   disabled: boolean;
   style?: any;
@@ -71,7 +75,7 @@ export default function DeleteButton(props: {
             <Button
               onClick={() => {
                 axios
-                  .post(`/api/items/delete`, {
+                  .post("/api/items/delete", {
                     token: localStorage.getItem("lnf_token"),
                     id: props.id,
                   })

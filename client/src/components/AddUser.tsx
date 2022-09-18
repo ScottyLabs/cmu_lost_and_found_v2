@@ -1,11 +1,15 @@
-import axios from "axios";
-import React, { useState } from "react";
-import { useHistory } from "react-router";
-import { Button, Grid, Modal, Form, Label, Icon } from "semantic-ui-react";
 import { BuildingType } from "../enums/locationTypes";
 import { PermissionType } from "../enums/permissionType";
+
+import axios from "axios";
+import * as React from "react";
+import { useState } from "react";
+import { useHistory } from "react-router";
+import { Button, Grid, Modal, Form, Label, Icon } from "semantic-ui-react";
 import "./AddUser.css";
 
+// TODO: #136 Replace any with appropriate type
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function exampleReducer(dispatchState: any, action: any) {
   switch (action.type) {
     case "CONFIG_CLOSE_ON_DIMMER_CLICK":
@@ -21,6 +25,8 @@ function exampleReducer(dispatchState: any, action: any) {
   }
 }
 
+// TODO: #135 Replace bad Function type with appropriate type
+// eslint-disable-next-line @typescript-eslint/ban-types
 function AddUser(props: { fetchUsers: Function }) {
   const history = useHistory();
   const buildings = Object.keys(BuildingType).map((key) => ({
@@ -54,30 +60,32 @@ function AddUser(props: { fetchUsers: Function }) {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    var compare = -1;
+    let compare = -1;
     for (let i = 0; i < permissions.length; i++) {
-      if (permissions[i].includes(`${BuildingType.ALL}:${PermissionType.ADMIN}`)) {
+      if (
+        permissions[i].includes(`${BuildingType.ALL}:${PermissionType.ADMIN}`)
+      ) {
         if (compare == -1) compare = 2;
         else {
-          let res = window.confirm(alertText);
+          const res = window.confirm(alertText);
           if (!res) return;
         }
       } else if (permissions[i].includes(PermissionType.ADMIN)) {
         if (compare == -1 || compare == 1) compare = 1;
         else {
-          let res = window.confirm(alertText);
+          const res = window.confirm(alertText);
           if (!res) return;
         }
       } else {
         if (compare == -1 || compare == 0) compare = 0;
         else {
-          let res = window.confirm(alertText);
+          const res = window.confirm(alertText);
           if (!res) return;
         }
       }
     }
     axios
-      .post(`/api/auth/create`, {
+      .post("/api/auth/create", {
         token: localStorage.getItem("lnf_token"),
         username: username,
         permissions: permissions,
@@ -149,6 +157,8 @@ function AddUser(props: { fetchUsers: Function }) {
                       : "green"
                     : "blue";
                 return (
+                  // TODO: #137 Fix missing React key prop in iterator
+                  // eslint-disable-next-line react/jsx-key
                   <Label
                     color={color}
                     image

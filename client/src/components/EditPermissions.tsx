@@ -1,11 +1,15 @@
-import React, { useState } from "react";
-import axios from "axios";
-import { Button, Form, Grid, Icon, Label, Modal } from "semantic-ui-react";
-import { User } from "../interface/user";
 import { BuildingType } from "../enums/locationTypes";
 import { PermissionType } from "../enums/permissionType";
-import { useHistory } from "react-router";
+import { User } from "../interface/user";
 
+import axios from "axios";
+import * as React from "react";
+import { useState } from "react";
+import { useHistory } from "react-router";
+import { Button, Form, Grid, Icon, Label, Modal } from "semantic-ui-react";
+
+// TODO: #124 Replace any annotations with appropriate types
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function exampleReducer(dispatchState: any, action: any) {
   switch (action.type) {
     case "CONFIG_CLOSE_ON_DIMMER_CLICK":
@@ -21,12 +25,11 @@ function exampleReducer(dispatchState: any, action: any) {
   }
 }
 
-const buildings = Object.keys(BuildingType)
-  .map((key) => ({
-    key,
-    text: key,
-    value: key,
-  }));
+const buildings = Object.keys(BuildingType).map((key) => ({
+  key,
+  text: key,
+  value: key,
+}));
 
 const actions = Object.keys(PermissionType)
   .filter((value) => value !== "ALL")
@@ -38,6 +41,8 @@ const actions = Object.keys(PermissionType)
 
 export default function EditPermissions(props: {
   user: User;
+  // TODO: #125 Replace bad Function type with the appropriate annotation
+  // eslint-disable-next-line @typescript-eslint/ban-types
   fetchUsers: Function;
 }) {
   const history = useHistory();
@@ -83,11 +88,17 @@ export default function EditPermissions(props: {
               {permissions.map((perm, index) => {
                 const [building, action] = perm.split(":");
                 /* users = blue, admin all = yellow, other admin = green */
-                const color = action !== PermissionType.ADMIN ? "blue" : building !== BuildingType.ALL ? "green" : "yellow";
+                const color =
+                  action !== PermissionType.ADMIN
+                    ? "blue"
+                    : building !== BuildingType.ALL
+                    ? "green"
+                    : "yellow";
                 return (
                   <Label
                     color={color}
                     image
+                    key={index}
                     as="a"
                     onClick={() => {
                       setPermissions(

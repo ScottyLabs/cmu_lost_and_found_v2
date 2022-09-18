@@ -1,9 +1,10 @@
-import { Request, Response, Router } from "express";
 import PermissionsController from "../controllers/PermissionsController";
 import { BuildingType } from "../enums/locationTypes";
 import { PermissionType } from "../enums/permissionType";
 import User, { IUser } from "../models/User";
 import { isAdmin, isUser } from "./auth";
+
+import { Request, Response, Router } from "express";
 
 // https://github.com/seanpmaxwell/express-generator-typescript/tree/265df43a2cb23a4389a0361530bb741d1fc88c7b
 
@@ -44,7 +45,7 @@ router.post("/currentUser", isUser, (req, res) => {
  * Required Permission ALL:ADMIN
  */
 router.post("/updatePerm", isAdmin, async (req: Request, res: Response) => {
-  let { username, perm } = req.body;
+  const { username, perm } = req.body;
   const permissionArray: Array<[BuildingType, PermissionType]> = perm
     .map((value: string) => PermissionsController.parsePermission(value))
     .filter((value: [BuildingType, PermissionType]) => value);
@@ -83,7 +84,9 @@ router.post("/updatePerm", isAdmin, async (req: Request, res: Response) => {
  */
 
 router.post("/delete", isAdmin, async (req: Request, res: Response) => {
-  let { username } = req.body;
+  const { username } = req.body;
+  // TODO: #146 Replace any with appropriate type
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   User.findOneAndDelete({ username: username }, (err: any, raw: IUser) => {
     if (err) {
       console.log(err);
@@ -100,20 +103,20 @@ router.post("/delete", isAdmin, async (req: Request, res: Response) => {
  *  notif: true or false
  * }
  */
- router.post("/updateNotif", async (req: Request, res: Response) => {
-  let { username, notif } = req.body;
+router.post("/updateNotif", async (req: Request, res: Response) => {
+  const { username, notif } = req.body;
   const toUpdate = await User.findOneByUsername(username);
   if (toUpdate) {
     const updated = await User.findByIdAndUpdate(
       toUpdate._id,
-        {
-          notif: notif,
-        },
-        { runValidators: true, useFindAndModify: false, new: true }
-      );
-      return res.status(200).send({ msg: updated });
+      {
+        notif: notif,
+      },
+      { runValidators: true, useFindAndModify: false, new: true }
+    );
+    return res.status(200).send({ msg: updated });
   } else {
-      return res.status(404).send(new Error("User not found"));
+    return res.status(404).send(new Error("User not found"));
   }
 });
 

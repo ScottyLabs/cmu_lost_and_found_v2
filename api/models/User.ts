@@ -1,15 +1,18 @@
-import { Model, Query, Schema, Document, model } from "mongoose";
+// TODO: #148 Replace any with appropriate types
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import axios from "axios";
 import * as bcrypt from "bcryptjs";
 import * as jwt from "jsonwebtoken";
-import axios from "axios";
+import { Model, Query, Schema, Document, model } from "mongoose";
 import { schedule } from "node-cron";
 // jsonwebtoken secret for authentication purposes
 let JWT_PUBKEY: string;
 // time for access token to expire in milliseconds
-const TIME_TO_EXPIRE = 3600000;
+// const TIME_TO_EXPIRE = 3600000;
 
 async function getLoginKey() {
-  JWT_PUBKEY = (await axios.get("https://login.scottylabs.org/login/pubkey")).data;
+  JWT_PUBKEY = (await axios.get("https://login.scottylabs.org/login/pubkey"))
+    .data;
 }
 
 if (!JWT_PUBKEY) {

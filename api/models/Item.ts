@@ -1,6 +1,7 @@
-import { Schema, Document, model } from "mongoose";
 import { BuildingType } from "../enums/locationTypes";
 import { IBuilding } from "./Building";
+
+import { Schema, Document, model } from "mongoose";
 
 export interface IItem extends Document {
   dateFound: Date;
@@ -8,7 +9,7 @@ export interface IItem extends Document {
   name: string;
   whereFound: string;
   description: string;
-  value: "general" | "high value"
+  value: "general" | "high value";
   identifiable: boolean;
   category: string;
   whereToRetrieve: IBuilding;
@@ -18,6 +19,7 @@ export interface IItem extends Document {
   status: "available" | "destroyed" | "claimed";
   approved: boolean;
   publicDisplay: boolean;
+  archived: boolean;
   notes: string;
   identification: string;
   username: string;

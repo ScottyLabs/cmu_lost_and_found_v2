@@ -85,13 +85,13 @@ router.post("/add", isUser, async (req: Request, res: Response) => {
     status: status,
     approved: approved,
     publicDisplay: false,
+    archived: false,
     identification: identification,
     notes: notes,
     username: user.username,
     modified: [user.username],
     approver: approved ? user.username : null,
     returner: null,
-    archived: false,
   });
   item.save((err) => {
     if (err) {

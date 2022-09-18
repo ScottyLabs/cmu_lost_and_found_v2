@@ -8,12 +8,12 @@ export interface IBuilding extends Document {
 const BuildingSchema = new Schema({
   name: {
     required: true,
-    type: String
+    type: String,
   },
   retrieveLocation: {
     type: String,
-    default: ""
-  }
+    default: "",
+  },
 });
 
 const Building = model<IBuilding>("Building", BuildingSchema, "buildings");

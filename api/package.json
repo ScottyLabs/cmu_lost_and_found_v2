@@ -7,8 +7,6 @@
     "start": "ts-node index.ts",
     "dev": "./node_modules/nodemon/bin/nodemon.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "tslint": "tslint --project tsconfig.json --config tslint.json",
-    "tslint-fix": "tslint --project tsconfig.json --config tslint.json --fix",
     "build": "webpack"
   },
   "keywords": [],

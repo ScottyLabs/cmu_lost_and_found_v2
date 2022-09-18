@@ -87,3 +87,8 @@ img.card-img {
 .ui.button.image-button {
   margin-top: 15px;
 }
+
+.show-image{
+  float: right;
+  margin: -15px!important;
+}

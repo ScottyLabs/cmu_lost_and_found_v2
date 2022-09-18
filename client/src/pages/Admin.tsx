@@ -1,24 +1,29 @@
-import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
-import { Grid, Rail } from "semantic-ui-react";
-import { Link } from "react-router-dom";
+// TODO: #109 Fix @typescript-eslint/no-explicit-any in Admin.tsx
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import "./Admin.css";
-import DropdownMenu from "../components/DropdownMenu";
 import AddItemButton from "../components/AddItemButton";
-import TableWidget from "../components/TableWidget";
+// import BulkArchiveButton from "../components/BulkArchiveButton";
+import DropdownMenu from "../components/DropdownMenu";
 import "semantic-ui-css/semantic.min.css";
-import axios from "axios";
-import { Item } from "../interface/item";
-import SearchBar from "../components/SearchBar";
 import LogoutButton from "../components/LogoutButton";
-import { User } from "../interface/user";
+import SearchBar from "../components/SearchBar";
+import TableWidget from "../components/TableWidget";
 import { BuildingType } from "../enums/locationTypes";
 import { PermissionType } from "../enums/permissionType";
+import { Item } from "../interface/item";
+import { User } from "../interface/user";
+
+import axios from "axios";
+import * as React from "react";
+import { useState, useEffect } from "react";
+import { useHistory, Link } from "react-router-dom";
+import { Grid, Rail } from "semantic-ui-react";
 
 function Admin() {
   document.title = "CMU Lost and Found";
 
-  const [items, setItems] = useState([]);
+  const [_items, setItems] = useState([]);
   //what is from the search
   const [input, setInput] = useState("");
   //unfiltered list
@@ -32,7 +37,7 @@ function Admin() {
 
   const fetchItems = () => {
     axios
-      .post(`/api/items/all`, {
+      .post("/api/items/all", {
         token: window.localStorage.getItem("lnf_token"),
       })
       .then(
@@ -79,21 +84,24 @@ function Admin() {
 
   // modify items
   const updateInput = async (input: string) => {
-    let inputName = input.toLowerCase();
+    const inputName = input.toLowerCase();
     const filtered = itemListDefault.filter((item: Item) => {
       return (
-        item.description.toLowerCase().includes(inputName)) ||
-        item.whereFound.toLowerCase().includes(inputName);
+        item.name.toLowerCase().includes(inputName) ||
+        item.description.toLowerCase().includes(inputName) ||
+        item.whereFound.toLowerCase().includes(inputName) ||
+        item.identification.toLowerCase().includes(inputName) ||
+        item.notes.toLowerCase().includes(inputName)
+      );
     });
     setInput(input);
     setItemList(filtered);
     setPage(1);
   };
-  
 
   // sort items
   const sortItems = async (column: string, direction: string) => {
-    var sorted = itemListDefault;
+    let sorted = itemListDefault;
     if (column === "whenFound") {
       sorted = itemListDefault.sort((item1: any, item2: any) => {
         const time1 = new Date(item1["dateFound"]).getTime();
@@ -161,6 +169,7 @@ function Admin() {
               <AddItemButton
                 fetchItems={fetchItems}
                 isAdmin={isAllAdmin}
+                permissions={user?.permissions}
               ></AddItemButton>
             </div>
             <div id="admin-filter-bar">
@@ -169,8 +178,12 @@ function Admin() {
                 <AddItemButton
                   fetchItems={fetchItems}
                   isAdmin={isAllAdmin}
+                  permissions={user?.permissions}
                 ></AddItemButton>
               </div>
+              {/* <div id="bulkarchive-desktop">
+                <BulkArchiveButton fetchItems={fetchItems}></BulkArchiveButton>
+              </div> */}
             </div>
           </Grid.Column>
         </Grid.Row>
@@ -182,7 +195,6 @@ function Admin() {
                 <TableWidget
                   items={itemList}
                   isUser={true}
-                  isArchived={false}
                   fetchItems={fetchItems}
                   sortItems={sortItems}
                   user={user}

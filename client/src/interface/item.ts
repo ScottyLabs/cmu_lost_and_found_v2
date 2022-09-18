@@ -17,6 +17,7 @@ export interface Item {
   status: string;
   approved: boolean;
   publicDisplay: boolean;
+  archived: boolean;
   identification: string;
   notes: string;
   username: string;

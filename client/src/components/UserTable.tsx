@@ -1,14 +1,16 @@
-import React from "react";
-import axios from "axios";
-import { Label, Table } from "semantic-ui-react";
-import { User } from "../interface/user";
 import "./TableWidget.css";
 import DeleteUser from "../components/DeleteUser";
 import { BuildingType } from "../enums/locationTypes";
 import { PermissionType } from "../enums/permissionType";
+import { User } from "../interface/user";
 import EditPermissions from "./EditPermissions";
 import NotificationSwitch from "./NotificationSwitch";
 
+import * as React from "react";
+import { Label, Table } from "semantic-ui-react";
+
+// TODO: #110 Replace bad type Function with appropriate type
+// eslint-disable-next-line @typescript-eslint/ban-types
 const UserTable = (props: { users: Array<User>; fetchUsers: Function }) => {
   console.log("Creating table");
   return (
@@ -31,7 +33,7 @@ const UserTable = (props: { users: Array<User>; fetchUsers: Function }) => {
             <Table.Row key={user.username}>
               <Table.Cell>{user.username}</Table.Cell>
               <Table.Cell>
-                {user.permissions.map((perm, index) => {
+                {user.permissions.map((perm, _index) => {
                   const [building, action] = perm.split(":");
                   /* blue for users, yellow for admin with access to all, green for */
                   /* admin with access to specific buildings */
@@ -42,6 +44,8 @@ const UserTable = (props: { users: Array<User>; fetchUsers: Function }) => {
                       ? "green"
                       : "yellow";
                   return (
+                    // TODO: #111 Fix missing React key prop
+                    // eslint-disable-next-line react/jsx-key
                     <Label color={color} image>
                       {building}
                       <Label.Detail>{action}</Label.Detail>

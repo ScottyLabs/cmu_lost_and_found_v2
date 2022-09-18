@@ -1,7 +1,8 @@
-import axios from "axios";
-import React, { useState } from "react";
-import { Button, Grid, Modal, Form } from "semantic-ui-react";
-import { useHistory } from "react-router-dom";
+// TODO: #122 Replace any annotations with the appropriate types
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import * as React from "react";
+import { useReducer } from "react";
+import { Button, Grid, Modal } from "semantic-ui-react";
 
 function exampleReducer(dispatchState: any, action: any) {
   switch (action.type) {
@@ -18,19 +19,19 @@ function exampleReducer(dispatchState: any, action: any) {
   }
 }
 
-let locations = [
-  "Gates Hillman 6203",
-  `University Center Information Desk`,
-  `Residence on Fifth Front Desk`,
-  `Morewood Front Desk`,
-  `Donner Front Desk`,
-];
+// const locations = [
+//   "Gates Hillman 6203",
+//   "University Center Information Desk",
+//   "Residence on Fifth Front Desk",
+//   "Morewood Front Desk",
+//   "Donner Front Desk",
+// ];
 
-const listItems = locations.map((d) => (
-  <li className="location" key={d}>
-    {d}
-  </li>
-));
+// const listItems = locations.map((d) => (
+//   <li className="location" key={d}>
+//     {d}
+//   </li>
+// ));
 
 export const foundItemMessage = (
   <>
@@ -39,8 +40,8 @@ export const foundItemMessage = (
     </p>
     <ul className="list">{listItems}</ul> */}
     <p>
-      Please return it to the CUC Lost and Found.
-      If you have any inquiries, please send an email to{" "}
+      Please return it to the CUC Lost and Found. If you have any inquiries,
+      please send an email to{" "}
       <a href="mailto:cucinfodesk@andrew.cmu.edu">cucinfodesk@andrew.cmu.edu</a>{" "}
       or call 412-268-2107.
     </p>
@@ -50,8 +51,15 @@ export const foundItemMessage = (
 export const feedbackForm = (
   <>
     <p>
-      To leave feedback, please fill out this {" "}
-      <a href="https://forms.gle/QDnNyjdzUBnFUkno8" target="_blank">form</a>. Thanks!
+      To leave feedback, please fill out this{" "}
+      <a
+        href="https://forms.gle/QDnNyjdzUBnFUkno8"
+        target="_blank"
+        rel="noreferrer"
+      >
+        form
+      </a>
+      . Thanks!
     </p>
   </>
 );
@@ -59,17 +67,18 @@ export const feedbackForm = (
 export const lostItemMessage = (
   <>
     <p>
-      If you lost an item and would like to report it, please visit this{" "}
-      <a href="https://forms.gle/wB8QUmZBQEpw2sNJA"> site</a>.
+      If you lost an item, please check the items below first to see if your
+      item is there. Otherwise, you can send an email to{" "}
+      <a href="mailto:lost-and-found@cmu.edu">lost-and-found@cmu.edu</a>. Note
+      that we do not actively cross-reference reported lost items with current
+      lost and found inventory. Instead, we use the information submitted in
+      special cases should we need to identify an item.
     </p>
   </>
 );
 
-function FoundItemModal(props: {
-  id?: string;
-  style?: any;
-}) {
-  const [dispatchState, dispatch] = React.useReducer(exampleReducer, {
+function FoundItemModal(props: { id?: string; style?: any }) {
+  const [dispatchState, dispatch] = useReducer(exampleReducer, {
     closeOnEscape: false,
     closeOnDimmerClick: false,
     open: false,
@@ -86,12 +95,23 @@ function FoundItemModal(props: {
           open={open}
           onOpen={() => dispatch({ type: "OPEN_MODAL" })}
           onClose={() => dispatch({ type: "CLOSE_MODAL" })}
-          trigger={<Button color="red" id={props.id} style={props.style}>Report Item</Button>}
+          trigger={
+            <Button color="red" id={props.id} style={props.style}>
+              Report Item
+            </Button>
+          }
         >
           <Modal.Header>Report Item</Modal.Header>
-          <Modal.Content style={{margin: "auto", maxWidth: "100%", padding: "30px", fontSize: "18px"}}>
+          <Modal.Content
+            style={{
+              margin: "auto",
+              maxWidth: "100%",
+              padding: "30px",
+              fontSize: "18px",
+            }}
+          >
             {/* Need to stop modal from closing when enter key is pressed */}
-            { foundItemMessage }
+            {foundItemMessage}
             <Button onClick={() => dispatch({ type: "CLOSE_MODAL" })} negative>
               OK
             </Button>

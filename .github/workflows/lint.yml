@@ -1,0 +1,22 @@
+name: Lint
+on: pull_request
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install dependencies
+        run: npm i
+        shell: bash
+      - name: Check Build Success (API)
+        working-directory: ./api
+        run: npm run build
+        shell: bash
+      - name: Check Build Success (Client)
+        working-directory: ./client
+        run: npm run build
+        shell: bash
+      - name: Run ESLint
+        run: npm run lint
+        shell: bash

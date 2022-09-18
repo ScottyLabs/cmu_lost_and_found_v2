@@ -14,7 +14,7 @@ export default class PermissionsController {
     if (!permission) {
       return null;
     }
-    
+
     const tokens = permission.split(":");
 
     if (tokens.length !== 2) {

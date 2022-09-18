@@ -1,20 +1,23 @@
-import axios from "axios";
-import React, { useState, useEffect } from "react";
-import { Grid, Message, Rail } from "semantic-ui-react";
-import { Link, useHistory } from "react-router-dom";
-import DropdownMenu from "../components/DropdownMenu";
-import SearchBar from "../components/SearchBar";
-import { Item } from "../interface/item";
 import CardWidget from "../components/CardWidget";
+import DropdownMenu from "../components/DropdownMenu";
 import "./TablePage.css";
 import FoundItemModal, {
+  lostItemMessage,
   foundItemMessage,
   feedbackForm,
 } from "../components/FoundItemModal";
 import LogoutButton from "../components/LogoutButton";
-import { User } from "../interface/user";
+import SearchBar from "../components/SearchBar";
 import { BuildingType } from "../enums/locationTypes";
 import { PermissionType } from "../enums/permissionType";
+import { Item } from "../interface/item";
+import { User } from "../interface/user";
+
+import axios from "axios";
+import * as React from "react";
+import { useState, useEffect } from "react";
+import { Link, useHistory } from "react-router-dom";
+import { Grid, Message, Rail } from "semantic-ui-react";
 
 function TablePage() {
   const history = useHistory();
@@ -30,7 +33,7 @@ function TablePage() {
 
   const fetchItems = () => {
     axios
-      .post(`/api/items/all`, {
+      .post("/api/items/all", {
         token: localStorage.getItem("lnf_token"),
       })
       .then(
@@ -65,11 +68,12 @@ function TablePage() {
 
   // modify items
   const updateInput = async (input: string) => {
-    let inputName = input.toLowerCase();
+    const inputName = input.toLowerCase();
     const filtered = itemListDefault.filter((item: Item) => {
       return (
         item.description.toLowerCase().includes(inputName) ||
-        item.whereFound.toLowerCase().includes(inputName)      );
+        item.whereFound.toLowerCase().includes(inputName)
+      );
     });
     setInput(input);
     setItemList(filtered);
@@ -132,8 +136,29 @@ function TablePage() {
         </Grid.Column>
       </Grid.Row>
 
-      <Grid.Row>
-        <Grid.Column width={16}>
+        <Grid.Row>
+          <Grid.Column width={16}>
+            <div id="description">
+              <p>
+                To retrieve an object, go to the location listed next to the
+                object on the corresponding card. You will be required to
+                identify any lost possessions. All items must be picked up in
+                person and a photo ID is required.
+              </p>
+            </div>
+            <Message id="faq-message" warning size="large">
+              <Message.Header>Lost an item?</Message.Header>
+              {lostItemMessage}
+              <Message.Header>Found an item?</Message.Header>
+              {foundItemMessage}
+              <Message.Header>Have feedback?</Message.Header>
+              {feedbackForm}
+            </Message>
+          </Grid.Column>
+        </Grid.Row>
+
+        <Grid.Row>
+          <Grid.Column width={16}>
             <div id="admin-filter-bar">
               <SearchBar input={input} onChange={updateInput} />
               <FoundItemModal
@@ -141,24 +166,23 @@ function TablePage() {
                 style={{ padding: "11px 11px", width: "110px" }}
               ></FoundItemModal>
             </div>
-        </Grid.Column>
-      </Grid.Row>
+          </Grid.Column>
+        </Grid.Row>
 
-      <Grid.Row>
-        <Grid.Column width={16}>
-          <main>
-            <div id="cards-widget">
-              <CardWidget
-                items={itemList}
-                isAdmin={false}
-                isArchived={false}
-                fetchItems={fetchItems}
-              ></CardWidget>
-            </div>
-          </main>
-        </Grid.Column>
-      </Grid.Row>
-    </Grid>
+        <Grid.Row>
+          <Grid.Column width={16}>
+            <main>
+              <div id="cards-widget">
+                <CardWidget
+                  items={itemList}
+                  fetchItems={fetchItems}
+                ></CardWidget>
+              </div>
+            </main>
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
+    )
   );
 }
 

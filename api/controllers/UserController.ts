@@ -1,7 +1,6 @@
-import { BuildingType } from "../enums/locationTypes";
-import { PermissionType } from "../enums/permissionType";
+// TODO: #149 Replace any with appropriate types
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import User, { IUser } from "../models/User";
-import * as jwt from "jsonwebtoken";
 
 export default class UserController {
   /**
@@ -29,8 +28,8 @@ export default class UserController {
       if (!user.checkPassword(password)) {
         return callback("That's not the right password.", null, null);
       }
-      let token = user.generateAuthToken();
-      let u = user.toJSON();
+      const token = user.generateAuthToken();
+      const u = user.toJSON();
       delete u.password;
       return callback(null, token, u);
     });
@@ -60,7 +59,7 @@ export default class UserController {
     username = username.toLowerCase();
 
     // Check that there isn't a user with this username already.
-    let u = new User();
+    const u = new User();
     u.username = username;
     u.permissions = permissions;
     u.notif = notif;

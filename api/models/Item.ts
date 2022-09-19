@@ -83,6 +83,10 @@ const ItemSchema = new Schema(
       type: Boolean,
       required: true,
     },
+    archived: {
+      type: Boolean,
+      required: true,
+    },
     identification: {
       type: String,
     },

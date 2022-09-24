@@ -1,15 +1,20 @@
-import axios from "axios";
-import React, { useState } from "react";
-import { Button, Grid, Modal, Form, Icon } from "semantic-ui-react";
-import { useHistory } from "react-router-dom";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import { Item } from "../interface/item";
-import "./EditItem.css";
+// TODO: #126 Replace any annotations with appropriate type
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { BuildingType } from "../enums/locationTypes";
-import DeleteButton from "./DeleteButton";
-import { User } from "../interface/user";
 import { PermissionType } from "../enums/permissionType";
+import { Item } from "../interface/item";
+import { User } from "../interface/user";
+import DeleteButton from "./DeleteButton";
+
+import axios from "axios";
+import * as React from "react";
+import { useState } from "react";
+import DatePicker from "react-datepicker";
+import { useHistory } from "react-router-dom";
+import { Button, Grid, Modal, Form, Icon } from "semantic-ui-react";
+
+import "react-datepicker/dist/react-datepicker.css";
+import "./EditItem.css";
 
 function exampleReducer(dispatchState: any, action: any) {
   switch (action.type) {
@@ -26,38 +31,38 @@ function exampleReducer(dispatchState: any, action: any) {
   }
 }
 
-const categories = [
-  { key: "clothing", text: "Clothing", value: "Clothing" },
-  { key: "headphones", text: "Headphones", value: "Headphones" },
-  { key: "jewelry", text: "Jewelry", value: "Jewelry" },
-  { key: "keys", text: "Keys", value: "Keys" },
-  { key: "laptops", text: "Laptops", value: "Laptops" },
-  { key: "phones", text: "Phones", value: "Phones" },
-  { key: "students ids", text: "Student IDs", value: "Student IDs" },
-  { key: "tablets", text: "Tablets", value: "Tablets" },
-  { key: "umbrellas", text: "Umbrellas", value: "Umbrellas" },
-  { key: "water bottles", text: "Water Bottles", value: "Water Bottles" },
-  {
-    key: "other electronics",
-    text: "Other Electronics",
-    value: "Other Electronics",
-  },
-  { key: "miscellaneous", text: "Miscellaneous", value: "Miscellaneous" },
-];
+// const categories = [
+//   { key: "clothing", text: "Clothing", value: "Clothing" },
+//   { key: "headphones", text: "Headphones", value: "Headphones" },
+//   { key: "jewelry", text: "Jewelry", value: "Jewelry" },
+//   { key: "keys", text: "Keys", value: "Keys" },
+//   { key: "laptops", text: "Laptops", value: "Laptops" },
+//   { key: "phones", text: "Phones", value: "Phones" },
+//   { key: "students ids", text: "Student IDs", value: "Student IDs" },
+//   { key: "tablets", text: "Tablets", value: "Tablets" },
+//   { key: "umbrellas", text: "Umbrellas", value: "Umbrellas" },
+//   { key: "water bottles", text: "Water Bottles", value: "Water Bottles" },
+//   {
+//     key: "other electronics",
+//     text: "Other Electronics",
+//     value: "Other Electronics",
+//   },
+//   { key: "miscellaneous", text: "Miscellaneous", value: "Miscellaneous" },
+// ];
 
-const pickup = [
-  {
-    key: "cohon",
-    text: "Cohon University Center",
-    value: "Cohon University Center",
-  },
-  {
-    key: "gates",
-    text: "GHC 6203, 412.268.8525, lostfound@cs.cmu.edu.",
-    value: "GHC 6203, 412.268.8525, lostfound@cs.cmu.edu.",
-  },
-  { key: "tepper", text: "Tepper Building", value: "Tepper Building" },
-];
+// const pickup = [
+//   {
+//     key: "cohon",
+//     text: "Cohon University Center",
+//     value: "Cohon University Center",
+//   },
+//   {
+//     key: "gates",
+//     text: "GHC 6203, 412.268.8525, lostfound@cs.cmu.edu.",
+//     value: "GHC 6203, 412.268.8525, lostfound@cs.cmu.edu.",
+//   },
+//   { key: "tepper", text: "Tepper Building", value: "Tepper Building" },
+// ];
 
 const buildings = Object.keys(BuildingType)
   .filter((value) => value !== "ALL")
@@ -68,6 +73,8 @@ const buildings = Object.keys(BuildingType)
   }));
 
 function EditItem(props: {
+  // TODO: #127 Replace bad Function type with appropriate type
+  // eslint-disable-next-line @typescript-eslint/ban-types
   fetchItems: Function;
   user: User;
   item: Item;
@@ -122,7 +129,7 @@ function EditItem(props: {
   ) => {
     console.log("handling file change");
     console.log(name + " " + value);
-    setState({ ...state, [name]: value, imageObject: e!.target!.files![0] });
+    setState({ ...state, [name]: value, imageObject: e?.target?.files?.[0] });
   };
 
   const uploadImage = (imageFile: File) => {
@@ -133,28 +140,28 @@ function EditItem(props: {
 
     // no image, TODO: check
     if (!imageFile) {
-      return new Promise((resolve, reject) => {
+      return new Promise((resolve, _reject) => {
         resolve("");
         return;
       });
     }
 
     return new Promise((resolve, reject) => {
-      let reader = new FileReader();
+      const reader = new FileReader();
 
       reader.onload = () => {
-        let data = {
+        const data = {
           token: localStorage.getItem("lnf_token"),
           imageName: imageName,
           dataURL: reader.result,
         };
         console.log("Trying to edit image");
 
-        axios.post(`/api/items/addImage`, data).then(
+        axios.post("/api/items/addImage", data).then(
           (res) => {
             console.log("Image uploaded successfully");
             console.log(res);
-            let finalURL = res.data.msg.fileId;
+            const finalURL = res.data.msg.fileId;
             console.log(
               "https://drive.google.com/uc?export=view&id=" + finalURL
             );
@@ -198,14 +205,14 @@ function EditItem(props: {
     } = state;
 
     const offset = date.getTimezoneOffset();
-    let currentDate = new Date(date.getTime() - offset * 60 * 1000);
+    const currentDate = new Date(date.getTime() - offset * 60 * 1000);
     const dateFound = currentDate.toISOString().slice(0, 10);
     const timeFound = currentDate.toISOString().slice(11, 16);
 
     uploadImage(imageObject).then(
       (res) => {
         axios
-          .post(`/api/items/editItem`, {
+          .post("/api/items/editItem", {
             id: props.id,
             token: localStorage.getItem("lnf_token"),
             dateFound: dateFound,

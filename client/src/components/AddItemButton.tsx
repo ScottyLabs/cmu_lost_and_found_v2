@@ -1,14 +1,20 @@
-import axios from "axios";
-import React, { useState } from "react";
-import { Button, Grid, Modal, Form, Message } from "semantic-ui-react";
-import { useHistory } from "react-router-dom";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+// TODO: #141 Replace any with appropriate type annotations
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import "./AddItemButton.css";
 import { BuildingType } from "../enums/locationTypes";
-import { User } from "../interface/user";
-import emailbody from "../templates/html/emailbody";
 import { PermissionType } from "../enums/permissionType";
+import { TemplateType } from "../enums/templateTypes";
+import { User } from "../interface/user";
+import { UseTemplate } from "../templates/emailTemplates";
+import emailbody from "../templates/html/emailbody";
+
+import axios from "axios";
+import * as React from "react";
+import { useState } from "react";
+import DatePicker from "react-datepicker";
+import { useHistory } from "react-router-dom";
+import { Button, Grid, Modal, Form, Message } from "semantic-ui-react";
+import "react-datepicker/dist/react-datepicker.css";
 
 function exampleReducer(dispatchState: any, action: any) {
   switch (action.type) {
@@ -25,38 +31,38 @@ function exampleReducer(dispatchState: any, action: any) {
   }
 }
 
-const categories = [
-  { key: "clothing", text: "Clothing", value: "Clothing" },
-  { key: "headphones", text: "Headphones", value: "Headphones" },
-  { key: "jewelry", text: "Jewelry", value: "Jewelry" },
-  { key: "keys", text: "Keys", value: "Keys" },
-  { key: "laptops", text: "Laptops", value: "Laptops" },
-  { key: "phones", text: "Phones", value: "Phones" },
-  { key: "students ids", text: "Student IDs", value: "Student IDs" },
-  { key: "tablets", text: "Tablets", value: "Tablets" },
-  { key: "umbrellas", text: "Umbrellas", value: "Umbrellas" },
-  { key: "water bottles", text: "Water Bottles", value: "Water Bottles" },
-  {
-    key: "other electronics",
-    text: "Other Electronics",
-    value: "Other Electronics",
-  },
-  { key: "miscellaneous", text: "Miscellaneous", value: "Miscellaneous" },
-];
+// const categories = [
+//   { key: "clothing", text: "Clothing", value: "Clothing" },
+//   { key: "headphones", text: "Headphones", value: "Headphones" },
+//   { key: "jewelry", text: "Jewelry", value: "Jewelry" },
+//   { key: "keys", text: "Keys", value: "Keys" },
+//   { key: "laptops", text: "Laptops", value: "Laptops" },
+//   { key: "phones", text: "Phones", value: "Phones" },
+//   { key: "students ids", text: "Student IDs", value: "Student IDs" },
+//   { key: "tablets", text: "Tablets", value: "Tablets" },
+//   { key: "umbrellas", text: "Umbrellas", value: "Umbrellas" },
+//   { key: "water bottles", text: "Water Bottles", value: "Water Bottles" },
+//   {
+//     key: "other electronics",
+//     text: "Other Electronics",
+//     value: "Other Electronics",
+//   },
+//   { key: "miscellaneous", text: "Miscellaneous", value: "Miscellaneous" },
+// ];
 
-const pickup = [
-  {
-    key: "cohon",
-    text: "Cohon University Center",
-    value: "Cohon University Center",
-  },
-  {
-    key: "gates",
-    text: "GHC 6203, 412.268.8525, lostfound@cs.cmu.edu.",
-    value: "GHC 6203, 412.268.8525, lostfound@cs.cmu.edu.",
-  },
-  { key: "tepper", text: "Tepper Building", value: "Tepper Building" },
-];
+// const pickup = [
+//   {
+//     key: "cohon",
+//     text: "Cohon University Center",
+//     value: "Cohon University Center",
+//   },
+//   {
+//     key: "gates",
+//     text: "GHC 6203, 412.268.8525, lostfound@cs.cmu.edu.",
+//     value: "GHC 6203, 412.268.8525, lostfound@cs.cmu.edu.",
+//   },
+//   { key: "tepper", text: "Tepper Building", value: "Tepper Building" },
+// ];
 
 const buildings = Object.keys(BuildingType)
   .filter((value) => value !== "ALL")
@@ -66,7 +72,29 @@ const buildings = Object.keys(BuildingType)
     value: key,
   }));
 
-function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
+const templates = Object.keys(TemplateType)
+  .filter((value) => value !== "ALL")
+  .map((key) => ({
+    key,
+    text: key,
+    value: key,
+  }));
+
+const emailValidatorRegex =
+  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+// Source: https://stackoverflow.com/questions/46155/whats-the-best-way-to-validate-an-email-address-in-javascript
+
+const isValidEmail = (email: string) => {
+  return String(email).toLowerCase().match(emailValidatorRegex);
+};
+
+function AddItemButton(props: {
+  // TODO: #140 Replace Function with appropriate type
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  fetchItems: Function;
+  isAdmin: boolean;
+  permissions: string[];
+}) {
   const [dispatchState, dispatch] = React.useReducer(exampleReducer, {
     closeOnEscape: false,
     closeOnDimmerClick: false,
@@ -75,6 +103,13 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
   });
   const { open, closeOnEscape, closeOnDimmerClick } = dispatchState;
 
+  const buildplace = () => {
+    //determine location of user
+    const build = props.permissions[0].split(":")[0];
+    if (build == "ALL") return "";
+    else return build; //returns building permission
+  };
+
   const [state, setState] = useState({
     date: new Date(),
     name: "",
@@ -82,13 +117,15 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
     description: "",
     value: "general",
     identifiable: false,
-    building: "",
+    building: buildplace(),
     image: "",
     imagePath: "",
     imageObject: null as any,
     imagePermission: false,
     status: "available",
     identification: "",
+    email: "",
+    templateType: "",
     notes: "",
   });
 
@@ -113,7 +150,7 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
     e: React.ChangeEvent<HTMLInputElement>,
     { name, value }: any
   ) => {
-    setState({ ...state, [name]: value, imageObject: e!.target!.files![0] });
+    setState({ ...state, [name]: value, imageObject: e?.target?.files?.[0] });
   };
 
   const uploadImage = (imageFile: File) => {
@@ -121,28 +158,28 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
 
     // no image, TODO: check
     if (!imageFile) {
-      return new Promise((resolve, reject) => {
+      return new Promise((resolve, _reject) => {
         resolve("");
         return;
       });
     }
 
     return new Promise((resolve, reject) => {
-      let reader = new FileReader();
+      const reader = new FileReader();
 
       reader.onload = () => {
-        let data = {
+        const data = {
           imageName: imageName,
           dataURL: reader.result,
           token: localStorage.getItem("lnf_token"),
         };
 
-        axios.post(`/api/items/addImage`, data).then(
+        axios.post("/api/items/addImage", data).then(
           (res) => {
             console.log("Image uploaded successfully");
             console.log(res);
-            let finalID = res.data.msg.fileId;
-            let finalURL =
+            const finalID = res.data.msg.fileId;
+            const finalURL =
               "https://drive.google.com/thumbnail?id=" + finalID + "&sz=w1000";
             console.log(finalURL);
             resolve(finalURL);
@@ -165,7 +202,7 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
 
   const handleOnOpen = () => {
     axios
-      .post(`/api/auth/isAdmin`, {
+      .post("/api/auth/isAdmin", {
         token: localStorage.getItem("lnf_token"),
       })
       .then(
@@ -196,11 +233,12 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
       value,
       identifiable,
       building,
-      image,
       imageObject,
       imagePermission,
       status,
       identification,
+      email,
+      templateType,
       notes,
     } = state;
 
@@ -224,7 +262,7 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
     if (!props.isAdmin) {
       // get list of all users
       axios
-        .post(`/api/accounts/all`, { token: localStorage.getItem("lnf_token") })
+        .post("/api/accounts/all", { token: localStorage.getItem("lnf_token") })
         .then(
           (res) => {
             console.log("Retrieved users!");
@@ -243,9 +281,40 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
         );
     }
 
+    const lostItemEmail = () => {
+      const emailTemplate = templateType + "-" + building;
+      console.log("Template:", emailTemplate, "\nSent to:", email);
+      const singleton = [email];
+      const data = {
+        emails: singleton,
+        subject: "Lost and Found: Your item has been found",
+        text: emailbody
+          .replace("{subheader_title}", "Hello,")
+          .replace("{subheader_content}", UseTemplate(templateType, building)),
+      };
+
+      console.log(data);
+
+      if (email.length > 0 && templateType != "" && building != "") {
+        axios.post("/api/email/sendEmail", data).then(
+          (res) => {
+            console.log("Email sent!");
+            console.log(res);
+          },
+          (error) => {
+            console.log(error.response.data);
+          }
+        );
+      }
+    };
+
+    if (email != "") {
+      lostItemEmail();
+    }
+
     const sendEmails = (userList: User[]) => {
       // filter user list to find admins with notifs
-      let emails: string[] = [];
+      const emails: string[] = [];
       userList.forEach((user: User) => {
         if (
           user.notif &&
@@ -259,8 +328,8 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
 
       // send emails to admins with notifs on
       if (emails.length > 0) {
-        let subheaderTitle = "A New Item Has Been Added For Approval";
-        let subheaderContent = `<b>Item Name:</b> ${String(
+        const subheaderTitle = "A New Item Has Been Added For Approval";
+        const subheaderContent = `<b>Item Name:</b> ${String(
           name
         )}<br><b>Item Description:</b> ${String(description)}
         <br><b>Item Value:</b> ${String(
@@ -268,7 +337,7 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
         )}<br><b>Building:</b> ${String(
           building
         )}<br>Visit the <a href=https://lostandfound.andrew.cmu.edu/admin>CMU Lost and Found site</a> to approve.`;
-        let data = {
+        const data = {
           emails: emails,
           subject:
             "New Item Added: Approval Needed" +
@@ -290,14 +359,14 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
       }
     };
     const offset = date.getTimezoneOffset();
-    let currentDate = new Date(date.getTime() - offset * 60 * 1000);
+    const currentDate = new Date(date.getTime() - offset * 60 * 1000);
     const dateFound = currentDate.toISOString().slice(0, 10);
     const timeFound = currentDate.toISOString().slice(11, 16);
 
     uploadImage(imageObject).then(
       (res) => {
         axios
-          .post(`/api/items/add`, {
+          .post("/api/items/add", {
             token: localStorage.getItem("lnf_token"),
             dateFound: dateFound,
             timeFound: timeFound,
@@ -312,6 +381,8 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
             status: status,
             approved: props.isAdmin,
             identification: identification,
+            email: email,
+            templateType: templateType,
             notes: notes,
           })
           .then(
@@ -336,7 +407,7 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
           date: new Date(),
           name: "",
           whereFound: "",
-          building: "",
+          building: buildplace(),
           description: "",
           value: "general",
           identifiable: false,
@@ -346,6 +417,8 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
           imagePermission: false,
           status: "available",
           identification: "",
+          email: "",
+          templateType: "",
           notes: "",
         });
         return res;
@@ -469,7 +542,7 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
                 required
                 label="Building (Lost and Found Desk)"
                 options={buildings}
-                placeholder="Building (Lost and Found Desk)"
+                placeholder={"Building (Lost and Found Desk)"}
                 name="building"
                 value={state.building}
                 onChange={handleChange}
@@ -482,13 +555,36 @@ function AddItemButton(props: { fetchItems: Function; isAdmin: boolean }) {
                 value={state.imagePath}
                 onChange={handleFileChange}
               />
-              <Form.Input
-                label="Identification"
-                placeholder="AndrewID or driver's license number"
-                name="identification"
-                value={state.identification}
-                onChange={handleChange}
-              />
+              {state.identifiable ? (
+                <Form.Input
+                  label="Identification"
+                  placeholder="AndrewID or driver's license number"
+                  name="identification"
+                  value={state.identification}
+                  onChange={handleChange}
+                />
+              ) : null}
+              {state.identifiable ? (
+                <Form.Input
+                  label="Email"
+                  placeholder="Ex. bovick@andrew.cmu.edu"
+                  name="email"
+                  value={state.email}
+                  onChange={handleChange}
+                />
+              ) : null}
+              {isValidEmail(state.email) ? (
+                <Form.Select
+                  fluid
+                  required
+                  label="Template Type"
+                  options={templates}
+                  placeholder="CMU ID or item with PID"
+                  name="templateType"
+                  value={state.templateType}
+                  onChange={handleChange}
+                />
+              ) : null}
               <Form.TextArea
                 label="Notes"
                 name="notes"

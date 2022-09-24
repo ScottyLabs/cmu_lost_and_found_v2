@@ -89,4 +89,13 @@ img {
   #add-desktop {
     display: none;
   }
+
+  #bulkarchive-mobile {
+    display: block;
+    margin-bottom: 20px;
+  }
+
+  #bulkarchive-desktop {
+    display: none;
+  }
 }

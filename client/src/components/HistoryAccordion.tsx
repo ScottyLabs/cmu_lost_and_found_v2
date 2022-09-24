@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import * as React from "react";
+import { useState } from "react";
 import { Accordion, Icon } from "semantic-ui-react";
 import "./HistoryAccordion.css";
 
@@ -9,6 +10,8 @@ export default function HistoryAccordion(props: {
 }) {
   const [activeIndex, setActiveIndex] = useState(-1);
 
+  // TODO: #121 Replace any annotations with the appropriate types
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleClick = (e: any, titleProps: any) => {
     const { index } = titleProps;
     setActiveIndex(activeIndex === index ? -1 : index);
@@ -17,6 +20,8 @@ export default function HistoryAccordion(props: {
   const modified = props.modified
     .filter((x) => x)
     .reverse()
+    // TODO: #120 Add missing React key prop
+    // eslint-disable-next-line react/jsx-key
     .map((username) => <p>{username}</p>);
 
   return (

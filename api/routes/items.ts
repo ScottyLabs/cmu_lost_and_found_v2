@@ -1,24 +1,32 @@
-import { Request, Response, Router } from "express";
-import Item from "../models/Item";
 import ImageController from "../controllers/ImageController";
-import { isUser } from "./auth";
+import PermissionsController from "../controllers/PermissionsController";
 import { BuildingType } from "../enums/locationTypes";
 import { PermissionType } from "../enums/permissionType";
-import PermissionsController from "../controllers/PermissionsController";
+import Item from "../models/Item";
+import { isUser, isAdmin } from "./auth";
+
+import { Request, Response, Router } from "express";
 
 const router = Router();
 
 /**
- * Returns all items in database, according to schema specified in Item.ts
+ * Returns items in database, according to schema specified in Item.ts
+ * When optional field onlyArchived is specified, we only fetch items
+ * corresponding to that field value, otherwise we only fetch items
+ * that are not archived by default
+ * {
+ * onlyArchived: onlyArchived
+ * }
  */
 router.post("/all", isUser, async (req: Request, res: Response) => {
-  Item.updateMany({ publicDisplay: { $eq: undefined } }, [
-    { $set: { publicDisplay: false } },
+  Item.updateMany({ archived: { $exists: false } }, [
+    { $set: { archived: false } },
   ]).exec(function (err, docs) {
     if (err) console.log(err);
     else console.log(docs);
   });
-  Item.find()
+  const onlyArchived = req.body.onlyArchived ?? false;
+  Item.find({ archived: onlyArchived })
     .populate("whereToRetrieve")
     .sort({ dateFound: -1, timeFound: -1 })
     .exec(function (err, docs) {
@@ -36,7 +44,7 @@ router.post("/all", isUser, async (req: Request, res: Response) => {
  */
 //TODO: Still need add item validation (in case some fields aren't satisfactory)
 router.post("/add", isUser, async (req: Request, res: Response) => {
-  let {
+  const {
     dateFound,
     timeFound,
     name,
@@ -63,7 +71,7 @@ router.post("/add", isUser, async (req: Request, res: Response) => {
   ) {
     return res.status(403).send(new Error("Insufficient privileges"));
   }
-  let item = new Item({
+  const item = new Item({
     dateFound: new Date(dateFound),
     timeFound: timeFound,
     name: name,
@@ -77,6 +85,7 @@ router.post("/add", isUser, async (req: Request, res: Response) => {
     status: status,
     approved: approved,
     publicDisplay: false,
+    archived: false,
     identification: identification,
     notes: notes,
     username: user.username,
@@ -100,7 +109,7 @@ router.post("/add", isUser, async (req: Request, res: Response) => {
  * }
  */
 router.post("/delete", isUser, async (req: Request, res: Response) => {
-  let id = req.body.id;
+  const id = req.body.id;
   const user = req.body.user;
   try {
     const item = await Item.findById(id);
@@ -126,6 +135,82 @@ router.post("/delete", isUser, async (req: Request, res: Response) => {
 });
 
 /**
+ * Set archived status of items by ids
+ * {
+ * ids: ids
+ * archived: archived
+ * }
+ */
+router.post("/archive", isUser, async (req: Request, res: Response) => {
+  const ids = req.body.ids;
+  const archived = req.body.archived;
+  const user = req.body.user;
+  let updatedItems = [];
+  for (const id of ids) {
+    try {
+      const item = await Item.findById(id);
+      if (item) {
+        if (
+          PermissionsController.hasPermissionsWithUser(
+            item.building as BuildingType,
+            PermissionType.USER,
+            user
+          )
+        ) {
+          const updatedItem = await Item.findByIdAndUpdate(
+            id,
+            { archived: archived },
+            { runValidators: true, useFindAndModify: false }
+          );
+          updatedItems.push(updatedItem);
+        } else {
+          return res.status(403).send(new Error("Insufficient privileges"));
+        }
+      } else {
+        return res.status(404).send(new Error("Item not found"));
+      }
+    } catch (err) {
+      return res.status(500).send(err);
+    }
+  }
+  return res.status(200).send({ msg: updatedItems });
+});
+
+/**
+ * Archives items older than the given days
+ * {
+ * days: days
+ * }
+ */
+router.post("/archiveByDays", isAdmin, async (req: Request, res: Response) => {
+  const days = req.body.days;
+  const ObjectID = require("mongodb").ObjectID;
+  Item.updateMany(
+    {
+      $and: [
+        {
+          archived: false,
+        },
+        {
+          _id: {
+            $lt: ObjectID.createFromTime(
+              Date.now() / 1000 - days * 24 * 60 * 60
+            ),
+          },
+        },
+      ],
+    },
+    [{ $set: { archived: true } }]
+  ).exec(function (err, docs) {
+    if (err) {
+      console.log(err);
+      return res.status(401).send(err);
+    }
+    return res.status(200).json(docs);
+  });
+});
+
+/**
  * Updates an item's status by id
  * {
  * id: id
@@ -133,8 +218,8 @@ router.post("/delete", isUser, async (req: Request, res: Response) => {
  * }
  */
 router.post("/updateStatus", isUser, async (req: Request, res: Response) => {
-  let id = req.body.id;
-  let status = req.body.status;
+  const id = req.body.id;
+  const status = req.body.status;
   const user = req.body.user;
   try {
     const item = await Item.findById(id);
@@ -177,8 +262,8 @@ router.post(
   "/updateApprovedStatus",
   isUser,
   async (req: Request, res: Response) => {
-    let id = req.body.id;
-    let approved = req.body.approved;
+    const id = req.body.id;
+    const approved = req.body.approved;
     const user = req.body.user;
     try {
       const item = await Item.findById(id);
@@ -219,8 +304,8 @@ router.post(
   "/updatePublicDisplayStatus",
   isUser,
   async (req: Request, res: Response) => {
-    let id = req.body.id;
-    let publicDisplay = req.body.publicDisplay;
+    const id = req.body.id;
+    const publicDisplay = req.body.publicDisplay;
     const user = req.body.user;
     try {
       const item = await Item.findById(id);
@@ -258,7 +343,7 @@ router.post(
  * }
  */
 router.post("/editItem", isUser, async (req: Request, res: Response) => {
-  let {
+  const {
     id,
     token,
     dateFound,
@@ -366,13 +451,15 @@ router.post("/editItem", isUser, async (req: Request, res: Response) => {
  * Returns the finalURL
  */
 router.post("/addImage", isUser, async (req: Request, res: Response) => {
-  let imageName = req.body.imageName;
-  let dataURL = req.body.dataURL;
+  const imageName = req.body.imageName;
+  const dataURL = req.body.dataURL;
 
   if (req.body.user?.permissions?.length > 0) {
     ImageController.sendImageToDrive(
       imageName,
       dataURL,
+      // TODO: #147 Replace any with appropriate type
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (err: any, finalURL: any) => {
         if (err) {
           console.log(err);

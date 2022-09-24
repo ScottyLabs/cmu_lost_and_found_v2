@@ -1,21 +1,26 @@
-import React, { useState } from "react";
-import { Table, Pagination } from "semantic-ui-react";
-import { Item } from "../interface/item";
+// TODO: #113 Replace any type annotations with appropriate type
+/* eslint-disable @typescript-eslint/no-explicit-any */
+// TODO: #112 Replace bad Function type with appropriate function type
+/* eslint-disable @typescript-eslint/ban-types */
+
 import "./TableWidget.css";
-import ImageModal from "./ImageModal";
-import ApproveSwitch from "./ApproveSwitch";
-import EditButton from "./EditItem";
-import AvailableSwitch from "./AvailableSwitch";
-import { User } from "../interface/user";
-import PublicDisplaySwitch from "./PublicDisplaySwitch";
 import { BuildingType } from "../enums/locationTypes";
 import { PermissionType } from "../enums/permissionType";
+import { Item } from "../interface/item";
+import { User } from "../interface/user";
+import ApproveSwitch from "./ApproveSwitch";
+import AvailableSwitch from "./AvailableSwitch";
+import EditButton from "./EditItem";
 import HistoryAccordion from "./HistoryAccordion";
+import ImageModal from "./ImageModal";
+import PublicDisplaySwitch from "./PublicDisplaySwitch";
+
+import * as React from "react";
+import { Table, Pagination } from "semantic-ui-react";
 
 const TableWidget = (props: {
   items: Array<Item>;
   isUser: boolean;
-  isArchived: boolean;
   fetchItems: Function;
   sortItems: Function;
   user: User;
@@ -54,7 +59,6 @@ const TableWidget = (props: {
     column: null,
     direction: null,
   });
-
   return (
     <div>
       <Table sortable celled className="lf_table">
@@ -156,20 +160,20 @@ const TableWidget = (props: {
               );
             })
             .map((item: Item) => {
-              let date = new Date(item.dateFound)
+              const date = new Date(item.dateFound)
                 .toISOString()
                 .substring(0, 10)
                 .split("-");
-              let dateFormatted = date[1] + "/" + date[2] + "/" + date[0];
-              let [h, m] = item.timeFound.split(":");
-              let timeFormatted =
+              const dateFormatted = date[1] + "/" + date[2] + "/" + date[0];
+              const [h, m] = item.timeFound.split(":");
+              const timeFormatted =
                 (parseInt(h) % 12) +
                 (parseInt(h) % 12 === 0 ? 12 : 0) +
                 ":" +
                 m +
                 " " +
                 (parseInt(h) >= 12 ? "PM" : "AM");
-              let isBuilding =
+              const isBuilding =
                 props.user.permissions.includes(
                   `${BuildingType.ALL}:${PermissionType.ADMIN}`
                 ) ||
@@ -182,7 +186,7 @@ const TableWidget = (props: {
                 props.user.permissions.includes(
                   `${item.building}:${PermissionType.USER}`
                 );
-              let isAdmin =
+              const isAdmin =
                 props.user.permissions.includes(
                   `${BuildingType.ALL}:${PermissionType.ADMIN}`
                 ) ||

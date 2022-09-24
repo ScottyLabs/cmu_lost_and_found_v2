@@ -1,32 +1,28 @@
 import axios from "axios";
 import * as React from "react";
 import { useHistory } from "react-router";
-import { Button, Icon } from "semantic-ui-react";
+import { Button } from "semantic-ui-react";
 
-export default function DeleteUser(props: {
-  username: string;
+export default function BulkArchiveButton(props: {
   // TODO: #128 Replace Function type with appropriate type
   // eslint-disable-next-line @typescript-eslint/ban-types
-  fetchUsers: Function;
+  fetchItems: Function;
 }) {
   const history = useHistory();
   return (
     <Button
-      icon
-      circular
-      color="red"
-      size="tiny"
+      style={{ height: "47px", width: "110px", marginLeft: "2px" }}
       onClick={() => {
         axios
-          .post("/api/accounts/delete", {
+          .post("/api/items/archiveByDays", {
             token: localStorage.getItem("lnf_token"),
-            username: props.username,
+            days: 90,
           })
           .then(
             (res) => {
-              console.log("Unclaimed!");
+              console.log("Bulk archived!");
               console.log(res);
-              props.fetchUsers();
+              props.fetchItems();
             },
             (error) => {
               console.log(error);
@@ -38,7 +34,7 @@ export default function DeleteUser(props: {
           );
       }}
     >
-      <Icon name="trash alternate outline" inverted size="large"></Icon>
+      Bulk Archive
     </Button>
   );
 }

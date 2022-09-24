@@ -1,17 +1,19 @@
-// loads the .env file
-require("dotenv").config();
+// Disabled for conventions
+/* eslint-disable import/no-named-as-default-member */
+import "dotenv/config";
 
-import express from "express";
-import morgan from "morgan";
-import cors from "cors";
-import mongoose from "mongoose";
-import UserRouter from "./routes/users";
-import AuthRouter from "./routes/auth";
-import ItemRouter from "./routes/items";
-import BuildingRouter from "./routes/buildings";
-import EmailRouter from "./routes/email";
 import { BuildingType } from "./enums/locationTypes";
 import Building from "./models/Building";
+import AuthRouter from "./routes/auth";
+import BuildingRouter from "./routes/buildings";
+import EmailRouter from "./routes/email";
+import ItemRouter from "./routes/items";
+import UserRouter from "./routes/users";
+
+import cors from "cors";
+import express from "express";
+import mongoose from "mongoose";
+import morgan from "morgan";
 
 const port = process.env.SERVER_PORT || 3080;
 const database = process.env.MONGO_URI || "mongodb://localhost:27017";
@@ -38,7 +40,7 @@ mongoose
   .catch(() => console.log("Failed to connect to DB at: " + database));
 
 (async () => {
-  for (let building in BuildingType) {
+  for (const building in BuildingType) {
     if (building !== BuildingType.ALL) {
       await Building.updateOne(
         { name: String(building) },
@@ -60,7 +62,7 @@ app.use("/api/buildings", BuildingRouter);
 app.use("/api/email", EmailRouter);
 
 // handle undefined routes
-app.use("*", (req, res, next) => {
+app.use("*", (req, res, _next) => {
   res.sendFile(process.cwd() + "/client/build/index.html");
 });
 

@@ -4,7 +4,7 @@ import { Request, Response, Router } from "express";
 const router = Router();
 
 router.post("/sendEmail", async (req: Request, res: Response) => {
-  let { emails, subject, text } = req.body;
+  const { emails, subject, text } = req.body;
   axios({
     method: "POST",
     url: "https://api.mailgun.net/v3/scottylabs.org/messages",

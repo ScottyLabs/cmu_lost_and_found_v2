@@ -1,13 +1,16 @@
-import React, { useState } from "react";
-import Toggle from "react-toggle";
 import axios from "axios";
-import "./ApproveSwitch.css";
+import * as React from "react";
+import { useState } from "react";
 import { useHistory } from "react-router";
+import Toggle from "react-toggle";
+import "./ApproveSwitch.css";
 
 // Admin-side claim/unclaim button that sets backend claim status to claimed/unclaimed
 export default function ApproveSwitch(props: {
   id: string;
   isApproved: boolean;
+  // TODO: #134 Replace bad Function type with appropriate type
+  // eslint-disable-next-line @typescript-eslint/ban-types
   fetchItems: Function;
   disabled: boolean;
 }) {
@@ -19,7 +22,7 @@ export default function ApproveSwitch(props: {
   const handleClick = () => {
     const { isApproved } = state;
     axios
-      .post(`/api/items/updateApprovedStatus`, {
+      .post("/api/items/updateApprovedStatus", {
         token: localStorage.getItem("lnf_token"),
         id: props.id,
         approved: !isApproved,
@@ -29,7 +32,7 @@ export default function ApproveSwitch(props: {
           props.fetchItems();
           if (isApproved) {
             axios
-              .post(`/api/items/updatePublicDisplayStatus`, {
+              .post("/api/items/updatePublicDisplayStatus", {
                 token: localStorage.getItem("lnf_token"),
                 id: props.id,
                 publicDisplay: false,

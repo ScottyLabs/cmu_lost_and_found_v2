@@ -3,7 +3,7 @@
   font-size: 18px;
   font-family: "Lato";
   margin: auto;
-  margin-bottom: 40px;
+  margin-bottom: 30px;
   max-width: 80%;
   padding: 10px;
   padding-top: 0ch;
@@ -22,33 +22,11 @@
   display: none;
 }
 
-#found-item-message {
-  display: none;
+#faq-message {
   text-align: left;
 }
 
-#found-item-message .header {
-  text-align: left;
-}
-
-#feedback-form {
-  display: none;
-  text-align: left;
-}
-
-#feedback-form .header {
-  text-align: left;
-}
-
-#feedback-form {
-  display: block;
-}
-
-#lost-item-message {
-  text-align: left;
-}
-
-#lost-item-message .header {
+#faq-message .header {
   text-align: left;
 }
 
@@ -59,10 +37,6 @@
 
 #found-item-modal {
   display: none;
-}
-
-#found-item-message {
-  display: block;
 }
 
 #admin-filter-bar {

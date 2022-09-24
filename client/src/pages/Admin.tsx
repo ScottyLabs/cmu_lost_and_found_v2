@@ -4,6 +4,7 @@
 import "./Admin.css";
 import AddItemButton from "../components/AddItemButton";
 // import BulkArchiveButton from "../components/BulkArchiveButton";
+import DisplayArchivedSwitch from "../components/DisplayArchivedSwitch";
 import DropdownMenu from "../components/DropdownMenu";
 import "semantic-ui-css/semantic.min.css";
 import LogoutButton from "../components/LogoutButton";
@@ -35,10 +36,13 @@ function Admin() {
 
   const [page, setPage] = useState(1);
 
+  const [onlyArchived, setOnlyArchived] = useState(false);
+
   const fetchItems = () => {
     axios
       .post("/api/items/all", {
         token: window.localStorage.getItem("lnf_token"),
+        onlyArchived,
       })
       .then(
         (res) => {
@@ -81,6 +85,16 @@ function Admin() {
     getCurrentUser();
     fetchItems();
   }, []);
+
+  // Toggle archives
+  useEffect(() => {
+    // Reset the UI so the data for the other tab isn't displayed
+    setItems([]);
+    setItemListDefault([]);
+    setItemList([]);
+
+    fetchItems();
+  }, [onlyArchived]);
 
   // modify items
   const updateInput = async (input: string) => {
@@ -185,6 +199,15 @@ function Admin() {
                 <BulkArchiveButton fetchItems={fetchItems}></BulkArchiveButton>
               </div> */}
             </div>
+          </Grid.Column>
+        </Grid.Row>
+
+        <Grid.Row>
+          <Grid.Column columns={16}>
+            <DisplayArchivedSwitch
+              onlyArchived={onlyArchived}
+              onChange={(newValue) => setOnlyArchived(newValue)}
+            />
           </Grid.Column>
         </Grid.Row>
 

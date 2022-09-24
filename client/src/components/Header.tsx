@@ -4,7 +4,11 @@ import DropdownMenu from "../components/DropdownMenu";
 import LogoutButton from "../components/LogoutButton";
 import "./Header.css";
 
-const Footer = (props: any) => {
+const Header = (props: {
+  page: string;
+  isAdmin: boolean;
+  isAllAdmin: boolean;
+}) => {
   return (
     <header>
       <div id="site-identity">
@@ -19,10 +23,10 @@ const Footer = (props: any) => {
       </div>
       <div id="navigation">
         <LogoutButton />
-        <DropdownMenu page={"/"} isAdmin={props.isAdmin} isAllAdmin={props.isAllAdmin}/>
+        <DropdownMenu page={props.page} isAdmin={props.isAdmin} isAllAdmin={props.isAllAdmin}/>
       </div>
     </header>
   );
 };
 
-export default Footer;
+export default Header;

@@ -1,20 +1,20 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { Grid, Message } from "semantic-ui-react";
 import { useHistory } from "react-router-dom";
-import SearchBar from "../components/SearchBar";
-import { Item } from "../interface/item";
-import CardWidget from "../components/CardWidget";
 import "./TablePage.css";
+import { Item } from "../interface/item";
+import { User } from "../interface/user";
+import { BuildingType } from "../enums/locationTypes";
+import { PermissionType } from "../enums/permissionType";
+import { Grid, Message } from "semantic-ui-react";
+import Header from "../components/Header";
+import SearchBar from "../components/SearchBar";
+import CardWidget from "../components/CardWidget";
 import FoundItemModal, {
   lostItemMessage,
   foundItemMessage,
   feedbackForm,
 } from "../components/FoundItemModal";
-import Header from "../components/Header";
-import { User } from "../interface/user";
-import { BuildingType } from "../enums/locationTypes";
-import { PermissionType } from "../enums/permissionType";
 
 function TablePage() {
   const history = useHistory();
@@ -88,83 +88,55 @@ function TablePage() {
   return user && (
     <Grid>
       <Grid.Row>
-        <Grid.Column width={16} id="">
-          <Header isAdmin={user.permissions?.length > 0} isAllAdmin={isAllAdmin}/>
+        <Grid.Column width={16}>
+          <Header page={"/"} isAdmin={user.permissions?.length > 0} isAllAdmin={isAllAdmin}/>
         </Grid.Column>
-        <Grid.Column width={16} id="">
+      </Grid.Row>
+      <Grid.Row>
+        <Grid.Column width={16}>
           <div id="description">
             <p>
               To retrieve an object, go to the location listed next to the
-              object on the table. You will be required to identify any lost
-              possessions. All items must be picked up in person and a photo ID is required.
-              For general inquiries, please contact{" "}
-              <a href="mailto:lost-and-found@cmu.edu">lost-and-found@cmu.edu</a>.
+              object on the corresponding card. You will be required to
+              identify any lost possessions. All items must be picked up in
+              person and a photo ID is required.
             </p>
           </div>
-        </Grid.Column>
-      </Grid.Row>
-     
-      <Grid.Row>
-        <Grid.Column width={16}>
-          <Message id="found-item-message" warning size="large">
+          <Message id="faq-message" warning size="large">
+            <Message.Header>Lost an item?</Message.Header>
+            {lostItemMessage}
             <Message.Header>Found an item?</Message.Header>
             {foundItemMessage}
-          </Message>
-          
-          <Message id="feedback-form" warning size="large">
             <Message.Header>Have feedback?</Message.Header>
             {feedbackForm}
           </Message>
         </Grid.Column>
       </Grid.Row>
-
-        <Grid.Row>
-          <Grid.Column width={16}>
-            <div id="description">
-              <p>
-                To retrieve an object, go to the location listed next to the
-                object on the corresponding card. You will be required to
-                identify any lost possessions. All items must be picked up in
-                person and a photo ID is required.
-              </p>
+      <Grid.Row>
+        <Grid.Column width={16}>
+          <div id="admin-filter-bar">
+            <SearchBar input={input} onChange={updateInput} />
+            <FoundItemModal
+              id="found-item-modal"
+              style={{ padding: "11px 11px", width: "110px" }}
+            ></FoundItemModal>
+          </div>
+        </Grid.Column>
+      </Grid.Row>
+      <Grid.Row>
+        <Grid.Column width={16}>
+          <main>
+            <div id="cards-widget">
+              <CardWidget
+                items={itemList}
+                fetchItems={fetchItems}
+              ></CardWidget>
             </div>
-            <Message id="faq-message" warning size="large">
-              <Message.Header>Lost an item?</Message.Header>
-              {lostItemMessage}
-              <Message.Header>Found an item?</Message.Header>
-              {foundItemMessage}
-              <Message.Header>Have feedback?</Message.Header>
-              {feedbackForm}
-            </Message>
-          </Grid.Column>
-        </Grid.Row>
-
-        <Grid.Row>
-          <Grid.Column width={16}>
-            <div id="admin-filter-bar">
-              <SearchBar input={input} onChange={updateInput} />
-              <FoundItemModal
-                id="found-item-modal"
-                style={{ padding: "11px 11px", width: "110px" }}
-              ></FoundItemModal>
-            </div>
-          </Grid.Column>
-        </Grid.Row>
-
-        <Grid.Row>
-          <Grid.Column width={16}>
-            <main>
-              <div id="cards-widget">
-                <CardWidget
-                  items={itemList}
-                  fetchItems={fetchItems}
-                ></CardWidget>
-              </div>
-            </main>
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
-    );
+          </main>
+        </Grid.Column>
+      </Grid.Row>
+    </Grid>
+  );
 }
 
 export default TablePage;

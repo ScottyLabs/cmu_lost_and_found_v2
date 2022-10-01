@@ -6,11 +6,29 @@ header {
   justify-content: space-between;
 }
 
+h1 {
+  margin-top: 0px;
+  clear: left;
+}
+
+img {
+  max-width: 120px;
+  height: auto;
+}
+
 #site-identity {
   display: flex;
   flex-grow: 1;
   text-align: left;
   align-items: center;
+}
+
+#logo-mobile {
+  display: none;
+}
+
+#add-mobile {
+  display: none;
 }
 
 #page-titles {
@@ -28,4 +46,16 @@ header {
   margin: 0;
   color: black;
   padding-left: 4%;
+}
+
+@media (max-width: 840px) {
+  #logo-mobile {
+    display: inline;
+    max-width: 90px;
+    margin-bottom: 50px;
+  }
+
+  #logo-desktop {
+    display: none;
+  }
 }

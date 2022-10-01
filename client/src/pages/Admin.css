@@ -9,11 +9,6 @@
   padding-right: 80px;
 }
 
-h1 {
-  margin-top: 0px;
-  clear: left;
-}
-
 #admin-filter-bar {
   display: flex;
   justify-content: center;
@@ -26,34 +21,7 @@ h1 {
   width: 100%;
 }
 
-img {
-  max-width: 120px;
-  height: auto;
-}
-
-#logo-mobile {
-  display: none;
-}
-
-#add-mobile {
-  display: none;
-}
-
-#add-item {
-  justify-content: right;
-}
-
 @media (max-width: 840px) {
-  #logo-mobile {
-    display: inline;
-    max-width: 90px;
-    margin-bottom: 50px;
-  }
-
-  #logo-desktop {
-    display: none;
-  }
-
   #settings {
     margin-top: 0px;
     justify-content: center;

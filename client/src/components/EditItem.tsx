@@ -4,6 +4,7 @@ import { BuildingType } from "../enums/locationTypes";
 import { PermissionType } from "../enums/permissionType";
 import { Item } from "../interface/item";
 import { User } from "../interface/user";
+import ArchiveButton from "./ArchiveButton";
 import DeleteButton from "./DeleteButton";
 
 import axios from "axios";
@@ -414,16 +415,40 @@ function EditItem(props: {
               <Form.Group></Form.Group>
 
               <Form.Group inline id="modal-actions">
-                <DeleteButton
-                  id={props.id}
-                  fetchItems={props.fetchItems}
-                  disabled={
-                    props.item.approved &&
-                    !props.user.permissions.some((value) =>
-                      value.includes(PermissionType.ADMIN)
-                    )
-                  }
-                ></DeleteButton>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "flex-start",
+                    textAlign: "right",
+                    width: "100%",
+                  }}
+                >
+                  <ArchiveButton
+                    id={props.id}
+                    fetchItems={props.fetchItems}
+                    disabled={
+                      props.item.approved &&
+                      !props.user.permissions.some((value) =>
+                        value.includes(PermissionType.ADMIN)
+                      )
+                    }
+                  />
+                  <div
+                    style={{
+                      width: "1rem",
+                    }}
+                  />
+                  <DeleteButton
+                    id={props.id}
+                    fetchItems={props.fetchItems}
+                    disabled={
+                      props.item.approved &&
+                      !props.user.permissions.some((value) =>
+                        value.includes(PermissionType.ADMIN)
+                      )
+                    }
+                  />
+                </div>
                 <div
                   style={{
                     display: "flex",

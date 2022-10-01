@@ -31,15 +31,10 @@ img {
   display: none;
 }
 
-#page-titles {
-  width: 150%;
-}
-
 #navigation {
   height: min-content;
   margin-top: 40px;
   display: flex;
-  flex-direction: row-reverse;
 }
 
 .title, .subtitle {
@@ -52,10 +47,28 @@ img {
   #logo-mobile {
     display: inline;
     max-width: 90px;
-    margin-bottom: 50px;
+    margin-bottom: 20px;
   }
 
   #logo-desktop {
     display: none;
+  }
+
+  header {
+    display: inherit;
+  }
+
+  h1 {
+    clear: none;
+  }
+
+  #navigation {
+    text-align: center;
+    display: block;
+  }
+
+  #site-identity {
+    display: inherit;
+    text-align: center;
   }
 }

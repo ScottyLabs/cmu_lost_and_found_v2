@@ -22,8 +22,8 @@ const Header = (props: {
         </div>
       </div>
       <div id="navigation">
-        <LogoutButton />
         <DropdownMenu page={props.page} isAdmin={props.isAdmin} isAllAdmin={props.isAllAdmin}/>
+        <LogoutButton />
       </div>
     </header>
   );

@@ -14,9 +14,9 @@ const SearchBar = (props: { input: string; onChange: Function }) => {
         placeholder="Search..."
         //item.whereFound
 
-        // TODO: #115 Replace any with appropriate type: React.ChangeEvent<HTMLInputElement>
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        onChange={(e: any) => props.onChange(e.target.value)}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          props.onChange(e.target.value)
+        }
         icon="search"
       />
     </Form>

@@ -157,9 +157,8 @@ function AddUser(props: { fetchUsers: Function }) {
                       : "green"
                     : "blue";
                 return (
-                  // TODO: #137 Fix missing React key prop in iterator
-                  // eslint-disable-next-line react/jsx-key
                   <Label
+                    key={index}
                     color={color}
                     image
                     as="a"

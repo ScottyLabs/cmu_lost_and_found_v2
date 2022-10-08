@@ -6,6 +6,7 @@ import Item from "../models/Item";
 import { isUser, isAdmin } from "./auth";
 
 import { Request, Response, Router } from "express";
+import { ObjectID } from "mongodb";
 
 const router = Router();
 
@@ -79,6 +80,7 @@ router.post("/add", isUser, async (req: Request, res: Response) => {
     status: status,
     approved: approved,
     publicDisplay: false,
+    archived: false,
     identification: identification,
     notes: notes,
     username: user.username,
@@ -138,7 +140,7 @@ router.post("/archive", isUser, async (req: Request, res: Response) => {
   const ids = req.body.ids;
   const archived = req.body.archived;
   const user = req.body.user;
-  let updatedItems = [];
+  const updatedItems = [];
   for (const id of ids) {
     try {
       const item = await Item.findById(id);
@@ -177,7 +179,6 @@ router.post("/archive", isUser, async (req: Request, res: Response) => {
  */
 router.post("/archiveByDays", isAdmin, async (req: Request, res: Response) => {
   const days = req.body.days;
-  const ObjectID = require("mongodb").ObjectID;
   Item.updateMany(
     {
       $and: [

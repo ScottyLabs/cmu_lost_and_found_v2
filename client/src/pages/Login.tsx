@@ -1,11 +1,11 @@
+import "./Login.css";
+import "semantic-ui-css/semantic.min.css";
+
 import axios from "axios";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import { Button, Icon, Loader, Segment, Message } from "semantic-ui-react";
-
-import "./Login.css";
-import "semantic-ui-css/semantic.min.css";
 
 function Login() {
   const [loading, setLoading] = useState(false);

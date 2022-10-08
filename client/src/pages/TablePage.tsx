@@ -1,12 +1,12 @@
-import CardWidget from "../components/CardWidget";
-import DropdownMenu from "../components/DropdownMenu";
 import "./TablePage.css";
+
+import CardWidget from "../components/CardWidget";
 import FoundItemModal, {
   lostItemMessage,
   foundItemMessage,
   feedbackForm,
 } from "../components/FoundItemModal";
-import LogoutButton from "../components/LogoutButton";
+import Header from "../components/Header";
 import SearchBar from "../components/SearchBar";
 import { BuildingType } from "../enums/locationTypes";
 import { PermissionType } from "../enums/permissionType";
@@ -16,8 +16,8 @@ import { User } from "../interface/user";
 import axios from "axios";
 import * as React from "react";
 import { useState, useEffect } from "react";
-import { Link, useHistory } from "react-router-dom";
-import { Grid, Message, Rail } from "semantic-ui-react";
+import { useHistory } from "react-router-dom";
+import { Grid, Message } from "semantic-ui-react";
 
 function TablePage() {
   const history = useHistory();
@@ -92,32 +92,14 @@ function TablePage() {
     user && (
       <Grid>
         <Grid.Row>
-          <Grid.Column width={16} id="">
-            <Link to="/">
-              <img
-                src="/dog-logo.png"
-                id="logo-mobile"
-                alt="CMU Lost and Found Logo"
-              ></img>
-            </Link>
-            <div id="settings">
-              <Rail attached internal position="left" id="logo-desktop">
-                <Link to="/">
-                  <img src="/dog-logo.png" alt="CMU Lost and Found Logo"></img>
-                </Link>
-              </Rail>
-              <LogoutButton />
-              <DropdownMenu
-                page={"/"}
-                isAdmin={user.permissions?.length > 0}
-                isAllAdmin={isAllAdmin}
-              />
-            </div>
-            <h1 className="title">Carnegie Mellon University</h1>
-            <h2 className="subtitle">Lost and Found Website</h2>
+          <Grid.Column width={16}>
+            <Header
+              page={"/"}
+              isAdmin={user.permissions?.length > 0}
+              isAllAdmin={isAllAdmin}
+            />
           </Grid.Column>
         </Grid.Row>
-
         <Grid.Row>
           <Grid.Column width={16}>
             <div id="description">
@@ -138,7 +120,6 @@ function TablePage() {
             </Message>
           </Grid.Column>
         </Grid.Row>
-
         <Grid.Row>
           <Grid.Column width={16}>
             <div id="admin-filter-bar">
@@ -150,7 +131,6 @@ function TablePage() {
             </div>
           </Grid.Column>
         </Grid.Row>
-
         <Grid.Row>
           <Grid.Column width={16}>
             <main>

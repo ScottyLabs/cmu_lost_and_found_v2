@@ -5,8 +5,8 @@ import { Button, Icon } from "semantic-ui-react";
 export default function LogoutButton() {
   const history = useHistory();
   return (
-    <Button 
-      icon 
+    <Button
+      icon
       color="red"
       labelPosition="left"
       onClick={() => {
@@ -14,9 +14,9 @@ export default function LogoutButton() {
         localStorage.removeItem("lnf_token");
         history.replace("/login");
       }}
-      >
-      <Icon name='sign out' />
-      Logout 
+    >
+      <Icon name="sign out" />
+      Logout
     </Button>
   );
 }

@@ -1,13 +1,16 @@
-import axios from "axios";
-import React, { useState, useEffect } from "react";
-import { useHistory} from "react-router-dom";
-import "./About.css";
-import "semantic-ui-css/semantic.min.css";
-import { User } from "../interface/user";
+import Header from "../components/Header";
 import { BuildingType } from "../enums/locationTypes";
 import { PermissionType } from "../enums/permissionType";
+import { User } from "../interface/user";
+
+import axios from "axios";
+import * as React from "react";
+import { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { Grid } from "semantic-ui-react";
-import Header from "../components/Header";
+
+import "./About.css";
+import "semantic-ui-css/semantic.min.css";
 
 function About() {
   document.title = "CMU Lost and Found";
@@ -44,7 +47,11 @@ function About() {
       <Grid>
         <Grid.Row>
           <Grid.Column width={16}>
-            <Header page={"/about"} isAdmin={user.permissions?.length > 0} isAllAdmin={isAllAdmin}/>
+            <Header
+              page={"/about"}
+              isAdmin={user.permissions?.length > 0}
+              isAllAdmin={isAllAdmin}
+            />
           </Grid.Column>
         </Grid.Row>
         <Grid.Row>

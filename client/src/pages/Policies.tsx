@@ -1,15 +1,17 @@
 // TODO: #108 Temporarily disabled. Fix this lint issue!
 /* eslint-disable react/no-unescaped-entities */
-
-import axios from "axios";
-import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
-import "semantic-ui-css/semantic.min.css";
+import Header from "../components/Header";
 import { BuildingType } from "../enums/locationTypes";
 import { PermissionType } from "../enums/permissionType";
 import { User } from "../interface/user";
+
+import axios from "axios";
+import * as React from "react";
+import { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { Grid } from "semantic-ui-react";
-import Header from "../components/Header";
+
+import "semantic-ui-css/semantic.min.css";
 
 function Policies() {
   document.title = "CMU Lost and Found";
@@ -49,7 +51,11 @@ function Policies() {
       <Grid>
         <Grid.Row>
           <Grid.Column width={16}>
-            <Header page={"/policies"} isAdmin={user.permissions?.length > 0} isAllAdmin={isAllAdmin}/>
+            <Header
+              page={"/policies"}
+              isAdmin={user.permissions?.length > 0}
+              isAllAdmin={isAllAdmin}
+            />
           </Grid.Column>
         </Grid.Row>
         <Grid.Row>

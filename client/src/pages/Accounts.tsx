@@ -1,16 +1,19 @@
-import axios from "axios";
-import React, { useState, useEffect } from "react";
-import { useHistory} from "react-router-dom";
-import "./Accounts.css";
-import "semantic-ui-css/semantic.min.css";
-import { User } from "../interface/user";
-import { BuildingType } from "../enums/locationTypes";
-import { PermissionType } from "../enums/permissionType";
-import { Grid } from "semantic-ui-react";
 import AddUser from "../components/AddUser";
 import Header from "../components/Header";
 import SearchBar from "../components/SearchBar";
 import UserTable from "../components/UserTable";
+import { BuildingType } from "../enums/locationTypes";
+import { PermissionType } from "../enums/permissionType";
+import { User } from "../interface/user";
+
+import axios from "axios";
+import * as React from "react";
+import { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
+import { Grid } from "semantic-ui-react";
+
+import "./Accounts.css";
+import "semantic-ui-css/semantic.min.css";
 
 function Accounts() {
   document.title = "Lost and Found User Permissions";
@@ -95,7 +98,11 @@ function Accounts() {
       <Grid>
         <Grid.Row>
           <Grid.Column width={16}>
-            <Header page={"/accounts"} isAdmin={user.permissions?.length > 0} isAllAdmin={isAllAdmin}/>
+            <Header
+              page={"/accounts"}
+              isAdmin={user.permissions?.length > 0}
+              isAllAdmin={isAllAdmin}
+            />
           </Grid.Column>
         </Grid.Row>
         <Grid.Row>

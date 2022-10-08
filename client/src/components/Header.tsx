@@ -1,7 +1,7 @@
 import DropdownMenu from "../components/DropdownMenu";
 import LogoutButton from "../components/LogoutButton";
 
-import React from "react";
+import * as React from "react";
 import { Link } from "react-router-dom";
 import "./Header.css";
 

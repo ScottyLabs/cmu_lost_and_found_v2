@@ -1,6 +1,6 @@
 header {
   margin-top: 25px;
-  margin-bottom: 25px;
+  margin-bottom: 15px;
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -21,6 +21,10 @@ img {
   flex-grow: 1;
   text-align: left;
   align-items: center;
+}
+
+#page-titles {
+  width: 100%;
 }
 
 #logo-mobile {

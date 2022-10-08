@@ -71,6 +71,7 @@ function TablePage() {
     const inputName = input.toLowerCase();
     const filtered = itemListDefault.filter((item: Item) => {
       return (
+        item.name.toLowerCase().includes(inputName) ||
         item.description.toLowerCase().includes(inputName) ||
         item.whereFound.toLowerCase().includes(inputName)
       );
@@ -123,7 +124,11 @@ function TablePage() {
         <Grid.Row>
           <Grid.Column width={16}>
             <div id="admin-filter-bar">
-              <SearchBar input={input} onChange={updateInput} />
+              <SearchBar
+                input={input}
+                onChange={updateInput}
+                placeholder={"Search..."}
+              />
               <FoundItemModal
                 id="found-item-modal"
                 style={{ padding: "11px 11px", width: "110px" }}

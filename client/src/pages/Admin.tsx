@@ -8,6 +8,7 @@ import AddItemButton from "../components/AddItemButton";
 import Header from "../components/Header";
 import SearchBar from "../components/SearchBar";
 import TableWidget from "../components/TableWidget";
+import SearchDropdown from "../components/SearchDropdown";
 import { BuildingType } from "../enums/locationTypes";
 import { PermissionType } from "../enums/permissionType";
 import { Item } from "../interface/item";
@@ -31,8 +32,8 @@ function Admin() {
   const [itemList, setItemList] = useState([]);
 
   const [user, setUser] = useState<User | null>(null);
-
   const [page, setPage] = useState(1);
+  const [selected, setSelected] = useState("");
 
   const fetchItems = () => {
     axios
@@ -81,18 +82,54 @@ function Admin() {
     fetchItems();
   }, []);
 
+  const isWithinRange = (date1: Date, date2: Date, date: Date) => {
+    return date >= date1 && date <= date2;
+  };
+
+  const subtractDays = (date: Date, days: any) => {
+    return new Date(date.getTime() - days * 24 * 60 * 60 * 1000);
+  };
+
   // modify items
   const updateInput = async (input: string) => {
-    const inputName = input.toLowerCase();
-    const filtered = itemListDefault.filter((item: Item) => {
-      return (
-        item.name.toLowerCase().includes(inputName) ||
-        item.description.toLowerCase().includes(inputName) ||
-        item.whereFound.toLowerCase().includes(inputName) ||
-        item.identification.toLowerCase().includes(inputName) ||
-        item.notes.toLowerCase().includes(inputName)
-      );
-    });
+    var filtered;
+    if (selected == "Search oldest items by days") {
+      filtered = itemListDefault.filter((item: Item) => {
+        const minDate = -8640000000000000;
+        return isWithinRange(
+          new Date(minDate),
+          subtractDays(new Date(), input),
+          new Date(item.dateFound)
+        );
+      });
+    } else if (selected == "Search by keyword") {
+      filtered = itemListDefault.filter((item: Item) => {
+        return (
+          item.whereFound.toLowerCase().includes(input.toLowerCase()) ||
+          item.name.toLowerCase().includes(input.toLowerCase())
+        );
+      });
+    } else if (input != "" && selected == "Search recent items by days") {
+      const days = parseInt(input);
+      filtered = itemListDefault.filter((item: Item) => {
+        return isWithinRange(
+          subtractDays(new Date(), days + 1),
+          new Date(),
+          new Date(item.dateFound)
+        );
+      });
+    } else {
+      const inputName = input.toLowerCase();
+      filtered = itemListDefault.filter((item: Item) => {
+        return (
+          item.name.toLowerCase().includes(inputName) ||
+          item.description.toLowerCase().includes(inputName) ||
+          item.whereFound.toLowerCase().includes(inputName) ||
+          item.identification.toLowerCase().includes(inputName) ||
+          item.notes.toLowerCase().includes(inputName)
+        );
+      });
+    }
     setInput(input);
     setItemList(filtered);
     setPage(1);
@@ -154,7 +191,12 @@ function Admin() {
               ></AddItemButton>
             </div>
             <div id="admin-filter-bar">
-              <SearchBar input={input} onChange={updateInput} />
+              <SearchDropdown selected={selected} onChange={setSelected} />
+              <SearchBar
+                input={input}
+                onChange={updateInput}
+                placeholder={selected}
+              />
               <div id="add-desktop">
                 <AddItemButton
                   fetchItems={fetchItems}

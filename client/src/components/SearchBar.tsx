@@ -4,14 +4,18 @@ import "./SearchBar.css";
 
 // TODO: #114 Replace Function annotation with appropriate type
 // eslint-disable-next-line @typescript-eslint/ban-types
-const SearchBar = (props: { input: string; onChange: Function }) => {
+const SearchBar = (props: {
+  input: string;
+  onChange: Function;
+  placeholder: string;
+}) => {
   return (
     <Form id="search">
       <Form.Field
         id="searchbar"
         control={Input}
         value={props.input}
-        placeholder="Search..."
+        placeholder={props.placeholder}
         //item.whereFound
 
         // TODO: #115 Replace any with appropriate type: React.ChangeEvent<HTMLInputElement>

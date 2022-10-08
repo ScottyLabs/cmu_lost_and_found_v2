@@ -5,12 +5,12 @@
 }
 
 #searchbar {
-  border-radius: .28571429rem;
+  border-radius: 0.28571429rem;
   border: 2px solid #c2c1c1;
+  width: 400 px;
 }
 
 @media (max-width: 1180px) {
-  
 }
 #search div.ui.icon.input {
   max-width: none;

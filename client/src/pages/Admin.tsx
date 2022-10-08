@@ -1,3 +1,6 @@
+import "./Admin.css";
+import "semantic-ui-css/semantic.min.css";
+
 // TODO: #109 Fix @typescript-eslint/no-explicit-any in Admin.tsx
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import AddItemButton from "../components/AddItemButton";
@@ -15,9 +18,6 @@ import * as React from "react";
 import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { Grid } from "semantic-ui-react";
-
-import "./Admin.css";
-import "semantic-ui-css/semantic.min.css";
 
 function Admin() {
   document.title = "CMU Lost and Found";

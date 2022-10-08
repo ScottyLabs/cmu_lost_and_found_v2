@@ -4,6 +4,8 @@ import SearchBar from "../components/SearchBar";
 import UserTable from "../components/UserTable";
 import { BuildingType } from "../enums/locationTypes";
 import { PermissionType } from "../enums/permissionType";
+import "./Accounts.css";
+import "semantic-ui-css/semantic.min.css";
 import { User } from "../interface/user";
 
 import axios from "axios";
@@ -11,9 +13,6 @@ import * as React from "react";
 import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { Grid } from "semantic-ui-react";
-
-import "./Accounts.css";
-import "semantic-ui-css/semantic.min.css";
 
 function Accounts() {
   document.title = "Lost and Found User Permissions";

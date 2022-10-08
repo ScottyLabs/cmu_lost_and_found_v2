@@ -1,3 +1,5 @@
+import "./TablePage.css";
+
 import CardWidget from "../components/CardWidget";
 import FoundItemModal, {
   lostItemMessage,
@@ -16,8 +18,6 @@ import * as React from "react";
 import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { Grid, Message } from "semantic-ui-react";
-
-import "./TablePage.css";
 
 function TablePage() {
   const history = useHistory();

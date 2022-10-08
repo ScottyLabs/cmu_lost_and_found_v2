@@ -1,3 +1,6 @@
+import "./About.css";
+import "semantic-ui-css/semantic.min.css";
+
 import Header from "../components/Header";
 import { BuildingType } from "../enums/locationTypes";
 import { PermissionType } from "../enums/permissionType";
@@ -8,9 +11,6 @@ import * as React from "react";
 import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { Grid } from "semantic-ui-react";
-
-import "./About.css";
-import "semantic-ui-css/semantic.min.css";
 
 function About() {
   document.title = "CMU Lost and Found";

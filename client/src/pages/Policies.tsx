@@ -1,3 +1,4 @@
+import "semantic-ui-css/semantic.min.css";
 // TODO: #108 Temporarily disabled. Fix this lint issue!
 /* eslint-disable react/no-unescaped-entities */
 import Header from "../components/Header";
@@ -10,8 +11,6 @@ import * as React from "react";
 import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { Grid } from "semantic-ui-react";
-
-import "semantic-ui-css/semantic.min.css";
 
 function Policies() {
   document.title = "CMU Lost and Found";

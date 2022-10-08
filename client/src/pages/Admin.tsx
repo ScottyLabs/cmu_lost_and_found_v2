@@ -3,7 +3,7 @@
 
 import "./Admin.css";
 import AddItemButton from "../components/AddItemButton";
-// import BulkArchiveButton from "../components/BulkArchiveButton";
+import BulkArchiveButton from "../components/BulkArchiveButton";
 import DropdownMenu from "../components/DropdownMenu";
 import "semantic-ui-css/semantic.min.css";
 import LogoutButton from "../components/LogoutButton";
@@ -18,7 +18,7 @@ import axios from "axios";
 import * as React from "react";
 import { useState, useEffect } from "react";
 import { useHistory, Link } from "react-router-dom";
-import { Grid, Rail } from "semantic-ui-react";
+import { Grid, GridRow, Rail } from "semantic-ui-react";
 
 function Admin() {
   document.title = "CMU Lost and Found";
@@ -181,15 +181,24 @@ function Admin() {
                   permissions={user?.permissions}
                 ></AddItemButton>
               </div>
-              {/* <div id="bulkarchive-desktop">
-                <BulkArchiveButton fetchItems={fetchItems}></BulkArchiveButton>
-              </div> */}
+              
+              
+
             </div>
           </Grid.Column>
         </Grid.Row>
 
         <Grid.Row>
           <Grid.Column width={16}>
+            <div id="bulkarchive-desktop">
+                <BulkArchiveButton fetchItems={fetchItems}></BulkArchiveButton>
+            </div>
+          </Grid.Column>
+        </Grid.Row>
+
+        <Grid.Row>
+          <Grid.Column width={16}>
+
             <main>
               <div id="table">
                 <TableWidget
@@ -203,7 +212,11 @@ function Admin() {
                 ></TableWidget>
               </div>
             </main>
+
           </Grid.Column>
+
+          
+
         </Grid.Row>
       </Grid>
     )

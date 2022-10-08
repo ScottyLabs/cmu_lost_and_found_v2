@@ -62,6 +62,11 @@ img {
   justify-content: right;
 }
 
+#bulkarchive-desktop {
+  display: flex;
+  justify-content: right;
+}
+
 @media (max-width: 840px) {
   #logo-mobile {
     display: inline;

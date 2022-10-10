@@ -7,8 +7,8 @@ import AddItemButton from "../components/AddItemButton";
 // import BulkArchiveButton from "../components/BulkArchiveButton";
 import Header from "../components/Header";
 import SearchBar from "../components/SearchBar";
-import TableWidget from "../components/TableWidget";
 import SearchDropdown from "../components/SearchDropdown";
+import TableWidget from "../components/TableWidget";
 import { BuildingType } from "../enums/locationTypes";
 import { PermissionType } from "../enums/permissionType";
 import { Item } from "../interface/item";
@@ -92,7 +92,7 @@ function Admin() {
 
   // modify items
   const updateInput = async (input: string) => {
-    var filtered;
+    let filtered;
     if (selected == "Search oldest items by days") {
       filtered = itemListDefault.filter((item: Item) => {
         const minDate = -8640000000000000;

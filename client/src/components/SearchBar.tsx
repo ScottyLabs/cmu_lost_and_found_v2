@@ -2,11 +2,9 @@ import * as React from "react";
 import { Form, Input } from "semantic-ui-react";
 import "./SearchBar.css";
 
-// TODO: #114 Replace Function annotation with appropriate type
-// eslint-disable-next-line @typescript-eslint/ban-types
 const SearchBar = (props: {
   input: string;
-  onChange: Function;
+  onChange: (input: string) => void;
   placeholder: string;
 }) => {
   return (

@@ -1,5 +1,6 @@
 import "./SearchDropdown.css";
-import React from "react";
+
+import * as React from "react";
 import { Dropdown } from "semantic-ui-react";
 
 const searchOptions = [
@@ -20,7 +21,10 @@ const searchOptions = [
   },
 ];
 
-const SearchDropdown = (props: { selected: string; onChange: Function }) => {
+const SearchDropdown = (props: {
+  selected: string;
+  onChange: React.Dispatch<React.SetStateAction<string>>;
+}) => {
   return (
     <Dropdown
       id="searchdropdown"
@@ -28,7 +32,9 @@ const SearchDropdown = (props: { selected: string; onChange: Function }) => {
       fluid
       selection
       value={props.selected}
-      onChange={(e: any, data) => props.onChange(data.value)}
+      onChange={(e, data) => {
+        props.onChange(String(data.value));
+      }}
       options={searchOptions}
     />
   );

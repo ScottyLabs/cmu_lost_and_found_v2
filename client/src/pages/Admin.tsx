@@ -5,6 +5,7 @@ import "semantic-ui-css/semantic.min.css";
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import AddItemButton from "../components/AddItemButton";
 // import BulkArchiveButton from "../components/BulkArchiveButton";
+import DownloadDataButton from "../components/DownloadDataButton";
 import Header from "../components/Header";
 import SearchBar from "../components/SearchBar";
 import SearchDropdown from "../components/SearchDropdown";
@@ -23,7 +24,7 @@ import { Grid } from "semantic-ui-react";
 function Admin() {
   document.title = "CMU Lost and Found";
 
-  const [_items, setItems] = useState([]);
+  const [items, setItems] = useState([]);
   //what is from the search
   const [input, setInput] = useState("");
   //unfiltered list
@@ -207,6 +208,7 @@ function Admin() {
               {/* <div id="bulkarchive-desktop">
                 <BulkArchiveButton fetchItems={fetchItems}></BulkArchiveButton>
               </div> */}
+              <DownloadDataButton fetchItems={fetchItems} items={items} />
             </div>
           </Grid.Column>
         </Grid.Row>

@@ -7,7 +7,7 @@ export default function LogoutButton() {
   return (
     <Button
       icon
-      color="blue"
+      color="red"
       labelPosition="left"
       onClick={() => {
         console.log("logout");
@@ -16,7 +16,7 @@ export default function LogoutButton() {
       }}
     >
       <Icon name="sign out" />
-      Sign out
+      Logout
     </Button>
   );
 }

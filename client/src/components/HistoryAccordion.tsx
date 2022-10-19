@@ -20,9 +20,7 @@ export default function HistoryAccordion(props: {
   const modified = props.modified
     .filter((x) => x)
     .reverse()
-    // TODO: #120 Add missing React key prop
-    // eslint-disable-next-line react/jsx-key
-    .map((username) => <p>{username}</p>);
+    .map((username, index) => <p key={index}>{username}</p>);
 
   return (
     <Accordion fluid styled>

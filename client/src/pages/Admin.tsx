@@ -1,13 +1,14 @@
+import "./Admin.css";
+import "semantic-ui-css/semantic.min.css";
+
 // TODO: #109 Fix @typescript-eslint/no-explicit-any in Admin.tsx
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
-import "./Admin.css";
 import AddItemButton from "../components/AddItemButton";
 // import BulkArchiveButton from "../components/BulkArchiveButton";
-import DropdownMenu from "../components/DropdownMenu";
-import "semantic-ui-css/semantic.min.css";
-import LogoutButton from "../components/LogoutButton";
+import DownloadDataButton from "../components/DownloadDataButton";
+import Header from "../components/Header";
 import SearchBar from "../components/SearchBar";
+import SearchDropdown from "../components/SearchDropdown";
 import TableWidget from "../components/TableWidget";
 import { BuildingType } from "../enums/locationTypes";
 import { PermissionType } from "../enums/permissionType";
@@ -17,13 +18,13 @@ import { User } from "../interface/user";
 import axios from "axios";
 import * as React from "react";
 import { useState, useEffect } from "react";
-import { useHistory, Link } from "react-router-dom";
-import { Grid, Rail } from "semantic-ui-react";
+import { useHistory } from "react-router-dom";
+import { Grid } from "semantic-ui-react";
 
 function Admin() {
   document.title = "CMU Lost and Found";
 
-  const [_items, setItems] = useState([]);
+  const [items, setItems] = useState([]);
   //what is from the search
   const [input, setInput] = useState("");
   //unfiltered list
@@ -32,8 +33,8 @@ function Admin() {
   const [itemList, setItemList] = useState([]);
 
   const [user, setUser] = useState<User | null>(null);
-
   const [page, setPage] = useState(1);
+  const [selected, setSelected] = useState("");
 
   const fetchItems = () => {
     axios
@@ -82,18 +83,54 @@ function Admin() {
     fetchItems();
   }, []);
 
+  const isWithinRange = (date1: Date, date2: Date, date: Date) => {
+    return date >= date1 && date <= date2;
+  };
+
+  const subtractDays = (date: Date, days: any) => {
+    return new Date(date.getTime() - days * 24 * 60 * 60 * 1000);
+  };
+
   // modify items
   const updateInput = async (input: string) => {
-    const inputName = input.toLowerCase();
-    const filtered = itemListDefault.filter((item: Item) => {
-      return (
-        item.name.toLowerCase().includes(inputName) ||
-        item.description.toLowerCase().includes(inputName) ||
-        item.whereFound.toLowerCase().includes(inputName) ||
-        item.identification.toLowerCase().includes(inputName) ||
-        item.notes.toLowerCase().includes(inputName)
-      );
-    });
+    let filtered;
+    if (selected == "Search oldest items by days") {
+      filtered = itemListDefault.filter((item: Item) => {
+        const minDate = -8640000000000000;
+        return isWithinRange(
+          new Date(minDate),
+          subtractDays(new Date(), input),
+          new Date(item.dateFound)
+        );
+      });
+    } else if (selected == "Search by keyword") {
+      filtered = itemListDefault.filter((item: Item) => {
+        return (
+          item.whereFound.toLowerCase().includes(input.toLowerCase()) ||
+          item.name.toLowerCase().includes(input.toLowerCase())
+        );
+      });
+    } else if (input != "" && selected == "Search recent items by days") {
+      const days = parseInt(input);
+      filtered = itemListDefault.filter((item: Item) => {
+        return isWithinRange(
+          subtractDays(new Date(), days + 1),
+          new Date(),
+          new Date(item.dateFound)
+        );
+      });
+    } else {
+      const inputName = input.toLowerCase();
+      filtered = itemListDefault.filter((item: Item) => {
+        return (
+          item.name.toLowerCase().includes(inputName) ||
+          item.description.toLowerCase().includes(inputName) ||
+          item.whereFound.toLowerCase().includes(inputName) ||
+          item.identification.toLowerCase().includes(inputName) ||
+          item.notes.toLowerCase().includes(inputName)
+        );
+      });
+    }
     setInput(input);
     setItemList(filtered);
     setPage(1);
@@ -138,31 +175,13 @@ function Admin() {
       <Grid>
         <Grid.Row>
           <Grid.Column width={16}>
-            <Link to="/">
-              <img
-                src="/dog-logo.png"
-                id="logo-mobile"
-                alt="CMU Lost and Found Logo"
-              ></img>
-            </Link>
-            <div id="settings">
-              <Rail attached internal position="left" id="logo-desktop">
-                <Link to="/">
-                  <img src="/dog-logo.png" alt="CMU Lost and Found Logo"></img>
-                </Link>
-              </Rail>
-              <LogoutButton />
-              <DropdownMenu
-                page={"/admin"}
-                isAdmin={user.permissions?.length > 0}
-                isAllAdmin={isAllAdmin}
-              />
-            </div>
-            <h1 className="title">Carnegie Mellon University</h1>
-            <h2 className="subtitle">Lost and Found - Admin Panel</h2>
+            <Header
+              page={"/admin"}
+              isAdmin={user.permissions?.length > 0}
+              isAllAdmin={isAllAdmin}
+            />
           </Grid.Column>
         </Grid.Row>
-
         <Grid.Row>
           <Grid.Column width={16}>
             <div id="add-mobile">
@@ -173,7 +192,12 @@ function Admin() {
               ></AddItemButton>
             </div>
             <div id="admin-filter-bar">
-              <SearchBar input={input} onChange={updateInput} />
+              <SearchDropdown selected={selected} onChange={setSelected} />
+              <SearchBar
+                input={input}
+                onChange={updateInput}
+                placeholder={selected}
+              />
               <div id="add-desktop">
                 <AddItemButton
                   fetchItems={fetchItems}
@@ -184,6 +208,7 @@ function Admin() {
               {/* <div id="bulkarchive-desktop">
                 <BulkArchiveButton fetchItems={fetchItems}></BulkArchiveButton>
               </div> */}
+              <DownloadDataButton fetchItems={fetchItems} items={items} />
             </div>
           </Grid.Column>
         </Grid.Row>

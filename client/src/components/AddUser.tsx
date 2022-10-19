@@ -25,9 +25,7 @@ function exampleReducer(dispatchState: any, action: any) {
   }
 }
 
-// TODO: #135 Replace bad Function type with appropriate type
-// eslint-disable-next-line @typescript-eslint/ban-types
-function AddUser(props: { fetchUsers: Function }) {
+function AddUser(props: { fetchUsers: () => void }) {
   const history = useHistory();
   const buildings = Object.keys(BuildingType).map((key) => ({
     key,

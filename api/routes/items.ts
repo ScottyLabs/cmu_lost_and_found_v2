@@ -145,7 +145,7 @@ router.post("/archive", isUser, async (req: Request, res: Response) => {
   const ids = req.body.ids;
   const archived = req.body.archived;
   const user = req.body.user;
-  let updatedItems = [];
+  const updatedItems = [];
   for (const id of ids) {
     try {
       const item = await Item.findById(id);
@@ -184,6 +184,7 @@ router.post("/archive", isUser, async (req: Request, res: Response) => {
  */
 router.post("/archiveByDays", isAdmin, async (req: Request, res: Response) => {
   const days = req.body.days;
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
   const ObjectID = require("mongodb").ObjectID;
   Item.updateMany(
     {

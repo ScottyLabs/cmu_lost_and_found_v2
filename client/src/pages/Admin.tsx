@@ -203,7 +203,7 @@ function Admin() {
         </Grid.Row>
 
         <Grid.Row>
-          <Grid.Column columns={16}>
+          <Grid.Column width={16}>
             <DisplayArchivedSwitch
               onlyArchived={onlyArchived}
               onChange={(newValue) => setOnlyArchived(newValue)}

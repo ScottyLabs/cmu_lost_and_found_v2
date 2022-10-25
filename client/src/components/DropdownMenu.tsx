@@ -11,7 +11,13 @@ const DropdownMenu = (props: {
   const history = useHistory();
 
   return (
-    <Dropdown icon="bars" floating button className="icon teal">
+    <Dropdown
+      icon="bars"
+      floating
+      button
+      className="icon black"
+      style={{ color: "#ffffff" }}
+    >
       <Dropdown.Menu>
         {props.page !== "/" ? (
           <Dropdown.Item onClick={() => history.push("/")}>

@@ -6,6 +6,7 @@ import Item from "../models/Item";
 import { isUser, isAdmin } from "./auth";
 
 import { Request, Response, Router } from "express";
+import { ObjectID } from "mongodb";
 
 const router = Router();
 
@@ -19,12 +20,6 @@ const router = Router();
  * }
  */
 router.post("/all", isUser, async (req: Request, res: Response) => {
-  Item.updateMany({ archived: { $exists: false } }, [
-    { $set: { archived: false } },
-  ]).exec(function (err, docs) {
-    if (err) console.log(err);
-    else console.log(docs);
-  });
   const onlyArchived = req.body.onlyArchived ?? false;
   Item.find({ archived: onlyArchived })
     .populate("whereToRetrieve")

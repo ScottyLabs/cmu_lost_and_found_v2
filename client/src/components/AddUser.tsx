@@ -25,9 +25,7 @@ function exampleReducer(dispatchState: any, action: any) {
   }
 }
 
-// TODO: #135 Replace bad Function type with appropriate type
-// eslint-disable-next-line @typescript-eslint/ban-types
-function AddUser(props: { fetchUsers: Function }) {
+function AddUser(props: { fetchUsers: () => void }) {
   const history = useHistory();
   const buildings = Object.keys(BuildingType).map((key) => ({
     key,
@@ -157,9 +155,8 @@ function AddUser(props: { fetchUsers: Function }) {
                       : "green"
                     : "blue";
                 return (
-                  // TODO: #137 Fix missing React key prop in iterator
-                  // eslint-disable-next-line react/jsx-key
                   <Label
+                    key={index}
                     color={color}
                     image
                     as="a"

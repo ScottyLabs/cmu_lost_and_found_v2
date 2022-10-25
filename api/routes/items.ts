@@ -6,7 +6,6 @@ import Item from "../models/Item";
 import { isUser, isAdmin } from "./auth";
 
 import { Request, Response, Router } from "express";
-import { ObjectID } from "mongodb";
 
 const router = Router();
 

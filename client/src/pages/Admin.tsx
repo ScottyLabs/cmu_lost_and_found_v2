@@ -5,6 +5,7 @@ import "semantic-ui-css/semantic.min.css";
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import AddItemButton from "../components/AddItemButton";
 // import BulkArchiveButton from "../components/BulkArchiveButton";
+import DisplayArchivedSwitch from "../components/DisplayArchivedSwitch";
 import DownloadDataButton from "../components/DownloadDataButton";
 import Header from "../components/Header";
 import SearchBar from "../components/SearchBar";
@@ -36,10 +37,13 @@ function Admin() {
   const [page, setPage] = useState(1);
   const [selected, setSelected] = useState("");
 
+  const [onlyArchived, setOnlyArchived] = useState(false);
+
   const fetchItems = () => {
     axios
       .post("/api/items/all", {
         token: window.localStorage.getItem("lnf_token"),
+        onlyArchived,
       })
       .then(
         (res) => {
@@ -82,6 +86,16 @@ function Admin() {
     getCurrentUser();
     fetchItems();
   }, []);
+
+  // Toggle archives
+  useEffect(() => {
+    // Reset the UI so the data for the other tab isn't displayed
+    setItems([]);
+    setItemListDefault([]);
+    setItemList([]);
+
+    fetchItems();
+  }, [onlyArchived]);
 
   const isWithinRange = (date1: Date, date2: Date, date: Date) => {
     return date >= date1 && date <= date2;
@@ -210,6 +224,15 @@ function Admin() {
               </div> */}
               <DownloadDataButton fetchItems={fetchItems} items={items} />
             </div>
+          </Grid.Column>
+        </Grid.Row>
+
+        <Grid.Row>
+          <Grid.Column width={16}>
+            <DisplayArchivedSwitch
+              onlyArchived={onlyArchived}
+              onChange={(newValue) => setOnlyArchived(newValue)}
+            />
           </Grid.Column>
         </Grid.Row>
 

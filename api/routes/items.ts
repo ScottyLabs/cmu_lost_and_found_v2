@@ -6,7 +6,6 @@ import Item from "../models/Item";
 import { isUser, isAdmin } from "./auth";
 
 import { Request, Response, Router } from "express";
-import { ObjectID } from "mongodb";
 
 const router = Router();
 
@@ -179,6 +178,8 @@ router.post("/archive", isUser, async (req: Request, res: Response) => {
  */
 router.post("/archiveByDays", isAdmin, async (req: Request, res: Response) => {
   const days = req.body.days;
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const ObjectID = require("mongodb").ObjectID;
   Item.updateMany(
     {
       $and: [

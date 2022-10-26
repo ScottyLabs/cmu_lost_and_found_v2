@@ -423,7 +423,7 @@ function EditItem(props: {
                     width: "100%",
                   }}
                 >
-                  <ArchiveButton
+                  <DeleteButton
                     id={props.id}
                     fetchItems={props.fetchItems}
                     disabled={
@@ -438,7 +438,7 @@ function EditItem(props: {
                       width: "1rem",
                     }}
                   />
-                  <DeleteButton
+                  <ArchiveButton
                     id={props.id}
                     fetchItems={props.fetchItems}
                     disabled={

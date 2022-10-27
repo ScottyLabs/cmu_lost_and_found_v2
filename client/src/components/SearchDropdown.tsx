@@ -7,17 +7,17 @@ const searchOptions = [
   {
     key: "Keyword",
     text: "Keyword",
-    value: "Search by keyword",
+    value: "e.g. keys",
   },
   {
     key: "Older than",
     text: "Items older than __ days",
-    value: "Search oldest items by days",
+    value: "e.g. 90",
   },
   {
     key: "Recency",
     text: "Items added within the last __ days",
-    value: "Search recent items by days",
+    value: "e.g. 10",
   },
 ];
 

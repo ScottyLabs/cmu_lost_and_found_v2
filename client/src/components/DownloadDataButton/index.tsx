@@ -4,7 +4,7 @@ import { Item } from "../../interface/item";
 
 import { unparse } from "papaparse";
 import * as React from "react";
-import { Button, Grid } from "semantic-ui-react";
+import { Button } from "semantic-ui-react";
 
 interface Props {
   fetchItems: () => void;
@@ -42,17 +42,13 @@ function DownloadDataButton({ fetchItems, items }: Props) {
   }
 
   return (
-    <Grid columns={1}>
-      <Grid.Column>
-        <Button
-          color="red"
-          style={{ height: "47px", width: "110px", marginLeft: "2px" }}
-          onClick={download}
-        >
-          Download Data
-        </Button>
-      </Grid.Column>
-    </Grid>
+    <Button
+      color="black"
+      style={{ height: "47px", width: "110px" }}
+      onClick={download}
+    >
+      Download Data
+    </Button>
   );
 }
 

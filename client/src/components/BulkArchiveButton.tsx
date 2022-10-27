@@ -11,7 +11,8 @@ export default function BulkArchiveButton(props: {
   const history = useHistory();
   return (
     <Button
-      style={{ height: "47px", width: "110px", marginLeft: "2px" }}
+      color="red"
+      style={{ height: "47px", width: "110px", margin: "0px", marginRight:"10px" }}
       onClick={() => {
         axios
           .post("/api/items/archiveByDays", {

@@ -14,8 +14,6 @@ const SearchBar = (props: {
         control={Input}
         value={props.input}
         placeholder={props.placeholder}
-        //item.whereFound
-
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
           props.onChange(e.target.value)
         }

@@ -190,7 +190,6 @@ function Archived() {
                 onChange={updateInput}
                 placeholder={selected}
               />
-              <DownloadDataButton fetchItems={fetchItems} items={items} />
             </div>
           </Grid.Column>
         </Grid.Row>
@@ -201,6 +200,7 @@ function Archived() {
               <div id="table">
                 <TableWidget
                   items={itemList}
+                  fixedItems={items}
                   isUser={true}
                   fetchItems={fetchItems}
                   sortItems={sortItems}
@@ -213,6 +213,7 @@ function Archived() {
             </main>
           </Grid.Column>
         </Grid.Row>
+        <Grid.Row></Grid.Row>
       </Grid>
     )
   );

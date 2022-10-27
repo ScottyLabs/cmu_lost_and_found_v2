@@ -4,8 +4,6 @@
 /* eslint-disable @typescript-eslint/ban-types */
 
 import "./TableWidget.css";
-import { Item } from "../interface/item";
-import { User } from "../interface/user";
 import AddItemButton from "./AddItemButton";
 import ApproveSwitch from "./ApproveSwitch";
 import AvailableSwitch from "./AvailableSwitch";
@@ -16,9 +14,10 @@ import HistoryAccordion from "./HistoryAccordion";
 import ImageModal from "./ImageModal";
 import PublicDisplaySwitch from "./PublicDisplaySwitch";
 import UnarchiveButton from "./UnarchiveButton";
-
 import { BuildingType } from "../enums/locationTypes";
 import { PermissionType } from "../enums/permissionType";
+import { Item } from "../interface/item";
+import { User } from "../interface/user";
 
 import * as React from "react";
 import { Table, Pagination } from "semantic-ui-react";

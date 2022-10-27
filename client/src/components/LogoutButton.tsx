@@ -9,6 +9,7 @@ export default function LogoutButton() {
       icon
       color="red"
       labelPosition="left"
+      style={{ marginLeft: "10px" }}
       onClick={() => {
         console.log("logout");
         localStorage.removeItem("lnf_token");

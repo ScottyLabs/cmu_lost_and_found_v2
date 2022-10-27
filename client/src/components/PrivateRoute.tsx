@@ -17,10 +17,6 @@ function PrivateRoute({ children, ...rest }: Props) {
   const token = window.localStorage.getItem("lnf_token");
   const [loggedIn, setLoggedIn] = React.useState(false);
 
-  memoizedFetchLoginAPIKey()
-    .then((res) => res.text())
-    .then((data) => console.log(data));
-
   React.useEffect(() => {
     memoizedFetchLoginAPIKey()
       .then((res) => res.text())

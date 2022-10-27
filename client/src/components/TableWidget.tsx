@@ -4,10 +4,13 @@
 /* eslint-disable @typescript-eslint/ban-types */
 
 import "./TableWidget.css";
+import BulkArchiveButton from "../components/BulkArchiveButton";
+import DownloadDataButton from "../components/DownloadDataButton";
 import { BuildingType } from "../enums/locationTypes";
 import { PermissionType } from "../enums/permissionType";
 import { Item } from "../interface/item";
 import { User } from "../interface/user";
+import AddItemButton from "./AddItemButton";
 import ApproveSwitch from "./ApproveSwitch";
 import AvailableSwitch from "./AvailableSwitch";
 import EditButton from "./EditItem";
@@ -21,8 +24,9 @@ import { Table, Pagination } from "semantic-ui-react";
 
 const TableWidget = (props: {
   items: Array<Item>;
+  fixedItems: Array<Item>;
   isUser: boolean;
-  fetchItems: Function;
+  fetchItems: () => void;
   sortItems: Function;
   isArchivedItems: boolean;
   user: User;
@@ -61,8 +65,36 @@ const TableWidget = (props: {
     column: null,
     direction: null,
   });
+
+  // check a value in local storage to decide if account user is an admin for client-side use
+  // safe from a security perspective because backend will independently check if user is an admin
+  const isAllAdmin =
+    props.user?.permissions.includes(
+      `${BuildingType.ALL}:${PermissionType.ADMIN}`
+    ) ?? false;
+
   return (
     <div>
+      <div className="buttons">
+        <div>
+          <DownloadDataButton
+            fetchItems={props.fetchItems}
+            items={props.fixedItems}
+          />
+          {!props.isArchivedItems ? (
+            <BulkArchiveButton
+              fetchItems={props.fetchItems}
+            ></BulkArchiveButton>
+          ) : null}
+        </div>
+        {!props.isArchivedItems ? (
+          <AddItemButton
+            fetchItems={props.fetchItems}
+            isAdmin={isAllAdmin}
+            permissions={props.user?.permissions}
+          ></AddItemButton>
+        ) : null}
+      </div>
       <Table sortable celled className="lf_table">
         <Table.Header>
           <Table.Row>

@@ -3,9 +3,6 @@ import "semantic-ui-css/semantic.min.css";
 
 // TODO: #109 Fix @typescript-eslint/no-explicit-any in Admin.tsx
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import AddItemButton from "../components/AddItemButton";
-// import BulkArchiveButton from "../components/BulkArchiveButton";
-import DownloadDataButton from "../components/DownloadDataButton";
 import Header from "../components/Header";
 import SearchBar from "../components/SearchBar";
 import SearchDropdown from "../components/SearchDropdown";
@@ -185,13 +182,6 @@ function Active() {
         </Grid.Row>
         <Grid.Row>
           <Grid.Column width={16}>
-            <div id="add-mobile">
-              <AddItemButton
-                fetchItems={fetchItems}
-                isAdmin={isAllAdmin}
-                permissions={user?.permissions}
-              ></AddItemButton>
-            </div>
             <div id="admin-filter-bar">
               <SearchDropdown selected={selected} onChange={setSelected} />
               <SearchBar
@@ -199,17 +189,6 @@ function Active() {
                 onChange={updateInput}
                 placeholder={selected}
               />
-              <div id="add-desktop">
-                <AddItemButton
-                  fetchItems={fetchItems}
-                  isAdmin={isAllAdmin}
-                  permissions={user?.permissions}
-                ></AddItemButton>
-              </div>
-              {/* <div id="bulkarchive-desktop">
-                <BulkArchiveButton fetchItems={fetchItems}></BulkArchiveButton>
-              </div> */}
-              <DownloadDataButton fetchItems={fetchItems} items={items} />
             </div>
           </Grid.Column>
         </Grid.Row>
@@ -220,6 +199,7 @@ function Active() {
               <div id="table">
                 <TableWidget
                   items={itemList}
+                  fixedItems={items}
                   isUser={true}
                   fetchItems={fetchItems}
                   sortItems={sortItems}
@@ -232,6 +212,7 @@ function Active() {
             </main>
           </Grid.Column>
         </Grid.Row>
+        <Grid.Row></Grid.Row>
       </Grid>
     )
   );

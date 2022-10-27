@@ -13,7 +13,7 @@ import * as React from "react";
 import { useState } from "react";
 import DatePicker from "react-datepicker";
 import { useHistory } from "react-router-dom";
-import { Button, Grid, Modal, Form, Message } from "semantic-ui-react";
+import { Button, Modal, Form, Message } from "semantic-ui-react";
 import "react-datepicker/dist/react-datepicker.css";
 
 function exampleReducer(dispatchState: any, action: any) {
@@ -430,195 +430,188 @@ function AddItemButton(props: {
   };
 
   return (
-    <Grid columns={1}>
-      <Grid.Column>
-        <Modal
-          closeOnEscape={closeOnEscape}
-          closeOnDimmerClick={closeOnDimmerClick}
-          open={open}
-          onOpen={handleOnOpen}
-          onClose={() => dispatch({ type: "CLOSE_MODAL" })}
-          trigger={
-            <Button
-              color="red"
-              style={{ height: "47px", width: "110px", marginLeft: "2px" }}
+    <Modal
+      closeOnEscape={closeOnEscape}
+      closeOnDimmerClick={closeOnDimmerClick}
+      open={open}
+      onOpen={handleOnOpen}
+      onClose={() => dispatch({ type: "CLOSE_MODAL" })}
+      trigger={
+        <Button color="black" style={{ height: "47px", width: "110px" }}>
+          Add Item
+        </Button>
+      }
+    >
+      <Modal.Header>Add Item</Modal.Header>
+      <Modal.Content>
+        {/* Need to stop modal from closing when enter key is pressed */}
+        <Form onSubmit={handleSubmit} error={formError}>
+          {formError ? (
+            <Message error content="Missing required field(s)" />
+          ) : null}
+          <Form.Input
+            required
+            fluid
+            label="Item Name"
+            placeholder="Item Name"
+            name="name"
+            value={state.name}
+            onChange={handleChange}
+            // error={nameError}
+          />
+          <Form.Group widths="equal">
+            <Form.Field required>
+              <label>Date and Time Found</label>
+              <DatePicker
+                selected={state.date}
+                name="date"
+                onChange={(date: Date) =>
+                  setState({ ...state, ["date"]: date })
+                }
+                dateFormat="MM/dd/yyyy hh:mm aa"
+                maxDate={new Date()}
+                showTimeSelect
+                timeFormat="hh:mm aa"
+                timeIntervals={5}
+                timeCaption="Time"
+              />
+            </Form.Field>
+            <Form.Input
+              required
+              fluid
+              label="Location Found"
+              name="whereFound"
+              placeholder="Location"
+              value={state.whereFound}
+              onChange={handleChange}
+              // error={locationError}
+            />
+          </Form.Group>
+          <Form.Input
+            required
+            label="Item Description"
+            placeholder="Item Description"
+            name="description"
+            value={state.description}
+            onChange={handleChange}
+            // error={descriptionError}
+          />
+          <Form.Group inline>
+            <Form.Field required>
+              <label>Value</label>
+            </Form.Field>
+            <Form.Radio
+              label="General"
+              name="value"
+              value="general"
+              checked={state.value === "general"}
+              onChange={handleChange}
+            />
+            <Form.Radio
+              label="High Value"
+              name="value"
+              value="high value"
+              checked={state.value === "high value"}
+              onChange={handleChange}
+            />
+            <Form.Field required>
+              <label>Identifiable</label>
+            </Form.Field>
+            <Form.Radio
+              label="Yes"
+              name="identifiable"
+              value="true"
+              checked={state.identifiable}
+              onChange={handleRadioChange}
+            />
+            <Form.Radio
+              label="No"
+              name="identifiable"
+              value="false"
+              checked={!state.identifiable}
+              onChange={handleRadioChange}
+            />
+          </Form.Group>
+          <Form.Select
+            fluid
+            required
+            label="Building (Lost and Found Desk)"
+            options={buildings}
+            placeholder={"Building (Lost and Found Desk)"}
+            name="building"
+            value={state.building}
+            onChange={handleChange}
+            error={buildingError}
+          />
+          <Form.Input
+            label="Image Upload"
+            name="imagePath"
+            type="file"
+            value={state.imagePath}
+            onChange={handleFileChange}
+          />
+          {state.identifiable ? (
+            <Form.Input
+              label="Identification"
+              placeholder="AndrewID or driver's license number"
+              name="identification"
+              value={state.identification}
+              onChange={handleChange}
+            />
+          ) : null}
+          {state.identifiable ? (
+            <Form.Input
+              label="Email"
+              placeholder="Ex. bovick@andrew.cmu.edu"
+              name="email"
+              value={state.email}
+              onChange={handleChange}
+            />
+          ) : null}
+          {isValidEmail(state.email) ? (
+            <Form.Select
+              fluid
+              required
+              label="Template Type"
+              options={templates}
+              placeholder="CMU ID or item with PID"
+              name="templateType"
+              value={state.templateType}
+              onChange={handleChange}
+            />
+          ) : null}
+          <Form.TextArea
+            label="Notes"
+            name="notes"
+            value={state.notes}
+            onChange={handleChange}
+          />
+          <Form.Group></Form.Group>
+          <Form.Group inline id="modal-actions">
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "flex-end",
+                textAlign: "right",
+                width: "100%",
+              }}
             >
-              Add Item
-            </Button>
-          }
-        >
-          <Modal.Header>Add Item</Modal.Header>
-          <Modal.Content>
-            {/* Need to stop modal from closing when enter key is pressed */}
-            <Form onSubmit={handleSubmit} error={formError}>
-              {formError ? (
-                <Message error content="Missing required field(s)" />
-              ) : null}
-              <Form.Input
-                required
-                fluid
-                label="Item Name"
-                placeholder="Item Name"
-                name="name"
-                value={state.name}
-                onChange={handleChange}
-                // error={nameError}
-              />
-              <Form.Group widths="equal">
-                <Form.Field required>
-                  <label>Date and Time Found</label>
-                  <DatePicker
-                    selected={state.date}
-                    name="date"
-                    onChange={(date: Date) =>
-                      setState({ ...state, ["date"]: date })
-                    }
-                    dateFormat="MM/dd/yyyy hh:mm aa"
-                    maxDate={new Date()}
-                    showTimeSelect
-                    timeFormat="hh:mm aa"
-                    timeIntervals={5}
-                    timeCaption="Time"
-                  />
-                </Form.Field>
-                <Form.Input
-                  required
-                  fluid
-                  label="Location Found"
-                  name="whereFound"
-                  placeholder="Location"
-                  value={state.whereFound}
-                  onChange={handleChange}
-                  // error={locationError}
-                />
-              </Form.Group>
-              <Form.Input
-                required
-                label="Item Description"
-                placeholder="Item Description"
-                name="description"
-                value={state.description}
-                onChange={handleChange}
-                // error={descriptionError}
-              />
-              <Form.Group inline>
-                <Form.Field required>
-                  <label>Value</label>
-                </Form.Field>
-                <Form.Radio
-                  label="General"
-                  name="value"
-                  value="general"
-                  checked={state.value === "general"}
-                  onChange={handleChange}
-                />
-                <Form.Radio
-                  label="High Value"
-                  name="value"
-                  value="high value"
-                  checked={state.value === "high value"}
-                  onChange={handleChange}
-                />
-                <Form.Field required>
-                  <label>Identifiable</label>
-                </Form.Field>
-                <Form.Radio
-                  label="Yes"
-                  name="identifiable"
-                  value="true"
-                  checked={state.identifiable}
-                  onChange={handleRadioChange}
-                />
-                <Form.Radio
-                  label="No"
-                  name="identifiable"
-                  value="false"
-                  checked={!state.identifiable}
-                  onChange={handleRadioChange}
-                />
-              </Form.Group>
-              <Form.Select
-                fluid
-                required
-                label="Building (Lost and Found Desk)"
-                options={buildings}
-                placeholder={"Building (Lost and Found Desk)"}
-                name="building"
-                value={state.building}
-                onChange={handleChange}
-                error={buildingError}
-              />
-              <Form.Input
-                label="Image Upload"
-                name="imagePath"
-                type="file"
-                value={state.imagePath}
-                onChange={handleFileChange}
-              />
-              {state.identifiable ? (
-                <Form.Input
-                  label="Identification"
-                  placeholder="AndrewID or driver's license number"
-                  name="identification"
-                  value={state.identification}
-                  onChange={handleChange}
-                />
-              ) : null}
-              {state.identifiable ? (
-                <Form.Input
-                  label="Email"
-                  placeholder="Ex. bovick@andrew.cmu.edu"
-                  name="email"
-                  value={state.email}
-                  onChange={handleChange}
-                />
-              ) : null}
-              {isValidEmail(state.email) ? (
-                <Form.Select
-                  fluid
-                  required
-                  label="Template Type"
-                  options={templates}
-                  placeholder="CMU ID or item with PID"
-                  name="templateType"
-                  value={state.templateType}
-                  onChange={handleChange}
-                />
-              ) : null}
-              <Form.TextArea
-                label="Notes"
-                name="notes"
-                value={state.notes}
-                onChange={handleChange}
-              />
-              <Form.Group></Form.Group>
-              <Form.Group inline id="modal-actions">
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "flex-end",
-                    textAlign: "right",
-                    width: "100%",
-                  }}
-                >
-                  <Button
-                    type="button"
-                    onClick={() => dispatch({ type: "CLOSE_MODAL" })}
-                    negative
-                  >
-                    Cancel
-                  </Button>
-                  {/* Need to close modal after validation of the form */}
-                  <Button positive type="submit">
-                    Add
-                  </Button>
-                </div>
-              </Form.Group>
-            </Form>
-          </Modal.Content>
-        </Modal>
-      </Grid.Column>
-    </Grid>
+              <Button
+                type="button"
+                onClick={() => dispatch({ type: "CLOSE_MODAL" })}
+                negative
+              >
+                Cancel
+              </Button>
+              {/* Need to close modal after validation of the form */}
+              <Button positive type="submit">
+                Add
+              </Button>
+            </div>
+          </Form.Group>
+        </Form>
+      </Modal.Content>
+    </Modal>
   );
 }
 

@@ -3,7 +3,6 @@ import "semantic-ui-css/semantic.min.css";
 
 // TODO: #109 Fix @typescript-eslint/no-explicit-any in Admin.tsx
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import DownloadDataButton from "../components/DownloadDataButton";
 import Header from "../components/Header";
 import SearchBar from "../components/SearchBar";
 import SearchDropdown from "../components/SearchDropdown";
@@ -190,7 +189,6 @@ function Archived() {
                 onChange={updateInput}
                 placeholder={selected}
               />
-              <DownloadDataButton fetchItems={fetchItems} items={items} />
             </div>
           </Grid.Column>
         </Grid.Row>
@@ -201,6 +199,7 @@ function Archived() {
               <div id="table">
                 <TableWidget
                   items={itemList}
+                  fixedItems={items}
                   isUser={true}
                   fetchItems={fetchItems}
                   sortItems={sortItems}
@@ -213,6 +212,7 @@ function Archived() {
             </main>
           </Grid.Column>
         </Grid.Row>
+        <Grid.Row></Grid.Row>
       </Grid>
     )
   );

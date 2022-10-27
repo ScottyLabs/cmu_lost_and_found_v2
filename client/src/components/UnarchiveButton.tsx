@@ -7,7 +7,7 @@ export default function UnarchiveButton(props: {
   // TODO: #128 Replace Function type with appropriate type
   // eslint-disable-next-line @typescript-eslint/ban-types
   id: string;
-  fetchItems: Function;
+  fetchItems: () => void;
 }) {
   const history = useHistory();
   return (

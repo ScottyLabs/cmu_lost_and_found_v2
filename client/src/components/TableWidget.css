@@ -9,3 +9,14 @@ table.ui.table.lf_table {
 .ui.sortable.table .unclickable:hover {
     background-color: #f9fafb;
 }
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.ui.button {
+    float: right;
+    margin-right: 0;
+    margin-bottom: 0.78571429em;
+}

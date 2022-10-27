@@ -36,7 +36,7 @@ export default function LoginForm() {
           console.log(isAdmin);
           localStorage.setItem("lnf_token", token);
           console.log("Logged in");
-          history.push("/admin");
+          history.push("/active");
           setState({ username: "", password: "" });
         },
         (error) => {

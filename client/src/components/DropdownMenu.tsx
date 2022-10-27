@@ -34,9 +34,14 @@ const DropdownMenu = (props: {
             <Link to="/policies">Policies</Link>
           </Dropdown.Item>
         ) : null}
-        {props.page !== "/admin" && props.isAdmin ? (
-          <Dropdown.Item onClick={() => history.push("/admin")}>
-            <Link to="/admin">Admin Panel</Link>
+        {props.page !== "/active" && props.isAdmin ? (
+          <Dropdown.Item onClick={() => history.push("/active")}>
+            <Link to="/active">Active Panel</Link>
+          </Dropdown.Item>
+        ) : null}
+        {props.page !== "/archived" && props.isAdmin ? (
+          <Dropdown.Item onClick={() => history.push("/archived")}>
+            <Link to="/archived">Archived Panel</Link>
           </Dropdown.Item>
         ) : null}
         {props.page !== "/accounts" && props.isAllAdmin ? (

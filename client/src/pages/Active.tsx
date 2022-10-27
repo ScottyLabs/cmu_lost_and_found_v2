@@ -1,11 +1,10 @@
-import "./Admin.css";
+import "./Active.css";
 import "semantic-ui-css/semantic.min.css";
 
 // TODO: #109 Fix @typescript-eslint/no-explicit-any in Admin.tsx
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import AddItemButton from "../components/AddItemButton";
 // import BulkArchiveButton from "../components/BulkArchiveButton";
-import DisplayArchivedSwitch from "../components/DisplayArchivedSwitch";
 import DownloadDataButton from "../components/DownloadDataButton";
 import Header from "../components/Header";
 import SearchBar from "../components/SearchBar";
@@ -22,7 +21,7 @@ import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { Grid } from "semantic-ui-react";
 
-function Admin() {
+function Active() {
   document.title = "CMU Lost and Found";
 
   const [items, setItems] = useState([]);
@@ -37,13 +36,11 @@ function Admin() {
   const [page, setPage] = useState(1);
   const [selected, setSelected] = useState("");
 
-  const [onlyArchived, setOnlyArchived] = useState(false);
-
   const fetchItems = () => {
     axios
       .post("/api/items/all", {
         token: window.localStorage.getItem("lnf_token"),
-        onlyArchived,
+        onlyArchived: false,
       })
       .then(
         (res) => {
@@ -86,16 +83,6 @@ function Admin() {
     getCurrentUser();
     fetchItems();
   }, []);
-
-  // Toggle archives
-  useEffect(() => {
-    // Reset the UI so the data for the other tab isn't displayed
-    setItems([]);
-    setItemListDefault([]);
-    setItemList([]);
-
-    fetchItems();
-  }, [onlyArchived]);
 
   const isWithinRange = (date1: Date, date2: Date, date: Date) => {
     return date >= date1 && date <= date2;
@@ -190,7 +177,7 @@ function Admin() {
         <Grid.Row>
           <Grid.Column width={16}>
             <Header
-              page={"/admin"}
+              page={"/active"}
               isAdmin={user.permissions?.length > 0}
               isAllAdmin={isAllAdmin}
             />
@@ -229,15 +216,6 @@ function Admin() {
 
         <Grid.Row>
           <Grid.Column width={16}>
-            <DisplayArchivedSwitch
-              onlyArchived={onlyArchived}
-              onChange={(newValue) => setOnlyArchived(newValue)}
-            />
-          </Grid.Column>
-        </Grid.Row>
-
-        <Grid.Row>
-          <Grid.Column width={16}>
             <main>
               <div id="table">
                 <TableWidget
@@ -245,6 +223,7 @@ function Admin() {
                   isUser={true}
                   fetchItems={fetchItems}
                   sortItems={sortItems}
+                  isArchivedItems={false}
                   user={user}
                   page={page}
                   setPage={setPage}
@@ -258,4 +237,4 @@ function Admin() {
   );
 }
 
-export default Admin;
+export default Active;

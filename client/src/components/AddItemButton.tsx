@@ -336,7 +336,7 @@ function AddItemButton(props: {
           value.charAt(0).toUpperCase() + value.slice(1)
         )}<br><b>Building:</b> ${String(
           building
-        )}<br>Visit the <a href=https://lostandfound.andrew.cmu.edu/admin>CMU Lost and Found site</a> to approve.`;
+        )}<br>Visit the <a href=https://lostandfound.andrew.cmu.edu/active>CMU Lost and Found site</a> to approve.`;
         const data = {
           emails: emails,
           subject:

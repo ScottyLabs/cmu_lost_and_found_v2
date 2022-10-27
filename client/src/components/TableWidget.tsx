@@ -14,6 +14,7 @@ import EditButton from "./EditItem";
 import HistoryAccordion from "./HistoryAccordion";
 import ImageModal from "./ImageModal";
 import PublicDisplaySwitch from "./PublicDisplaySwitch";
+import UnarchiveButton from "./UnarchiveButton";
 
 import * as React from "react";
 import { Table, Pagination } from "semantic-ui-react";
@@ -23,6 +24,7 @@ const TableWidget = (props: {
   isUser: boolean;
   fetchItems: Function;
   sortItems: Function;
+  isArchivedItems: boolean;
   user: User;
   page: number;
   setPage: Function;
@@ -112,7 +114,7 @@ const TableWidget = (props: {
             >
               Image
             </Table.HeaderCell>
-            {props.isUser ? (
+            {!props.isArchivedItems && props.isUser ? (
               <Table.HeaderCell
                 sorted={
                   state.column === "publicDisplay" ? state.direction : null
@@ -124,7 +126,7 @@ const TableWidget = (props: {
                 Make Public
               </Table.HeaderCell>
             ) : null}
-            {props.isUser ? (
+            {!props.isArchivedItems && props.isUser ? (
               <Table.HeaderCell
                 sorted={state.column === "status" ? state.direction : null}
                 onClick={() =>
@@ -134,8 +136,10 @@ const TableWidget = (props: {
                 Available For Pickup
               </Table.HeaderCell>
             ) : null}
-            {props.isUser ? <Table.HeaderCell>Edit</Table.HeaderCell> : null}
-            {props.isUser ? (
+            {!props.isArchivedItems && props.isUser ? (
+              <Table.HeaderCell>Edit</Table.HeaderCell>
+            ) : null}
+            {!props.isArchivedItems && props.isUser ? (
               <Table.HeaderCell
                 sorted={state.column === "approved" ? state.direction : null}
                 onClick={() =>
@@ -146,6 +150,9 @@ const TableWidget = (props: {
               </Table.HeaderCell>
             ) : null}
             <Table.HeaderCell width={2}>History</Table.HeaderCell>
+            {props.isArchivedItems ? (
+              <Table.HeaderCell>Unarchive</Table.HeaderCell>
+            ) : null}
           </Table.Row>
         </Table.Header>
         <Table.Body>
@@ -205,7 +212,7 @@ const TableWidget = (props: {
                   <Table.Cell>
                     <ImageModal image={item.image}></ImageModal>
                   </Table.Cell>
-                  {props.isUser ? (
+                  {!props.isArchivedItems && props.isUser ? (
                     <Table.Cell>
                       <PublicDisplaySwitch
                         id={item._id}
@@ -221,7 +228,7 @@ const TableWidget = (props: {
                       ></PublicDisplaySwitch>
                     </Table.Cell>
                   ) : null}
-                  {props.isUser ? (
+                  {!props.isArchivedItems && props.isUser ? (
                     <Table.Cell>
                       <AvailableSwitch
                         id={item._id}
@@ -231,7 +238,7 @@ const TableWidget = (props: {
                       ></AvailableSwitch>
                     </Table.Cell>
                   ) : null}
-                  {props.isUser && (
+                  {!props.isArchivedItems && props.isUser && (
                     <Table.Cell>
                       <EditButton
                         fetchItems={props.fetchItems}
@@ -242,7 +249,7 @@ const TableWidget = (props: {
                       ></EditButton>
                     </Table.Cell>
                   )}
-                  {props.isUser && (
+                  {!props.isArchivedItems && props.isUser && (
                     <Table.Cell>
                       <ApproveSwitch
                         id={item._id}
@@ -259,6 +266,14 @@ const TableWidget = (props: {
                       returner={item.returner}
                     ></HistoryAccordion>
                   </Table.Cell>
+                  {props.isArchivedItems ? (
+                    <Table.Cell>
+                      <UnarchiveButton
+                        id={item._id}
+                        fetchItems={props.fetchItems}
+                      />
+                    </Table.Cell>
+                  ) : null}
                 </Table.Row>
               );
             })}

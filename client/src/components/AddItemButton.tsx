@@ -437,7 +437,9 @@ function AddItemButton(props: {
       onOpen={handleOnOpen}
       onClose={() => dispatch({ type: "CLOSE_MODAL" })}
       trigger={
-        <Button color="black" style={{ height: "47px", width: "110px" }}>Add Item</Button>
+        <Button color="black" style={{ height: "47px", width: "110px" }}>
+          Add Item
+        </Button>
       }
     >
       <Modal.Header>Add Item</Modal.Header>

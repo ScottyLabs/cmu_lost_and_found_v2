@@ -1,4 +1,3 @@
-import AddUser from "../components/AddUser";
 import Header from "../components/Header";
 import SearchBar from "../components/SearchBar";
 import UserTable from "../components/UserTable";
@@ -106,18 +105,12 @@ function Accounts() {
         </Grid.Row>
         <Grid.Row>
           <Grid.Column width={16}>
-            <div id="add-user-mobile">
-              <AddUser fetchUsers={fetchUsers}></AddUser>
-            </div>
             <div id="admin-filter-bar">
               <SearchBar
                 input={input}
                 onChange={updateInput}
                 placeholder={"Search..."}
               />
-              <div id="add-user-desktop">
-                <AddUser fetchUsers={fetchUsers}></AddUser>
-              </div>
             </div>
           </Grid.Column>
         </Grid.Row>

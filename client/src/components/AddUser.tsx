@@ -121,7 +121,7 @@ function AddUser(props: { fetchUsers: () => void }) {
           onClose={() => dispatch({ type: "CLOSE_MODAL" })}
           trigger={
             <Button
-              color="red"
+              color="black"
               id="add-user"
               style={{ height: "47px", width: "110px", marginLeft: "2px" }}
             >

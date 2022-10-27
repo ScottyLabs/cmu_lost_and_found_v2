@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import axios from "axios";
 import * as React from "react";
 import { useHistory } from "react-router";

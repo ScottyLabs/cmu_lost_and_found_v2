@@ -71,6 +71,10 @@ img {
     display: block;
   }
 
+  .title, .subtitle {
+    padding-left: 0;
+  }
+
   #site-identity {
     display: inherit;
     text-align: center;

@@ -1,6 +1,6 @@
-#add-item {
-    width : 100px;
-    margin-left: 15px;
+.ui.button {
+    margin-right: 0;
+    margin-bottom: 0.78571429em;
 }
 
 .ui.modal {
@@ -17,17 +17,9 @@ div .header {
 
 #modal-actions {
     display: flex;
-    justify-content: center;
+    justify-content: right;
 }
 
 body.dimmed.dimmable {
     overflow-y: scroll !important;
 }
-
-@media (max-width: 425px) {
-    #add-item {
-        width : 100px;
-        margin-left: 0;
-    }
-}
-

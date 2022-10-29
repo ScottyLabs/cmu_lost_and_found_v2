@@ -10,13 +10,7 @@ table.ui.table.lf_table {
     background-color: #f9fafb;
 }
 
-.buttons {
+.table-buttons {
     display: flex;
     justify-content: space-between;
-}
-
-.ui.button {
-    float: right;
-    margin-right: 0;
-    margin-bottom: 0.78571429em;
 }

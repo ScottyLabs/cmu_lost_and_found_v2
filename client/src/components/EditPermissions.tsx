@@ -140,44 +140,46 @@ export default function EditPermissions(props: {
                 />
                 <Form.Button color="teal">Add Permission</Form.Button>
               </Form.Group>
+              <Form.Group inline id="modal-actions">
+                <Button
+                  color="red"
+                  onClick={() => dispatch({ type: "CLOSE_MODAL" })}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  positive
+                  style={{ marginLeft: "10px" }}
+                  onClick={() => {
+                    axios
+                      .post("/api/accounts/updatePerm", {
+                        token: localStorage.getItem("lnf_token"),
+                        username: props.user.username,
+                        perm: permissions,
+                      })
+                      .then(
+                        (res) => {
+                          console.log("Edited permissions!");
+                          console.log(res);
+                          props.fetchUsers();
+                          dispatch({ type: "CLOSE_MODAL" });
+                        },
+                        (error) => {
+                          console.log(error);
+                          alert("Unable to edit permissions");
+                          if (error?.response?.status === 401) {
+                            window.localStorage.removeItem("lnf_token");
+                            history.push("/login");
+                          }
+                          dispatch({ type: "CLOSE_MODAL" });
+                        }
+                      );
+                  }}
+                >
+                  Edit
+                </Button>
+              </Form.Group>
             </Form>
-            <h3>Submit Changes</h3>
-            <Button
-              color="red"
-              onClick={() => dispatch({ type: "CLOSE_MODAL" })}
-            >
-              Cancel
-            </Button>
-            <Button
-              color="blue"
-              onClick={() => {
-                axios
-                  .post("/api/accounts/updatePerm", {
-                    token: localStorage.getItem("lnf_token"),
-                    username: props.user.username,
-                    perm: permissions,
-                  })
-                  .then(
-                    (res) => {
-                      console.log("Edited permissions!");
-                      console.log(res);
-                      props.fetchUsers();
-                      dispatch({ type: "CLOSE_MODAL" });
-                    },
-                    (error) => {
-                      console.log(error);
-                      alert("Unable to edit permissions");
-                      if (error?.response?.status === 401) {
-                        window.localStorage.removeItem("lnf_token");
-                        history.push("/login");
-                      }
-                      dispatch({ type: "CLOSE_MODAL" });
-                    }
-                  );
-              }}
-            >
-              Submit
-            </Button>
           </Modal.Content>
         </Modal>
       </Grid.Column>

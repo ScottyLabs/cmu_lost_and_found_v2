@@ -75,7 +75,7 @@ const TableWidget = (props: {
 
   return (
     <div>
-      <div className="buttons">
+      <div className="table-buttons">
         <div>
           <DownloadDataButton
             fetchItems={props.fetchItems}

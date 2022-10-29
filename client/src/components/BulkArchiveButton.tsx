@@ -45,7 +45,7 @@ export default function BulkArchiveButton(props: { fetchItems: () => void }) {
             height: "47px",
             width: "110px",
             margin: "0px",
-            marginRight: "10px",
+            marginLeft: "10px",
           }}
         >
           Bulk Archive

@@ -414,7 +414,7 @@ function EditItem(props: {
               />
               <Form.Group></Form.Group>
 
-              <Form.Group inline id="modal-actions">
+              <Form.Group inline id="edit-modal-actions">
                 <div
                   style={{
                     display: "flex",

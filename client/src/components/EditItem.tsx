@@ -435,7 +435,7 @@ function EditItem(props: {
                   />
                   <div
                     style={{
-                      width: "1rem",
+                      width: "10px",
                     }}
                   />
                   <ArchiveButton
@@ -492,7 +492,7 @@ function EditItem(props: {
                     Cancel
                   </Button>
                   {/* Need to close modal after validation of the form */}
-                  <Button positive type="submit">
+                  <Button positive type="submit" style={{ marginLeft: "10px" }}>
                     Edit
                   </Button>
                 </div>

@@ -604,7 +604,7 @@ function AddItemButton(props: {
                 Cancel
               </Button>
               {/* Need to close modal after validation of the form */}
-              <Button positive type="submit">
+              <Button positive type="submit" style={{ marginLeft: "10px" }}>
                 Add
               </Button>
             </div>

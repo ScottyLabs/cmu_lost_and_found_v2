@@ -37,7 +37,6 @@ const ItemSchema = new Schema(
     },
     dateReturned: {
       type: Date,
-      required: true,
     },
     timeFound: {
       type: String,

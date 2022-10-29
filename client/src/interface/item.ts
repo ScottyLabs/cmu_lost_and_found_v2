@@ -4,6 +4,7 @@ import { Building } from "./building";
 export interface Item {
   _id: string;
   dateFound: string; // Ex: 2020-03-11T05:00:00.000Z
+  dateReturned: string;
   timeFound: string; // Ex: 13:30
   name: string;
   whereFound: string;

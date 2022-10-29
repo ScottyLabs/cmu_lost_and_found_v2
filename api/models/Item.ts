@@ -5,6 +5,7 @@ import { Schema, Document, model } from "mongoose";
 
 export interface IItem extends Document {
   dateFound: Date;
+  dateReturned: Date;
   timeFound: string;
   name: string;
   whereFound: string;
@@ -33,6 +34,9 @@ const ItemSchema = new Schema(
     dateFound: {
       type: Date,
       required: true,
+    },
+    dateReturned: {
+      type: Date,
     },
     timeFound: {
       type: String,

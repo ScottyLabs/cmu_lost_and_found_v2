@@ -67,6 +67,7 @@ router.post("/add", isUser, async (req: Request, res: Response) => {
   }
   const item = new Item({
     dateFound: new Date(dateFound),
+    dateReturned: null,
     timeFound: timeFound,
     name: name,
     whereFound: whereFound,
@@ -231,6 +232,7 @@ router.post("/updateStatus", isUser, async (req: Request, res: Response) => {
           {
             status: status,
             returner: status === "claimed" ? user.username : null,
+            dateReturned: status === "claimed" ? new Date() : null,
           },
           { runValidators: true, useFindAndModify: false }
         );

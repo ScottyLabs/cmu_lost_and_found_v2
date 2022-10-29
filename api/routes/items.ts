@@ -19,12 +19,6 @@ const router = Router();
  * }
  */
 router.post("/all", isUser, async (req: Request, res: Response) => {
-  Item.updateMany({ dateReturned: { $exists: false } }, [
-    { $set: { dateReturned: null } },
-  ]).exec(function (err, docs) {
-    if (err) console.log(err);
-    else console.log(docs);
-  });
   const onlyArchived = req.body.onlyArchived ?? false;
   Item.find({ archived: onlyArchived })
     .populate("whereToRetrieve")

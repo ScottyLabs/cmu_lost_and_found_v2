@@ -559,7 +559,7 @@ function AddItemButton(props: {
               onChange={handleChange}
             />
           ) : null}
-          {state.identifiable ? (
+          {/* {state.identifiable ? (
             <Form.Input
               label="Email"
               placeholder="Ex. bovick@andrew.cmu.edu"
@@ -579,7 +579,7 @@ function AddItemButton(props: {
               value={state.templateType}
               onChange={handleChange}
             />
-          ) : null}
+          ) : null} */}
           <Form.TextArea
             label="Notes"
             name="notes"

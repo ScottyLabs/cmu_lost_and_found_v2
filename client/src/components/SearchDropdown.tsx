@@ -1,5 +1,6 @@
 import "./SearchDropdown.css";
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import * as React from "react";
 import { Dropdown } from "semantic-ui-react";
 

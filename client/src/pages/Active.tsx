@@ -103,13 +103,6 @@ function Active() {
           new Date(item.dateFound)
         );
       });
-    } else if (input != "" && searchSetting == "Keyword") {
-      filtered = itemListDefault.filter((item: Item) => {
-        return (
-          item.whereFound.toLowerCase().includes(input.toLowerCase()) ||
-          item.name.toLowerCase().includes(input.toLowerCase())
-        );
-      });
     } else if (input != "" && searchSetting == "Recency") {
       const days = parseInt(input);
       filtered = itemListDefault.filter((item: Item) => {

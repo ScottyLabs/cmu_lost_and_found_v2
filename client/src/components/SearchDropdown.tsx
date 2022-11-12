@@ -23,7 +23,7 @@ const searchOptions = [
 
 const SearchDropdown = (props: {
   selected: string;
-  onChange: React.Dispatch<React.SetStateAction<string>>;
+  onChange: React.Dispatch<React.SetStateAction<any>>;
 }) => {
   return (
     <Dropdown
@@ -33,7 +33,10 @@ const SearchDropdown = (props: {
       selection
       value={props.selected}
       onChange={(e, data) => {
-        props.onChange(String(data.value));
+        var option =
+          searchOptions.find((option) => option.value == String(data.value)) ??
+          searchOptions[0];
+        props.onChange(option);
       }}
       options={searchOptions}
     />

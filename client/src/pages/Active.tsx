@@ -31,7 +31,9 @@ function Active() {
 
   const [user, setUser] = useState<User | null>(null);
   const [page, setPage] = useState(1);
-  const [selected, setSelected] = useState("");
+
+  const [placeholder, setPlaceholder] = useState("e.g. keys");
+  const [searchSetting, setSearchSetting] = useState("Keyword");
 
   const fetchItems = () => {
     axios
@@ -92,7 +94,7 @@ function Active() {
   // modify items
   const updateInput = async (input: string) => {
     let filtered;
-    if (selected == "Search oldest items by days") {
+    if (input != "" && searchSetting == "Older than") {
       filtered = itemListDefault.filter((item: Item) => {
         const minDate = -8640000000000000;
         return isWithinRange(
@@ -101,14 +103,14 @@ function Active() {
           new Date(item.dateFound)
         );
       });
-    } else if (selected == "Search by keyword") {
+    } else if (input != "" && searchSetting == "Keyword") {
       filtered = itemListDefault.filter((item: Item) => {
         return (
           item.whereFound.toLowerCase().includes(input.toLowerCase()) ||
           item.name.toLowerCase().includes(input.toLowerCase())
         );
       });
-    } else if (input != "" && selected == "Search recent items by days") {
+    } else if (input != "" && searchSetting == "Recency") {
       const days = parseInt(input);
       filtered = itemListDefault.filter((item: Item) => {
         return isWithinRange(
@@ -156,6 +158,12 @@ function Active() {
     setItemList(sorted);
   };
 
+  // Change search filter
+  const setSearchFilter = (option: any) => {
+    setSearchSetting(option.key);
+    setPlaceholder(option.value);
+  };
+
   // check a value in local storage to decide if account user is an admin for client-side use
   // safe from a security perspective because backend will independently check if user is an admin
   const isAllAdmin =
@@ -183,11 +191,14 @@ function Active() {
         <Grid.Row>
           <Grid.Column width={16}>
             <div id="admin-filter-bar">
-              <SearchDropdown selected={selected} onChange={setSelected} />
+              <SearchDropdown
+                selected={placeholder}
+                onChange={setSearchFilter}
+              />
               <SearchBar
                 input={input}
                 onChange={updateInput}
-                placeholder={selected}
+                placeholder={placeholder}
               />
             </div>
           </Grid.Column>

@@ -33,10 +33,10 @@ const SearchDropdown = (props: {
       selection
       value={props.selected}
       onChange={(e, data) => {
-        var option =
+        props.onChange(
           searchOptions.find((option) => option.value == String(data.value)) ??
-          searchOptions[0];
-        props.onChange(option);
+            searchOptions[0]
+        );
       }}
       options={searchOptions}
     />

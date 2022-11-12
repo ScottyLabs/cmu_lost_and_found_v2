@@ -2,8 +2,9 @@
 
 import axios from "axios";
 import * as React from "react";
+import { useState } from "react";
 import { useHistory } from "react-router";
-import { Button, Modal } from "semantic-ui-react";
+import { Button, Form, Modal, Message } from "semantic-ui-react";
 
 function exampleReducer(dispatchState: any, action: any) {
   switch (action.type) {
@@ -29,7 +30,40 @@ export default function BulkArchiveButton(props: { fetchItems: () => void }) {
   });
   const { open, closeOnEscape, closeOnDimmerClick } = dispatchState;
 
+  const [archiveDays, setArchiveDays] = useState("");
+  const [formError, setFormError] = useState(false);
+
   const history = useHistory();
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (isNaN(Number(archiveDays))) {
+      setFormError(true);
+    } else {
+      axios
+        .post("/api/items/archiveByDays", {
+          token: localStorage.getItem("lnf_token"),
+          days: parseInt(archiveDays),
+        })
+        .then(
+          (res) => {
+            console.log("Bulk archived!");
+            console.log(res);
+            props.fetchItems();
+          },
+          (error) => {
+            console.log(error);
+            if (error?.response?.status === 401) {
+              window.localStorage.removeItem("lnf_token");
+              history.push("/login");
+            }
+          }
+        );
+      dispatch({ type: "CLOSE_MODAL" });
+      setArchiveDays("");
+      setFormError(false);
+    }
+  };
 
   return (
     <Modal
@@ -52,51 +86,65 @@ export default function BulkArchiveButton(props: { fetchItems: () => void }) {
         </Button>
       }
     >
-      <Modal.Header>Bulk Archive</Modal.Header>
+      <Modal.Header>Bulk Archive Unavailable Items</Modal.Header>
       <Modal.Content
         style={{
           margin: "auto",
           maxWidth: "100%",
-          padding: "20px 20px 50px 20px",
+          padding: "20px 20px 10px 20px",
           fontSize: "18px",
         }}
       >
-        <p>Are you sure you wish to archive all items older than 90 days?</p>
-        <Button
-          onClick={() => {
-            axios
-              .post("/api/items/archiveByDays", {
-                token: localStorage.getItem("lnf_token"),
-                days: 90,
-              })
-              .then(
-                (res) => {
-                  console.log("Bulk archived!");
-                  console.log(res);
-                  props.fetchItems();
-                },
-                (error) => {
-                  console.log(error);
-                  if (error?.response?.status === 401) {
-                    window.localStorage.removeItem("lnf_token");
-                    history.push("/login");
-                  }
-                }
-              );
-            dispatch({ type: "CLOSE_MODAL" });
-          }}
-          positive
-          floated="right"
-        >
-          Yes
-        </Button>
-        <Button
-          onClick={() => dispatch({ type: "CLOSE_MODAL" })}
-          negative
-          floated="right"
-        >
-          Cancel
-        </Button>
+        <Form onSubmit={handleSubmit} error={formError}>
+          <Form.Group inline>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "flex-start",
+                textAlign: "right",
+                width: "100%",
+                alignItems: "center",
+              }}
+            >
+              <p style={{ margin: 0, padding: 0 }}>
+                Archive all unavailable items older than
+              </p>
+              <Form.Input
+                label=""
+                placeholder="0"
+                width={2}
+                name="archiveDays"
+                value={archiveDays}
+                onChange={(_e, { _, value }) => setArchiveDays(value)}
+              />
+              <p>days?</p>
+            </div>
+          </Form.Group>
+          {formError ? (
+            <Message error content="Number of days not a number" />
+          ) : null}
+          <Form.Group inline id="modal-actions">
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "flex-end",
+                textAlign: "right",
+                width: "100%",
+              }}
+            >
+              <Button
+                type="button"
+                onClick={() => dispatch({ type: "CLOSE_MODAL" })}
+                negative
+              >
+                Cancel
+              </Button>
+              <Button positive type="submit" style={{ marginLeft: "10px" }}>
+                Confirm
+              </Button>
+            </div>
+          </Form.Group>
+        </Form>
       </Modal.Content>
     </Modal>
   );

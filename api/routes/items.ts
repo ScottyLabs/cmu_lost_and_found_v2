@@ -207,6 +207,45 @@ router.post("/archiveByDays", isAdmin, async (req: Request, res: Response) => {
 });
 
 /**
+ * Archives all unavailable items. If days is specified, archives
+ * all unavailable items older than the number of days.
+ * {
+ * days: days
+ * }
+ */
+ router.post("/archiveUnavailable", isAdmin, async (req: Request, res: Response) => {
+  const days = req.body.days ?? 0;
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const ObjectID = require("mongodb").ObjectID;
+  Item.updateMany(
+    {
+      $and: [
+        {
+          archived: false,
+        },
+        {
+          $not: { status: "available" }
+        },
+        {
+          _id: {
+            $lt: ObjectID.createFromTime(
+              Date.now() / 1000 - days * 24 * 60 * 60
+            ),
+          },
+        },
+      ],
+    },
+    [{ $set: { archived: true } }]
+  ).exec(function (err, docs) {
+    if (err) {
+      console.log(err);
+      return res.status(401).send(err);
+    }
+    return res.status(200).json(docs);
+  });
+});
+
+/**
  * Updates an item's status by id
  * {
  * id: id

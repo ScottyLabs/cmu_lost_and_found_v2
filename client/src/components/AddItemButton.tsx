@@ -3,7 +3,7 @@
 import "./AddItemButton.css";
 import { BuildingType } from "../enums/locationTypes";
 import { PermissionType } from "../enums/permissionType";
-import { TemplateType } from "../enums/templateTypes";
+// import { TemplateType } from "../enums/templateTypes";
 import { User } from "../interface/user";
 import { UseTemplate } from "../templates/emailTemplates";
 import emailbody from "../templates/html/emailbody";
@@ -80,8 +80,8 @@ const buildings = Object.keys(BuildingType)
 //     value: key,
 //   }));
 
-const emailValidatorRegex =
-  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+// const emailValidatorRegex =
+//   /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 // Source: https://stackoverflow.com/questions/46155/whats-the-best-way-to-validate-an-email-address-in-javascript
 
 // const isValidEmail = (email: string) => {

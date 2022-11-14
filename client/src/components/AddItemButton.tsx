@@ -72,21 +72,21 @@ const buildings = Object.keys(BuildingType)
     value: key,
   }));
 
-const templates = Object.keys(TemplateType)
-  .filter((value) => value !== "ALL")
-  .map((key) => ({
-    key,
-    text: key,
-    value: key,
-  }));
+// const templates = Object.keys(TemplateType)
+//   .filter((value) => value !== "ALL")
+//   .map((key) => ({
+//     key,
+//     text: key,
+//     value: key,
+//   }));
 
 const emailValidatorRegex =
   /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 // Source: https://stackoverflow.com/questions/46155/whats-the-best-way-to-validate-an-email-address-in-javascript
 
-const isValidEmail = (email: string) => {
-  return String(email).toLowerCase().match(emailValidatorRegex);
-};
+// const isValidEmail = (email: string) => {
+//   return String(email).toLowerCase().match(emailValidatorRegex);
+// };
 
 function AddItemButton(props: {
   // TODO: #140 Replace Function with appropriate type

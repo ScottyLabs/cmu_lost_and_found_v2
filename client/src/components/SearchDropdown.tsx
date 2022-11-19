@@ -1,5 +1,6 @@
 import "./SearchDropdown.css";
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import * as React from "react";
 import { Dropdown } from "semantic-ui-react";
 
@@ -23,7 +24,7 @@ const searchOptions = [
 
 const SearchDropdown = (props: {
   selected: string;
-  onChange: React.Dispatch<React.SetStateAction<string>>;
+  onChange: React.Dispatch<React.SetStateAction<any>>;
 }) => {
   return (
     <Dropdown
@@ -33,7 +34,10 @@ const SearchDropdown = (props: {
       selection
       value={props.selected}
       onChange={(e, data) => {
-        props.onChange(String(data.value));
+        props.onChange(
+          searchOptions.find((option) => option.value == String(data.value)) ??
+            searchOptions[0]
+        );
       }}
       options={searchOptions}
     />

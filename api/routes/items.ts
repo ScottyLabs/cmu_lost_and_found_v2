@@ -19,6 +19,12 @@ const router = Router();
  * }
  */
 router.post("/all", isUser, async (req: Request, res: Response) => {
+  Item.updateMany({ dateArchived: { $exists: false } }, [
+    { $set: { dateArchived: null } },
+  ]).exec(function (err, docs) {
+    if (err) console.log(err);
+    else console.log(docs);
+  });
   const onlyArchived = req.body.onlyArchived ?? false;
   Item.find({ archived: onlyArchived })
     .populate("whereToRetrieve")
@@ -68,6 +74,7 @@ router.post("/add", isUser, async (req: Request, res: Response) => {
   const item = new Item({
     dateFound: new Date(dateFound),
     dateReturned: null,
+    dateArchived: null,
     timeFound: timeFound,
     name: name,
     whereFound: whereFound,
@@ -154,7 +161,7 @@ router.post("/archive", isUser, async (req: Request, res: Response) => {
         ) {
           const updatedItem = await Item.findByIdAndUpdate(
             id,
-            { archived: archived },
+            { archived: archived, dateArchived: new Date() },
             { runValidators: true, useFindAndModify: false }
           );
           updatedItems.push(updatedItem);
@@ -203,7 +210,7 @@ router.post("/archiveByDays", isUser, async (req: Request, res: Response) => {
         }
       ],
     },
-    [{ $set: { archived: true } }]
+    [{ $set: { archived: true, dateArchived: new Date() } }]
   ).exec(function (err, docs) {
     if (err) {
       console.log(err);

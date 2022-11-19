@@ -3,7 +3,7 @@ import PermissionsController from "../controllers/PermissionsController";
 import { BuildingType } from "../enums/locationTypes";
 import { PermissionType } from "../enums/permissionType";
 import Item from "../models/Item";
-import { isUser, isAdmin } from "./auth";
+import isUser from "./auth";
 
 import { Request, Response, Router } from "express";
 
@@ -179,7 +179,7 @@ router.post("/archive", isUser, async (req: Request, res: Response) => {
 });
 
 /**
- * Archives items older than the given days. If unavailable is set to true, 
+ * Archives items older than the given days. If unavailable is set to true,
  * only archive items that are marked as unavailable. Otherwise, archive
  * all items older than the given days.
  * {
@@ -205,9 +205,9 @@ router.post("/archiveByDays", isUser, async (req: Request, res: Response) => {
             ),
           },
         },
-        { 
-          status: { $nin: unavailable ? ["available"] : [] } 
-        }
+        {
+          status: { $nin: unavailable ? ["available"] : [] },
+        },
       ],
     },
     [{ $set: { archived: true, dateArchived: new Date() } }]

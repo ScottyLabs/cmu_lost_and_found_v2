@@ -172,13 +172,17 @@ router.post("/archive", isUser, async (req: Request, res: Response) => {
 });
 
 /**
- * Archives items older than the given days
+ * Archives items older than the given days. If unavailable is set to true, 
+ * only archive items that are marked as unavailable. Otherwise, archive
+ * all items older than the given days.
  * {
  * days: days
+ * unavailable: unavailable
  * }
  */
-router.post("/archiveByDays", isAdmin, async (req: Request, res: Response) => {
+router.post("/archiveByDays", isUser, async (req: Request, res: Response) => {
   const days = req.body.days;
+  const unavailable = req.body.unavailable ?? false;
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   const ObjectID = require("mongodb").ObjectID;
   Item.updateMany(
@@ -194,45 +198,9 @@ router.post("/archiveByDays", isAdmin, async (req: Request, res: Response) => {
             ),
           },
         },
-      ],
-    },
-    [{ $set: { archived: true } }]
-  ).exec(function (err, docs) {
-    if (err) {
-      console.log(err);
-      return res.status(401).send(err);
-    }
-    return res.status(200).json(docs);
-  });
-});
-
-/**
- * Archives all unavailable items. If days is specified, archives
- * all unavailable items older than the number of days.
- * {
- * days: days
- * }
- */
- router.post("/archiveUnavailable", isAdmin, async (req: Request, res: Response) => {
-  const days = req.body.days ?? 0;
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  const ObjectID = require("mongodb").ObjectID;
-  Item.updateMany(
-    {
-      $and: [
-        {
-          archived: false,
-        },
-        {
-          $not: { status: "available" }
-        },
-        {
-          _id: {
-            $lt: ObjectID.createFromTime(
-              Date.now() / 1000 - days * 24 * 60 * 60
-            ),
-          },
-        },
+        { 
+          status: { $nin: unavailable ? ["available"] : [] } 
+        }
       ],
     },
     [{ $set: { archived: true } }]

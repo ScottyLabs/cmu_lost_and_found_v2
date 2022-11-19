@@ -44,6 +44,7 @@ export default function BulkArchiveButton(props: { fetchItems: () => void }) {
         .post("/api/items/archiveByDays", {
           token: localStorage.getItem("lnf_token"),
           days: parseInt(archiveDays),
+          unavailable: true,
         })
         .then(
           (res) => {

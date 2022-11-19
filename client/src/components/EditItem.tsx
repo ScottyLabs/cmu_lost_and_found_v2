@@ -430,12 +430,7 @@ function EditItem(props: {
                   <DeleteButton
                     id={props.id}
                     fetchItems={props.fetchItems}
-                    disabled={
-                      props.item.approved &&
-                      !props.user.permissions.some((value) =>
-                        value.includes(PermissionType.ADMIN)
-                      )
-                    }
+                    disabled={props.item.approved && !isAdmin}
                   />
                   <div
                     style={{

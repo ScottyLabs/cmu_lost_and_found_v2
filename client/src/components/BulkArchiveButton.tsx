@@ -37,7 +37,9 @@ export default function BulkArchiveButton(props: { fetchItems: () => void }) {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (isNaN(Number(archiveDays))) {
+    if (archiveDays === "") {
+      setFormError("Input is empty");
+    } else if (isNaN(Number(archiveDays))) {
       setFormError("Input not a number");
     } else if (Number(archiveDays) < 0) {
       setFormError("Input is negative");

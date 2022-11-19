@@ -31,14 +31,16 @@ export default function BulkArchiveButton(props: { fetchItems: () => void }) {
   const { open, closeOnEscape, closeOnDimmerClick } = dispatchState;
 
   const [archiveDays, setArchiveDays] = useState("");
-  const [formError, setFormError] = useState(false);
+  const [formError, setFormError] = useState("");
 
   const history = useHistory();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (isNaN(Number(archiveDays))) {
-      setFormError(true);
+      setFormError("Input not a number");
+    } else if (Number(archiveDays) < 0) {
+      setFormError("Input is negative");
     } else {
       axios
         .post("/api/items/archiveByDays", {
@@ -62,7 +64,7 @@ export default function BulkArchiveButton(props: { fetchItems: () => void }) {
         );
       dispatch({ type: "CLOSE_MODAL" });
       setArchiveDays("");
-      setFormError(false);
+      setFormError("");
     }
   };
 
@@ -96,7 +98,7 @@ export default function BulkArchiveButton(props: { fetchItems: () => void }) {
           fontSize: "18px",
         }}
       >
-        <Form onSubmit={handleSubmit} error={formError}>
+        <Form onSubmit={handleSubmit} error={formError !== ""}>
           <Form.Group inline>
             <div
               style={{
@@ -121,9 +123,7 @@ export default function BulkArchiveButton(props: { fetchItems: () => void }) {
               <p>days?</p>
             </div>
           </Form.Group>
-          {formError ? (
-            <Message error content="Number of days not a number" />
-          ) : null}
+          {formError !== "" ? <Message error content={formError} /> : null}
           <Form.Group inline id="modal-actions">
             <div
               style={{

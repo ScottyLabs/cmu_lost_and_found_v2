@@ -6,6 +6,7 @@ import Item from "../models/Item";
 import { isUser, isAdmin } from "./auth";
 
 import { Request, Response, Router } from "express";
+import User from "../models/User";
 
 const router = Router();
 
@@ -20,6 +21,12 @@ const router = Router();
  */
 router.post("/all", isUser, async (req: Request, res: Response) => {
   const onlyArchived = req.body.onlyArchived ?? false;
+  Item.updateMany({ archiver: { $exists: false } }, [
+    { $set: { archiver: null } },
+  ]).exec(function (err, docs) {
+    if (err) console.log(err);
+    else console.log(docs);
+  });
   Item.find({ archived: onlyArchived })
     .populate("whereToRetrieve")
     .sort({ dateFound: -1, timeFound: -1 })
@@ -87,6 +94,7 @@ router.post("/add", isUser, async (req: Request, res: Response) => {
     modified: [user.username],
     approver: approved ? user.username : null,
     returner: null,
+    archiver: null,
   });
   item.save((err) => {
     if (err) {
@@ -154,8 +162,8 @@ router.post("/archive", isUser, async (req: Request, res: Response) => {
         ) {
           const updatedItem = await Item.findByIdAndUpdate(
             id,
-            { archived: archived },
-            { runValidators: true, useFindAndModify: false }
+            { archived: archived,  archiver: user.username },
+            { runValidators: true, useFindAndModify: false },
           );
           updatedItems.push(updatedItem);
         } else {
@@ -181,6 +189,7 @@ router.post("/archiveByDays", isAdmin, async (req: Request, res: Response) => {
   const days = req.body.days;
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   const ObjectID = require("mongodb").ObjectID;
+  const user = req.body.user;
   Item.updateMany(
     {
       $and: [
@@ -196,7 +205,7 @@ router.post("/archiveByDays", isAdmin, async (req: Request, res: Response) => {
         },
       ],
     },
-    [{ $set: { archived: true } }]
+    [{ $set: { archived: true, archiver: user.username } }]
   ).exec(function (err, docs) {
     if (err) {
       console.log(err);

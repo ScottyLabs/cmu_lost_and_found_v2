@@ -27,6 +27,7 @@ export interface IItem extends Document {
   modified: string[];
   approver: string;
   returner: string;
+  archiver: string;
 }
 
 const ItemSchema = new Schema(
@@ -110,6 +111,9 @@ const ItemSchema = new Schema(
       type: String,
     },
     returner: {
+      type: String,
+    },
+    archiver: {
       type: String,
     },
   },

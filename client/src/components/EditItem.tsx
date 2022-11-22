@@ -275,6 +275,10 @@ function EditItem(props: {
     );
   };
 
+  const isAdmin = props.user?.permissions.some((value) =>
+    value.includes(PermissionType.ADMIN)
+  );
+
   return (
     <Grid columns={1}>
       <Grid.Column>
@@ -426,28 +430,25 @@ function EditItem(props: {
                   <DeleteButton
                     id={props.id}
                     fetchItems={props.fetchItems}
-                    disabled={
-                      props.item.approved &&
-                      !props.user.permissions.some((value) =>
-                        value.includes(PermissionType.ADMIN)
-                      )
-                    }
+                    disabled={props.item.approved && !isAdmin}
                   />
                   <div
                     style={{
                       width: "10px",
                     }}
                   />
-                  <ArchiveButton
-                    id={props.id}
-                    fetchItems={props.fetchItems}
-                    disabled={
-                      props.item.approved &&
-                      !props.user.permissions.some((value) =>
-                        value.includes(PermissionType.ADMIN)
-                      )
-                    }
-                  />
+                  {isAdmin ? (
+                    <ArchiveButton
+                      id={props.id}
+                      fetchItems={props.fetchItems}
+                      disabled={
+                        props.item.approved &&
+                        !props.user.permissions.some((value) =>
+                          value.includes(PermissionType.ADMIN)
+                        )
+                      }
+                    />
+                  ) : null}
                 </div>
                 <div
                   style={{

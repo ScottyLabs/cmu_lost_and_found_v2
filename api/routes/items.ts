@@ -6,7 +6,6 @@ import Item from "../models/Item";
 import { isUser, isAdmin } from "./auth";
 
 import { Request, Response, Router } from "express";
-import User from "../models/User";
 
 const router = Router();
 

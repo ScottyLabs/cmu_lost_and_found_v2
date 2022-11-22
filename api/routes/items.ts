@@ -26,6 +26,12 @@ router.post("/all", isUser, async (req: Request, res: Response) => {
     else console.log(docs);
   });
   const onlyArchived = req.body.onlyArchived ?? false;
+  Item.updateMany({ archiver: { $exists: false } }, [
+    { $set: { archiver: null } },
+  ]).exec(function (err, docs) {
+    if (err) console.log(err);
+    else console.log(docs);
+  });
   Item.find({ archived: onlyArchived })
     .populate("whereToRetrieve")
     .sort({ dateFound: -1, timeFound: -1 })
@@ -94,6 +100,7 @@ router.post("/add", isUser, async (req: Request, res: Response) => {
     modified: [user.username],
     approver: approved ? user.username : null,
     returner: null,
+    archiver: null,
   });
   item.save((err) => {
     if (err) {
@@ -161,7 +168,11 @@ router.post("/archive", isUser, async (req: Request, res: Response) => {
         ) {
           const updatedItem = await Item.findByIdAndUpdate(
             id,
-            { archived: archived, dateArchived: new Date() },
+            {
+              archived: archived,
+              archiver: user.username,
+              dateArchived: new Date(),
+            },
             { runValidators: true, useFindAndModify: false }
           );
           updatedItems.push(updatedItem);
@@ -188,6 +199,7 @@ router.post("/archiveByDays", isAdmin, async (req: Request, res: Response) => {
   const days = req.body.days;
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   const ObjectID = require("mongodb").ObjectID;
+  const user = req.body.user;
   Item.updateMany(
     {
       $and: [
@@ -203,7 +215,15 @@ router.post("/archiveByDays", isAdmin, async (req: Request, res: Response) => {
         },
       ],
     },
-    [{ $set: { archived: true, dateArchived: new Date() } }]
+    [
+      {
+        $set: {
+          archived: true,
+          archiver: user.username,
+          dateArchived: new Date(),
+        },
+      },
+    ]
   ).exec(function (err, docs) {
     if (err) {
       console.log(err);

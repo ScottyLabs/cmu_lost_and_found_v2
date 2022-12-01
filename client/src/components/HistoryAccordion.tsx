@@ -7,6 +7,8 @@ export default function HistoryAccordion(props: {
   modified: string[];
   approver: string;
   returner: string;
+  archiver: string;
+  isArchived: boolean;
 }) {
   const [activeIndex, setActiveIndex] = useState(-1);
 
@@ -61,6 +63,23 @@ export default function HistoryAccordion(props: {
       {props.returner !== null && (
         <Accordion.Content active={activeIndex === 2}>
           {props.returner}
+        </Accordion.Content>
+      )}
+      
+  
+    
+      {props.isArchived==true ?(    <Accordion.Title
+        active={activeIndex === 3}
+        index={3}
+        onClick={handleClick}
+      >
+        <Icon name="dropdown" />
+        Archiver
+      </Accordion.Title>) :null}
+
+      {props.archiver !== null  && (
+        <Accordion.Content active={activeIndex === 3}>
+          {props.archiver}
         </Accordion.Content>
       )}
     </Accordion>

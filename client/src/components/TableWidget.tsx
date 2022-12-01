@@ -300,8 +300,11 @@ const TableWidget = (props: {
                       modified={item.modified}
                       approver={item.approver}
                       returner={item.returner}
+                      archiver={item.archiver}
+                      isArchived={item.archived}
                     ></HistoryAccordion>
                   </Table.Cell>
+                  
                   {props.isArchivedItems ? (
                     <Table.Cell>
                       <UnarchiveButton
@@ -310,6 +313,8 @@ const TableWidget = (props: {
                       />
                     </Table.Cell>
                   ) : null}
+                  
+                  
                 </Table.Row>
               );
             })}

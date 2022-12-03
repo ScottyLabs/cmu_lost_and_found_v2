@@ -25,4 +25,5 @@ export interface Item {
   modified: string[];
   approver: string;
   returner: string;
+  archiver: string;
 }

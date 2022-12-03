@@ -25,13 +25,14 @@ router.post("/all", isUser, async (req: Request, res: Response) => {
     if (err) console.log(err);
     else console.log(docs);
   });
-  const onlyArchived = req.body.onlyArchived ?? false;
   Item.updateMany({ archiver: { $exists: false } }, [
     { $set: { archiver: null } },
   ]).exec(function (err, docs) {
     if (err) console.log(err);
     else console.log(docs);
   });
+
+  const onlyArchived = req.body.onlyArchived ?? false;
   Item.find({ archived: onlyArchived })
     .populate("whereToRetrieve")
     .sort({ dateFound: -1, timeFound: -1 })
@@ -170,8 +171,8 @@ router.post("/archive", isUser, async (req: Request, res: Response) => {
             id,
             {
               archived: archived,
-              archiver: user.username,
               dateArchived: new Date(),
+              archiver: user.username,
             },
             { runValidators: true, useFindAndModify: false }
           );
@@ -219,8 +220,8 @@ router.post("/archiveByDays", isAdmin, async (req: Request, res: Response) => {
       {
         $set: {
           archived: true,
-          archiver: user.username,
           dateArchived: new Date(),
+          archiver: user.username,
         },
       },
     ]

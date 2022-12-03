@@ -73,6 +73,10 @@ const TableWidget = (props: {
       `${BuildingType.ALL}:${PermissionType.ADMIN}`
     ) ?? false;
 
+  const isAdmin = props.user?.permissions.some((value) =>
+    value.includes(PermissionType.ADMIN)
+  );
+
   return (
     <div>
       <div className="table-buttons">
@@ -81,7 +85,7 @@ const TableWidget = (props: {
             fetchItems={props.fetchItems}
             items={props.fixedItems}
           />
-          {!props.isArchivedItems ? (
+          {!props.isArchivedItems && isAdmin ? (
             <BulkArchiveButton
               fetchItems={props.fetchItems}
             ></BulkArchiveButton>
@@ -296,8 +300,11 @@ const TableWidget = (props: {
                       modified={item.modified}
                       approver={item.approver}
                       returner={item.returner}
+                      archiver={item.archiver}
+                      isArchived={item.archived}
                     ></HistoryAccordion>
                   </Table.Cell>
+
                   {props.isArchivedItems ? (
                     <Table.Cell>
                       <UnarchiveButton

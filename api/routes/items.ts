@@ -31,7 +31,7 @@ router.post("/all", isUser, async (req: Request, res: Response) => {
     if (err) console.log(err);
     else console.log(docs);
   });
-  
+
   const onlyArchived = req.body.onlyArchived ?? false;
   Item.find({ archived: onlyArchived })
     .populate("whereToRetrieve")
@@ -169,7 +169,11 @@ router.post("/archive", isUser, async (req: Request, res: Response) => {
         ) {
           const updatedItem = await Item.findByIdAndUpdate(
             id,
-            { archived: archived, dateArchived: new Date(), archiver: user.username  },
+            {
+              archived: archived,
+              dateArchived: new Date(),
+              archiver: user.username,
+            },
             { runValidators: true, useFindAndModify: false }
           );
           updatedItems.push(updatedItem);
@@ -212,7 +216,15 @@ router.post("/archiveByDays", isAdmin, async (req: Request, res: Response) => {
         },
       ],
     },
-    [{ $set: { archived: true, dateArchived: new Date(), archiver: user.username } }]
+    [
+      {
+        $set: {
+          archived: true,
+          dateArchived: new Date(),
+          archiver: user.username,
+        },
+      },
+    ]
   ).exec(function (err, docs) {
     if (err) {
       console.log(err);
@@ -387,60 +399,60 @@ router.post("/editItem", isUser, async (req: Request, res: Response) => {
         const updatedItem =
           item.modified[item.modified.length - 1] === user.username
             ? await Item.findByIdAndUpdate(
-              id,
-              {
-                $set: {
-                  status: status,
-                  token: token,
-                  dateFound: dateFound,
-                  timeFound: timeFound,
-                  name: name,
-                  whereFound: whereFound,
-                  building: building,
-                  description: description,
-                  value: value,
-                  identifiable: identifiable,
-                  image: image,
-                  imagePermission: imagePermission,
-                  identification: identification,
-                  notes: notes,
-                  publicDisplay: item.publicDisplay
-                    ? value == "general" && !identifiable
-                    : false,
-                  username: user.username,
+                id,
+                {
+                  $set: {
+                    status: status,
+                    token: token,
+                    dateFound: dateFound,
+                    timeFound: timeFound,
+                    name: name,
+                    whereFound: whereFound,
+                    building: building,
+                    description: description,
+                    value: value,
+                    identifiable: identifiable,
+                    image: image,
+                    imagePermission: imagePermission,
+                    identification: identification,
+                    notes: notes,
+                    publicDisplay: item.publicDisplay
+                      ? value == "general" && !identifiable
+                      : false,
+                    username: user.username,
+                  },
                 },
-              },
-              { runValidators: true, useFindAndModify: false }
-            )
+                { runValidators: true, useFindAndModify: false }
+              )
             : await Item.findByIdAndUpdate(
-              id,
-              {
-                $set: {
-                  status: status,
-                  token: token,
-                  dateFound: dateFound,
-                  timeFound: timeFound,
-                  name: name,
-                  whereFound: whereFound,
-                  building: building,
-                  description: description,
-                  value: value,
-                  identifiable: identifiable,
-                  image: image,
-                  imagePermission: imagePermission,
-                  identification: identification,
-                  notes: notes,
-                  publicDisplay: item.publicDisplay
-                    ? value == "general" && !identifiable
-                    : false,
-                  username: user.username,
+                id,
+                {
+                  $set: {
+                    status: status,
+                    token: token,
+                    dateFound: dateFound,
+                    timeFound: timeFound,
+                    name: name,
+                    whereFound: whereFound,
+                    building: building,
+                    description: description,
+                    value: value,
+                    identifiable: identifiable,
+                    image: image,
+                    imagePermission: imagePermission,
+                    identification: identification,
+                    notes: notes,
+                    publicDisplay: item.publicDisplay
+                      ? value == "general" && !identifiable
+                      : false,
+                    username: user.username,
+                  },
+                  $push: {
+                    modified: user.username,
+                  },
                 },
-                $push: {
-                  modified: user.username,
-                },
-              },
-              { runValidators: true, useFindAndModify: false }
-            );
+                { runValidators: true, useFindAndModify: false }
+              );
         return res.status(200).send({ msg: updatedItem });
       } else {
         return res.status(403).send(new Error("Insufficient privileges"));

@@ -63,6 +63,8 @@ export default class PermissionsController {
     action: PermissionType,
     user: IUser
   ): boolean {
+    console.log(user);
+    console.log(user.permissions);
     if (user) {
       if (
         user.permissions.includes(

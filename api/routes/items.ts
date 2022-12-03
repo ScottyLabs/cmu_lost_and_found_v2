@@ -4,6 +4,7 @@ import { BuildingType } from "../enums/locationTypes";
 import { PermissionType } from "../enums/permissionType";
 import Item from "../models/Item";
 import isUser from "./auth";
+import { schedule } from "node-cron";
 
 import { Request, Response, Router } from "express";
 
@@ -191,21 +192,18 @@ router.post("/archive", isUser, async (req: Request, res: Response) => {
 });
 
 /**
- * Archives items older than the given days. If unavailable is set to true,
- * only archive items that are marked as unavailable. Otherwise, archive
- * all items older than the given days.
+ * Helper function to archive items older than the given days. If unavailable
+ * is set to true, only archive items that are marked as unavailable. Otherwise,
+ * archive all items older than the given days.
  * {
  * days: days
  * unavailable: unavailable
+ * user: name of user performing archive
  * }
  */
-router.post("/archiveByDays", isUser, async (req: Request, res: Response) => {
-  const days = req.body.days;
-  const unavailable = req.body.unavailable ?? false;
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
+function archiveByDays(days: number, unavailable: boolean, user: string) {
   const ObjectID = require("mongodb").ObjectID;
-  const user = req.body.user;
-  Item.updateMany(
+  return Item.updateMany(
     {
       $and: [
         {
@@ -228,11 +226,36 @@ router.post("/archiveByDays", isUser, async (req: Request, res: Response) => {
         $set: {
           archived: true,
           dateArchived: new Date(),
-          archiver: user.username,
+          archiver: user,
         },
       },
     ]
-  ).exec(function (err, docs) {
+  );
+}
+
+// Archive all items older than 90 days
+async function archiveOldItems() {
+  archiveByDays(0, false, "Automatically Archived");
+}
+
+// Once a week, automatically archives all items older than 90 days
+schedule("0 0 * * *", archiveOldItems);
+
+/**
+ * Archives items older than the given days. If unavailable is set to true,
+ * only archive items that are marked as unavailable. Otherwise, archive
+ * all items older than the given days.
+ * {
+ * days: days
+ * unavailable: unavailable
+ * }
+ */
+router.post("/archiveByDays", isUser, async (req: Request, res: Response) => {
+  const days = req.body.days;
+  const unavailable = req.body.unavailable ?? false;
+  const user = req.body.user;
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  archiveByDays(days, unavailable, user).exec(function (err, docs) {
     if (err) {
       console.log(err);
       return res.status(401).send(err);

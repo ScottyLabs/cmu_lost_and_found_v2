@@ -3,7 +3,7 @@ import PermissionsController from "../controllers/PermissionsController";
 import { BuildingType } from "../enums/locationTypes";
 import { PermissionType } from "../enums/permissionType";
 import Item from "../models/Item";
-import { isUser, isAdmin } from "./auth";
+import isUser from "./auth";
 
 import { Request, Response, Router } from "express";
 
@@ -191,13 +191,17 @@ router.post("/archive", isUser, async (req: Request, res: Response) => {
 });
 
 /**
- * Archives items older than the given days
+ * Archives items older than the given days. If unavailable is set to true,
+ * only archive items that are marked as unavailable. Otherwise, archive
+ * all items older than the given days.
  * {
  * days: days
+ * unavailable: unavailable
  * }
  */
-router.post("/archiveByDays", isAdmin, async (req: Request, res: Response) => {
+router.post("/archiveByDays", isUser, async (req: Request, res: Response) => {
   const days = req.body.days;
+  const unavailable = req.body.unavailable ?? false;
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   const ObjectID = require("mongodb").ObjectID;
   const user = req.body.user;
@@ -213,6 +217,9 @@ router.post("/archiveByDays", isAdmin, async (req: Request, res: Response) => {
               Date.now() / 1000 - days * 24 * 60 * 60
             ),
           },
+        },
+        {
+          status: { $nin: unavailable ? ["available"] : [] },
         },
       ],
     },

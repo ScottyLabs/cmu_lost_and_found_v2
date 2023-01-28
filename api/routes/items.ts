@@ -3,9 +3,10 @@ import PermissionsController from "../controllers/PermissionsController";
 import { BuildingType } from "../enums/locationTypes";
 import { PermissionType } from "../enums/permissionType";
 import Item from "../models/Item";
-import { schedule } from "node-cron";
 import { isUser, isAdmin } from "./auth";
+
 import { Request, Response, Router } from "express";
+import { schedule } from "node-cron";
 
 const router = Router();
 
@@ -192,6 +193,7 @@ router.post("/archive", isUser, async (req: Request, res: Response) => {
 
 // Archive all items older than 90 days.
 async function archiveOldItems() {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
   const ObjectID = require("mongodb").ObjectID;
   return Item.updateMany(
     {

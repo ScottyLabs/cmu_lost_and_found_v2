@@ -220,6 +220,12 @@ async function archiveOldItems() {
 // Once a week, automatically archives all items older than 90 days
 schedule("0 0 * * *", archiveOldItems);
 
+/**
+ * Archives items older than the given days
+ * {
+ * days: days
+ * }
+ */
 router.post("/archiveByDays", isAdmin, async (req: Request, res: Response) => {
   const days = req.body.days;
   // eslint-disable-next-line @typescript-eslint/no-var-requires

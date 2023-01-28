@@ -3,8 +3,8 @@ import PermissionsController from "../controllers/PermissionsController";
 import { BuildingType } from "../enums/locationTypes";
 import { PermissionType } from "../enums/permissionType";
 import Item from "../models/Item";
+import { schedule } from "node-cron";
 import { isUser, isAdmin } from "./auth";
-
 import { Request, Response, Router } from "express";
 
 const router = Router();
@@ -190,12 +190,36 @@ router.post("/archive", isUser, async (req: Request, res: Response) => {
   return res.status(200).send({ msg: updatedItems });
 });
 
-/**
- * Archives items older than the given days
- * {
- * days: days
- * }
- */
+// Archive all items older than 90 days.
+async function archiveOldItems() {
+  const ObjectID = require("mongodb").ObjectID;
+  return Item.updateMany(
+    {
+      $and: [
+        {
+          archived: false,
+        },
+        {
+          _id: {
+            $lt: ObjectID.createFromTime(Date.now() / 1000 - 90 * 24 * 60 * 60),
+          },
+        },
+      ],
+    },
+    [
+      {
+        $set: {
+          archived: true,
+          dateArchived: new Date(),
+          archiver: `Automatically Archived on ${new Date().toDateString()}`,
+        },
+      },
+    ]
+  );
+}
+// Once a week, automatically archives all items older than 90 days
+schedule("0 0 * * *", archiveOldItems);
+
 router.post("/archiveByDays", isAdmin, async (req: Request, res: Response) => {
   const days = req.body.days;
   // eslint-disable-next-line @typescript-eslint/no-var-requires

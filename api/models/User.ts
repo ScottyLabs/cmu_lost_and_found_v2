@@ -19,7 +19,7 @@ if (!JWT_PUBKEY) {
   getLoginKey();
 }
 
-schedule("0 0 * * *", getLoginKey);
+schedule("0 0 * * 0", getLoginKey);
 
 export interface IUser extends Document {
   username: string;

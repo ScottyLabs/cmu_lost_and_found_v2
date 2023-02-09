@@ -24,7 +24,6 @@ import { Table, Pagination } from "semantic-ui-react";
 
 const TableWidget = (props: {
   items: Array<Item>;
-  fixedItems: Array<Item>;
   isUser: boolean;
   fetchItems: () => void;
   sortItems: Function;

@@ -20,8 +20,6 @@ import { Grid } from "semantic-ui-react";
 
 function Active() {
   document.title = "CMU Lost and Found";
-
-  const [items, setItems] = useState([]);
   //what is from the search
   const [input, setInput] = useState("");
   //unfiltered list
@@ -43,7 +41,6 @@ function Active() {
       })
       .then(
         (res) => {
-          setItems(res.data);
           //added
           setItemListDefault(res.data);
           setItemList(res.data);
@@ -203,7 +200,6 @@ function Active() {
               <div id="table">
                 <TableWidget
                   items={itemList}
-                  fixedItems={items}
                   isUser={true}
                   fetchItems={fetchItems}
                   sortItems={sortItems}

@@ -81,10 +81,7 @@ const TableWidget = (props: {
     <div>
       <div className="table-buttons">
         <div>
-          <DownloadDataButton
-            fetchItems={props.fetchItems}
-            items={props.fixedItems}
-          />
+          <DownloadDataButton />
           {!props.isArchivedItems && isAdmin ? (
             <BulkArchiveButton
               fetchItems={props.fetchItems}

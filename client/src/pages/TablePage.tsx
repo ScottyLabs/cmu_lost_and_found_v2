@@ -7,10 +7,10 @@ import FoundItemModal, {
   feedbackForm,
 } from "../components/FoundItemModal";
 import Header from "../components/Header";
-import SearchBar from "../components/SearchBar";
+// import SearchBar from "../components/SearchBar";
 import { BuildingType } from "../enums/locationTypes";
 import { PermissionType } from "../enums/permissionType";
-import { Item } from "../interface/item";
+// import { Item } from "../interface/item";
 import { User } from "../interface/user";
 
 import axios from "axios";
@@ -23,9 +23,9 @@ function TablePage() {
   const history = useHistory();
 
   //what is from the search
-  const [input, setInput] = useState("");
+  // const [_input, setInput] = useState("");
   //unfiltered list
-  const [itemListDefault, setItemListDefault] = useState([]);
+  const [_itemListDefault, setItemListDefault] = useState([]);
   //filtered list
   const [itemList, setItemList] = useState([]);
 
@@ -67,18 +67,18 @@ function TablePage() {
   };
 
   // modify items
-  const updateInput = async (input: string) => {
-    const inputName = input.toLowerCase();
-    const filtered = itemListDefault.filter((item: Item) => {
-      return (
-        item.name.toLowerCase().includes(inputName) ||
-        item.description.toLowerCase().includes(inputName) ||
-        item.whereFound.toLowerCase().includes(inputName)
-      );
-    });
-    setInput(input);
-    setItemList(filtered);
-  };
+  // const updateInput = async (input: string) => {
+  //   const inputName = input.toLowerCase();
+  //   const filtered = itemListDefault.filter((item: Item) => {
+  //     return (
+  //       item.name.toLowerCase().includes(inputName) ||
+  //       item.description.toLowerCase().includes(inputName) ||
+  //       item.whereFound.toLowerCase().includes(inputName)
+  //     );
+  //   });
+  //   setInput(input);
+  //   setItemList(filtered);
+  // };
 
   useEffect(() => {
     getCurrentUser();
@@ -124,11 +124,11 @@ function TablePage() {
         <Grid.Row>
           <Grid.Column width={16}>
             <div id="admin-filter-bar">
-              <SearchBar
+              {/* <SearchBar
                 input={input}
                 onChange={updateInput}
                 placeholder={"Search..."}
-              />
+              /> */}
               <FoundItemModal
                 id="found-item-modal"
                 style={{ padding: "11px 11px", width: "110px" }}

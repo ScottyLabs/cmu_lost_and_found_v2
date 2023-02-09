@@ -10,6 +10,7 @@ import { BuildingType } from "../enums/locationTypes";
 import { PermissionType } from "../enums/permissionType";
 import { Item } from "../interface/item";
 import { User } from "../interface/user";
+import { SortConfig } from "../pages/Active";
 import AddItemButton from "./AddItemButton";
 import ApproveSwitch from "./ApproveSwitch";
 import AvailableSwitch from "./AvailableSwitch";
@@ -26,7 +27,8 @@ const TableWidget = (props: {
   items: Array<Item>;
   isUser: boolean;
   fetchItems: () => void;
-  sortItems: Function;
+  sort: SortConfig;
+  setSort: React.Dispatch<React.SetStateAction<SortConfig>>;
   isArchivedItems: boolean;
   user: User;
   page: number;
@@ -37,33 +39,15 @@ const TableWidget = (props: {
     props.setPage(value.activePage);
   };
 
-  function reducer(state: any, action: any) {
-    switch (action.type) {
-      case "CHANGE_SORT":
-        if (state.column === action.column) {
-          const newdir =
-            state.direction === "ascending" ? "descending" : "ascending";
-          props.sortItems(action.column, newdir);
-          return {
-            ...state,
-            direction: newdir,
-          };
-        }
-        props.sortItems(action.column, "ascending");
-        return {
-          ...state,
-          column: action.column,
-          direction: "ascending",
-        };
-      default:
-        throw new Error();
+  function changeSort(column: string) {
+    if (props.sort.column === column) {
+      const newDir =
+        props.sort.direction === "ascending" ? "descending" : "ascending";
+      props.setSort({ ...props.sort, direction: newDir });
+    } else {
+      props.setSort({ column, direction: "ascending" });
     }
   }
-
-  const [state, dispatch] = React.useReducer(reducer, {
-    column: null,
-    direction: null,
-  });
 
   // check a value in local storage to decide if account user is an admin for client-side use
   // safe from a security perspective because backend will independently check if user is an admin
@@ -100,70 +84,81 @@ const TableWidget = (props: {
           <Table.Row>
             <Table.HeaderCell
               width={1}
-              sorted={state.column === "whenFound" ? state.direction : null}
-              onClick={() =>
-                dispatch({
-                  type: "CHANGE_SORT",
-                  column: "whenFound",
-                })
+              sorted={
+                props.sort.column === "whenFound"
+                  ? props.sort.direction
+                  : undefined
               }
+              onClick={() => changeSort("whenFound")}
             >
               When Found
             </Table.HeaderCell>
             <Table.HeaderCell
-              sorted={state.column === "name" ? state.direction : null}
-              onClick={() => dispatch({ type: "CHANGE_SORT", column: "name" })}
+              sorted={
+                props.sort.column === "name" ? props.sort.direction : undefined
+              }
+              onClick={() => changeSort("name")}
             >
               Name
             </Table.HeaderCell>
             <Table.HeaderCell
-              sorted={state.column === "whereFound" ? state.direction : null}
-              onClick={() =>
-                dispatch({ type: "CHANGE_SORT", column: "whereFound" })
+              sorted={
+                props.sort.column === "whereFound"
+                  ? props.sort.direction
+                  : undefined
               }
+              onClick={() => changeSort("whereFound")}
             >
               Where Found
             </Table.HeaderCell>
             <Table.HeaderCell
-              sorted={state.column === "description" ? state.direction : null}
-              onClick={() =>
-                dispatch({ type: "CHANGE_SORT", column: "description" })
+              sorted={
+                props.sort.column === "description"
+                  ? props.sort.direction
+                  : undefined
               }
+              onClick={() => changeSort("description")}
             >
               Description
             </Table.HeaderCell>
             <Table.HeaderCell
-              sorted={state.column === "building" ? state.direction : null}
-              onClick={() =>
-                dispatch({ type: "CHANGE_SORT", column: "building" })
+              sorted={
+                props.sort.column === "building"
+                  ? props.sort.direction
+                  : undefined
               }
+              onClick={() => changeSort("building")}
             >
               Building
             </Table.HeaderCell>
             <Table.HeaderCell
-              sorted={state.column === "image" ? state.direction : null}
-              onClick={() => dispatch({ type: "CHANGE_SORT", column: "image" })}
+              sorted={
+                props.sort.column === "image" ? props.sort.direction : undefined
+              }
+              onClick={() => changeSort("image")}
             >
               Image
             </Table.HeaderCell>
             {!props.isArchivedItems && props.isUser ? (
               <Table.HeaderCell
                 sorted={
-                  state.column === "publicDisplay" ? state.direction : null
+                  props.sort.column === "publicDisplay"
+                    ? props.sort.direction
+                    : undefined
                 }
-                onClick={() =>
-                  dispatch({ type: "CHANGE_SORT", column: "publicDisplay" })
-                }
+                onClick={() => changeSort("publicDisplay")}
               >
                 Make Public
               </Table.HeaderCell>
             ) : null}
             {!props.isArchivedItems && props.isUser ? (
               <Table.HeaderCell
-                sorted={state.column === "status" ? state.direction : null}
-                onClick={() =>
-                  dispatch({ type: "CHANGE_SORT", column: "status" })
+                sorted={
+                  props.sort.column === "status"
+                    ? props.sort.direction
+                    : undefined
                 }
+                onClick={() => changeSort("status")}
               >
                 Available For Pickup
               </Table.HeaderCell>
@@ -173,10 +168,12 @@ const TableWidget = (props: {
             ) : null}
             {!props.isArchivedItems && props.isUser ? (
               <Table.HeaderCell
-                sorted={state.column === "approved" ? state.direction : null}
-                onClick={() =>
-                  dispatch({ type: "CHANGE_SORT", column: "approved" })
+                sorted={
+                  props.sort.column === "approved"
+                    ? props.sort.direction
+                    : undefined
                 }
+                onClick={() => changeSort("approved")}
               >
                 Approve
               </Table.HeaderCell>

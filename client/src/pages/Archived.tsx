@@ -11,6 +11,7 @@ import { BuildingType } from "../enums/locationTypes";
 import { PermissionType } from "../enums/permissionType";
 import { Item } from "../interface/item";
 import { User } from "../interface/user";
+import { SortConfig } from "./Active";
 
 import axios from "axios";
 import * as React from "react";
@@ -33,6 +34,10 @@ function Archived() {
 
   const [placeholder, setPlaceholder] = useState("e.g. keys");
   const [searchSetting, setSearchSetting] = useState("Keyword");
+  const [sort, setSort] = useState<SortConfig>({
+    column: undefined,
+    direction: undefined,
+  });
 
   const fetchItems = () => {
     axios
@@ -167,6 +172,10 @@ function Archived() {
     }
   }, [user]);
 
+  useEffect(() => {
+    sortItems(sort.column ?? "whenFound", sort.direction ?? "descending");
+  }, [sort]);
+
   return (
     user && (
       <Grid>
@@ -203,7 +212,8 @@ function Archived() {
                   items={itemList}
                   isUser={true}
                   fetchItems={fetchItems}
-                  sortItems={sortItems}
+                  sort={sort}
+                  setSort={setSort}
                   isArchivedItems={true}
                   user={user}
                   page={page}

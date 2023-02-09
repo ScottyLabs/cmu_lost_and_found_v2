@@ -18,6 +18,11 @@ import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { Grid } from "semantic-ui-react";
 
+export interface SortConfig {
+  column: string | undefined;
+  direction: "ascending" | "descending" | undefined;
+}
+
 function Active() {
   document.title = "CMU Lost and Found";
   //what is from the search
@@ -26,6 +31,11 @@ function Active() {
   const [itemListDefault, setItemListDefault] = useState([]);
   //filtered list
   const [itemList, setItemList] = useState([]);
+
+  const [sort, setSort] = useState<SortConfig>({
+    column: undefined,
+    direction: undefined,
+  });
 
   const [user, setUser] = useState<User | null>(null);
   const [page, setPage] = useState(1);
@@ -166,6 +176,10 @@ function Active() {
     }
   }, [user]);
 
+  useEffect(() => {
+    sortItems(sort.column ?? "whenFound", sort.direction ?? "descending");
+  }, [sort]);
+
   return (
     user && (
       <Grid>
@@ -202,7 +216,8 @@ function Active() {
                   items={itemList}
                   isUser={true}
                   fetchItems={fetchItems}
-                  sortItems={sortItems}
+                  sort={sort}
+                  setSort={setSort}
                   isArchivedItems={false}
                   user={user}
                   page={page}

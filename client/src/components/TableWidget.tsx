@@ -1,8 +1,3 @@
-// TODO: #113 Replace any type annotations with appropriate type
-/* eslint-disable @typescript-eslint/no-explicit-any */
-// TODO: #112 Replace bad Function type with appropriate function type
-/* eslint-disable @typescript-eslint/ban-types */
-
 import "./TableWidget.css";
 import BulkArchiveButton from "../components/BulkArchiveButton";
 import DownloadDataButton from "../components/DownloadDataButton";
@@ -32,12 +27,9 @@ const TableWidget = (props: {
   isArchivedItems: boolean;
   user: User;
   page: number;
-  setPage: Function;
+  setPage: React.Dispatch<React.SetStateAction<number>>;
 }) => {
   const numberOfItems = 30;
-  const handlePageChange = (e: any, value: any) => {
-    props.setPage(value.activePage);
-  };
 
   function changeSort(column: string) {
     if (props.sort.column === column) {
@@ -314,7 +306,19 @@ const TableWidget = (props: {
       <Pagination
         activePage={props.page}
         totalPages={Math.ceil(props.items.length / numberOfItems)}
-        onPageChange={handlePageChange}
+        onPageChange={(_e, value) => {
+          switch (typeof value.activePage) {
+            case "number":
+              props.setPage(value.activePage);
+              break;
+            case "string":
+              props.setPage(parseInt(value.activePage));
+              break;
+            case "undefined":
+              props.setPage(1);
+              break;
+          }
+        }}
       />
     </div>
   );

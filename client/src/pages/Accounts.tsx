@@ -6,6 +6,7 @@ import { PermissionType } from "../enums/permissionType";
 import "./Accounts.css";
 import "semantic-ui-css/semantic.min.css";
 import { User } from "../interface/user";
+import { SearchConfig } from "../utils/itemTableUtils";
 
 import axios from "axios";
 import * as React from "react";
@@ -15,12 +16,15 @@ import { Grid } from "semantic-ui-react";
 
 function Accounts() {
   document.title = "Lost and Found User Permissions";
-  //what is from the search
-  const [input, setInput] = useState("");
+  const [search, setSearch] = useState<SearchConfig>({
+    value: "",
+    setting: "",
+    placeholder: "",
+  });
   //unfiltered list
-  const [userListDefault, setUserListDefault] = useState([]);
+  const [userListDefault, setUserListDefault] = useState<User[]>([]);
   //filtered list
-  const [userList, setUserList] = useState([]);
+  const [userList, setUserList] = useState<User[]>([]);
   const [user, setUser] = useState<User | null>(null);
   const history = useHistory();
 
@@ -78,14 +82,12 @@ function Accounts() {
     }
   }, [user]);
 
-  //modify users
-  const updateInput = async (input: string) => {
-    const filtered = userListDefault.filter((user: User) => {
-      return user.username.toLowerCase().includes(input.toLowerCase());
-    });
-    setInput(input);
+  useEffect(() => {
+    const filtered = userListDefault.filter((user) =>
+      user.username.toLowerCase().includes(search.value.toLowerCase())
+    );
     setUserList(filtered);
-  };
+  }, [userListDefault, search]);
 
   const isAllAdmin =
     user?.permissions.includes(`${BuildingType.ALL}:${PermissionType.ADMIN}`) ??
@@ -107,8 +109,8 @@ function Accounts() {
           <Grid.Column width={16}>
             <div id="admin-filter-bar">
               <SearchBar
-                input={input}
-                onChange={updateInput}
+                value={search}
+                onChange={setSearch}
                 placeholder={"Search..."}
               />
             </div>

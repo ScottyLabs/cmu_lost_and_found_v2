@@ -107,6 +107,12 @@ function Policies() {
                       “High-Value” item, that still maintains some level of
                       monetary value{" "}
                     </li>
+                    <li>
+                      {" "}
+                      Beverage Containers &mdash; Reusable water bottles, coffee
+                      mugs, etc.{" "}
+                    </li>
+                    <li> CMU ID Cards </li>
                   </ul>
                   <h2> Procedures </h2>
                   Procedures for Lost/Abandoned Property*:
@@ -155,6 +161,38 @@ function Policies() {
                       </ul>
                     </li>
                     <li>
+                      Beverage Containers
+                      <ul>
+                        <li>
+                          Beverage containers turned into the lost and found
+                          will be emptied of their contents.
+                        </li>
+                        <li>
+                          Containers will be held for 1 week, at which time they
+                          will be discarded.
+                        </li>
+                      </ul>
+                    </li>
+                    <li>
+                      CMU ID Cards
+                      <ul>
+                        <li>
+                          CMU ID Cards turned into the Information Desk will be
+                          held for a minimum of 1 week, and the owner will be
+                          contacted.
+                        </li>
+                        <li>
+                          Cards left for longer than 1 week will be returned to
+                          The HUB.
+                        </li>
+                        <li>
+                          Cards will not be returned to The HUB if they are
+                          turned in within a wallet, cell-phone, or other
+                          personal property.
+                        </li>
+                      </ul>
+                    </li>
+                    <li>
                       Returning Property
                       <ul>
                         <li>
@@ -169,8 +207,9 @@ function Policies() {
                       </ul>
                     </li>
                   </ul>
-                  *Water bottles and any such items which may carry bodily
-                  fluids will not be accepted.
+                  *Any items that contain food, or may carry bodily fluids will
+                  not be accepted. The Cohon Center may refuse to take any lost
+                  items at the discretion of it's staff.
                 </div>
               </div>
             </main>

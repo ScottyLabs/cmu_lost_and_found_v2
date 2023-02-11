@@ -1,5 +1,7 @@
 import "./SearchDropdown.css";
 
+import { SearchConfig } from "../utils/itemTableUtils";
+
 import * as React from "react";
 import { Dropdown } from "semantic-ui-react";
 
@@ -22,18 +24,28 @@ const searchOptions = [
 ];
 
 const SearchDropdown = (props: {
-  selected: string;
-  onChange: React.Dispatch<React.SetStateAction<string>>;
+  onChange: React.Dispatch<React.SetStateAction<SearchConfig>>;
+  value: SearchConfig;
 }) => {
+  const searchOption = searchOptions.find(
+    (option) => option.key === props.value.setting
+  );
   return (
     <Dropdown
       id="searchdropdown"
       placeholder="Search by..."
       fluid
       selection
-      value={props.selected}
-      onChange={(e, data) => {
-        props.onChange(String(data.value));
+      value={searchOption?.value ?? searchOptions[0].value}
+      onChange={(_e, data) => {
+        const option = searchOptions.find(
+          (option) => option.value === String(data.value)
+        );
+        props.onChange({
+          ...props.value,
+          setting: option?.key ?? "Keyword",
+          placeholder: option?.value ?? "e.g. keys",
+        });
       }}
       options={searchOptions}
     />

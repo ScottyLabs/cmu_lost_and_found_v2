@@ -1,8 +1,3 @@
-// TODO: #113 Replace any type annotations with appropriate type
-/* eslint-disable @typescript-eslint/no-explicit-any */
-// TODO: #112 Replace bad Function type with appropriate function type
-/* eslint-disable @typescript-eslint/ban-types */
-
 import "./TableWidget.css";
 import BulkArchiveButton from "../components/BulkArchiveButton";
 import DownloadDataButton from "../components/DownloadDataButton";
@@ -10,6 +5,7 @@ import { BuildingType } from "../enums/locationTypes";
 import { PermissionType } from "../enums/permissionType";
 import { Item } from "../interface/item";
 import { User } from "../interface/user";
+import { SortConfig } from "../utils/itemTableUtils";
 import AddItemButton from "./AddItemButton";
 import ApproveSwitch from "./ApproveSwitch";
 import AvailableSwitch from "./AvailableSwitch";
@@ -24,47 +20,26 @@ import { Table, Pagination } from "semantic-ui-react";
 
 const TableWidget = (props: {
   items: Array<Item>;
-  fixedItems: Array<Item>;
   isUser: boolean;
   fetchItems: () => void;
-  sortItems: Function;
+  sort: SortConfig;
+  setSort: React.Dispatch<React.SetStateAction<SortConfig>>;
   isArchivedItems: boolean;
   user: User;
   page: number;
-  setPage: Function;
+  setPage: React.Dispatch<React.SetStateAction<number>>;
 }) => {
   const numberOfItems = 30;
-  const handlePageChange = (e: any, value: any) => {
-    props.setPage(value.activePage);
-  };
 
-  function reducer(state: any, action: any) {
-    switch (action.type) {
-      case "CHANGE_SORT":
-        if (state.column === action.column) {
-          const newdir =
-            state.direction === "ascending" ? "descending" : "ascending";
-          props.sortItems(action.column, newdir);
-          return {
-            ...state,
-            direction: newdir,
-          };
-        }
-        props.sortItems(action.column, "ascending");
-        return {
-          ...state,
-          column: action.column,
-          direction: "ascending",
-        };
-      default:
-        throw new Error();
+  function changeSort(column: string) {
+    if (props.sort.column === column) {
+      const newDir =
+        props.sort.direction === "ascending" ? "descending" : "ascending";
+      props.setSort({ ...props.sort, direction: newDir });
+    } else {
+      props.setSort({ column, direction: "ascending" });
     }
   }
-
-  const [state, dispatch] = React.useReducer(reducer, {
-    column: null,
-    direction: null,
-  });
 
   // check a value in local storage to decide if account user is an admin for client-side use
   // safe from a security perspective because backend will independently check if user is an admin
@@ -73,15 +48,16 @@ const TableWidget = (props: {
       `${BuildingType.ALL}:${PermissionType.ADMIN}`
     ) ?? false;
 
+  const isAdmin = props.user?.permissions.some((value) =>
+    value.includes(PermissionType.ADMIN)
+  );
+
   return (
     <div>
       <div className="table-buttons">
         <div>
-          <DownloadDataButton
-            fetchItems={props.fetchItems}
-            items={props.fixedItems}
-          />
-          {!props.isArchivedItems ? (
+          <DownloadDataButton />
+          {!props.isArchivedItems && isAdmin ? (
             <BulkArchiveButton
               fetchItems={props.fetchItems}
             ></BulkArchiveButton>
@@ -100,70 +76,81 @@ const TableWidget = (props: {
           <Table.Row>
             <Table.HeaderCell
               width={1}
-              sorted={state.column === "whenFound" ? state.direction : null}
-              onClick={() =>
-                dispatch({
-                  type: "CHANGE_SORT",
-                  column: "whenFound",
-                })
+              sorted={
+                props.sort.column === "whenFound"
+                  ? props.sort.direction
+                  : undefined
               }
+              onClick={() => changeSort("whenFound")}
             >
               When Found
             </Table.HeaderCell>
             <Table.HeaderCell
-              sorted={state.column === "name" ? state.direction : null}
-              onClick={() => dispatch({ type: "CHANGE_SORT", column: "name" })}
+              sorted={
+                props.sort.column === "name" ? props.sort.direction : undefined
+              }
+              onClick={() => changeSort("name")}
             >
               Name
             </Table.HeaderCell>
             <Table.HeaderCell
-              sorted={state.column === "whereFound" ? state.direction : null}
-              onClick={() =>
-                dispatch({ type: "CHANGE_SORT", column: "whereFound" })
+              sorted={
+                props.sort.column === "whereFound"
+                  ? props.sort.direction
+                  : undefined
               }
+              onClick={() => changeSort("whereFound")}
             >
               Where Found
             </Table.HeaderCell>
             <Table.HeaderCell
-              sorted={state.column === "description" ? state.direction : null}
-              onClick={() =>
-                dispatch({ type: "CHANGE_SORT", column: "description" })
+              sorted={
+                props.sort.column === "description"
+                  ? props.sort.direction
+                  : undefined
               }
+              onClick={() => changeSort("description")}
             >
               Description
             </Table.HeaderCell>
             <Table.HeaderCell
-              sorted={state.column === "building" ? state.direction : null}
-              onClick={() =>
-                dispatch({ type: "CHANGE_SORT", column: "building" })
+              sorted={
+                props.sort.column === "building"
+                  ? props.sort.direction
+                  : undefined
               }
+              onClick={() => changeSort("building")}
             >
               Building
             </Table.HeaderCell>
             <Table.HeaderCell
-              sorted={state.column === "image" ? state.direction : null}
-              onClick={() => dispatch({ type: "CHANGE_SORT", column: "image" })}
+              sorted={
+                props.sort.column === "image" ? props.sort.direction : undefined
+              }
+              onClick={() => changeSort("image")}
             >
               Image
             </Table.HeaderCell>
             {!props.isArchivedItems && props.isUser ? (
               <Table.HeaderCell
                 sorted={
-                  state.column === "publicDisplay" ? state.direction : null
+                  props.sort.column === "publicDisplay"
+                    ? props.sort.direction
+                    : undefined
                 }
-                onClick={() =>
-                  dispatch({ type: "CHANGE_SORT", column: "publicDisplay" })
-                }
+                onClick={() => changeSort("publicDisplay")}
               >
                 Make Public
               </Table.HeaderCell>
             ) : null}
             {!props.isArchivedItems && props.isUser ? (
               <Table.HeaderCell
-                sorted={state.column === "status" ? state.direction : null}
-                onClick={() =>
-                  dispatch({ type: "CHANGE_SORT", column: "status" })
+                sorted={
+                  props.sort.column === "status"
+                    ? props.sort.direction
+                    : undefined
                 }
+                onClick={() => changeSort("status")}
               >
                 Available For Pickup
               </Table.HeaderCell>
@@ -173,10 +160,12 @@ const TableWidget = (props: {
             ) : null}
             {!props.isArchivedItems && props.isUser ? (
               <Table.HeaderCell
-                sorted={state.column === "approved" ? state.direction : null}
-                onClick={() =>
-                  dispatch({ type: "CHANGE_SORT", column: "approved" })
+                sorted={
+                  props.sort.column === "approved"
+                    ? props.sort.direction
+                    : undefined
                 }
+                onClick={() => changeSort("approved")}
               >
                 Approve
               </Table.HeaderCell>
@@ -296,8 +285,11 @@ const TableWidget = (props: {
                       modified={item.modified}
                       approver={item.approver}
                       returner={item.returner}
+                      archiver={item.archiver}
+                      isArchived={item.archived}
                     ></HistoryAccordion>
                   </Table.Cell>
+
                   {props.isArchivedItems ? (
                     <Table.Cell>
                       <UnarchiveButton
@@ -314,7 +306,19 @@ const TableWidget = (props: {
       <Pagination
         activePage={props.page}
         totalPages={Math.ceil(props.items.length / numberOfItems)}
-        onPageChange={handlePageChange}
+        onPageChange={(_e, value) => {
+          switch (typeof value.activePage) {
+            case "number":
+              props.setPage(value.activePage);
+              break;
+            case "string":
+              props.setPage(parseInt(value.activePage));
+              break;
+            case "undefined":
+              props.setPage(1);
+              break;
+          }
+        }}
       />
     </div>
   );

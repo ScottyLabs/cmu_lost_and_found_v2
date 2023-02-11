@@ -1,9 +1,9 @@
-.ui.grid>.row {
+.ui.grid > .row {
   margin: 0;
   padding-bottom: 0;
 }
 
-.ui.grid>.row>.column {
+.ui.grid > .row > .column {
   margin-top: 0;
   padding-left: 80px;
   padding-right: 80px;
@@ -35,7 +35,7 @@
     padding-right: 20px;
   }
 
-  .ui.grid>.row>.column {
+  .ui.grid > .row > .column {
     padding-left: 20px;
     padding-right: 20px;
   }

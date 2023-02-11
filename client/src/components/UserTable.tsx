@@ -10,8 +10,6 @@ import NotificationSwitch from "./NotificationSwitch";
 import * as React from "react";
 import { Label, Table } from "semantic-ui-react";
 
-// TODO: #110 Replace bad type Function with appropriate type
-// eslint-disable-next-line @typescript-eslint/ban-types
 const UserTable = (props: { users: Array<User>; fetchUsers: () => void }) => {
   console.log("Creating table");
   return (
@@ -47,9 +45,11 @@ const UserTable = (props: { users: Array<User>; fetchUsers: () => void }) => {
                         ? "green"
                         : "yellow";
                     return (
-                      // TODO: #111 Fix missing React key prop
-                      // eslint-disable-next-line react/jsx-key
-                      <Label color={color} image>
+                      <Label
+                        color={color}
+                        image
+                        key={`permission-${building}-${action}`}
+                      >
                         {building}
                         <Label.Detail>{action}</Label.Detail>
                       </Label>

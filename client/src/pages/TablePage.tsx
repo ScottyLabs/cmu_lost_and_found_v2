@@ -12,6 +12,7 @@ import { BuildingType } from "../enums/locationTypes";
 import { PermissionType } from "../enums/permissionType";
 import { Item } from "../interface/item";
 import { User } from "../interface/user";
+import { filterItems, SearchConfig } from "../utils/itemTableUtils";
 
 import axios from "axios";
 import * as React from "react";
@@ -22,12 +23,15 @@ import { Grid, Message } from "semantic-ui-react";
 function TablePage() {
   const history = useHistory();
 
-  //what is from the search
-  const [input, setInput] = useState("");
   //unfiltered list
-  const [itemListDefault, setItemListDefault] = useState([]);
+  const [itemListDefault, setItemListDefault] = useState<Item[]>([]);
+  const [search, setSearch] = useState<SearchConfig>({
+    value: "",
+    placeholder: "Search...",
+    setting: "Keyword",
+  });
   //filtered list
-  const [itemList, setItemList] = useState([]);
+  const [itemList, setItemList] = useState<Item[]>([]);
 
   const [user, setUser] = useState<User | null>(null);
 
@@ -66,20 +70,6 @@ function TablePage() {
       });
   };
 
-  // modify items
-  const updateInput = async (input: string) => {
-    const inputName = input.toLowerCase();
-    const filtered = itemListDefault.filter((item: Item) => {
-      return (
-        item.name.toLowerCase().includes(inputName) ||
-        item.description.toLowerCase().includes(inputName) ||
-        item.whereFound.toLowerCase().includes(inputName)
-      );
-    });
-    setInput(input);
-    setItemList(filtered);
-  };
-
   useEffect(() => {
     getCurrentUser();
     fetchItems();
@@ -88,6 +78,11 @@ function TablePage() {
   const isAllAdmin =
     user?.permissions.includes(`${BuildingType.ALL}:${PermissionType.ADMIN}`) ??
     false;
+
+  useEffect(() => {
+    const filtered = filterItems(itemListDefault, search);
+    setItemList(filtered);
+  }, [itemListDefault, search]);
 
   return (
     user && (
@@ -125,9 +120,9 @@ function TablePage() {
           <Grid.Column width={16}>
             <div id="admin-filter-bar">
               <SearchBar
-                input={input}
-                onChange={updateInput}
-                placeholder={"Search..."}
+                value={search}
+                onChange={setSearch}
+                placeholder={search.placeholder}
               />
               <FoundItemModal
                 id="found-item-modal"

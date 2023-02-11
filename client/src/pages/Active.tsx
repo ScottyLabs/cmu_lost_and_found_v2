@@ -1,8 +1,6 @@
 import "./Active.css";
 import "semantic-ui-css/semantic.min.css";
 
-// TODO: #109 Fix @typescript-eslint/no-explicit-any in Admin.tsx
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import Header from "../components/Header";
 import SearchBar from "../components/SearchBar";
 import SearchDropdown from "../components/SearchDropdown";
@@ -11,6 +9,12 @@ import { BuildingType } from "../enums/locationTypes";
 import { PermissionType } from "../enums/permissionType";
 import { Item } from "../interface/item";
 import { User } from "../interface/user";
+import {
+  filterItems,
+  SearchConfig,
+  SortConfig,
+  sortItems,
+} from "../utils/itemTableUtils";
 
 import axios from "axios";
 import * as React from "react";
@@ -21,19 +25,24 @@ import { Grid } from "semantic-ui-react";
 function Active() {
   document.title = "CMU Lost and Found";
 
-  const [items, setItems] = useState([]);
-  //what is from the search
-  const [input, setInput] = useState("");
   //unfiltered list
-  const [itemListDefault, setItemListDefault] = useState([]);
+  const [itemListDefault, setItemListDefault] = useState<Item[]>([]);
   //filtered list
-  const [itemList, setItemList] = useState([]);
+  const [itemList, setItemList] = useState<Item[]>([]);
+
+  const [sort, setSort] = useState<SortConfig>({
+    column: undefined,
+    direction: undefined,
+  });
 
   const [user, setUser] = useState<User | null>(null);
   const [page, setPage] = useState(1);
 
-  const [placeholder, setPlaceholder] = useState("e.g. keys");
-  const [searchSetting, setSearchSetting] = useState("Keyword");
+  const [search, setSearch] = useState<SearchConfig>({
+    value: "",
+    setting: "Keyword",
+    placeholder: "e.g. keys",
+  });
 
   const fetchItems = () => {
     axios
@@ -43,7 +52,6 @@ function Active() {
       })
       .then(
         (res) => {
-          setItems(res.data);
           //added
           setItemListDefault(res.data);
           setItemList(res.data);
@@ -83,80 +91,6 @@ function Active() {
     fetchItems();
   }, []);
 
-  const isWithinRange = (date1: Date, date2: Date, date: Date) => {
-    return date >= date1 && date <= date2;
-  };
-
-  const subtractDays = (date: Date, days: any) => {
-    return new Date(date.getTime() - days * 24 * 60 * 60 * 1000);
-  };
-
-  // modify items
-  const updateInput = async (input: string) => {
-    let filtered;
-    if (input != "" && searchSetting == "Older than") {
-      filtered = itemListDefault.filter((item: Item) => {
-        const minDate = -8640000000000000;
-        return isWithinRange(
-          new Date(minDate),
-          subtractDays(new Date(), input),
-          new Date(item.dateFound)
-        );
-      });
-    } else if (input != "" && searchSetting == "Recency") {
-      const days = parseInt(input);
-      filtered = itemListDefault.filter((item: Item) => {
-        return isWithinRange(
-          subtractDays(new Date(), days + 1),
-          new Date(),
-          new Date(item.dateFound)
-        );
-      });
-    } else {
-      const inputName = input.toLowerCase();
-      filtered = itemListDefault.filter((item: Item) => {
-        return (
-          item.name.toLowerCase().includes(inputName) ||
-          item.description.toLowerCase().includes(inputName) ||
-          item.whereFound.toLowerCase().includes(inputName) ||
-          item.identification.toLowerCase().includes(inputName) ||
-          item.notes.toLowerCase().includes(inputName)
-        );
-      });
-    }
-    setInput(input);
-    setItemList(filtered);
-    setPage(1);
-  };
-
-  // sort items
-  const sortItems = async (column: string, direction: string) => {
-    let sorted = itemListDefault;
-    if (column === "whenFound") {
-      sorted = itemListDefault.sort((item1: any, item2: any) => {
-        const time1 = new Date(item1["dateFound"]).getTime();
-        const time2 = new Date(item2["dateFound"]).getTime();
-        return time1 === time2
-          ? item1["timeFound"].localeCompare(item2["timeFound"])
-          : time1 - time2;
-      });
-    } else {
-      sorted = itemListDefault.sort((item1: any, item2: any) => {
-        const str1 = String(item1[column]).replace(/\s+/g, "").toLowerCase();
-        const str2 = String(item2[column]).replace(/\s+/g, "").toLowerCase();
-        return str1.localeCompare(str2);
-      });
-    }
-    if (direction == "descending") sorted.reverse();
-    setItemList(sorted);
-  };
-
-  // Change search filter
-  const setSearchFilter = (option: any) => {
-    setSearchSetting(option.key);
-    setPlaceholder(option.value);
-  };
-
   // check a value in local storage to decide if account user is an admin for client-side use
   // safe from a security perspective because backend will independently check if user is an admin
   const isAllAdmin =
@@ -168,6 +102,17 @@ function Active() {
       history.push("/");
     }
   }, [user]);
+
+  useEffect(() => {
+    const filtered = filterItems(itemListDefault, search);
+    const sorted = sortItems(
+      filtered,
+      (sort.column as keyof Item) ?? "whenFound",
+      sort.direction ?? "descending"
+    );
+    setItemList(sorted);
+    setPage(1);
+  }, [itemListDefault, search, sort]);
 
   return (
     user && (
@@ -184,14 +129,11 @@ function Active() {
         <Grid.Row>
           <Grid.Column width={16}>
             <div id="admin-filter-bar">
-              <SearchDropdown
-                selected={placeholder}
-                onChange={setSearchFilter}
-              />
+              <SearchDropdown value={search} onChange={setSearch} />
               <SearchBar
-                input={input}
-                onChange={updateInput}
-                placeholder={placeholder}
+                value={search}
+                onChange={setSearch}
+                placeholder={search.placeholder}
               />
             </div>
           </Grid.Column>
@@ -203,10 +145,10 @@ function Active() {
               <div id="table">
                 <TableWidget
                   items={itemList}
-                  fixedItems={items}
                   isUser={true}
                   fetchItems={fetchItems}
-                  sortItems={sortItems}
+                  sort={sort}
+                  setSort={setSort}
                   isArchivedItems={false}
                   user={user}
                   page={page}

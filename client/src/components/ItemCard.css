@@ -2,8 +2,10 @@
   justify-content: space-between;
 
   /* Maybe switch this to display grid in the future, because last row is not spaced properly */
-  /* display: grid;
-  grid-template-columns: repeat(auto-fill, 400px); */
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  margin-bottom:20px;
 }
 .grid {
   grid-row: span 4; /* span 4 rows */
@@ -12,14 +14,9 @@
   grid-template-rows: subgrid; /* create a sub-grid with the 4 parent grid rows */
 }
 .card-wrapper {
-  width: 23%;
-  margin-bottom: 25px;
-  display:flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  display:grid;
   height: max-height;
-  padding-left: 10px;
-  padding-right: 10px;
+  gap:10px;
 }
 .card-wrapper-outer{
   height: max-height;

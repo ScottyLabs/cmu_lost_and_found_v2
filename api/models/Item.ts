@@ -6,6 +6,7 @@ import { Schema, Document, model } from "mongoose";
 export interface IItem extends Document {
   dateFound: Date;
   dateReturned: Date;
+  dateArchived: Date;
   timeFound: string;
   name: string;
   whereFound: string;
@@ -27,6 +28,7 @@ export interface IItem extends Document {
   modified: string[];
   approver: string;
   returner: string;
+  archiver: string;
 }
 
 const ItemSchema = new Schema(
@@ -36,6 +38,9 @@ const ItemSchema = new Schema(
       required: true,
     },
     dateReturned: {
+      type: Date,
+    },
+    dateArchived: {
       type: Date,
     },
     timeFound: {
@@ -110,6 +115,9 @@ const ItemSchema = new Schema(
       type: String,
     },
     returner: {
+      type: String,
+    },
+    archiver: {
       type: String,
     },
   },

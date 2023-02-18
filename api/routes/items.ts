@@ -19,6 +19,19 @@ const router = Router();
  * }
  */
 router.post("/all", isUser, async (req: Request, res: Response) => {
+  Item.updateMany({ dateArchived: { $exists: false } }, [
+    { $set: { dateArchived: null } },
+  ]).exec(function (err, docs) {
+    if (err) console.log(err);
+    else console.log(docs);
+  });
+  Item.updateMany({ archiver: { $exists: false } }, [
+    { $set: { archiver: null } },
+  ]).exec(function (err, docs) {
+    if (err) console.log(err);
+    else console.log(docs);
+  });
+
   const onlyArchived = req.body.onlyArchived ?? false;
   Item.find({ archived: onlyArchived })
     .populate("whereToRetrieve")
@@ -68,6 +81,7 @@ router.post("/add", isUser, async (req: Request, res: Response) => {
   const item = new Item({
     dateFound: new Date(dateFound),
     dateReturned: null,
+    dateArchived: null,
     timeFound: timeFound,
     name: name,
     whereFound: whereFound,
@@ -87,6 +101,7 @@ router.post("/add", isUser, async (req: Request, res: Response) => {
     modified: [user.username],
     approver: approved ? user.username : null,
     returner: null,
+    archiver: null,
   });
   item.save((err) => {
     if (err) {
@@ -154,7 +169,11 @@ router.post("/archive", isUser, async (req: Request, res: Response) => {
         ) {
           const updatedItem = await Item.findByIdAndUpdate(
             id,
-            { archived: archived },
+            {
+              archived: archived,
+              dateArchived: new Date(),
+              archiver: user.username,
+            },
             { runValidators: true, useFindAndModify: false }
           );
           updatedItems.push(updatedItem);
@@ -181,6 +200,7 @@ router.post("/archiveByDays", isAdmin, async (req: Request, res: Response) => {
   const days = req.body.days;
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   const ObjectID = require("mongodb").ObjectID;
+  const user = req.body.user;
   Item.updateMany(
     {
       $and: [
@@ -196,7 +216,15 @@ router.post("/archiveByDays", isAdmin, async (req: Request, res: Response) => {
         },
       ],
     },
-    [{ $set: { archived: true } }]
+    [
+      {
+        $set: {
+          archived: true,
+          dateArchived: new Date(),
+          archiver: user.username,
+        },
+      },
+    ]
   ).exec(function (err, docs) {
     if (err) {
       console.log(err);

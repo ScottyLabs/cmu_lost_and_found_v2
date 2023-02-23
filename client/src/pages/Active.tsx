@@ -111,7 +111,9 @@ function Active() {
       sort.direction ?? "descending"
     );
     setItemList(sorted);
-    setPage(1);
+    if (Math.ceil(sorted.length / 30) < page && page !== 1) {
+      setPage(page - 1);
+    }
   }, [itemListDefault, search, sort]);
 
   return (

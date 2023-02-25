@@ -19,32 +19,32 @@ const DropdownMenu = (props: {
       style={{ color: "#ffffff" }}
     >
       <Dropdown.Menu>
-        {props.page !== "/" ? (
+        {
           <Dropdown.Item onClick={() => history.push("/")}>
             <Link to="/">Home</Link>
           </Dropdown.Item>
-        ) : null}
-        {props.page !== "/about" ? (
+        }
+        {
           <Dropdown.Item onClick={() => history.push("/about")}>
             <Link to="/about">About</Link>
           </Dropdown.Item>
-        ) : null}
-        {props.page !== "/policies" ? (
+        }
+        {
           <Dropdown.Item onClick={() => history.push("/policies")}>
             <Link to="/policies">Policies</Link>
           </Dropdown.Item>
-        ) : null}
-        {props.page !== "/active" && props.isAdmin ? (
+        }
+        {props.isAdmin ? (
           <Dropdown.Item onClick={() => history.push("/active")}>
             <Link to="/active">Active</Link>
           </Dropdown.Item>
         ) : null}
-        {props.page !== "/archived" && props.isAdmin ? (
+        {props.isAdmin ? (
           <Dropdown.Item onClick={() => history.push("/archived")}>
             <Link to="/archived">Archived</Link>
           </Dropdown.Item>
         ) : null}
-        {props.page !== "/accounts" && props.isAllAdmin ? (
+        {props.isAllAdmin ? (
           <Dropdown.Item onClick={() => history.push("/accounts")}>
             <Link to="/accounts">Accounts</Link>
           </Dropdown.Item>

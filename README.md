@@ -26,6 +26,12 @@ cp .env.config .env
 
 and fill out the fields.
 
+To check for linting errors, in the root directory run
+
+```
+npx eslint .
+```
+
 Credits to Bhargav Bachina for template:
 https://medium.com/bb-tutorials-and-thoughts/how-to-develop-and-build-react-app-with-nodejs-backend-typescript-version-27a6a283a7c5
 https://github.com/bbachi/react-nodejs-typescript-example

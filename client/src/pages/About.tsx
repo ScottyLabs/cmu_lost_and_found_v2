@@ -76,19 +76,21 @@ function About() {
                     items on campus in one location.
                   </p>
                   <h2>Contributors</h2>
+                  <p>
+                    This website is developed by ScottyLabs. The following
+                    members have made contributions to the project:
+                  </p>
                   <ul id="contributors">
                     <li>Richard Guo (Project Lead)</li>
                     <li>Elizabeth Louie (Project Lead)</li>
                     <li>Jackie Yang (Project Lead)</li>
-                    <li>Michael Crotty</li>
-                    <li>Daniel Gunawan</li>
+                    <li>Michelle Li (Project Lead)</li>
+                    <li>Gabriel Hall (Project Lead)</li>
+                    <li>David Hwang</li>
                     <li>Brian Lee</li>
-                    <li>Victoria Lee</li>
-                    <li>Cathy Li</li>
-                    <li>Michelle Li</li>
-                    <li>Yerim Song</li>
+                    <li>Ethan Lu</li>
+                    <li>Eric Tong</li>
                     <li>Clara Wang</li>
-                    <li>Rachel Wei</li>
                   </ul>
                 </div>
               </div>

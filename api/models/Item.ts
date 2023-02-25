@@ -100,7 +100,7 @@ const ItemSchema = new Schema(
     identification: {
       type: String,
     },
-    itemLocation:{
+    itemLocation: {
       type: String,
     },
     notes: {

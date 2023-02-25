@@ -65,6 +65,7 @@ router.post("/add", isUser, async (req: Request, res: Response) => {
     status,
     approved,
     identification,
+    itemLocation,
     notes,
     user,
   } = req.body;
@@ -96,6 +97,7 @@ router.post("/add", isUser, async (req: Request, res: Response) => {
     publicDisplay: false,
     archived: false,
     identification: identification,
+    itemLocation: itemLocation,
     notes: notes,
     username: user.username,
     modified: [user.username],
@@ -383,6 +385,7 @@ router.post("/editItem", isUser, async (req: Request, res: Response) => {
     imagePermission,
     status,
     identification,
+    itemLocation,
     notes,
     user,
   } = req.body;
@@ -415,6 +418,7 @@ router.post("/editItem", isUser, async (req: Request, res: Response) => {
                     image: image,
                     imagePermission: imagePermission,
                     identification: identification,
+                    itemLocation: itemLocation,
                     notes: notes,
                     publicDisplay: item.publicDisplay
                       ? value == "general" && !identifiable
@@ -441,6 +445,7 @@ router.post("/editItem", isUser, async (req: Request, res: Response) => {
                     image: image,
                     imagePermission: imagePermission,
                     identification: identification,
+                    itemLocation: itemLocation,
                     notes: notes,
                     publicDisplay: item.publicDisplay
                       ? value == "general" && !identifiable

@@ -24,6 +24,7 @@ export interface IItem extends Document {
   archived: boolean;
   notes: string;
   identification: string;
+  itemLocation: string;
   username: string;
   modified: string[];
   approver: string;
@@ -97,6 +98,9 @@ const ItemSchema = new Schema(
       required: true,
     },
     identification: {
+      type: String,
+    },
+    itemLocation:{
       type: String,
     },
     notes: {

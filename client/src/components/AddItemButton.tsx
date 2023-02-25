@@ -124,6 +124,7 @@ function AddItemButton(props: {
     imagePermission: false,
     status: "available",
     identification: "",
+    itemLocation: "",
     email: "",
     templateType: "",
     notes: "",
@@ -237,6 +238,7 @@ function AddItemButton(props: {
       imagePermission,
       status,
       identification,
+      itemLocation,
       email,
       templateType,
       notes,
@@ -381,6 +383,7 @@ function AddItemButton(props: {
             status: status,
             approved: props.isAdmin,
             identification: identification,
+            itemLocation: itemLocation,
             email: email,
             templateType: templateType,
             notes: notes,
@@ -417,6 +420,7 @@ function AddItemButton(props: {
           imagePermission: false,
           status: "available",
           identification: "",
+          itemLocation: "",
           email: "",
           templateType: "",
           notes: "",
@@ -559,6 +563,15 @@ function AddItemButton(props: {
               onChange={handleChange}
             />
           ) : null}
+          <Form.Input
+            required
+            label="Item Location"
+            placeholder="Ex. Closet or Vault"
+            name="itemLocation"
+            value={state.itemLocation}
+            onChange={handleChange}
+          />
+
           {/* {state.identifiable ? (
             <Form.Input
               label="Email"
@@ -581,8 +594,9 @@ function AddItemButton(props: {
             />
           ) : null} */}
           <Form.TextArea
-            label="Notes"
+            label="Private Notes"
             name="notes"
+            placeholder="Description typed here is not visible to the public"
             value={state.notes}
             onChange={handleChange}
           />

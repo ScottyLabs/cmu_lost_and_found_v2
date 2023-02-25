@@ -1,4 +1,5 @@
 {
     "cmake.configureOnOpen": false,
-    "extensions.ignoreRecommendations": true
+    "extensions.ignoreRecommendations": true,
+    "editor.formatOnSave": true
 }

@@ -75,7 +75,6 @@ export const filterItems = (items: Item[], search: SearchConfig): Item[] => {
         item.description.toLowerCase().includes(inputName) ||
         item.whereFound.toLowerCase().includes(inputName) ||
         item.identification.toLowerCase().includes(inputName) ||
-        item.itemLocation.toLowerCase().includes(inputName) ||
         item.notes.toLowerCase().includes(inputName)
       );
     });

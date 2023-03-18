@@ -563,7 +563,7 @@ function AddItemButton(props: {
               onChange={handleChange}
             />
           ) : null}
-          <Form.Input
+          <Form.TextArea
             required
             label="Item Location"
             placeholder="Ex. Closet or Vault"

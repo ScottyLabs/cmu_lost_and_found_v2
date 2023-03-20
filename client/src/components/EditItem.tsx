@@ -112,6 +112,7 @@ function EditItem(props: {
     status: props.item.status,
     approved: props.item.approved,
     identification: props.item.identification,
+    itemLocation: props.item.itemLocation,
     notes: props.item.notes,
   });
 
@@ -202,6 +203,7 @@ function EditItem(props: {
       status,
       approved,
       identification,
+      itemLocation,
       notes,
     } = state;
 
@@ -229,6 +231,7 @@ function EditItem(props: {
             status: status,
             approved: approved,
             identification: identification,
+            itemLocation: itemLocation,
             notes: notes,
           })
           .then(
@@ -264,6 +267,7 @@ function EditItem(props: {
           status: "available",
           approved: false,
           identification: state.identification,
+          itemLocation: state.itemLocation,
           notes: state.notes,
         });
         return res;
@@ -412,12 +416,22 @@ function EditItem(props: {
                   onChange={handleChange}
                 />
               ) : null}
+              <Form.Input
+                required
+                label="Item Location in UC"
+                placeholder="Ex. Closet or Vault"
+                name="itemLocation"
+                value={state.itemLocation}
+                onChange={handleChange}
+              />
               <Form.TextArea
-                label="Notes"
+                label="Private Notes"
                 name="notes"
+                placeholder="Description typed here is not visible to the public"
                 value={state.notes}
                 onChange={handleChange}
               />
+
               <Form.Group></Form.Group>
 
               <Form.Group inline id="edit-modal-actions">
@@ -487,6 +501,7 @@ function EditItem(props: {
                         status: props.item.status,
                         approved: props.item.approved,
                         identification: props.item.identification,
+                        itemLocation: props.item.itemLocation,
                         notes: props.item.notes,
                       });
                     }}

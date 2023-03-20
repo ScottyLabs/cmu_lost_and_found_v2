@@ -20,6 +20,7 @@ export interface Item {
   publicDisplay: boolean;
   archived: boolean;
   identification: string;
+  itemLocation: string;
   notes: string;
   username: string;
   modified: string[];

@@ -1,5 +1,5 @@
-import { IBuilding } from "./Building";
 import { BuildingType } from "../enums/locationTypes";
+import { IBuilding } from "./Building";
 
 import { Schema, Document, model } from "mongoose";
 

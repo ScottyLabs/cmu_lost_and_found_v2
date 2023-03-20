@@ -1,11 +1,11 @@
 import "./TableWidget.css";
-import EditPermissions from "./EditPermissions";
-import NotificationSwitch from "./NotificationSwitch";
 import AddUser from "../components/AddUser";
 import DeleteUser from "../components/DeleteUser";
 import { BuildingType } from "../enums/locationTypes";
 import { PermissionType } from "../enums/permissionType";
 import { User } from "../interface/user";
+import EditPermissions from "./EditPermissions";
+import NotificationSwitch from "./NotificationSwitch";
 
 import * as React from "react";
 import { Label, Table } from "semantic-ui-react";

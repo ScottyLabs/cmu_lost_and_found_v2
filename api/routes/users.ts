@@ -1,8 +1,8 @@
+import { isAdmin, isUser } from "./auth";
 import PermissionsController from "../controllers/PermissionsController";
 import { BuildingType } from "../enums/locationTypes";
 import { PermissionType } from "../enums/permissionType";
 import User, { IUser } from "../models/User";
-import { isAdmin, isUser } from "./auth";
 
 import { Request, Response, Router } from "express";
 

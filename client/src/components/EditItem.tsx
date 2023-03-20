@@ -1,11 +1,11 @@
 // TODO: #126 Replace any annotations with appropriate type
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import ArchiveButton from "./ArchiveButton";
+import DeleteButton from "./DeleteButton";
 import { BuildingType } from "../enums/locationTypes";
 import { PermissionType } from "../enums/permissionType";
 import { Item } from "../interface/item";
 import { User } from "../interface/user";
-import ArchiveButton from "./ArchiveButton";
-import DeleteButton from "./DeleteButton";
 
 import axios from "axios";
 import * as React from "react";

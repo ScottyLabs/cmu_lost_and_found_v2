@@ -1,5 +1,5 @@
-import { Building } from "./building";
 import { BuildingType } from "../enums/locationTypes";
+import { Building } from "./building";
 
 export interface Item {
   _id: string;

@@ -1,9 +1,9 @@
-import { isUser, isAdmin } from "./auth";
 import ImageController from "../controllers/ImageController";
 import PermissionsController from "../controllers/PermissionsController";
 import { BuildingType } from "../enums/locationTypes";
 import { PermissionType } from "../enums/permissionType";
 import Item from "../models/Item";
+import { isUser, isAdmin } from "./auth";
 
 import { Request, Response, Router } from "express";
 

@@ -403,13 +403,15 @@ function EditItem(props: {
                 value={state.imagePath}
                 onChange={handleFileChange}
               />
-              <Form.Input
-                label="Identification"
-                placeholder="AndrewID or driver's license number"
-                name="identification"
-                value={state.identification}
-                onChange={handleChange}
-              />
+              {state.identifiable ? (
+                <Form.Input
+                  label="Identification"
+                  placeholder="AndrewID or driver's license number"
+                  name="identification"
+                  value={state.identification}
+                  onChange={handleChange}
+                />
+              ) : null}
               <Form.TextArea
                 label="Notes"
                 name="notes"

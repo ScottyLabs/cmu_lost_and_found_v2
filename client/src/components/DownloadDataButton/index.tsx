@@ -7,12 +7,12 @@ import { unparse } from "papaparse";
 import * as React from "react";
 import { Button } from "semantic-ui-react";
 
-function DownloadDataButton() {
+function DownloadDataButton(props: { onlyArchived: boolean }) {
   function fetchItems(): Promise<Item[]> {
     return axios
       .post("/api/items/all", {
         token: window.localStorage.getItem("lnf_token"),
-        onlyArchived: false,
+        onlyArchived: props.onlyArchived,
       })
       .then((res) => {
         return res.data as Item[];

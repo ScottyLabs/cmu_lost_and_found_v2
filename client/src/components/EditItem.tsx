@@ -418,7 +418,7 @@ function EditItem(props: {
               ) : null}
               <Form.Input
                 required
-                label="Item Location in UC"
+                label="Item Storage Location"
                 placeholder="Ex. Closet or Vault"
                 name="itemLocation"
                 value={state.itemLocation}

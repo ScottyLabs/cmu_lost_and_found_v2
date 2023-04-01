@@ -124,6 +124,7 @@ function AddItemButton(props: {
     imagePermission: false,
     status: "available",
     identification: "",
+    ownerNotified: "",
     itemLocation: "",
     email: "",
     templateType: "",
@@ -238,6 +239,7 @@ function AddItemButton(props: {
       imagePermission,
       status,
       identification,
+      ownerNotified,
       itemLocation,
       email,
       templateType,
@@ -383,6 +385,7 @@ function AddItemButton(props: {
             status: status,
             approved: props.isAdmin,
             identification: identification,
+            ownerNotified: ownerNotified,
             itemLocation: itemLocation,
             email: email,
             templateType: templateType,
@@ -420,6 +423,7 @@ function AddItemButton(props: {
           imagePermission: false,
           status: "available",
           identification: "",
+          ownerNotified: "",
           itemLocation: "",
           email: "",
           templateType: "",
@@ -555,13 +559,25 @@ function AddItemButton(props: {
             onChange={handleFileChange}
           />
           {state.identifiable ? (
-            <Form.Input
-              label="Identification"
-              placeholder="AndrewID or driver's license number"
-              name="identification"
-              value={state.identification}
-              onChange={handleChange}
-            />
+            <Form.Group widths="equal">
+              <Form.Input
+                required
+                label="Identification"
+                placeholder="AndrewID or driver's license number"
+                name="identification"
+                value={state.identification}
+                onChange={handleChange}
+              />
+              <Form.Input
+                required
+                fluid
+                label="Owner Notified"
+                name="ownerNotified"
+                placeholder="Ex. Yes - emailed, No, N/A, etc."
+                value={state.ownerNotified}
+                onChange={handleChange}
+              />
+            </Form.Group>
           ) : null}
           <Form.TextArea
             required
@@ -571,28 +587,6 @@ function AddItemButton(props: {
             value={state.itemLocation}
             onChange={handleChange}
           />
-
-          {/* {state.identifiable ? (
-            <Form.Input
-              label="Email"
-              placeholder="Ex. bovick@andrew.cmu.edu"
-              name="email"
-              value={state.email}
-              onChange={handleChange}
-            />
-          ) : null}
-          {isValidEmail(state.email) ? (
-            <Form.Select
-              fluid
-              required
-              label="Template Type"
-              options={templates}
-              placeholder="CMU ID or item with PID"
-              name="templateType"
-              value={state.templateType}
-              onChange={handleChange}
-            />
-          ) : null} */}
           <Form.TextArea
             label="Private Notes"
             name="notes"

@@ -112,6 +112,7 @@ function EditItem(props: {
     status: props.item.status,
     approved: props.item.approved,
     identification: props.item.identification,
+    ownerNotified: props.item.ownerNotified,
     itemLocation: props.item.itemLocation,
     notes: props.item.notes,
   });
@@ -203,6 +204,7 @@ function EditItem(props: {
       status,
       approved,
       identification,
+      ownerNotified,
       itemLocation,
       notes,
     } = state;
@@ -231,6 +233,7 @@ function EditItem(props: {
             status: status,
             approved: approved,
             identification: identification,
+            ownerNotified: ownerNotified,
             itemLocation: itemLocation,
             notes: notes,
           })
@@ -267,6 +270,7 @@ function EditItem(props: {
           status: "available",
           approved: false,
           identification: state.identification,
+          ownerNotified: state.ownerNotified,
           itemLocation: state.itemLocation,
           notes: state.notes,
         });
@@ -408,13 +412,25 @@ function EditItem(props: {
                 onChange={handleFileChange}
               />
               {state.identifiable ? (
-                <Form.Input
-                  label="Identification"
-                  placeholder="AndrewID or driver's license number"
-                  name="identification"
-                  value={state.identification}
-                  onChange={handleChange}
-                />
+                <Form.Group widths="equal">
+                  <Form.Input
+                    required
+                    label="Identification"
+                    placeholder="AndrewID or driver's license number"
+                    name="identification"
+                    value={state.identification}
+                    onChange={handleChange}
+                  />
+                  <Form.Input
+                    required
+                    fluid
+                    label="Owner Notified"
+                    name="ownerNotified"
+                    placeholder="Ex. Yes - emailed, No, N/A, etc."
+                    value={state.ownerNotified}
+                    onChange={handleChange}
+                  />
+                </Form.Group>
               ) : null}
               <Form.Input
                 required
@@ -501,6 +517,7 @@ function EditItem(props: {
                         status: props.item.status,
                         approved: props.item.approved,
                         identification: props.item.identification,
+                        ownerNotified: props.item.ownerNotified,
                         itemLocation: props.item.itemLocation,
                         notes: props.item.notes,
                       });

@@ -579,9 +579,9 @@ function AddItemButton(props: {
               />
             </Form.Group>
           ) : null}
-          <Form.TextArea
+          <Form.Input
             required
-            label="Item Location"
+            label="Item Storage Location"
             placeholder="Ex. Closet or Vault"
             name="itemLocation"
             value={state.itemLocation}

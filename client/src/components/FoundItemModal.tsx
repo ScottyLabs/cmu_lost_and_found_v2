@@ -69,7 +69,7 @@ export const lostItemMessage = (
     <p>
       If you lost an item, please check the items below first to see if your
       item is there. Otherwise, you can send an email to{" "}
-      <a href="mailto:lost-and-found@cmu.edu">lost-and-found@cmu.edu</a>. Note
+      <a href="mailto:cucinfodesk@andrew.cmu.edu">cucinfodesk@andrew.cmu.edu</a>. Note
       that we do not actively cross-reference reported lost items with current
       lost and found inventory. Instead, we use the information submitted in
       special cases should we need to identify an item.

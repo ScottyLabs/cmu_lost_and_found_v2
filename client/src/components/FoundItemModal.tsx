@@ -35,13 +35,9 @@ function exampleReducer(dispatchState: any, action: any) {
 
 export const foundItemMessage = (
   <>
-    {/* <p>
-      If you find a lost item, please take it to one of the following locations:
-    </p>
-    <ul className="list">{listItems}</ul> */}
     <p>
-      Please return it to the CUC Lost and Found. If you have any inquiries,
-      please send an email to{" "}
+      Please return it to the Cohon University Center Information Desk. If you
+      have any inquiries, please send an email to{" "}
       <a href="mailto:cucinfodesk@andrew.cmu.edu">cucinfodesk@andrew.cmu.edu</a>{" "}
       or call 412-268-2107.
     </p>
@@ -67,12 +63,19 @@ export const feedbackForm = (
 export const lostItemMessage = (
   <>
     <p>
-      If you lost an item, please check the items below first to see if your
-      item is there. Otherwise, you can send an email to{" "}
-      <a href="mailto:cucinfodesk@andrew.cmu.edu">cucinfodesk@andrew.cmu.edu</a>. Note
-      that we do not actively cross-reference reported lost items with current
-      lost and found inventory. Instead, we use the information submitted in
-      special cases should we need to identify an item.
+      If you lost an item, please check the items below to see if your item is
+      at the Cohon Center Lost and Found.
+    </p>
+    <p>
+      Not a CMU community member? Please call 412-268-2107 or email{" "}
+      <a href="mailto:cucinfodesk@andrew.cmu.edu">cucinfodesk@andrew.cmu.edu</a>{" "}
+      to inquire about a lost item.
+    </p>
+    <p>
+      We do not accept reports of lost items for cross-referencing with future
+      items that may be turned in. Please review our{" "}
+      <a href="https://lostandfound.andrew.cmu.edu/policies">policy page</a> for
+      full details.
     </p>
   </>
 );

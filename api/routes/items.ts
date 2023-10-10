@@ -6,6 +6,7 @@ import Item from "../models/Item";
 import { isUser, isAdmin } from "./auth";
 
 import { Request, Response, Router } from "express";
+import { schedule } from "node-cron";
 
 const router = Router();
 
@@ -193,6 +194,37 @@ router.post("/archive", isUser, async (req: Request, res: Response) => {
   }
   return res.status(200).send({ msg: updatedItems });
 });
+
+// Archive all items older than 90 days.
+async function archiveOldItems() {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const ObjectID = require("mongodb").ObjectID;
+  return Item.updateMany(
+    {
+      $and: [
+        {
+          archived: false,
+        },
+        {
+          _id: {
+            $lt: ObjectID.createFromTime(Date.now() / 1000 - 90 * 24 * 60 * 60),
+          },
+        },
+      ],
+    },
+    [
+      {
+        $set: {
+          archived: true,
+          dateArchived: new Date(),
+          archiver: `Automatically Archived on ${new Date().toDateString()}`,
+        },
+      },
+    ]
+  );
+}
+// Once a week, automatically archives all items older than 90 days
+schedule("0 0 * * *", archiveOldItems);
 
 /**
  * Archives items older than the given days

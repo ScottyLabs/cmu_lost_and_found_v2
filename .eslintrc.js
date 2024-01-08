@@ -22,6 +22,7 @@ module.exports = {
         caughtErrorsIgnorePattern: "^_",
       },
     ],
+    "@typescript-eslint/no-empty-function": "off",
     "@typescript-eslint/no-explicit-any": ["error"],
     "import/no-unresolved": "error",
     "import/order": [

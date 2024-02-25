@@ -17,7 +17,7 @@ import morgan from "morgan";
 
 const port = process.env.SERVER_PORT || 3080;
 const database = process.env.MONGO_URI || "mongodb://localhost:27017";
-const dbName = process.env.MONGO_DB || "lost_and_found_dev";
+const dbName = process.env.MONGO_DB || undefined;
 
 // https://medium.com/bb-tutorials-and-thoughts/how-to-develop-and-build-react-app-with-nodejs-backend-typescript-version-27a6a283a7c5
 // https://github.com/bbachi/react-nodejs-typescript-example

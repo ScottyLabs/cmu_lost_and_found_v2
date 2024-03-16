@@ -113,7 +113,7 @@ const TableWidget = (props: {
             >
               Description
             </Table.HeaderCell>
-            <Table.HeaderCell
+            {/* <Table.HeaderCell
               sorted={
                 props.sort.column === "building"
                   ? props.sort.direction
@@ -122,7 +122,7 @@ const TableWidget = (props: {
               onClick={() => changeSort("building")}
             >
               Building
-            </Table.HeaderCell>
+            </Table.HeaderCell> */}
             <Table.HeaderCell
               sorted={
                 props.sort.column === "image" ? props.sort.direction : undefined
@@ -229,7 +229,7 @@ const TableWidget = (props: {
                   <Table.Cell>{item.name}</Table.Cell>
                   <Table.Cell>{item.whereFound}</Table.Cell>
                   <Table.Cell>{item.description}</Table.Cell>
-                  <Table.Cell>{item.building}</Table.Cell>
+                  {/* <Table.Cell>{item.building}</Table.Cell> */}
                   <Table.Cell>
                     <ImageModal image={item.image}></ImageModal>
                   </Table.Cell>

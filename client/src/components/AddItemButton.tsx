@@ -117,7 +117,7 @@ function AddItemButton(props: {
     description: "",
     value: "general",
     identifiable: false,
-    building: buildplace(),
+    building: "CUC",
     image: "",
     imagePath: "",
     imageObject: null as any,
@@ -465,7 +465,7 @@ function AddItemButton(props: {
             name="name"
             value={state.name}
             onChange={handleChange}
-            // error={nameError}
+          // error={nameError}
           />
           <Form.Group widths="equal">
             <Form.Field required>
@@ -492,7 +492,7 @@ function AddItemButton(props: {
               placeholder="Location"
               value={state.whereFound}
               onChange={handleChange}
-              // error={locationError}
+            // error={locationError}
             />
           </Form.Group>
           <Form.Input
@@ -502,7 +502,7 @@ function AddItemButton(props: {
             name="description"
             value={state.description}
             onChange={handleChange}
-            // error={descriptionError}
+          // error={descriptionError}
           />
           <Form.Group inline>
             <Form.Field required>
@@ -540,17 +540,6 @@ function AddItemButton(props: {
               onChange={handleRadioChange}
             />
           </Form.Group>
-          <Form.Select
-            fluid
-            required
-            label="Building (Lost and Found Desk)"
-            options={buildings}
-            placeholder={"Building (Lost and Found Desk)"}
-            name="building"
-            value={state.building}
-            onChange={handleChange}
-            error={buildingError}
-          />
           <Form.Input
             label="Image Upload"
             name="imagePath"

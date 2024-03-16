@@ -94,10 +94,10 @@ function EditItem(props: {
   const [state, setState] = useState({
     date: new Date(
       new Date(props.item.dateFound).toISOString().substring(0, 10) +
-        "T" +
-        (props.item.timeFound.trim().length > 4
-          ? props.item.timeFound.trim()
-          : "0" + props.item.timeFound.trim())
+      "T" +
+      (props.item.timeFound.trim().length > 4
+        ? props.item.timeFound.trim()
+        : "0" + props.item.timeFound.trim())
     ),
     name: props.item.name,
     whereFound: props.item.whereFound,
@@ -499,10 +499,10 @@ function EditItem(props: {
                           new Date(props.item.dateFound)
                             .toISOString()
                             .substring(0, 10) +
-                            "T" +
-                            (props.item.timeFound.trim().length > 4
-                              ? props.item.timeFound.trim()
-                              : "0" + props.item.timeFound.trim())
+                          "T" +
+                          (props.item.timeFound.trim().length > 4
+                            ? props.item.timeFound.trim()
+                            : "0" + props.item.timeFound.trim())
                         ),
                         name: props.item.name,
                         whereFound: props.item.whereFound,

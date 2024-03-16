@@ -138,7 +138,7 @@ function AddItemButton(props: {
   // const[locationError, setLocationError] = useState(false);
   // const[descriptionError, setDescriptionError] = useState(false);
   // const [buildingError, setBuildingError] = useState(false);
-  const [formError, setFormError] = useState(false);
+  const [formError, _setFormError] = useState(false);
 
   const history = useHistory();
 

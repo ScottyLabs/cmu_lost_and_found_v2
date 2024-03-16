@@ -404,6 +404,13 @@ function EditItem(props: {
                   onChange={handleChange}
                 />
               </Form.Group>
+              {/* <Form.Input
+                label="Image Upload"
+                name="imagePath"
+                type="file"
+                value={state.imagePath}
+                onChange={handleFileChange}
+              /> */}
               {state.identifiable ? (
                 <Form.Group widths="equal">
                   <Form.Input

@@ -551,6 +551,13 @@ function AddItemButton(props: {
             onChange={handleChange}
             error={buildingError}
           />
+          {/* <Form.Input
+            label="Image Upload"
+            name="imagePath"
+            type="file"
+            value={state.imagePath}
+            onChange={handleFileChange}
+          /> */}
           {state.identifiable ? (
             <Form.Group widths="equal">
               <Form.Input

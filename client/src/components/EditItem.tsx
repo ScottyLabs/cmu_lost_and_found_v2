@@ -126,14 +126,14 @@ function EditItem(props: {
   const handleRadioChange = (e: any, { name, value }: any) => {
     setState({ ...state, [name]: value === "true" });
   };
-  const handleFileChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    { name, value }: any
-  ) => {
-    console.log("handling file change");
-    console.log(name + " " + value);
-    setState({ ...state, [name]: value, imageObject: e?.target?.files?.[0] });
-  };
+  // const handleFileChange = (
+  //   e: React.ChangeEvent<HTMLInputElement>,
+  //   { name, value }: any
+  // ) => {
+  //   console.log("handling file change");
+  //   console.log(name + " " + value);
+  //   setState({ ...state, [name]: value, imageObject: e?.target?.files?.[0] });
+  // };
 
   const uploadImage = (imageFile: File) => {
     console.log("attempting to edit image");

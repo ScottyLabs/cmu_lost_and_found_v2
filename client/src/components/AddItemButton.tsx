@@ -465,7 +465,7 @@ function AddItemButton(props: {
             name="name"
             value={state.name}
             onChange={handleChange}
-            // error={nameError}
+          // error={nameError}
           />
           <Form.Group widths="equal">
             <Form.Field required>
@@ -492,7 +492,7 @@ function AddItemButton(props: {
               placeholder="Location"
               value={state.whereFound}
               onChange={handleChange}
-              // error={locationError}
+            // error={locationError}
             />
           </Form.Group>
           <Form.Input
@@ -502,7 +502,7 @@ function AddItemButton(props: {
             name="description"
             value={state.description}
             onChange={handleChange}
-            // error={descriptionError}
+          // error={descriptionError}
           />
           <Form.Group inline>
             <Form.Field required>
@@ -550,13 +550,6 @@ function AddItemButton(props: {
             value={state.building}
             onChange={handleChange}
             error={buildingError}
-          />
-          <Form.Input
-            label="Image Upload"
-            name="imagePath"
-            type="file"
-            value={state.imagePath}
-            onChange={handleFileChange}
           />
           {state.identifiable ? (
             <Form.Group widths="equal">

@@ -540,6 +540,17 @@ function AddItemButton(props: {
               onChange={handleRadioChange}
             />
           </Form.Group>
+          {/* <Form.Select
+            fluid
+            required
+            label="Building (Lost and Found Desk)"
+            options={buildings}
+            placeholder={"Building (Lost and Found Desk)"}
+            name="building"
+            value={state.building}
+            onChange={handleChange}
+            error={buildingError}
+          /> */}
           <Form.Input
             label="Image Upload"
             name="imagePath"

@@ -148,12 +148,12 @@ function AddItemButton(props: {
   const handleRadioChange = (e: any, { name, value }: any) => {
     setState({ ...state, [name]: value === "true" });
   };
-  const handleFileChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    { name, value }: any
-  ) => {
-    setState({ ...state, [name]: value, imageObject: e?.target?.files?.[0] });
-  };
+  // const handleFileChange = (
+  //   e: React.ChangeEvent<HTMLInputElement>,
+  //   { name, value }: any
+  // ) => {
+  //   setState({ ...state, [name]: value, imageObject: e?.target?.files?.[0] });
+  // };
 
   const uploadImage = (imageFile: File) => {
     const imageName = "test";

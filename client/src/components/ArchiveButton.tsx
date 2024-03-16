@@ -9,6 +9,7 @@ type Props = {
   // eslint-disable-next-line @typescript-eslint/ban-types
   fetchItems: Function;
   disabled: boolean;
+  handleSubmit: Function;
 };
 
 function exampleReducer(dispatchState: any, action: any) {
@@ -26,7 +27,7 @@ function exampleReducer(dispatchState: any, action: any) {
   }
 }
 
-const ArchiveButton: React.FC<Props> = ({ id, fetchItems, disabled }) => {
+const ArchiveButton: React.FC<Props> = ({ id, fetchItems, disabled, handleSubmit }) => {
   const [dispatchState, dispatch] = React.useReducer(exampleReducer, {
     closeOnEscape: false,
     closeOnDimmerClick: false,
@@ -73,6 +74,7 @@ const ArchiveButton: React.FC<Props> = ({ id, fetchItems, disabled }) => {
             <p>Are you sure you wish to archive this item?</p>
             <Button
               onClick={() => {
+                handleSubmit();
                 axios
                   .post("/api/items/archive", {
                     token: localStorage.getItem("lnf_token"),

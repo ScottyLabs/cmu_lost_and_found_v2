@@ -188,8 +188,7 @@ function EditItem(props: {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleSubmitHelper = () => {
     const {
       date,
       name,
@@ -281,6 +280,11 @@ function EditItem(props: {
         alert("Unable to edit item");
       }
     );
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    handleSubmitHelper();
   };
 
   const isAdmin = props.user?.permissions.some((value) =>
@@ -479,6 +483,7 @@ function EditItem(props: {
                           value.includes(PermissionType.ADMIN)
                         )
                       }
+                      handleSubmit={handleSubmitHelper}
                     />
                   ) : null}
                 </div>

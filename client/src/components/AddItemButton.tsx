@@ -64,13 +64,13 @@ function exampleReducer(dispatchState: any, action: any) {
 //   { key: "tepper", text: "Tepper Building", value: "Tepper Building" },
 // ];
 
-const buildings = Object.keys(BuildingType)
-  .filter((value) => value !== "ALL")
-  .map((key) => ({
-    key,
-    text: key,
-    value: key,
-  }));
+// const buildings = Object.keys(BuildingType)
+//   .filter((value) => value !== "ALL")
+//   .map((key) => ({
+//     key,
+//     text: key,
+//     value: key,
+//   }));
 
 // const templates = Object.keys(TemplateType)
 //   .filter((value) => value !== "ALL")
@@ -137,7 +137,7 @@ function AddItemButton(props: {
   // const[timeError, setTimeError] = useState(false);
   // const[locationError, setLocationError] = useState(false);
   // const[descriptionError, setDescriptionError] = useState(false);
-  const [buildingError, setBuildingError] = useState(false);
+  // const [buildingError, setBuildingError] = useState(false);
   const [formError, setFormError] = useState(false);
 
   const history = useHistory();
@@ -248,12 +248,12 @@ function AddItemButton(props: {
 
     let error = false;
 
-    if (building === "") {
-      setBuildingError(true);
-      error = true;
-    } else {
-      setBuildingError(false);
-    }
+    // if (building === "") {
+    //   setBuildingError(true);
+    //   error = true;
+    // } else {
+    //   setBuildingError(false);
+    // }
 
     if (error) {
       setFormError(true);
@@ -465,7 +465,7 @@ function AddItemButton(props: {
             name="name"
             value={state.name}
             onChange={handleChange}
-          // error={nameError}
+            // error={nameError}
           />
           <Form.Group widths="equal">
             <Form.Field required>
@@ -492,7 +492,7 @@ function AddItemButton(props: {
               placeholder="Location"
               value={state.whereFound}
               onChange={handleChange}
-            // error={locationError}
+              // error={locationError}
             />
           </Form.Group>
           <Form.Input
@@ -502,7 +502,7 @@ function AddItemButton(props: {
             name="description"
             value={state.description}
             onChange={handleChange}
-          // error={descriptionError}
+            // error={descriptionError}
           />
           <Form.Group inline>
             <Form.Field required>

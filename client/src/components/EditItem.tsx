@@ -65,13 +65,13 @@ function exampleReducer(dispatchState: any, action: any) {
 //   { key: "tepper", text: "Tepper Building", value: "Tepper Building" },
 // ];
 
-const buildings = Object.keys(BuildingType)
-  .filter((value) => value !== "ALL")
-  .map((key) => ({
-    key,
-    text: key,
-    value: key,
-  }));
+// const buildings = Object.keys(BuildingType)
+//   .filter((value) => value !== "ALL")
+//   .map((key) => ({
+//     key,
+//     text: key,
+//     value: key,
+//   }));
 
 function EditItem(props: {
   // TODO: #127 Replace bad Function type with appropriate type
@@ -94,10 +94,10 @@ function EditItem(props: {
   const [state, setState] = useState({
     date: new Date(
       new Date(props.item.dateFound).toISOString().substring(0, 10) +
-      "T" +
-      (props.item.timeFound.trim().length > 4
-        ? props.item.timeFound.trim()
-        : "0" + props.item.timeFound.trim())
+        "T" +
+        (props.item.timeFound.trim().length > 4
+          ? props.item.timeFound.trim()
+          : "0" + props.item.timeFound.trim())
     ),
     name: props.item.name,
     whereFound: props.item.whereFound,
@@ -499,10 +499,10 @@ function EditItem(props: {
                           new Date(props.item.dateFound)
                             .toISOString()
                             .substring(0, 10) +
-                          "T" +
-                          (props.item.timeFound.trim().length > 4
-                            ? props.item.timeFound.trim()
-                            : "0" + props.item.timeFound.trim())
+                            "T" +
+                            (props.item.timeFound.trim().length > 4
+                              ? props.item.timeFound.trim()
+                              : "0" + props.item.timeFound.trim())
                         ),
                         name: props.item.name,
                         whereFound: props.item.whereFound,

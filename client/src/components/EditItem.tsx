@@ -1,6 +1,6 @@
 // TODO: #126 Replace any annotations with appropriate type
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { BuildingType } from "../enums/locationTypes";
+// import { BuildingType } from "../enums/locationTypes";
 import { PermissionType } from "../enums/permissionType";
 import { Item } from "../interface/item";
 import { User } from "../interface/user";

@@ -246,7 +246,7 @@ function AddItemButton(props: {
       notes,
     } = state;
 
-    let error = false;
+    // let error = false;
 
     // if (building === "") {
     //   setBuildingError(true);
@@ -255,12 +255,12 @@ function AddItemButton(props: {
     //   setBuildingError(false);
     // }
 
-    if (error) {
-      setFormError(true);
-      return;
-    } else {
-      setFormError(false);
-    }
+    // if (error) {
+    //   setFormError(true);
+    //   return;
+    // } else {
+    //   setFormError(false);
+    // }
 
     // if user, send notifcation to admins with notifs on
     if (!props.isAdmin) {

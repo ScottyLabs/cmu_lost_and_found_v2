@@ -11,6 +11,7 @@ import ApproveSwitch from "./ApproveSwitch";
 import AvailableSwitch from "./AvailableSwitch";
 import EditButton from "./EditItem";
 import HistoryAccordion from "./HistoryAccordion";
+// import ImageModal from "./ImageModal";
 import PublicDisplaySwitch from "./PublicDisplaySwitch";
 import UnarchiveButton from "./UnarchiveButton";
 

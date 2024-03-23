@@ -100,10 +100,10 @@ function TablePage() {
           <Grid.Column width={16}>
             <div id="description">
               <p>
-                To retrieve an object, go to the location listed next to the
-                object on the corresponding card. You will be required to
-                identify any lost possessions. All items must be picked up in
-                person and a photo ID is required.
+                To retrieve an object, go to The Information Desk at the Cohon
+                University Center. You will be required to identify any lost
+                possessions. All items must be picked up in person and a photo
+                ID is required.
               </p>
             </div>
             <Message id="faq-message" warning size="large">

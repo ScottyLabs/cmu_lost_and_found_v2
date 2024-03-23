@@ -11,7 +11,7 @@ import ApproveSwitch from "./ApproveSwitch";
 import AvailableSwitch from "./AvailableSwitch";
 import EditButton from "./EditItem";
 import HistoryAccordion from "./HistoryAccordion";
-import ImageModal from "./ImageModal";
+// import ImageModal from "./ImageModal";
 import PublicDisplaySwitch from "./PublicDisplaySwitch";
 import UnarchiveButton from "./UnarchiveButton";
 
@@ -123,14 +123,14 @@ const TableWidget = (props: {
             >
               Building
             </Table.HeaderCell>
-            <Table.HeaderCell
+            {/* <Table.HeaderCell
               sorted={
                 props.sort.column === "image" ? props.sort.direction : undefined
               }
               onClick={() => changeSort("image")}
             >
               Image
-            </Table.HeaderCell>
+            </Table.HeaderCell> */}
             {!props.isArchivedItems && props.isUser ? (
               <Table.HeaderCell
                 sorted={
@@ -230,9 +230,9 @@ const TableWidget = (props: {
                   <Table.Cell>{item.whereFound}</Table.Cell>
                   <Table.Cell>{item.description}</Table.Cell>
                   <Table.Cell>{item.building}</Table.Cell>
-                  <Table.Cell>
+                  {/* <Table.Cell>
                     <ImageModal image={item.image}></ImageModal>
-                  </Table.Cell>
+                  </Table.Cell> */}
                   {!props.isArchivedItems && props.isUser ? (
                     <Table.Cell>
                       <PublicDisplaySwitch

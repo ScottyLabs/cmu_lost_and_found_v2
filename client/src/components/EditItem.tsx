@@ -1,6 +1,6 @@
 // TODO: #126 Replace any annotations with appropriate type
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { BuildingType } from "../enums/locationTypes";
+// import { BuildingType } from "../enums/locationTypes";
 import { PermissionType } from "../enums/permissionType";
 import { Item } from "../interface/item";
 import { User } from "../interface/user";
@@ -65,13 +65,13 @@ function exampleReducer(dispatchState: any, action: any) {
 //   { key: "tepper", text: "Tepper Building", value: "Tepper Building" },
 // ];
 
-const buildings = Object.keys(BuildingType)
-  .filter((value) => value !== "ALL")
-  .map((key) => ({
-    key,
-    text: key,
-    value: key,
-  }));
+// const buildings = Object.keys(BuildingType)
+//   .filter((value) => value !== "ALL")
+//   .map((key) => ({
+//     key,
+//     text: key,
+//     value: key,
+//   }));
 
 function EditItem(props: {
   // TODO: #127 Replace bad Function type with appropriate type
@@ -392,7 +392,7 @@ function EditItem(props: {
                   onChange={handleRadioChange}
                 />
               </Form.Group>
-              <Form.Group widths="equal">
+              {/* <Form.Group widths="equal">
                 <Form.Select
                   fluid
                   required
@@ -403,7 +403,7 @@ function EditItem(props: {
                   value={state.building}
                   onChange={handleChange}
                 />
-              </Form.Group>
+              </Form.Group> */}
               {/* <Form.Input
                 label="Image Upload"
                 name="imagePath"

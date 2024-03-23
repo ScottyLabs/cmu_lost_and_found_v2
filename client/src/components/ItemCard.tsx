@@ -96,8 +96,8 @@ const ItemCard = (props: { item: Item }) => {
         <Card.Content className="bottom-content">
           <b>Found: </b>
           {props.item.whereFound} <br />
-          <b>Retrieve From: </b>
-          {props.item.whereToRetrieve.retrieveLocation}
+          {/* <b>Retrieve From: </b>
+          {props.item.whereToRetrieve.retrieveLocation} */}
         </Card.Content>
       </Card>
     </div>

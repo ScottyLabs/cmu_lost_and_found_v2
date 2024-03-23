@@ -64,13 +64,13 @@ function exampleReducer(dispatchState: any, action: any) {
 //   { key: "tepper", text: "Tepper Building", value: "Tepper Building" },
 // ];
 
-const buildings = Object.keys(BuildingType)
-  .filter((value) => value !== "ALL")
-  .map((key) => ({
-    key,
-    text: key,
-    value: key,
-  }));
+// const buildings = Object.keys(BuildingType)
+//   .filter((value) => value !== "ALL")
+//   .map((key) => ({
+//     key,
+//     text: key,
+//     value: key,
+//   }));
 
 // const templates = Object.keys(TemplateType)
 //   .filter((value) => value !== "ALL")
@@ -117,7 +117,7 @@ function AddItemButton(props: {
     description: "",
     value: "general",
     identifiable: false,
-    building: buildplace(),
+    building: "CUC",
     image: "",
     imagePath: "",
     imageObject: null as any,
@@ -137,8 +137,8 @@ function AddItemButton(props: {
   // const[timeError, setTimeError] = useState(false);
   // const[locationError, setLocationError] = useState(false);
   // const[descriptionError, setDescriptionError] = useState(false);
-  const [buildingError, setBuildingError] = useState(false);
-  const [formError, setFormError] = useState(false);
+  // const [buildingError, setBuildingError] = useState(false);
+  const [formError, _setFormError] = useState(false);
 
   const history = useHistory();
 
@@ -246,21 +246,21 @@ function AddItemButton(props: {
       notes,
     } = state;
 
-    let error = false;
+    // let error = false;
 
-    if (building === "") {
-      setBuildingError(true);
-      error = true;
-    } else {
-      setBuildingError(false);
-    }
+    // if (building === "") {
+    //   setBuildingError(true);
+    //   error = true;
+    // } else {
+    //   setBuildingError(false);
+    // }
 
-    if (error) {
-      setFormError(true);
-      return;
-    } else {
-      setFormError(false);
-    }
+    // if (error) {
+    //   setFormError(true);
+    //   return;
+    // } else {
+    //   setFormError(false);
+    // }
 
     // if user, send notifcation to admins with notifs on
     if (!props.isAdmin) {
@@ -540,7 +540,7 @@ function AddItemButton(props: {
               onChange={handleRadioChange}
             />
           </Form.Group>
-          <Form.Select
+          {/* <Form.Select
             fluid
             required
             label="Building (Lost and Found Desk)"
@@ -550,7 +550,7 @@ function AddItemButton(props: {
             value={state.building}
             onChange={handleChange}
             error={buildingError}
-          />
+          /> */}
           {/* <Form.Input
             label="Image Upload"
             name="imagePath"

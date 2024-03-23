@@ -1,6 +1,6 @@
 // TODO: #126 Replace any annotations with appropriate type
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { BuildingType } from "../enums/locationTypes";
+// import { BuildingType } from "../enums/locationTypes";
 import { PermissionType } from "../enums/permissionType";
 import { Item } from "../interface/item";
 import { User } from "../interface/user";
@@ -65,13 +65,13 @@ function exampleReducer(dispatchState: any, action: any) {
 //   { key: "tepper", text: "Tepper Building", value: "Tepper Building" },
 // ];
 
-const buildings = Object.keys(BuildingType)
-  .filter((value) => value !== "ALL")
-  .map((key) => ({
-    key,
-    text: key,
-    value: key,
-  }));
+// const buildings = Object.keys(BuildingType)
+//   .filter((value) => value !== "ALL")
+//   .map((key) => ({
+//     key,
+//     text: key,
+//     value: key,
+//   }));
 
 function EditItem(props: {
   // TODO: #127 Replace bad Function type with appropriate type
@@ -126,14 +126,14 @@ function EditItem(props: {
   const handleRadioChange = (e: any, { name, value }: any) => {
     setState({ ...state, [name]: value === "true" });
   };
-  const handleFileChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    { name, value }: any
-  ) => {
-    console.log("handling file change");
-    console.log(name + " " + value);
-    setState({ ...state, [name]: value, imageObject: e?.target?.files?.[0] });
-  };
+  // const handleFileChange = (
+  //   e: React.ChangeEvent<HTMLInputElement>,
+  //   { name, value }: any
+  // ) => {
+  //   console.log("handling file change");
+  //   console.log(name + " " + value);
+  //   setState({ ...state, [name]: value, imageObject: e?.target?.files?.[0] });
+  // };
 
   const uploadImage = (imageFile: File) => {
     console.log("attempting to edit image");
@@ -396,7 +396,7 @@ function EditItem(props: {
                   onChange={handleRadioChange}
                 />
               </Form.Group>
-              <Form.Group widths="equal">
+              {/* <Form.Group widths="equal">
                 <Form.Select
                   fluid
                   required
@@ -407,14 +407,14 @@ function EditItem(props: {
                   value={state.building}
                   onChange={handleChange}
                 />
-              </Form.Group>
-              <Form.Input
+              </Form.Group> */}
+              {/* <Form.Input
                 label="Image Upload"
                 name="imagePath"
                 type="file"
                 value={state.imagePath}
                 onChange={handleFileChange}
-              />
+              /> */}
               {state.identifiable ? (
                 <Form.Group widths="equal">
                   <Form.Input

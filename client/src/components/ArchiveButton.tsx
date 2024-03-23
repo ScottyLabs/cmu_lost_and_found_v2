@@ -9,7 +9,7 @@ type Props = {
   // eslint-disable-next-line @typescript-eslint/ban-types
   fetchItems: Function;
   disabled: boolean;
-  handleSubmit: Function;
+  handleSubmit: () => void;
 };
 
 function exampleReducer(dispatchState: any, action: any) {
@@ -27,7 +27,12 @@ function exampleReducer(dispatchState: any, action: any) {
   }
 }
 
-const ArchiveButton: React.FC<Props> = ({ id, fetchItems, disabled, handleSubmit }) => {
+const ArchiveButton: React.FC<Props> = ({
+  id,
+  fetchItems,
+  disabled,
+  handleSubmit,
+}) => {
   const [dispatchState, dispatch] = React.useReducer(exampleReducer, {
     closeOnEscape: false,
     closeOnDimmerClick: false,

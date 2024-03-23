@@ -239,6 +239,7 @@ const TableWidget = (props: {
                         id={item._id}
                         isPublicDisplay={item.publicDisplay}
                         disabled={
+                          !isAdmin ||
                           !item.approved ||
                           !isBuilding ||
                           item.status !== "available" ||

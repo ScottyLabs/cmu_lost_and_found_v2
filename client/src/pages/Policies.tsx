@@ -207,9 +207,33 @@ function Policies() {
                       </ul>
                     </li>
                   </ul>
-                  *Any items that contain food, or may carry bodily fluids will
-                  not be accepted. The Cohon Center may refuse to take any lost
-                  items at the discretion of it's staff.
+                  *The Cohon Center will not accept the following items:
+                  <ul>
+                    <li>Any item that may carry bodily fluids</li>
+                    <li>Wet, dirty, or soiled items</li>
+                    <li>
+                      Undergarments, including underwear, socks, bras, bathing
+                      suits, etc.
+                    </li>
+                    <li>
+                      Towels, pillows, sheets, blankets, and other bedding
+                    </li>
+                    <li>
+                      Toiletries, including makeup, chemicals, or detergents
+                    </li>
+                    <li>
+                      Food items, containers with food, or other perishable
+                      items
+                    </li>
+                    <li>
+                      Weapons of any kind, including knives with blades longer
+                      than 6 inches
+                    </li>
+                    <li>
+                      Any item that is deemed unsanitary and/or hazardous by the
+                      CUC staff
+                    </li>
+                  </ul>
                 </div>
               </div>
             </main>

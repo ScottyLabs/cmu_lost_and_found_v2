@@ -115,7 +115,7 @@ function Policies() {
                     <li> CMU ID Cards </li>
                   </ul>
                   <h2> Procedures </h2>
-                  Procedures for Lost/Abandoned Property*:
+                  Procedures for Lost/Abandoned Property:
                   <ul>
                     <li>
                       High Value Items
@@ -207,7 +207,7 @@ function Policies() {
                       </ul>
                     </li>
                   </ul>
-                  *The Cohon Center will not accept the following items:
+                  The Cohon Center will not accept the following items:
                   <ul>
                     <li>Any item that may carry bodily fluids</li>
                     <li>Wet, dirty, or soiled items</li>
